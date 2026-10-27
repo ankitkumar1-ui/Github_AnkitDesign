@@ -21,7 +21,7 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 |---|---|---|
 | signin | screens/signin.html | Onboarding v2 · Sign in |
 | about | screens/about.html | Onboarding v2 · 1 About you |
-| data | screens/data.html | Onboarding v2 · 2 Connect your data |
+| data | screens/data.html | Onboarding v2 · 2 Connect your data. Starts with a website scan (hero with a canvas scan effect → Allow / Skip, ~75s in the background, toast when done); state lives in `window.ADX_SCAN` |
 | goals | screens/goals.html | Onboarding v2 · Cortex setting up + 3 Your goals |
 | home | screens/home.html | Home (prompt, recommendations, workspace completeness) |
 | setup | screens/setup.html | ADX Setup · Overview |

@@ -14,6 +14,139 @@ body{margin:0}
 @keyframes obPulse{0%,80%,100%{opacity:.2;transform:scale(.75)}40%{opacity:1;transform:scale(1)}}
 input::placeholder{color:#a1a1aa}
 
+/* ---- Step 1 · website scan ---- */
+/* sephora.com homepage snapshot: the mock from web-signals.html, scoped under .scan-shot */
+.scan-shot .site{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#111;background:#fff;font-size:13px;line-height:1.35}
+.scan-shot .site *{box-sizing:border-box}
+.scan-shot .site .muted{color:#666;font-size:12px}
+.scan-shot .site .sx-promo{background:#6d0f17;color:#fff;text-align:center;font-size:12px;padding:10px 12px}
+.scan-shot .site .sx-head{display:flex;align-items:center;gap:16px;padding:14px 28px 14px 42px;border-bottom:1px solid #eee}
+.scan-shot .site .sx-logo{font-size:21px;letter-spacing:.32em;font-weight:500}
+.scan-shot .site .sx-search{flex:0 1 250px;display:flex;align-items:center;gap:7px;border:1.5px solid #222;border-radius:999px;padding:7px 12px;color:#777;font-size:12px}
+.scan-shot .site .sx-sp{flex:1}
+.scan-shot .site .sx-hi{display:flex;flex-direction:column;font-size:11px;line-height:1.3}
+.scan-shot .site .sx-hi b{font-weight:500}.sx-hi small{font-size:10px;color:#888}
+.scan-shot .site .sx-hi em{font-style:normal;font-size:8.5px;font-weight:700;background:#111;color:#fff;border-radius:3px;padding:0 4px;width:max-content}
+.scan-shot .site .sx-user{flex-direction:row;align-items:center;gap:8px}.sx-user>span:last-child{display:flex;flex-direction:column}
+.scan-shot .site .sx-av{width:26px;height:26px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700}
+.scan-shot .site .sx-ico{display:flex;color:#111}
+.scan-shot .site .sx-nav{display:flex;justify-content:center;gap:24px;background:#000;color:#fff;font-size:12px;padding:11px 20px}
+.scan-shot .site .sx-body{padding:18px 28px 34px 42px}
+.scan-shot .site .crumb{font-size:11px;color:#666;margin-bottom:10px}
+.scan-shot .site .sec-h{font-size:16px;font-weight:700;margin:24px 0 12px}
+.scan-shot .site .row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.scan-shot .site .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.scan-shot .site .row3t{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.scan-shot .site .pc{display:flex;flex-direction:column;gap:3px;font-size:11.5px}
+.scan-shot .site .pimg{height:132px;background:#f6f6f6;border-radius:4px;display:grid;place-items:center;margin-bottom:6px}
+.scan-shot .site .pimg.sm{height:72px;width:64px;margin:0}
+.scan-shot .site .mini{width:40px;height:68px;border-radius:6px 6px 12px 12px;box-shadow:0 -12px 0 -4px #d9c3b7}
+.scan-shot .site .pimg.sm .mini{width:22px;height:38px;box-shadow:0 -7px 0 -2px #d9c3b7}
+.scan-shot .site .pb{font-weight:700;font-size:10.5px;letter-spacing:.04em}
+.scan-shot .site .pn{line-height:1.35;color:#222}.pp{font-weight:700}
+.scan-shot .site .st{font-size:10.5px;letter-spacing:1px}.st i{font-style:normal;color:#777;letter-spacing:0}
+.scan-shot .site .hm-hero{height:220px;background:linear-gradient(110deg,#2b0f14,#6d0f17 48%,#b8483d);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 34px;overflow:visible}
+.scan-shot .site .hm-copy{display:flex;flex-direction:column;gap:7px;max-width:320px}
+.scan-shot .site .hm-k{font-size:10.5px;letter-spacing:.2em;opacity:.8}.hm-copy b{font-size:26px;font-weight:600;line-height:1.15}.hm-copy>span:nth-child(3){font-size:12.5px;opacity:.85}
+.scan-shot .site .hm-btn{margin-top:6px;background:#fff;color:#111;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:700;width:max-content}
+.scan-shot .site .hm-art{position:relative;width:230px;height:170px}
+.scan-shot .site .hm-art span{position:absolute;bottom:0;border-radius:8px 8px 14px 14px}
+.scan-shot .site .hm-art .b1{left:20px;width:56px;height:120px;background:linear-gradient(#f1d7c9,#d8a58c)}
+.scan-shot .site .hm-art .b2{left:90px;width:70px;height:150px;background:linear-gradient(#ffd0d8,#e98aa0)}
+.scan-shot .site .hm-art .b3{left:172px;width:46px;height:96px;background:linear-gradient(#e9e2ff,#a99ad6)}
+.scan-shot .site .story{height:118px;border-radius:4px;padding:12px 14px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;font-size:14px;font-weight:700}
+.scan-shot .site .story small{font-size:9.5px;letter-spacing:.14em;opacity:.85;font-weight:600}
+.scan-shot .site .bi{margin-top:22px;background:#f6f6f6;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.scan-shot .site .pill{background:#111;color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:700}
+.scan-shot .site .pill-o{display:inline-block;border:1.5px solid #111;border-radius:999px;padding:9px 22px;font-size:12.5px;font-weight:700;margin-top:14px}
+.scan-shot .site .plp-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.scan-shot .site .plp-top h2,.scan-shot .site h2{font-size:24px;font-weight:700;margin:0}
+.scan-shot .site .selbox{border:1px solid #ccc;border-radius:4px;padding:7px 12px;font-size:12px;white-space:nowrap}
+.scan-shot .site .plp{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px;align-items:start}
+.scan-shot .site .flt{display:flex;flex-direction:column;gap:16px;padding:2px}
+.scan-shot .site .fg{display:flex;flex-direction:column;gap:7px;font-size:12px;border-bottom:1px solid #eee;padding-bottom:12px}
+.scan-shot .site .fg b{font-size:12.5px}
+.scan-shot .site .fg span{display:flex;align-items:center;gap:8px;color:#333}
+.scan-shot .site .fg i{width:13px;height:13px;border:1.5px solid #999;border-radius:3px}.fg i.on{background:#111;border-color:#111}
+.scan-shot .site .more{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px}
+.scan-shot .site .bar{width:180px;height:3px;background:#e5e5e5;border-radius:2px}.bar i{display:block;height:100%;background:#111}
+.scan-shot .site .pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+.scan-shot .site .gal{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-content:start}
+.scan-shot .site .thumbs{display:flex;flex-direction:column;gap:8px}
+.scan-shot .site .th{width:38px;height:38px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #ddd}.th.on{box-shadow:0 0 0 1.5px #111}
+.scan-shot .site .hero{position:relative;height:330px;display:grid;place-items:center;overflow:hidden;background:#faf7f5}
+.scan-shot .site .bottle{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.scan-shot .site .cap{width:120px;height:78px;border-radius:10px 10px 4px 4px;background:linear-gradient(135deg,#e9d3c7,#c9a593 60%,#b48d7a)}
+.scan-shot .site .glass{width:136px;height:150px;margin-top:-4px;border-radius:12px 12px 24px 24px;background:linear-gradient(160deg,#a0603a,#7b4126 55%,#5e2f1b);display:grid;place-items:center;box-shadow:inset 0 0 0 6px rgba(255,255,255,.12)}
+.scan-shot .site .glass span{color:#f5e9e2;font-size:11px;letter-spacing:.3em;text-align:center;line-height:1.8}
+.scan-shot .site .swoosh{position:absolute;width:280px;height:110px;border-radius:50%;background:linear-gradient(90deg,transparent,#8a4a2a 40%,#6b3720);transform:rotate(-38deg) translate(40px,10px);opacity:.85}
+.scan-shot .site .brand{font-size:12.5px;font-weight:700}.pname{font-size:15px;margin-top:2px}
+.scan-shot .site .rate{background:#f6f6f6;padding:8px 10px;font-size:11.5px;margin:12px 0}.rate .sep{color:#bbb;margin:0 6px}.rate u{color:#1b5ed1}
+.scan-shot .site .price{font-size:12px;color:#555;margin-bottom:10px}.price b{font-size:17px;color:#111}
+.scan-shot .site .color{font-size:12.5px;margin:6px 0 8px}
+.scan-shot .site .swg{display:grid;grid-template-columns:repeat(13,1fr);gap:6px;padding:2px}
+.scan-shot .site .sw{aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}.sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #111}
+.scan-shot .site .find{font-size:12px;color:#1b5ed1;text-decoration:underline;margin:10px 0 14px;width:max-content}
+.scan-shot .site .del{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.scan-shot .site .del>div{border:1px solid #ddd;border-radius:6px;padding:9px;font-size:11px;line-height:1.35}.del>div.on{border:2px solid #111}
+.scan-shot .site .del b{display:block;font-size:11.5px}.del span{color:#666}
+.scan-shot .site .add{height:44px;border-radius:999px;background:#cf112c;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:12px}
+.scan-shot .site .srch{display:flex;align-items:center;gap:10px;border:2px solid #111;border-radius:999px;padding:11px 18px;font-size:15px}
+.scan-shot .site .srch .x{margin-left:auto;color:#999;font-size:18px}
+.scan-shot .site .chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;font-size:12px;width:max-content;max-width:100%;padding:2px}
+.scan-shot .site .chips b{font-weight:500;border:1px solid #ccc;border-radius:999px;padding:6px 12px}
+.scan-shot .site .bk{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:start}
+.scan-shot .site .card{border:1px solid #e5e5e5;border-radius:6px;padding:14px 16px;background:#fff}
+.scan-shot .site .bitem{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #eee;font-size:12px}.bitem:last-child{border-bottom:0}
+.scan-shot .site .bt{flex:1;display:flex;flex-direction:column;gap:2px}
+.scan-shot .site .promo{display:flex;gap:8px;margin-bottom:12px}.promo .inp{flex:1;border:1px solid #ccc;border-radius:4px;padding:8px 10px;font-size:12px;letter-spacing:.06em}
+.scan-shot .site .sum>div{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}.sum .tot{border-top:1px solid #eee;margin-top:6px;padding-top:9px;font-size:13.5px}
+.scan-shot .site .co-head{display:flex;align-items:center;gap:16px;padding:16px 28px 16px 42px;border-bottom:1px solid #eee}
+.scan-shot .site .lnk{font-size:12.5px;text-decoration:underline}
+.scan-shot .site .co .coh{display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:10px}
+.scan-shot .site .co .coh i{width:20px;height:20px;border-radius:50%;background:#111;color:#fff;font-style:normal;font-size:11px;display:grid;place-items:center}
+.scan-shot .site .fields{display:flex;flex-direction:column;gap:3px;font-size:12px;color:#333;padding-left:29px}
+.scan-shot .site .fields.two{flex-direction:row;gap:30px}.fields b{font-weight:500;color:#111}
+.scan-shot .site .radios{display:flex;flex-direction:column;gap:7px;padding-left:29px;font-size:12px}
+.scan-shot .site .radios span{display:flex;align-items:center;gap:8px}.radios i{width:13px;height:13px;border:1.5px solid #999;border-radius:50%}.radios .on i{border:4px solid #111}
+.scan-shot .site .err{margin:10px 0 0 29px;font-size:11.5px;color:#b3261e;background:#fdecea;border-radius:4px;padding:7px 10px}
+.scan-shot .site .sx-in{flex:1;min-width:0;border:0;outline:none;background:transparent;font:inherit;font-size:12px;color:#111;padding:0;-webkit-appearance:none;appearance:none}
+.scan-shot .site .sx-in::placeholder{color:#777}
+.scan-shot .site .lipimg{background:linear-gradient(180deg,#faf6f3,#f1ebe6)}
+.scan-shot .site .lip{display:flex;flex-direction:column;align-items:center;transform:rotate(-8deg)}
+.scan-shot .site .lip i{display:block;width:18px;height:30px;border-radius:3px 9px 2px 2px;clip-path:polygon(0 28%,100% 0,100% 100%,0 100%)}
+.scan-shot .site .lip b{display:block;width:24px;height:52px;border-radius:3px 3px 4px 4px;box-shadow:inset -5px 0 0 rgba(255,255,255,.12),inset 4px 0 0 rgba(0,0,0,.12);margin-top:-1px}
+.scan-hero{position:relative;height:440px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid #e4e4e7;box-shadow:0 10px 30px -14px rgba(9,9,11,.35);animation:scanHeroIn .4s ease both}
+.scan-shot{position:absolute;left:0;top:0;width:1200px;transform-origin:0 0;pointer-events:none;user-select:none}
+.scan-fx{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
+.scan-grad{position:absolute;inset:0;background:linear-gradient(to top,#09090b 0%,rgba(9,9,11,.88) 34%,rgba(9,9,11,.25) 62%,rgba(9,9,11,0) 78%);pointer-events:none}
+.scan-cta{position:absolute;left:0;right:0;bottom:0;padding:0 28px 30px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fafafa}
+.scan-cta .k{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7fd1c4}
+.scan-cta .k i{width:6px;height:6px;border-radius:50%;background:#5fd3c2;box-shadow:0 0 0 0 rgba(95,211,194,.6);animation:scanPing 1.8s ease-out infinite}
+.scan-cta h2{margin:10px 0 0;font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.02em}
+.scan-cta p{margin:8px 0 0;max-width:52ch;font-size:13.5px;line-height:1.55;color:#a1a1aa}
+.scan-btns{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+.scan-go{height:44px;padding:0 20px;border:0;border-radius:999px;background:#fafafa;color:#09090b;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 8px 24px -6px rgba(95,211,194,.45)}
+.scan-go em{font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.03em;color:#2f7a70;background:rgba(60,140,129,.14);border-radius:999px;padding:2px 8px}
+.scan-go:disabled{cursor:progress;opacity:.85}
+.scan-skip{height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.04);color:#e4e4e7;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.scan-skip:hover{background:rgba(255,255,255,.1)}
+.scan-card{animation:scanCollapse .45s cubic-bezier(.2,.8,.2,1) both}
+.scan-bar{height:6px;border-radius:4px;background:#e4e4e7;overflow:hidden}
+.scan-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#18181b,#3c8c81);transition:width .5s linear}
+.scan-tw{position:relative;min-width:0;display:flex}
+.scan-tw>button{flex:1}
+.scan-tip{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translate(-50%,4px);background:#18181b;color:#fafafa;font-size:12px;line-height:1.45;padding:8px 10px;border-radius:8px;width:max-content;max-width:240px;box-shadow:0 8px 20px -8px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .12s,transform .12s;z-index:20}
+.scan-tip::after{content:"";position:absolute;left:50%;top:100%;margin-left:-5px;border:5px solid transparent;border-top-color:#18181b}
+.scan-tw:hover .scan-tip,.scan-tw:focus-within .scan-tip{opacity:1;transform:translate(-50%,0)}
+.scan-tip b{display:block;font-weight:600}
+.scan-tip span{color:#a1a1aa}
+@keyframes scanHeroIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes scanCollapse{from{opacity:0;transform:scaleY(1.6);transform-origin:top}to{opacity:1;transform:none}}
+@keyframes scanPing{0%{box-shadow:0 0 0 0 rgba(95,211,194,.6)}80%,100%{box-shadow:0 0 0 8px rgba(95,211,194,0)}}
+@media (max-width:620px){.scan-hero{height:480px}.scan-grad{background:linear-gradient(to top,#09090b 0%,rgba(9,9,11,.92) 50%,rgba(9,9,11,.35) 72%,rgba(9,9,11,0) 86%)}.scan-cta{padding:0 18px 22px}.scan-cta h2{font-size:21px}.scan-btns{flex-direction:column;align-self:stretch}.scan-go,.scan-skip{justify-content:center;width:100%}}
+@media (prefers-reduced-motion:reduce){.scan-hero,.scan-card{animation:none}.scan-cta .k i{animation:none}.ob-dots i{animation:none;opacity:.6}}
+
 </style>
 </head>
 <body>
@@ -39,8 +172,111 @@ input::placeholder{color:#a1a1aa}
 
     <div style="margin-bottom: 4px">
       <h1 style="margin: 0; font-size: 26px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em">Connect your data</h1>
-      <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: #71717a; max-width: 62ch">Connect your web signals and product catalog, and add more context if you have it. Cortex reads them and drafts a first set of signals. Everything is read-only.</p>
+      <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: #71717a; max-width: 62ch">Start with a scan of {{scan.site}}, then connect your web signals and product catalog, and add more context if you have it. Cortex reads them and drafts a first set of signals. Everything is read-only.</p>
     </div>
+
+    <!-- ============ 0 · WEB<div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo">SEPHORA</span><span class="sx-search"><span style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" tabindex="-1" readonly placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="hm-hero">
+    <div class="hm-copy"><span class="hm-k">THE HOLIDAY SHOP</span><b>Gifts they'll actually use</b><span>Value sets, minis and stocking stuffers from $10.</span><span class="hm-btn">Shop now</span></div>
+    <div class="hm-art"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  </div>
+  <div class="sec-h">Chosen for you</div>
+  <div class="row4"><div class=""><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:#e3a9b3"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Soft Pinch Liquid Blush</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$23.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#9ccda9"></span></div><span class="pb">GLOW RECIPE</span><span class="pn">Watermelon Niacinamide Dew Drops</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b9b5d3"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Setting Spray</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$38.00</span></div></div>
+  <div class="" style="margin-top:6px">
+    <div class="sec-h">Brand stories</div>
+    <div class="row3"><div class="story" style="background:linear-gradient(160deg,#c7a17a,#6b4a33)"><small>RARE BEAUTY</small>Made to feel good in</div><div class="story" style="background:linear-gradient(160deg,#8fb6a0,#2f5b4b)"><small>GLOW RECIPE</small>Fruit-powered skincare</div><div class="story" style="background:linear-gradient(160deg,#c48a9a,#5e2a3a)"><small>FENTY BEAUTY</small>Beauty for all</div></div>
+  </div>
+  <div class="bi"><span><b>Beauty Insider</b> · Earn points on every purchase and unlock birthday gifts.</span><span class="pill">Join now</span></div>
+</div></div> SCAN ============ -->
+    <!-- Hero: a snapshot of the site from About you, a canvas scan effect, Allow / Skip. State lives in window.ADX_SCAN so it survives leaving the screen. -->
+    <sc-if value="{{scan.hero}}" hint-placeholder-val="{{true}}">
+    <section class="scan-hero" aria-label="Scan {{scan.site}}">
+      <div class="scan-shot" aria-hidden="true"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo">SEPHORA</span><span class="sx-search"><span style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" tabindex="-1" readonly placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="hm-hero">
+    <div class="hm-copy"><span class="hm-k">THE HOLIDAY SHOP</span><b>Gifts they'll actually use</b><span>Value sets, minis and stocking stuffers from $10.</span><span class="hm-btn">Shop now</span></div>
+    <div class="hm-art"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  </div>
+  <div class="sec-h">Chosen for you</div>
+  <div class="row4"><div class=""><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:#e3a9b3"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Soft Pinch Liquid Blush</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$23.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#9ccda9"></span></div><span class="pb">GLOW RECIPE</span><span class="pn">Watermelon Niacinamide Dew Drops</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b9b5d3"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Setting Spray</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$38.00</span></div></div>
+  <div class="" style="margin-top:6px">
+    <div class="sec-h">Brand stories</div>
+    <div class="row3"><div class="story" style="background:linear-gradient(160deg,#c7a17a,#6b4a33)"><small>RARE BEAUTY</small>Made to feel good in</div><div class="story" style="background:linear-gradient(160deg,#8fb6a0,#2f5b4b)"><small>GLOW RECIPE</small>Fruit-powered skincare</div><div class="story" style="background:linear-gradient(160deg,#c48a9a,#5e2a3a)"><small>FENTY BEAUTY</small>Beauty for all</div></div>
+  </div>
+  <div class="bi"><span><b>Beauty Insider</b> · Earn points on every purchase and unlock birthday gifts.</span><span class="pill">Join now</span></div>
+</div></div></div>
+      <canvas class="scan-fx" data-scan-fx="1" aria-hidden="true"></canvas>
+      <div class="scan-grad"></div>
+      <div class="scan-cta">
+        <span class="k"><i></i>Step 1 · Recommended</span>
+        <h2>{{scan.heroTitle}}</h2>
+        <p>We read public pages only, like a shopper would, and find the events your site already sends. Takes about a minute, and you can keep going while it runs.</p>
+        <div class="scan-btns">
+          <button type="button" class="scan-go" onClick="{{scan.allow}}" disabled="{{scan.boosting}}">{{scan.goLabel}}<em>Recommended</em></button>
+          <sc-if value="{{scan.canSkip}}" hint-placeholder-val="{{true}}"><button type="button" class="scan-skip" onClick="{{scan.skip}}">Skip for now</button></sc-if>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- Collapsed: running / done / skipped -->
+    <sc-if value="{{scan.card}}" hint-placeholder-val="{{false}}">
+    <section id="obScanCard" class="scan-card" style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
+      <button type="button" onClick="{{scan.toggle}}" aria-expanded="{{scan.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 22px; border: 0; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
+        <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><sc-if value="{{scan.done}}" hint-placeholder-val="{{false}}"><span title="Complete" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
+        <div style="flex: 1; min-width: 0">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Website scan
+            <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #2f7a70; background: rgba(60,140,129,0.11); border-radius: 5px; padding: 1px 6px">Auto</em></div>
+          <div style="font-size: 13px; color: #71717a; margin-top: 2px">{{scan.sub}}</div>
+        </div>
+        <sc-if value="{{scan.running}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: #3f3f46; white-space: nowrap"><span class="ob-dots" aria-hidden="true"><i></i><i></i><i></i></span>{{scan.pctText}}</span></sc-if>
+        <sc-if value="{{scan.done}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; color: #15803d; white-space: nowrap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Complete</span></sc-if>
+        <sc-if value="{{scan.skipped}}" hint-placeholder-val="{{false}}"><span style="font-size: 12.5px; color: #71717a; white-space: nowrap">Skipped</span></sc-if>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: rotate({{scan.rot}}); transition: transform 0.15s"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+
+      <sc-if value="{{scan.open}}" hint-placeholder-val="{{false}}">
+      <div style="padding: 0 22px 20px 72px; display: flex; flex-direction: column; gap: 14px">
+        <sc-if value="{{scan.running}}" hint-placeholder-val="{{false}}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; align-items: baseline; gap: 10px; font-size: 13px"><b style="flex: 1; font-weight: 600">{{scan.phase}}</b><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #52525b">{{scan.left}}</span></div>
+            <div class="scan-bar"><i style="width: {{scan.pctW}}"></i></div>
+            <div style="font-size: 12.5px; color: #71717a">{{scan.counts}} · You can keep going. We'll finish in the background and let you know.</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{scan.done}}" hint-placeholder-val="{{false}}">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr)); gap: 10px">
+            <sc-for list="{{scan.found}}" as="f" hint-placeholder-count="4">
+              <div style="border: 1px solid #e4e4e7; border-radius: 11px; padding: 11px 12px"><div style="font-size: 19px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1">{{f.n}}</div><div style="font-size: 11.5px; color: #71717a; margin-top: 3px">{{f.l}}</div></div>
+            </sc-for>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+            <a href="#/signals" style="height: 34px; padding: 0 14px; border-radius: 8px; background: #09090b; color: #fafafa; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none">View signals</a>
+            <button type="button" onClick="{{scan.rescan}}" style="height: 34px; padding: 0 14px; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; font-family: inherit; font-size: 13px; font-weight: 600; color: #09090b; cursor: pointer">Rescan</button>
+            <span style="font-size: 12px; color: #71717a">Scanned {{scan.when}} · public pages only</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{scan.skipped}}" hint-placeholder-val="{{false}}">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+            <span style="flex: 1; min-width: 220px; font-size: 13px; color: #52525b">The auto-scan of {{scan.site}} was skipped. Run it any time to find the events, products and pages your site already has.</span>
+            <button type="button" onClick="{{scan.reopen}}" style="height: 34px; padding: 0 14px; border: 0; border-radius: 8px; background: #09090b; color: #fafafa; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">Scan {{scan.site}}</button>
+          </div>
+        </sc-if>
+      </div>
+      </sc-if>
+    </section>
+    </sc-if>
 
     <!-- ============ 1 · ANALYTICS ============ -->
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
@@ -50,7 +286,7 @@ input::placeholder{color:#a1a1aa}
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Web signals
             <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></div>
-          <div style="font-size: 13px; color: #71717a; margin-top: 2px">Shopper events: page views, searches, add-to-basket and checkout.</div>
+          <div style="font-size: 13px; color: {{evt.subFg}}; margin-top: 2px">{{evt.sub}}</div>
         </div>
         <sc-if value="{{evt.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{evt.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{evt.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{evt.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 11px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{evt.more}}</span></sc-if></span></sc-if>
         <sc-if value="{{evt.showText}}" hint-placeholder-val="{{true}}">
@@ -76,6 +312,20 @@ input::placeholder{color:#a1a1aa}
             </div>
 
             <div role="radiogroup" aria-label="Web signals source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
+              <sc-if value="{{evt.scanTile.show}}" hint-placeholder-val="{{false}}">
+                <div class="scan-tw">
+                  <button type="button" onClick="{{evt.scanTile.pick}}" aria-disabled="{{evt.scanTile.ariaDis}}" aria-label="{{evt.scanTile.aria}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{evt.scanTile.bd}}; border-radius: 10px; padding: 0 11px; background: {{evt.scanTile.bg}}; font-family: inherit; color: inherit; cursor: {{evt.scanTile.cursor}}">
+                    <span style="flex: 0 0 30px; width: 30px; height: 30px; border-radius: 8px; background: #09090b; color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; display: flex; align-items: center; justify-content: center; opacity: {{evt.scanTile.op}}">S</span>
+                    <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; opacity: {{evt.scanTile.op}}">
+                      <b style="font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Scan {{evt.scanTile.site}}</b>
+                      <span style="font-size: 10.5px; font-weight: 600; color: {{evt.scanTile.subFg}}; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{evt.scanTile.sub}}</span>
+                    </span>
+                    <sc-if value="{{evt.scanTile.running}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" class="ob-dots"><i></i><i></i><i></i></span></sc-if>
+                    <sc-if value="{{evt.scanTile.done}}" hint-placeholder-val="{{false}}"><span title="Scanned" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                  </button>
+                  <sc-if value="{{evt.scanTile.running}}" hint-placeholder-val="{{false}}"><span class="scan-tip" role="tooltip"><b>Scan in progress · {{evt.scanTile.pct}}%</b><span>{{evt.scanTile.left}} · {{evt.scanTile.phase}}</span></span></sc-if>
+                </div>
+              </sc-if>
               <sc-for list="{{evt.tiles}}" as="t" hint-placeholder-count="9">
                 <button type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{t.bd}}; box-shadow: {{t.ring}}; border-radius: 10px; padding: 0 11px; background: #fff; font-family: inherit; color: inherit; cursor: pointer">
                   <span style="flex: 0 0 30px; width: 30px; height: 30px; box-sizing: border-box; border-radius: 8px; border: 1px solid #f0f0f2; background: #fff; display: flex; align-items: center; justify-content: center"><img src="{{t.logo}}" alt="" width="18" height="18" style="display: block; border-radius: 3px"></span>
@@ -311,7 +561,21 @@ input::placeholder{color:#a1a1aa}
           </div>
           <sc-if value="{{g.isConnect}}" hint-placeholder-val="{{true}}">
           <div role="radiogroup" aria-label="{{g.name}} source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
-            <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="9">
+            <sc-if value="{{g.scanTile.show}}" hint-placeholder-val="{{false}}">
+                <div class="scan-tw">
+                  <button type="button" onClick="{{g.scanTile.pick}}" aria-disabled="{{g.scanTile.ariaDis}}" aria-label="{{g.scanTile.aria}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{g.scanTile.bd}}; border-radius: 10px; padding: 0 11px; background: {{g.scanTile.bg}}; font-family: inherit; color: inherit; cursor: {{g.scanTile.cursor}}">
+                    <span style="flex: 0 0 30px; width: 30px; height: 30px; border-radius: 8px; background: #09090b; color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; display: flex; align-items: center; justify-content: center; opacity: {{g.scanTile.op}}">S</span>
+                    <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; opacity: {{g.scanTile.op}}">
+                      <b style="font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Scan {{g.scanTile.site}}</b>
+                      <span style="font-size: 10.5px; font-weight: 600; color: {{g.scanTile.subFg}}; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{g.scanTile.sub}}</span>
+                    </span>
+                    <sc-if value="{{g.scanTile.running}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" class="ob-dots"><i></i><i></i><i></i></span></sc-if>
+                    <sc-if value="{{g.scanTile.done}}" hint-placeholder-val="{{false}}"><span title="Scanned" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                  </button>
+                  <sc-if value="{{g.scanTile.running}}" hint-placeholder-val="{{false}}"><span class="scan-tip" role="tooltip"><b>Scan in progress · {{g.scanTile.pct}}%</b><span>{{g.scanTile.left}} · {{g.scanTile.phase}}</span></span></sc-if>
+                </div>
+              </sc-if>
+              <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="9">
               <button type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{t.bd}}; box-shadow: {{t.ring}}; border-radius: 10px; padding: 0 11px; background: #fff; font-family: inherit; color: inherit; cursor: pointer">
                 <span style="flex: 0 0 30px; width: 30px; height: 30px; box-sizing: border-box; border-radius: 8px; border: 1px solid #f0f0f2; background: #fff; display: flex; align-items: center; justify-content: center"><img src="{{t.logo}}" alt="" width="18" height="18" style="display: block; border-radius: 3px"></span>
                 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
@@ -496,7 +760,21 @@ input::placeholder{color:#a1a1aa}
           </div>
           <sc-if value="{{g.isConnect}}" hint-placeholder-val="{{true}}">
               <div role="radiogroup" aria-label="{{g.name}} source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
-                <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="6">
+                <sc-if value="{{g.scanTile.show}}" hint-placeholder-val="{{false}}">
+                <div class="scan-tw">
+                  <button type="button" onClick="{{g.scanTile.pick}}" aria-disabled="{{g.scanTile.ariaDis}}" aria-label="{{g.scanTile.aria}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{g.scanTile.bd}}; border-radius: 10px; padding: 0 11px; background: {{g.scanTile.bg}}; font-family: inherit; color: inherit; cursor: {{g.scanTile.cursor}}">
+                    <span style="flex: 0 0 30px; width: 30px; height: 30px; border-radius: 8px; background: #09090b; color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; display: flex; align-items: center; justify-content: center; opacity: {{g.scanTile.op}}">S</span>
+                    <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; opacity: {{g.scanTile.op}}">
+                      <b style="font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Scan {{g.scanTile.site}}</b>
+                      <span style="font-size: 10.5px; font-weight: 600; color: {{g.scanTile.subFg}}; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{g.scanTile.sub}}</span>
+                    </span>
+                    <sc-if value="{{g.scanTile.running}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" class="ob-dots"><i></i><i></i><i></i></span></sc-if>
+                    <sc-if value="{{g.scanTile.done}}" hint-placeholder-val="{{false}}"><span title="Scanned" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                  </button>
+                  <sc-if value="{{g.scanTile.running}}" hint-placeholder-val="{{false}}"><span class="scan-tip" role="tooltip"><b>Scan in progress · {{g.scanTile.pct}}%</b><span>{{g.scanTile.left}} · {{g.scanTile.phase}}</span></span></sc-if>
+                </div>
+              </sc-if>
+              <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="6">
                   <button type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{t.bd}}; box-shadow: {{t.ring}}; border-radius: 10px; padding: 0 11px; background: #fff; font-family: inherit; color: inherit; cursor: pointer">
                     <span style="flex: 0 0 30px; width: 30px; height: 30px; box-sizing: border-box; border-radius: 8px; border: 1px solid #f0f0f2; background: #fff; display: flex; align-items: center; justify-content: center"><img src="{{t.logo}}" alt="" width="18" height="18" style="display: block; border-radius: 3px"></span>
                     <b style="flex: 1; min-width: 0; font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.name}}</b>
@@ -658,6 +936,102 @@ input::placeholder{color:#a1a1aa}
 </div>
 </template>
 <script type="text/x-dc">
+/* ---------- Step 1 · website scan ----------
+   window.ADX_SCAN keeps the scan alive across screens: { st: 'hero' | 'running' | 'done' | 'skipped', t0, boost, done }.
+   'hero' shows the full-size preview; Allow plays a short boost, then the scan runs in the background for at least a minute.
+   The ticker and the toast live on window (not the component) so the toast shows on whatever screen is open. */
+var SCAN_SITE = 'sephora.com', SCAN_MS = 75000, SCAN_BOOST_MS = 2200;
+var SCAN_FOUND = { pages: 120, events: 142, signals: 23, products: 12480, content: 1240 };
+function scanStore() {
+  if (!window.ADX_SCAN) window.ADX_SCAN = { st: 'hero', t0: 0, boost: 0, done: 0, subs: [] };
+  return window.ADX_SCAN;
+}
+function scanPct(S) { return S.st === 'done' ? 1 : S.st === 'running' ? Math.min(1, Math.max(0, (Date.now() - S.t0) / SCAN_MS)) : 0; }
+function scanPhase(p) {
+  return p < 0.2 ? 'Opening ' + SCAN_SITE + '…' : p < 0.6 ? 'Reading product and category pages · ' + Math.round(SCAN_FOUND.pages * p) + ' of ' + SCAN_FOUND.pages
+    : p < 0.9 ? 'Matching events to signals' : 'Drafting signals';
+}
+function scanLeft(p) {
+  var s = SCAN_MS * (1 - p) / 1000;
+  return s < 10 ? 'less than 10s left' : s >= 60 ? 'about 1 min left' : 'about ' + Math.round(s / 5) * 5 + 's left';
+}
+function scanNotify() { var S = scanStore(); S.subs.slice().forEach(function (f) { try { f(); } catch (e) {} }); }
+function scanTick() {
+  var S = scanStore();
+  if (S.st === 'running' && Date.now() - S.t0 >= SCAN_MS) { S.st = 'done'; S.done = Date.now(); scanToast(); }
+  scanNotify();
+  if (S.st !== 'running') { clearInterval(S.timer); S.timer = 0; }
+}
+function scanStart() {
+  var S = scanStore();
+  S.st = 'running'; S.t0 = Date.now(); S.boost = Date.now() + SCAN_BOOST_MS;
+  clearInterval(S.timer); S.timer = setInterval(scanTick, 500);
+  scanNotify();
+}
+// toast with inline styles: the screen's <style> is swapped out when another screen is shown
+function scanToast() {
+  var old = document.getElementById('adxScanToast'); if (old) old.remove();
+  var t = document.createElement('div');
+  t.id = 'adxScanToast'; t.setAttribute('role', 'status');
+  t.style.cssText = 'position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:flex-start;gap:11px;max-width:380px;padding:13px 14px;border-radius:12px;background:#18181b;color:#fafafa;font:13px/1.45 Geist,ui-sans-serif,system-ui,sans-serif;box-shadow:0 14px 34px -10px rgba(0,0,0,.45);transition:opacity .25s,transform .25s;opacity:0;transform:translateY(8px)';
+  t.innerHTML = '<span style="flex:none;width:22px;height:22px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>'
+    + '<span style="flex:1;min-width:0"><b style="display:block;font-weight:600">Scan of ' + SCAN_SITE + ' complete</b><span style="color:#a1a1aa">' + SCAN_FOUND.events + ' events · ' + SCAN_FOUND.products.toLocaleString('en-US') + ' products · ' + SCAN_FOUND.content.toLocaleString('en-US') + ' pages</span></span>'
+    + '<a href="#/signals" style="flex:none;align-self:center;color:#5fd3c2;font-weight:600;text-decoration:none">View signals</a>';
+  document.body.appendChild(t);
+  requestAnimationFrame(function () { t.style.opacity = '1'; t.style.transform = 'none'; });
+  setTimeout(function () { t.style.opacity = '0'; t.style.transform = 'translateY(8px)'; setTimeout(function () { t.remove(); }, 300); }, 6000);
+}
+// resume the ticker if the screen script is re-evaluated mid-scan
+(function () { var S = scanStore(); if (S.st === 'running' && !S.timer) S.timer = setInterval(scanTick, 500); })();
+
+/* Scan effect: a teal beam sweeps the site snapshot; cells around it flicker as bits, cells behind it pixelate while boosting,
+   and event tags pop on the elements they belong to. Drawn every frame into canvas[data-scan-fx] if it is on the page. */
+var SCAN_TAGS = [[0.47, 0.085, 'search_performed'], [0.2, 0.3, 'promo_viewed'], [0.14, 0.62, 'product_viewed'], [0.58, 0.66, 'add_to_cart'], [0.4, 0.86, 'banner_clicked'], [0.78, 0.1, 'sign_in_started']];
+function scanHash(x, y) { var h = (x * 374761393 + y * 668265263) >>> 0; h = (h ^ (h >>> 13)) * 1274126177 >>> 0; return (h % 1000) / 1000; }
+function scanDraw(cv, now, reduced) {
+  var S = scanStore(), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+  if (!W || !H) return;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  var x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, W, H);
+  // fit the 1200px-wide snapshot to the card; on narrow screens keep it legible and let it crop
+  var shot = cv.parentNode && cv.parentNode.querySelector('.scan-shot'); if (shot) shot.style.transform = 'scale(' + Math.max(W / 1200, 0.5) + ')';
+  var boosting = S.st === 'running' && now < S.boost, cell = 6, glyph = '8px "Geist Mono", ui-monospace, monospace';
+  if (reduced) {
+    x.fillStyle = 'rgba(95,211,194,0.10)';
+    for (var gy = 0; gy < H * 0.7; gy += cell * 2) for (var gx = 0; gx < W; gx += cell * 2) x.fillRect(gx, gy, 1.5, 1.5);
+    return;
+  }
+  var period = boosting ? 1100 : 4200, t = (now % period) / period, by = -60 + t * (H + 120), band = boosting ? 120 : 80, f = Math.floor(now / 90);
+  x.font = glyph; x.textBaseline = 'top';
+  for (var cy = Math.max(0, Math.floor((by - band) / cell)); cy * cell < Math.min(H, by + band * 0.4); cy++) {
+    var d = (by - cy * cell) / band; if (d < 0) d = -d * 2.5; var a = Math.max(0, 1 - d);
+    for (var cx = 0; cx * cell < W; cx++) {
+      var r = scanHash(cx, cy + f);
+      if (r > 0.86) { x.fillStyle = 'rgba(95,211,194,' + (a * 0.55).toFixed(3) + ')'; x.fillText(r > 0.93 ? '1' : '0', cx * cell, cy * cell); }
+      else if (r > 0.6) { x.fillStyle = 'rgba(95,211,194,' + (a * 0.16).toFixed(3) + ')'; x.fillRect(cx * cell, cy * cell, cell - 1, cell - 1); }
+    }
+  }
+  if (boosting) { // scanned area above the beam turns into a coarse teal pixel field
+    for (var py = 0; py < Math.min(by, H); py += 12) for (var px = 0; px < W; px += 12) {
+      var q = scanHash(px, py); if (q > 0.55) { x.fillStyle = 'rgba(60,140,129,' + (0.05 + q * 0.12).toFixed(3) + ')'; x.fillRect(px, py, 11, 11); }
+    }
+  }
+  var g = x.createLinearGradient(0, by - 70, 0, by + 2); g.addColorStop(0, 'rgba(95,211,194,0)'); g.addColorStop(1, 'rgba(95,211,194,0.35)');
+  x.fillStyle = g; x.fillRect(0, by - 70, W, 72);
+  x.fillStyle = 'rgba(160,255,240,0.95)'; x.fillRect(0, by, W, 1.5);
+  x.shadowColor = 'rgba(95,211,194,0.9)'; x.shadowBlur = 14; x.fillRect(0, by, W, 1); x.shadowBlur = 0;
+  if (S.st === 'running') { // event tags pop once the beam has passed them
+    x.font = '600 10.5px "Geist Mono", ui-monospace, monospace';
+    SCAN_TAGS.forEach(function (tg, i) {
+      var tx = tg[0] * W, ty = tg[1] * H; if (ty > H * 0.62 || ty > by) return;
+      var w = x.measureText(tg[2]).width + 18;
+      x.fillStyle = 'rgba(9,9,11,0.82)'; x.strokeStyle = 'rgba(95,211,194,0.8)'; x.lineWidth = 1;
+      x.beginPath(); if (x.roundRect) x.roundRect(tx, ty, w, 20, 6); else x.rect(tx, ty, w, 20); x.fill(); x.stroke();
+      x.fillStyle = '#7fe3d4'; x.fillText(tg[2], tx + 9, ty + 5);
+    });
+  }
+}
+
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -665,7 +1039,24 @@ class Component extends DCLogic {
     this.state = { mode: 'connect', src: null, status: { websdk: 'idle', tealium: 'idle', aa: 'idle', ga: 'idle', csv: 'idle' }, runs: {}, vals: {}, pick: {}, open: { evt: true }, gmode: {} };
     this.timers = {};
   }
-  componentWillUnmount() { for (var k in this.timers) clearInterval(this.timers[k]); }
+  componentDidMount() {
+    var self = this, S = scanStore(), reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.scanSub = function () { self.setState({ scanTick: Date.now() }); };
+    S.subs.push(this.scanSub);
+    var loop = function (now) {
+      var cv = document.querySelector('canvas[data-scan-fx]');
+      if (cv) scanDraw(cv, Date.now(), reduced);
+      // after the boost, fold the hero into the running card
+      if (S.st === 'running' && self.state.boosting && Date.now() >= S.boost) self.setState({ boosting: false });
+      self.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() {
+    for (var k in this.timers) clearInterval(this.timers[k]);
+    cancelAnimationFrame(this.raf);
+    var S = scanStore(), i = S.subs.indexOf(this.scanSub); if (i >= 0) S.subs.splice(i, 1);
+  }
   setRun(k, status, run) {
     var m = Object.assign({}, this.state.status), r = Object.assign({}, this.state.runs);
     m[k] = status; if (run) r[k] = run; else delete r[k];
@@ -685,6 +1076,42 @@ class Component extends DCLogic {
   disconnect(k) { clearInterval(this.timers[k]); this.setRun(k, 'idle', null); }
   renderVals() {
     var self = this, st = this.state;
+
+    /* ---------- 0 · website scan ---------- */
+    var SC = scanStore(), sp = scanPct(SC), sst = SC.st, boosting = !!st.boosting && sst === 'running';
+    var scanRunning = sst === 'running' && !boosting, scanDone = sst === 'done';
+    function openScanCard() { var o = Object.assign({}, self.state.open); o.scan = true; self.setState({ open: o }); setTimeout(function () { var el = document.getElementById('obScanCard'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60); }
+    function reopenHero() { SC.st = 'hero'; scanNotify(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    var scan = {
+      site: SCAN_SITE, hero: sst === 'hero' || boosting, card: !(sst === 'hero' || boosting),
+      heroTitle: boosting ? 'Scanning ' + SCAN_SITE + '…' : 'Let Cortex scan ' + SCAN_SITE,
+      goLabel: boosting ? 'Starting scan…' : 'Allow scan', boosting: boosting, canSkip: !boosting,
+      allow: function () { self.setState({ boosting: true }); scanStart(); },
+      skip: function () { SC.st = 'skipped'; scanNotify(); },
+      running: scanRunning, done: scanDone, skipped: sst === 'skipped',
+      sub: scanRunning ? SCAN_SITE + ' · ' + scanPhase(sp) : scanDone ? SCAN_FOUND.pages + ' pages · ' + SCAN_FOUND.events + ' events · ' + SCAN_FOUND.signals + ' signals drafted' : 'Auto-scan of ' + SCAN_SITE + ' was skipped',
+      pctText: Math.round(sp * 100) + '%', pctW: (sp * 100).toFixed(1) + '%', phase: scanPhase(sp), left: scanLeft(sp),
+      counts: Math.round(SCAN_FOUND.pages * sp) + ' of ' + SCAN_FOUND.pages + ' pages · ' + Math.round(SCAN_FOUND.events * sp) + ' events found',
+      found: [{ n: SCAN_FOUND.pages, l: 'pages scanned' }, { n: SCAN_FOUND.events, l: 'events found' }, { n: SCAN_FOUND.products.toLocaleString('en-US'), l: 'products' }, { n: SCAN_FOUND.content.toLocaleString('en-US'), l: 'pages, guides and banners' }],
+      when: SC.done ? (Date.now() - SC.done < 60000 ? 'just now' : Math.round((Date.now() - SC.done) / 60000) + ' min ago') : '',
+      rescan: function () { self.setState({ boosting: true }); scanStart(); },
+      reopen: reopenHero
+    };
+    // a skipped scan opens the hero again from its header; running and done fold open to show progress / results
+    var scanOpen = !!st.open.scan;
+    scan.open = scanOpen; scan.exp = scanOpen ? 'true' : 'false'; scan.rot = scanOpen ? '180deg' : '0deg';
+    scan.toggle = function () { var o = Object.assign({}, self.state.open); o.scan = !o.scan; self.setState({ open: o }); };
+    // "Scan sephora.com" tile, first in the sections a public-page scan can fill
+    function scanTile(sub, result) {
+      return { show: true, site: SCAN_SITE, running: sst === 'running', done: scanDone,
+        sub: sst === 'running' ? 'Scanning · ' + Math.round(sp * 100) + '%' : scanDone ? result : sst === 'skipped' ? 'Skipped · run scan' : sub,
+        subFg: scanDone ? '#15803d' : sst === 'running' ? '#52525b' : '#2f7a70',
+        pct: Math.round(sp * 100), left: scanLeft(sp), phase: scanPhase(sp),
+        ariaDis: sst === 'running' ? 'true' : 'false', aria: sst === 'running' ? 'Scan of ' + SCAN_SITE + ' in progress, ' + Math.round(sp * 100) + '% done, ' + scanLeft(sp) : 'Scan ' + SCAN_SITE,
+        cursor: sst === 'running' ? 'not-allowed' : 'pointer', op: sst === 'running' ? '0.55' : '1',
+        bd: scanDone ? '#bbf7d0' : '#e4e4e7', bg: sst === 'running' ? '#fafafa' : scanDone ? '#f7fdf9' : '#fff',
+        pick: function () { if (sst === 'running') return; if (scanDone) openScanCard(); else reopenHero(); } };
+    }
 
     function seg(list, cur, onPick) {
       return list.map(function (d) {
@@ -977,18 +1404,23 @@ class Component extends DCLogic {
       return g;
     }
     accordion(evt, 'evt'); evt.secDone = evtDone;
+    evt.scanTile = scanTile('Events from public pages', SCAN_FOUND.events + ' events found');
+    evt.sub = scanDone && !evtDone ? SCAN_FOUND.events + ' events found by the scan · connect a source to keep them live' : 'Shopper events: page views, searches, add-to-basket and checkout.';
+    evt.subFg = scanDone && !evtDone ? '#2f7a70' : '#71717a';
     Object.assign(evt, faces(mode === 'connect' ? doneKeys.map(function (k) { return { logo: logo(LOGO[k]), name: EV[k].name }; }) : []));
     var cat = accordion(group('catalog'), 'catalog'), catDone = cat.done;
+    cat.scanTile = scanTile('Products from product pages', SCAN_FOUND.products.toLocaleString('en-US') + ' products found');
     var opt = ['oms', 'cms', 'cs', 'crm'].map(function (gid, i) {
       var g = group(gid);
       g.bt = i ? '1px solid #e4e4e7' : '0';
       g.isOms = gid === 'oms'; g.isCms = gid === 'cms'; g.isCs = gid === 'cs'; g.isCrm = gid === 'crm';
+      g.scanTile = gid === 'cms' ? scanTile('Pages, guides and banners', SCAN_FOUND.content.toLocaleString('en-US') + ' pages found') : { show: false };
       return accordion(g, gid);
     });
     var ready = evtDone && catDone;
 
     return {
-      evt: evt, cat: cat, catList: [cat], opt: opt, ready: ready, notReady: !ready,
+      scan: scan, evt: evt, cat: cat, catList: [cat], opt: opt, ready: ready, notReady: !ready,
       meta: ready ? 'Step 2 of 3' : !evtDone && !catDone ? 'Step 2 of 3 · connect web signals and a product catalog to continue' : !evtDone ? 'Step 2 of 3 · connect web signals to continue' : 'Step 2 of 3 · connect a product catalog to continue'
     };
   }
