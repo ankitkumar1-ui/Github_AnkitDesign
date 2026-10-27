@@ -31,6 +31,7 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 | connections | screens/connections.html | ADX Setup · Connections (connect / edit / disconnect sources) |
 | web-signals | screens/web-signals.html | ADX Setup · Web Signals (simple · site map) |
 | signals | screens/signals.html | ADX Setup · Web Signals · Signals list; `#/signals?id=<signal>` opens the signal detail |
+| derived | screens/derived.html | ADX Setup · Web Signals · Derived signals (user-built triggers that combine signals; starts empty, saved ones in `window.ADX_DERIVED`) |
 | add-signal | screens/add-signal.html | ADX Setup · Web Signals · Add signal manually (from "Add manually") |
 
 ## Studio pages (Goals → Test Management)

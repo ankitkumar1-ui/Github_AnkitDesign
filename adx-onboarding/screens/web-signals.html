@@ -316,7 +316,7 @@ body{margin:0}
 </sc-if>
 
       <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
-      <div class="dtabs"><button class="dtab on">Source &amp; mapping</button><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">23</span></a></div>
+      <div class="dtabs"><button class="dtab on">Source &amp; mapping</button><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">23</span></a><a class="dtab" href="#/derived" style="text-decoration:none">Derived signals<span class="tcount">{{derivedN}}</span></a></div>
 
       <!-- site summary: domain card + metric cards -->
       <div class="ws-sum">
@@ -590,6 +590,8 @@ body{margin:0}
   </div>
 </div></div></sc-if>
 
+            <!-- Coverage globe + "next tag" callout: hidden for now (gl.show) -->
+            <sc-if value="{{gl.show}}" hint-placeholder-val="{{false}}">
             <sc-if value="{{co.show}}" hint-placeholder-val="{{false}}">
               <div style="position:absolute;right:112px;bottom:50px;background:#fff;border:1px solid #d3e4e0;border-radius:14px;padding:11px 12px 11px 14px;box-shadow:0 12px 32px rgba(15,23,42,.16),0 2px 6px rgba(60,140,129,.12);z-index:30;display:flex;align-items:center;gap:8px;animation:calloutIn .28s cubic-bezier(.22,1,.36,1) both">
                 <span style="font-size:13.5px;font-weight:500;line-height:1.35;color:#18181b;white-space:nowrap">{{co.title}}</span>
@@ -611,6 +613,7 @@ body{margin:0}
               </div>
               <span style="font-size:11px;font-weight:600;color:#52525b;font-variant-numeric:tabular-nums;letter-spacing:.01em">{{gl.label}}</span>
             </div>
+            </sc-if>
           </div>
         </div>
         </sc-if>
@@ -792,7 +795,7 @@ class Component extends DCLogic {
     if (actE) co.title = actE.ok ? (actE.fresh ? 'Captured \u00b7 ' + actE.tag : actE.when) : st.found === actE.key ? 'Found \u00b7 ' + actE.sug : st.checking === actE.key ? 'Checking for ' + actE.sug + '\u2026' : actE.hint;
     function goSearch(v) { var t = (v || '').trim() || 'lipstick'; self.setState({ term: t, q: t, sel: 'home', open: 'home', act: 4, tab: 'map' }); self.detect('home4'); }
     var srch = { q: st.q, term: st.term || '', onQ: function (ev) { self.setState({ q: ev.target.value }); }, onKey: function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); goSearch(ev.target.value); } }, go: function () { goSearch(st.q); } };
-    var gl = { px: gpix, dash: (2 * Math.PI * 38.5 * pct / 100).toFixed(1) + ' ' + (2 * Math.PI * 38.5).toFixed(1), label: pct + '% mapped', click: function () { if (firstMiss) self.setState({ act: firstMiss.n, open: cur.id }); } };
+    var gl = { show: false, px: gpix, dash: (2 * Math.PI * 38.5 * pct / 100).toFixed(1) + ' ' + (2 * Math.PI * 38.5).toFixed(1), label: pct + '% mapped', click: function () { if (firstMiss) self.setState({ act: firstMiss.n, open: cur.id }); } };
 
     var rows = [];
     PAGES.forEach(function (p) {
@@ -805,6 +808,7 @@ class Component extends DCLogic {
     });
     return {
       toast: st.added ? { name: st.added.name, via: st.added.via, close: function () { self.setState({ added: null }); } } : null,
+      derivedN: (window.ADX_DERIVED || []).length,
       sum: { cap: cap, miss: miss,
         showMissing: function () { self.setState({ tab: 'list', filter: 'missing' }); } },
       scan: { busy: st.scan === 'run', idle: st.scan !== 'run', label: st.scan === 'run' ? 'Scanning…' : 'Re-scan',

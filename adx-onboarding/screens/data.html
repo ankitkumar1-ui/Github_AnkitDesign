@@ -119,18 +119,23 @@ input::placeholder{color:#a1a1aa}
 .scan-hero{position:relative;height:440px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid #e4e4e7;box-shadow:0 10px 30px -14px rgba(9,9,11,.35);animation:scanHeroIn .4s ease both}
 .scan-shot{position:absolute;left:0;top:0;width:1200px;transform-origin:0 0;pointer-events:none;user-select:none}
 .scan-fx{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;pointer-events:none}
-.scan-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,9,11,.72) 0%,rgba(9,9,11,.32) 12%,rgba(9,9,11,0) 26%),linear-gradient(to top,#09090b 0%,rgba(9,9,11,.88) 34%,rgba(9,9,11,.25) 62%,rgba(9,9,11,0) 78%);pointer-events:none}
+.scan-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,9,11,.72) 0%,rgba(9,9,11,.32) 12%,rgba(9,9,11,0) 26%),linear-gradient(to top,#09090b 0%,rgba(9,9,11,.88) 27%,rgba(9,9,11,.25) 50%,rgba(9,9,11,0) 62%);pointer-events:none}
 .scan-cta{position:absolute;left:0;right:0;bottom:0;padding:0 28px 30px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fafafa}
 .scan-cta .k{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7fd1c4}
 .scan-cta .k i{width:6px;height:6px;border-radius:50%;background:#5fd3c2;box-shadow:0 0 0 0 rgba(95,211,194,.6);animation:scanPing 1.8s ease-out infinite}
 .scan-cta h2{margin:10px 0 0;font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.02em}
-.scan-cta p{margin:8px 0 0;max-width:52ch;font-size:13.5px;line-height:1.55;color:#a1a1aa}
+.scan-cta p{margin:8px 0 0;max-width:64ch;font-size:13.5px;line-height:1.55;color:#a1a1aa}
 .scan-btns{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
 .scan-go{height:52px;min-width:180px;padding:0 22px;border:0;border-radius:999px;background:#fafafa;color:#09090b;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1.2;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 8px 24px -6px rgba(95,211,194,.45)}
 .scan-go em{font-style:normal;font-size:11px;font-weight:500;color:#2f7a70}
 .scan-go:disabled{cursor:progress;opacity:.85}
 .scan-skip{height:52px;min-width:180px;padding:0 22px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.04);color:#e4e4e7;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .scan-skip:hover{background:rgba(255,255,255,.1)}
+.scan-now{height:52px;margin-top:20px;display:flex;align-items:center;font-size:18px;font-weight:500;letter-spacing:-0.01em;color:rgba(255,255,255,.55)}
+.scan-ell i{font-style:normal;animation:scanEll 1.2s ease-in-out infinite}
+.scan-ell i:nth-child(2){animation-delay:.2s}.scan-ell i:nth-child(3){animation-delay:.4s}
+@keyframes scanEll{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.scan-now+.scan-btns{display:none}
 .scan-card{animation:scanCollapse .45s cubic-bezier(.2,.8,.2,1) both}
 .scan-bar{height:6px;border-radius:4px;background:#e4e4e7;overflow:hidden}
 .scan-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#18181b,#3c8c81);transition:width .5s linear}
@@ -142,21 +147,17 @@ input::placeholder{color:#a1a1aa}
 .scan-tip b{display:block;font-weight:600}
 .scan-tip span{color:#a1a1aa}
 
-/* section headings and the snap between "Auto-scan" and "Add connections manually" */
+/* section headings and the snap between "Auto-scan website" and "Connect data" */
 .ob-sh h2{margin:0;font-size:19px;line-height:1.25;font-weight:600;letter-spacing:-0.015em;color:#09090b}
 .ob-sh h2 span{font-family:'Geist Mono',ui-monospace,monospace;font-size:16px;font-weight:500;color:#2f7a70;background:rgba(60,140,129,.1);border-radius:6px;padding:1px 7px;margin-left:4px}
 .ob-sh p{margin:5px 0 0;font-size:13.5px;line-height:1.5;color:#71717a}
+.ob-sh p.ob-lead{margin:0 0 22px;font-size:14px;color:#52525b}
 .ob-pg2{display:flex;flex-direction:column;gap:18px;margin-top:44px;padding-top:28px;border-top:1px solid #e4e4e7;scroll-margin-top:12px}
-.ob-cue{align-self:center;display:inline-flex;align-items:center;gap:6px;margin-top:-4px;border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:#71717a;cursor:pointer;padding:6px 10px;border-radius:8px}
-.ob-cue:hover{color:#09090b;background:#f4f4f5}
-.ob-cue svg{animation:obCue 1.6s ease-in-out infinite}
-@keyframes obCue{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 .scan-hero{height:max(400px,calc(100vh - 360px))}
-@media (prefers-reduced-motion:reduce){.ob-cue svg{animation:none}}
 @keyframes scanHeroIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes scanCollapse{from{opacity:0;transform:scaleY(1.6);transform-origin:top}to{opacity:1;transform:none}}
 @keyframes scanPing{0%{box-shadow:0 0 0 0 rgba(95,211,194,.6)}80%,100%{box-shadow:0 0 0 8px rgba(95,211,194,0)}}
-@media (max-width:620px){.scan-hero{height:480px}.scan-grad{background:linear-gradient(to bottom,rgba(9,9,11,.72) 0%,rgba(9,9,11,.32) 12%,rgba(9,9,11,0) 26%),linear-gradient(to top,#09090b 0%,rgba(9,9,11,.92) 50%,rgba(9,9,11,.35) 72%,rgba(9,9,11,0) 86%)}.scan-cta{padding:0 18px 22px}.scan-cta h2{font-size:21px}.scan-btns{flex-direction:column;align-self:stretch}.scan-go,.scan-skip{justify-content:center;width:100%}}
+@media (max-width:620px){.scan-hero{height:480px}.scan-grad{background:linear-gradient(to bottom,rgba(9,9,11,.72) 0%,rgba(9,9,11,.32) 12%,rgba(9,9,11,0) 26%),linear-gradient(to top,#09090b 0%,rgba(9,9,11,.92) 40%,rgba(9,9,11,.35) 58%,rgba(9,9,11,0) 69%)}.scan-cta{padding:0 18px 22px}.scan-cta h2{font-size:21px}.scan-btns{flex-direction:column;align-self:stretch}.scan-go,.scan-skip{justify-content:center;width:100%}}
 @media (prefers-reduced-motion:reduce){.scan-hero,.scan-card{animation:none}.scan-cta .k i{animation:none}.ob-dots i{animation:none;opacity:.6}}
 
 </style>
@@ -193,7 +194,7 @@ input::placeholder{color:#a1a1aa}
 
     <!-- ============ 0 · WEBSITE SCAN ============ -->
     <div class="ob-sh">
-      <h2>Auto-scan <span>{{scan.site}}</span></h2>
+      <h2>1. Auto-scan website</h2>
       <p>Cortex reads your public pages and finds the events, products and content your site already has.</p>
     </div>
     <!-- Hero: a snapshot of the site from About you, a canvas scan effect, Allow / Skip. State lives in window.ADX_SCAN so it survives leaving the screen. -->
@@ -221,16 +222,18 @@ input::placeholder{color:#a1a1aa}
       <canvas class="scan-fx" data-scan-fx="1" aria-hidden="true"></canvas>
       <div class="scan-grad"></div>
       <div class="scan-cta">
-        <span class="k"><i></i>Step 1 · Recommended</span>
+        <sc-if value="{{scan.canSkip}}" hint-placeholder-val="{{true}}">
         <h2>{{scan.heroTitle}}</h2>
-        <p>We read public pages only, like a shopper would, and find the events your site already sends. Takes about a minute, and you can keep going while it runs.</p>
+        <p>We read public pages only, like a shopper would, and find the events your site already sends. Takes 3–5 minutes, and you can keep going while it runs.</p>
+        </sc-if>
+        <!-- after Allow, the title, copy and buttons give way to a single "Scanning…", then the hero folds into the card -->
+        <sc-if value="{{scan.boosting}}" hint-placeholder-val="{{false}}"><div class="scan-now" role="status">Scanning<span class="scan-ell" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></div></sc-if>
         <div class="scan-btns">
-          <button type="button" class="scan-go" onClick="{{scan.allow}}" disabled="{{scan.boosting}}">{{scan.goLabel}}<em>(Recommended)</em></button>
-          <sc-if value="{{scan.canSkip}}" hint-placeholder-val="{{true}}"><button type="button" class="scan-skip" onClick="{{scan.skip}}">Skip for now</button></sc-if>
+          <sc-if value="{{scan.canSkip}}" hint-placeholder-val="{{true}}"><button type="button" class="scan-go" onClick="{{scan.allow}}">Allow scan<em>(Recommended)</em></button>
+          <button type="button" class="scan-skip" onClick="{{scan.skip}}">Skip for now</button></sc-if>
         </div>
       </div>
     </section>
-    <button type="button" class="ob-cue" onClick="{{scan.toManual}}">Or add connections manually<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
     </sc-if>
 
     <!-- Collapsed: running / done / skipped -->
@@ -284,15 +287,16 @@ input::placeholder{color:#a1a1aa}
     <!-- Manual connections: its own snap area, so scrolling past the scan hero flips straight to it -->
     <div id="obManual" class="ob-pg2">
     <div class="ob-sh">
-      <h2>Add connections manually</h2>
-      <p>Connect web signals and a product catalog to continue. Add more context if you have it.</p>
+      <p class="ob-lead">Connect manually the services you use on your website, like analytics, commerce and content tools.</p>
+      <h2>2. Connect data</h2>
+      <p>Web signals, a product catalog and content are required. The rest is optional.</p>
     </div>
 
     <!-- ============ 1 · ANALYTICS ============ -->
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
       <button type="button" onClick="{{evt.toggle}}" aria-expanded="{{evt.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 22px; border: 0; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
         <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.secDone}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.secDone}}" hint-placeholder-val="{{false}}"><span title="{{evt.tickTitle}}" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Web signals
             <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></div>
@@ -318,7 +322,7 @@ input::placeholder{color:#a1a1aa}
           <div style="display: flex; flex-direction: column; gap: 14px">
             <div style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(60,140,129,0.3); background: linear-gradient(135deg, #f1f7f6, #fff 70%)">
               <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true" style="flex: 0 0 auto"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#3c8c81"></path></svg>
-              <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #3f3f46"><b style="font-weight: 600; color: #09090b">We found Adobe Analytics on sephora.com.</b> Detected AppMeasurement on your homepage. Not right? Choose another source.</span>
+              <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #3f3f46">Found <b style="font-weight: 600; color: #09090b">Adobe Analytics</b> and <b style="font-weight: 600; color: #09090b">Tealium iQ</b> on sephora.com.</span>
             </div>
 
             <div role="radiogroup" aria-label="Web signals source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
@@ -549,7 +553,7 @@ input::placeholder{color:#a1a1aa}
       <!-- ============ 2 · PRODUCT CATALOG (same card) ============ -->
       <button type="button" onClick="{{cat.toggle}}" aria-expanded="{{cat.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 22px; border: 0; border-top: 1px solid #e4e4e7; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
         <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><path d="M7.5 7.5h.01"></path></svg><sc-if value="{{cat.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><path d="M7.5 7.5h.01"></path></svg><sc-if value="{{cat.tick}}" hint-placeholder-val="{{false}}"><span title="{{cat.tickTitle}}" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Product catalog
             <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></div>
@@ -732,12 +736,199 @@ input::placeholder{color:#a1a1aa}
         </div>
       </sc-for>
       </sc-if>
+      <!-- ============ CONTENT MANAGEMENT (required, same card) ============ -->
+      <sc-for list="{{req}}" as="g" hint-placeholder-count="1">
+        <div style="border-top: {{g.bt}}">
+          <button type="button" onClick="{{g.toggle}}" aria-expanded="{{g.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 16px 22px; border: 0; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
+            <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center">
+              <sc-if value="{{g.isOms}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M3 13h18"></path></svg></sc-if>
+              <sc-if value="{{g.isCms}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 9h10M7 13h6"></path></svg></sc-if>
+              <sc-if value="{{g.isCs}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"></path><path d="M8 12h.01M12 12h.01M16 12h.01"></path></svg></sc-if>
+              <sc-if value="{{g.isCrm}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg></sc-if>
+              <sc-if value="{{g.tick}}" hint-placeholder-val="{{false}}"><span title="{{g.tickTitle}}" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+            </span>
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+              <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><b style="font-size: 14.5px; font-weight: 600">{{g.name}}</b>
+                <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></span>
+              <span style="font-size: 13px; color: #71717a">{{g.blurb}}</span>
+            </span>
+            <sc-if value="{{g.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{g.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{g.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{g.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 11px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{g.more}}</span></sc-if></span></sc-if>
+            <sc-if value="{{g.showText}}" hint-placeholder-val="{{true}}">
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 13px; white-space: nowrap; color: {{g.stFg}}; font-weight: {{g.stWeight}}">
+              <sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{g.stText}}</span></sc-if>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: rotate({{g.rot}}); transition: transform 0.15s"><path d="m6 9 6 6 6-6"></path></svg>
+          </button>
+          <sc-if value="{{g.open}}" hint-placeholder-val="{{false}}">
+            <div style="padding: 0 22px 20px; display: flex; flex-direction: column; gap: 14px">
+          <div role="tablist" aria-label="How to bring in {{g.noun}}" style="display: inline-flex; flex-wrap: wrap; align-self: flex-start; background: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 10px; padding: 3px; gap: 2px">
+            <sc-for list="{{g.modes}}" as="m" hint-placeholder-count="3">
+              <button type="button" role="tab" aria-selected="{{m.sel}}" onClick="{{m.pick}}" style="font-family: inherit; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border: 0; border-radius: 7px; cursor: pointer; white-space: nowrap; background: {{m.bg}}; color: {{m.fg}}; box-shadow: {{m.shadow}}">{{m.label}}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{g.isConnect}}" hint-placeholder-val="{{true}}">
+              <div role="radiogroup" aria-label="{{g.name}} source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
+                <sc-if value="{{g.scanTile.show}}" hint-placeholder-val="{{false}}">
+                <div class="scan-tw">
+                  <button type="button" onClick="{{g.scanTile.pick}}" aria-disabled="{{g.scanTile.ariaDis}}" aria-label="{{g.scanTile.aria}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{g.scanTile.bd}}; border-radius: 10px; padding: 0 11px; background: {{g.scanTile.bg}}; font-family: inherit; color: inherit; cursor: {{g.scanTile.cursor}}">
+                    <span style="flex: 0 0 30px; width: 30px; height: 30px; border-radius: 8px; background: #09090b; color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; display: flex; align-items: center; justify-content: center; opacity: {{g.scanTile.op}}">S</span>
+                    <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; opacity: {{g.scanTile.op}}">
+                      <b style="font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Scan {{g.scanTile.site}}</b>
+                      <span style="font-size: 10.5px; font-weight: 600; color: {{g.scanTile.subFg}}; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{g.scanTile.sub}}</span>
+                    </span>
+                    <sc-if value="{{g.scanTile.running}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" class="ob-dots"><i></i><i></i><i></i></span></sc-if>
+                    <sc-if value="{{g.scanTile.done}}" hint-placeholder-val="{{false}}"><span title="Scanned" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                  </button>
+                  <sc-if value="{{g.scanTile.running}}" hint-placeholder-val="{{false}}"><span class="scan-tip" role="tooltip"><b>Scan in progress · {{g.scanTile.pct}}%</b><span>{{g.scanTile.left}} · {{g.scanTile.phase}}</span></span></sc-if>
+                </div>
+              </sc-if>
+              <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="6">
+                  <button type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{t.bd}}; box-shadow: {{t.ring}}; border-radius: 10px; padding: 0 11px; background: #fff; font-family: inherit; color: inherit; cursor: pointer">
+                    <span style="flex: 0 0 30px; width: 30px; height: 30px; box-sizing: border-box; border-radius: 8px; border: 1px solid #f0f0f2; background: #fff; display: flex; align-items: center; justify-content: center"><img src="{{t.logo}}" alt="" width="18" height="18" style="display: block; border-radius: 3px"></span>
+                    <b style="flex: 1; min-width: 0; font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.name}}</b>
+                    <sc-if value="{{t.on}}" hint-placeholder-val="{{false}}">
+                      <span title="Connected" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+                    </sc-if>
+                    <sc-if value="{{t.running}}" hint-placeholder-val="{{false}}">
+                      <span title="Connecting" aria-label="Connecting" class="ob-dots"><i></i><i></i><i></i></span>
+                    </sc-if>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{g.hasSrc}}" hint-placeholder-val="{{false}}">
+                <div style="border: 1px solid #e4e4e7; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 16px">
+                  <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+                    <span style="flex: 0 0 36px; width: 36px; height: 36px; box-sizing: border-box; border-radius: 10px; border: 1px solid #e4e4e7; background: #fff; display: flex; align-items: center; justify-content: center"><img src="{{g.src.logo}}" alt="" width="20" height="20" style="display: block; border-radius: 4px"></span>
+                    <span style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                      <b style="font-size: 14px; font-weight: 600">{{g.src.name}}</b>
+                      <span style="font-size: 12.5px; color: #71717a">{{g.desc}}</span>
+                    </span>
+                    <sc-if value="{{g.isDone}}" hint-placeholder-val="{{false}}">
+                      <button type="button" onClick="{{g.reset}}" style="height: 32px; padding: 0 12px; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; font-family: inherit; font-size: 12.5px; font-weight: 600; color: #09090b; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">Disconnect</button>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{g.form}}" hint-placeholder-val="{{true}}">
+                    <div style="display: flex; flex-direction: column; gap: 14px">
+                      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 12px">
+                        <sc-for list="{{g.fields}}" as="f" hint-placeholder-count="2">
+                          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 600; color: #3f3f46">
+                            <span>{{f.label}}</span>
+                            <input type="{{f.type}}" value="{{f.val}}" onInput="{{f.set}}" placeholder="{{f.ph}}" style="height: 38px; box-sizing: border-box; border: 1px solid #e4e4e7; border-radius: 8px; padding: 0 12px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 13px; color: #09090b; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+                          </label>
+                        </sc-for>
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+                        <button type="button" onClick="{{g.start}}" style="height: 40px; padding: 0 18px; border: 0; border-radius: 9px; background: #09090b; color: #fafafa; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer">Save &amp; connect</button>
+                        <span style="font-size: 12.5px; color: #71717a">Read-only. Cortex checks access, then brings in {{g.noun}}.</span>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{g.showSteps}}" hint-placeholder-val="{{false}}">
+                    <div style="border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; padding: 6px 14px">
+                      <sc-for list="{{g.steps}}" as="s" hint-placeholder-count="3">
+                        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: {{s.bt}}">
+                          <span style="flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; display: flex; align-items: center; justify-content: center">
+                            <sc-if value="{{s.isDone}}" hint-placeholder-val="{{true}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                            <sc-if value="{{s.isActive}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span></sc-if>
+                            <sc-if value="{{s.isWait}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 1.5px dashed #d4d4d8; display: block"></span></sc-if>
+                          </span>
+                          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                            <span style="display: flex; align-items: baseline; gap: 10px">
+                              <b style="flex: 1; font-size: 13px; font-weight: 600; color: {{s.fg}}">{{s.label}}</b>
+                              <sc-if value="{{s.hasPct}}" hint-placeholder-val="{{false}}"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #52525b">{{s.pct}}%</span></sc-if>
+                            </span>
+                            <span style="font-size: 12px; color: #71717a; line-height: 1.45">{{s.detail}}</span>
+                            <sc-if value="{{s.hasBar}}" hint-placeholder-val="{{false}}">
+                              <div style="height: 6px; border-radius: 4px; background: #e4e4e7; overflow: hidden; margin-top: 5px"><div style="height: 100%; border-radius: 4px; background: linear-gradient(90deg, #18181b, #3c8c81); width: {{s.pctW}}"></div></div>
+                            </sc-if>
+                          </span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+          </sc-if>
+          <!-- CSV -->
+          <sc-if value="{{g.isCsv}}" hint-placeholder-val="{{false}}">
+            <sc-if value="{{g.csvIdle}}" hint-placeholder-val="{{true}}">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <button type="button" onClick="{{g.upload}}" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 24px 16px; border: 1.5px dashed #d4d4d8; border-radius: 12px; background: #fafafa; font-family: inherit; color: #09090b; cursor: pointer">
+                  <span style="width: 40px; height: 40px; border-radius: 11px; background: #fff; border: 1px solid #e4e4e7; display: flex; align-items: center; justify-content: center; color: #3f3f46; margin-bottom: 4px">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4"></path><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"></path></svg></span>
+                  <b style="font-size: 14px; font-weight: 600">Drop your {{g.noun}} export (CSV) here</b>
+                  <span style="font-size: 12.5px; color: #71717a">or <u style="color: #09090b; text-underline-offset: 3px">choose a file</u> · up to 200 MB</span>
+                </button>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; color: #71717a; flex-wrap: wrap">
+                  <span>{{g.csvNeeds}}</span>
+                  <a href="#template" style="font-size: 13px; font-weight: 600; color: #52525b; text-decoration: underline; text-decoration-color: #d4d4d8; text-underline-offset: 3px">Download template</a>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{g.csvHasFile}}" hint-placeholder-val="{{false}}">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #e4e4e7; border-radius: 12px">
+                <span style="width: 34px; height: 34px; border-radius: 9px; background: #f4f4f5; color: #3f3f46; display: flex; align-items: center; justify-content: center; flex: 0 0 auto">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M8 13h8M8 17h5"></path></svg></span>
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+                  <b style="font-size: 13px; font-weight: 600; font-family: 'Geist Mono', ui-monospace, monospace">{{g.csvFile}}</b>
+                  <span style="font-size: 12px; color: #71717a">{{g.csvMeta}}</span>
+                </span>
+                <sc-if value="{{g.csvDone}}" hint-placeholder-val="{{false}}">
+                  <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #15803d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Imported</span>
+                  <button type="button" onClick="{{g.csvReset}}" style="height: 30px; padding: 0 11px; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; color: #09090b; font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">Remove</button>
+                </sc-if>
+              </div>
+              <sc-if value="{{g.csvHasFile}}" hint-placeholder-val="{{false}}">
+                <div style="border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; padding: 6px 14px">
+                  <sc-for list="{{g.csvSteps}}" as="s" hint-placeholder-count="3">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: {{s.bt}}">
+                      <span style="flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; display: flex; align-items: center; justify-content: center">
+                        <sc-if value="{{s.isDone}}" hint-placeholder-val="{{true}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                        <sc-if value="{{s.isActive}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span></sc-if>
+                        <sc-if value="{{s.isWait}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 1.5px dashed #d4d4d8; display: block"></span></sc-if>
+                      </span>
+                      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                        <span style="display: flex; align-items: baseline; gap: 10px">
+                          <b style="flex: 1; font-size: 13px; font-weight: 600; color: {{s.fg}}">{{s.label}}</b>
+                          <sc-if value="{{s.hasPct}}" hint-placeholder-val="{{false}}"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #52525b">{{s.pct}}%</span></sc-if>
+                        </span>
+                        <span style="font-size: 12px; color: #71717a; line-height: 1.45">{{s.detail}}</span>
+                        <sc-if value="{{s.hasBar}}" hint-placeholder-val="{{false}}">
+                          <div style="height: 6px; border-radius: 4px; background: #e4e4e7; overflow: hidden; margin-top: 5px"><div style="height: 100%; border-radius: 4px; background: linear-gradient(90deg, #18181b, #3c8c81); width: {{s.pctW}}"></div></div>
+                        </sc-if>
+                      </span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </sc-if>
+          </sc-if>
+          <!-- MOCK -->
+          <sc-if value="{{g.isMock}}" hint-placeholder-val="{{false}}">
+            <div style="border: 1px solid rgba(60,140,129,0.3); border-radius: 14px; background: linear-gradient(135deg, #f1f7f6, #fff 70%); padding: 16px 17px">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+                <b style="font-size: 14px; font-weight: 600">Sephora · {{g.mockTitle}}</b>
+                <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 999px; padding: 3px 10px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #16a34a; display: block"></span>Ready instantly</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); gap: 0; margin-top: 14px">
+                <sc-for list="{{g.pack}}" as="p" hint-placeholder-count="3">
+                  <div style="padding: 2px 18px; border-left: 1px solid rgba(60,140,129,0.22)">
+                    <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1">{{p.n}}</div>
+                    <div style="font-size: 11.5px; color: #71717a; margin-top: 3px">{{p.l}}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
     </section>
 
     <!-- ============ 3 · MORE CONTEXT (optional) ============ -->
     <div style="margin: 14px 2px -6px">
       <div style="font-size: 16px; font-weight: 600; letter-spacing: -0.01em">More context</div>
-      <div style="font-size: 13px; color: #71717a; margin-top: 2px">Optional data layers that give Cortex a fuller picture of your orders, content and service. Add them now or anytime from ADX Setup.</div>
+      <div style="font-size: 13px; color: #71717a; margin-top: 2px">Optional data layers that give Cortex a fuller picture of your orders, service and customers. Add them now or anytime from ADX Setup.</div>
     </div>
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
       <sc-for list="{{opt}}" as="g" hint-placeholder-count="4">
@@ -748,7 +939,7 @@ input::placeholder{color:#a1a1aa}
               <sc-if value="{{g.isCms}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 9h10M7 13h6"></path></svg></sc-if>
               <sc-if value="{{g.isCs}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"></path><path d="M8 12h.01M12 12h.01M16 12h.01"></path></svg></sc-if>
               <sc-if value="{{g.isCrm}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg></sc-if>
-              <sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+              <sc-if value="{{g.tick}}" hint-placeholder-val="{{false}}"><span title="{{g.tickTitle}}" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
             </span>
             <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
               <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><b style="font-size: 14.5px; font-weight: 600">{{g.name}}</b>
@@ -1127,8 +1318,7 @@ class Component extends DCLogic {
     function reopenHero() { SC.st = 'hero'; scanNotify(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     var scan = {
       site: SCAN_SITE, hero: sst === 'hero' || boosting, card: !(sst === 'hero' || boosting),
-      heroTitle: boosting ? 'Scanning ' + SCAN_SITE + '…' : 'Let Cortex scan ' + SCAN_SITE,
-      goLabel: boosting ? 'Starting scan…' : 'Allow scan', boosting: boosting, canSkip: !boosting,
+      heroTitle: 'Let Cortex scan ' + SCAN_SITE, boosting: boosting, canSkip: !boosting,
       allow: function () { self.setState({ boosting: true }); scanStart(); },
       skip: function () { SC.st = 'skipped'; scanNotify(); },
       running: scanRunning, done: scanDone, skipped: sst === 'skipped',
@@ -1138,13 +1328,12 @@ class Component extends DCLogic {
       found: [{ n: SCAN_FOUND.pages, l: 'pages scanned' }, { n: SCAN_FOUND.events, l: 'events found' }, { n: SCAN_FOUND.products.toLocaleString('en-US'), l: 'products' }, { n: SCAN_FOUND.content.toLocaleString('en-US'), l: 'pages, guides and banners' }],
       when: SC.done ? (Date.now() - SC.done < 60000 ? 'just now' : Math.round((Date.now() - SC.done) / 60000) + ' min ago') : '',
       rescan: function () { self.setState({ boosting: true }); scanStart(); },
-      reopen: reopenHero,
-      toManual: function () { var el = document.getElementById('obManual'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 12, behavior: 'smooth' }); }
+      reopen: reopenHero
     };
     // a skipped scan opens the hero again from its header; running and done fold open to show progress / results
     var scanOpen = !!st.open.scan;
     scan.open = scanOpen; scan.exp = scanOpen ? 'true' : 'false'; scan.rot = scanOpen ? '180deg' : '0deg';
-    scan.toggle = function () { var o = Object.assign({}, self.state.open); o.scan = !o.scan; self.setState({ open: o }); };
+    scan.toggle = sst === 'skipped' ? reopenHero : function () { var o = Object.assign({}, self.state.open); o.scan = !o.scan; self.setState({ open: o }); };
     // "Scan sephora.com" tile, first in the sections a public-page scan can fill
     function scanTile(sub, result) {
       return { show: true, site: SCAN_SITE, running: sst === 'running', done: scanDone,
@@ -1326,7 +1515,7 @@ class Component extends DCLogic {
       isConnect: mode === 'connect', isCsv: mode === 'csv', isMock: mode === 'mock',
       tiles: order.map(function (k) {
         var t = EV[k], on = st.status[k] === 'done', sel = src === k, run = st.status[k] === 'running';
-        return { name: t.name, logo: logo(LOGO[k]), detected: k === 'aa', on: on, running: run, sel: sel ? 'true' : 'false',
+        return { name: t.name, logo: logo(LOGO[k]), detected: k === 'aa' || k === 'tealium', on: on, running: run, sel: sel ? 'true' : 'false',
           bd: sel || run ? '#18181b' : '#e4e4e7', ring: sel ? '0 0 0 3px #f4f4f5' : 'none',
           pick: function () { self.setState({ src: self.state.src === k ? null : k }); } };
       }),
@@ -1447,25 +1636,38 @@ class Component extends DCLogic {
       g.toggle = function () { var o = Object.assign({}, self.state.open); o[id] = !o[id]; self.setState({ open: o }); };
       return g;
     }
-    accordion(evt, 'evt'); evt.secDone = evtDone;
+    accordion(evt, 'evt');
+    // A finished scan already brought in some events, products and content, so those required rows get their tick too
+    function scanned(x, done) {
+      x.tick = done || scanDone; x.tickTitle = done ? 'Connected' : 'Found by the scan';
+      if (scanDone && !done && x.showText !== false) { x.stText = 'Found by scan'; x.stFg = '#15803d'; x.stWeight = '600'; }
+      return x;
+    }
     evt.scanTile = scanTile('Events from public pages', SCAN_FOUND.events + ' events found');
     evt.sub = scanDone && !evtDone ? SCAN_FOUND.events + ' events found by the scan · connect a source to keep them live' : 'Shopper events: page views, searches, add-to-basket and checkout.';
     evt.subFg = scanDone && !evtDone ? '#2f7a70' : '#71717a';
     Object.assign(evt, faces(mode === 'connect' ? doneKeys.map(function (k) { return { logo: logo(LOGO[k]), name: EV[k].name }; }) : []));
+    scanned(evt, evtDone); evt.secDone = evt.tick;
     var cat = accordion(group('catalog'), 'catalog'), catDone = cat.done;
+    scanned(cat, catDone);
     cat.scanTile = scanTile('Products from product pages', SCAN_FOUND.products.toLocaleString('en-US') + ' products found');
-    var opt = ['oms', 'cms', 'cs', 'crm'].map(function (gid, i) {
+    function ctxGroup(gid, i, first) {
       var g = group(gid);
-      g.bt = i ? '1px solid #e4e4e7' : '0';
+      g.bt = i || !first ? '1px solid #e4e4e7' : '0';
       g.isOms = gid === 'oms'; g.isCms = gid === 'cms'; g.isCs = gid === 'cs'; g.isCrm = gid === 'crm';
       g.scanTile = gid === 'cms' ? scanTile('Pages, guides and banners', SCAN_FOUND.content.toLocaleString('en-US') + ' pages found') : { show: false };
+      if (first) { g.tick = g.done; g.tickTitle = 'Connected'; } else scanned(g, g.done);
       return accordion(g, gid);
-    });
-    var ready = evtDone && catDone;
+    }
+    // Content management sits with the required sources (below the catalog); the rest are optional context
+    var req = ['cms'].map(function (gid, i) { return ctxGroup(gid, i, false); });
+    var opt = ['oms', 'cs', 'crm'].map(function (gid, i) { return ctxGroup(gid, i, true); });
+    var ready = evt.tick && cat.tick && req[0].tick;
+    var missing = [!evt.tick && 'web signals', !cat.tick && 'a product catalog', !req[0].tick && 'content'].filter(Boolean);
 
     return {
-      scan: scan, evt: evt, cat: cat, catList: [cat], opt: opt, ready: ready, notReady: !ready,
-      meta: ready ? 'Step 2 of 3' : !evtDone && !catDone ? 'Step 2 of 3 · connect web signals and a product catalog to continue' : !evtDone ? 'Step 2 of 3 · connect web signals to continue' : 'Step 2 of 3 · connect a product catalog to continue'
+      scan: scan, evt: evt, cat: cat, catList: [cat], req: req, opt: opt, ready: ready, notReady: !ready,
+      meta: ready ? 'Step 2 of 3' : 'Step 2 of 3 · connect ' + (missing.length > 1 ? missing.slice(0, -1).join(', ') + ' and ' + missing[missing.length - 1] : missing[0]) + ' to continue'
     };
   }
 }

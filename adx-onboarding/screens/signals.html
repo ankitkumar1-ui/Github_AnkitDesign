@@ -400,7 +400,7 @@ body{margin:0}
 <div class="wrap">
 <sc-if value="{{isList}}">
   <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
-  <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><button class="dtab on">Signals<span class="tcount">{{total}}</span></button></div>
+  <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><button class="dtab on">Signals<span class="tcount">{{total}}</span></button><a class="dtab" href="#/derived" style="text-decoration:none">Derived signals<span class="tcount">{{derivedN}}</span></a></div>
 
   <div class="sg-tools">
     <label class="sg-q"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg><input placeholder="Search {{total}} signals" value="{{q}}" onInput="{{onQ}}" aria-label="Search signals"></label>
@@ -612,7 +612,7 @@ class Component extends DCLogic {
       modal: !!modal, modalTitle: modal ? modal.title : '', modalText: modal ? modal.text : '', modalCancel: modal ? modal.cancel : '', modalOkLabel: modal ? modal.ok : '',
       modalOk: function () { var f = self.state.modal && self.state.modal.run; self.setState({ modal: null }); if (f) f(); },
       closeModal: function () { self.setState({ modal: null }); }, stop: function (e) { e.stopPropagation(); },
-      toast: st.toast, isList: !sig, isDetail: !!sig
+      toast: st.toast, isList: !sig, isDetail: !!sig, derivedN: (window.ADX_DERIVED || []).length
     };
 
     if (!sig) {

@@ -26,6 +26,7 @@
     { path: 'connections', file: 'screens/connections.html', label: 'ADX Setup · Connections',          nav: 'Connections', group: true },
     { path: 'web-signals', file: 'screens/web-signals.html', label: 'ADX Setup · Web Signals',          nav: 'Web Signals' },
     { path: 'signals',     file: 'screens/signals.html',     label: 'ADX Setup · Web Signals · Signals', under: 'web-signals' },
+    { path: 'derived',     file: 'screens/derived.html',     label: 'ADX Setup · Derived signals',      under: 'web-signals' },
     { path: 'add-signal',  file: 'screens/add-signal.html',  label: 'ADX Setup · Add signal manually',  under: 'web-signals' }
   ];
 
