@@ -1058,7 +1058,7 @@ class Component extends DCLogic {
       self.raf = requestAnimationFrame(loop);
     };
     this.raf = requestAnimationFrame(loop);
-    // While the scan hero is up the page has two stops: the top, and "Add connections manually".
+    // The page has two stops: the top (Auto-scan), and "Add connections manually".
     // Scrolling between them flips in one quick jump; below the manual heading scrolling is normal.
     var busy = 0, touchY = null;
     function stop2() { var el = document.getElementById('obManual'); return el ? Math.round(el.getBoundingClientRect().top + window.scrollY - 12) : null; }
@@ -1072,7 +1072,6 @@ class Component extends DCLogic {
       })(t0);
     }
     function decide(dir, ev) {
-      if (!document.querySelector('.scan-hero')) return;
       var y = window.scrollY, p2 = stop2(); if (p2 === null) return;
       if (Date.now() < busy) { if (ev) ev.preventDefault(); return; }
       if (dir > 0 && y < p2 - 4) { if (ev) ev.preventDefault(); flip(p2); }
