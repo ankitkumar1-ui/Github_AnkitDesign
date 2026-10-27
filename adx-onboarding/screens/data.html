@@ -830,7 +830,7 @@ class Component extends DCLogic {
       anyConn: doneKeys.length > 0 && es !== 'running', connList: connList,
       connHint: left ? 'Pick another source above to add it too, or continue when you\'re ready.' : 'All sources are in. Continue when you\'re ready.',
       stFg: evtDone ? '#15803d' : '#71717a', stWeight: evtDone ? '600' : '400',
-      modes: seg([['csv', 'Upload CSV'], ['connect', 'Connect'], ['mock', 'Mock data']], mode, function (m) { self.setState({ mode: m }); }),
+      modes: seg([['connect', 'Connect'], ['csv', 'Upload CSV'], ['mock', 'Mock data']], mode, function (m) { self.setState({ mode: m }); }),
       isConnect: mode === 'connect', isCsv: mode === 'csv', isMock: mode === 'mock',
       tiles: order.map(function (k) {
         var t = EV[k], on = st.status[k] === 'done', sel = src === k;
@@ -907,7 +907,7 @@ class Component extends DCLogic {
       var gDone = gmode === 'connect' ? connDone : gmode === 'csv' ? cs === 'done' : true;
       return {
         name: G.name, blurb: G.blurb, noun: G.noun,
-        modes: seg([['csv', 'Upload CSV'], ['connect', 'Connect'], ['mock', 'Mock data']], gmode, function (m) { var o = Object.assign({}, self.state.gmode); o[gid] = m; self.setState({ gmode: o }); }),
+        modes: seg([['connect', 'Connect'], ['csv', 'Upload CSV'], ['mock', 'Mock data']], gmode, function (m) { var o = Object.assign({}, self.state.gmode); o[gid] = m; self.setState({ gmode: o }); }),
         isConnect: gmode === 'connect', isCsv: gmode === 'csv', isMock: gmode === 'mock',
         csvIdle: cs === 'idle', csvHasFile: cs !== 'idle', csvDone: cs === 'done', csvFile: A[0], csvMeta: A[1], csvNeeds: A[2],
         csvSteps: stepsFor(csvKey, [
