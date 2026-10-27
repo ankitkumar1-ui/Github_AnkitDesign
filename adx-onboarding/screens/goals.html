@@ -35,6 +35,15 @@ body{margin:0}
 
   <main style="max-width: 780px; margin: 0 auto; padding: 40px 24px 110px; box-sizing: border-box; display: flex; flex-direction: column">
 
+    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px">
+      <span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #f4f4f5; color: #18181b; border: 1px solid #e4e4e7; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>
+      <div style="min-width: 0; flex: 1">
+        <h1 style="margin: 0; font-size: 24px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em">Your goals</h1>
+        <p style="margin: 6px 0 0; font-size: 14.5px; line-height: 1.5; color: #71717a">Pick where ADX should start. Cortex suggests one from your data, and you can choose more or add your own.</p>
+      </div>
+    </div>
+
     <sc-if value="{{busy}}" hint-placeholder-val="{{true}}">
       <div style="display: flex">
       <section role="status" aria-live="polite" style="width: 100%; box-sizing: border-box; border: 1px solid rgba(60,140,129,0.3); border-radius: 18px; background: linear-gradient(135deg, #f1f7f6, #fff 70%); padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start">
