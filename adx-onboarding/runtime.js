@@ -86,7 +86,9 @@
         // fires on every keystroke for text fields, so map it to "input" there.
         var evt = lname.slice(2);
         if (evt === 'change' && !(tag === 'select' || /^(checkbox|radio)$/.test(node.getAttribute('type') || ''))) evt = 'input';
-        el.addEventListener(evt, raw);
+        // handlers live on el.__h so a re-render can swap them without rebinding (see patch)
+        (el.__h = el.__h || {})[evt] = raw;
+        el.addEventListener(evt, dispatch);
         continue;
       }
       if (BOOL_ATTRS[lname] && whole) { if (raw) el.setAttribute(lname, ''); continue; }
@@ -98,6 +100,35 @@
     node.childNodes.forEach(function (c) { build(c, scope, target, svg); });
     if (el.__value !== undefined) el.value = el.__value;
     parent.appendChild(el);
+  }
+
+  function dispatch(e) { var f = this.__h && this.__h[e.type]; if (f) return f.call(this, e); }
+
+  // Re-renders patch the live DOM in place instead of replacing it, so a click that
+  // spans a render still lands, hover states hold and CSS animations keep running.
+  function same(a, b) { return a.nodeType === b.nodeType && (a.nodeType !== 1 || (a.tagName === b.tagName && a.namespaceURI === b.namespaceURI && a.tagName !== 'TEMPLATE')); }
+  function patch(o, n) {
+    if (o.nodeType !== 1) { if (o.data !== n.data) o.data = n.data; return; }
+    var names = o.getAttributeNames(), i;
+    for (i = 0; i < names.length; i++) if (!n.hasAttribute(names[i])) o.removeAttribute(names[i]);
+    names = n.getAttributeNames();
+    for (i = 0; i < names.length; i++) { var v = n.getAttribute(names[i]); if (o.getAttribute(names[i]) !== v) o.setAttribute(names[i], v); }
+    o.__h = n.__h;
+    for (var ev in n.__h) o.addEventListener(ev, dispatch);
+    morph(o, n);
+    if (n.__value !== undefined && o.value !== n.__value) o.value = n.__value;
+    if (o.tagName === 'INPUT' && /^(checkbox|radio)$/.test(o.type)) o.checked = n.hasAttribute('checked');
+  }
+  function morph(op, np) {
+    var o = op.firstChild, n = np.firstChild;
+    while (n) {
+      var next = n.nextSibling;
+      if (!o) op.appendChild(n);
+      else if (same(o, n)) { patch(o, n); o = o.nextSibling; }
+      else { op.replaceChild(n, o); o = n.nextSibling; }
+      n = next;
+    }
+    while (o) { var rm = o; o = o.nextSibling; op.removeChild(rm); }
   }
 
   // focus / caret preservation across re-renders
@@ -113,7 +144,7 @@
       var vals = comp.renderVals() || {};
       var frag = document.createDocumentFragment();
       screen.template.childNodes.forEach(function (c) { build(c, vals, frag, false); });
-      root.replaceChildren(frag);
+      morph(root, frag);
       if (p) { var el = byPath(root, p); if (el && el.focus) { el.focus({ preventScroll: true }); if (sel && el.setSelectionRange) { try { el.setSelectionRange(sel[0], sel[1]); } catch (e) {} } } }
     }
     comp.__render = function () { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; render(); }); };
