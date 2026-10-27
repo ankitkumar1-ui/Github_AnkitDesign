@@ -72,7 +72,7 @@ input::placeholder{color:#a1a1aa}
           <div style="display: flex; flex-direction: column; gap: 14px">
             <div style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(60,140,129,0.3); background: linear-gradient(135deg, #f1f7f6, #fff 70%)">
               <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true" style="flex: 0 0 auto"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#3c8c81"></path></svg>
-              <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #3f3f46"><b style="font-weight: 600; color: #09090b">We found Adobe Web SDK on sephora.com.</b> Detected alloy.js on your homepage. Not right? Choose another source.</span>
+              <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: #3f3f46"><b style="font-weight: 600; color: #09090b">We found Adobe Analytics on sephora.com.</b> Detected AppMeasurement on your homepage. Not right? Choose another source.</span>
             </div>
 
             <div role="radiogroup" aria-label="Web signals source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
@@ -808,8 +808,8 @@ class Component extends DCLogic {
     };
     function logo(d) { return 'assets/logos/' + d + '.png'; }
     var LOGO = { websdk: 'adobe.com', tealium: 'tealium.com', gtm: 'tagmanager.google.com', aa: 'adobe.com', cja: 'adobe.com', ga: 'analytics.google.com', segment: 'segment.com', amplitude: 'amplitude.com', mixpanel: 'mixpanel.com', heap: 'heap.io' };
-    var order = ['websdk', 'aa', 'cja', 'tealium', 'gtm', 'ga', 'segment', 'amplitude', 'mixpanel', 'heap'];
-    var mode = st.mode, src = st.src, e = EV[src || 'websdk'], es = st.status[src] || 'idle';
+    var order = ['aa', 'cja', 'tealium', 'gtm', 'ga', 'segment', 'amplitude', 'mixpanel', 'heap'];
+    var mode = st.mode, src = st.src, e = EV[src || 'aa'], es = st.status[src] || 'idle';
     // several sources can be connected; Continue stays manual so the user can keep adding
     var doneKeys = order.filter(function (k) { return st.status[k] === 'done'; });
     var doneNames = doneKeys.map(function (k) { return EV[k].name; });
@@ -855,12 +855,12 @@ class Component extends DCLogic {
       isConnect: mode === 'connect', isCsv: mode === 'csv', isMock: mode === 'mock',
       tiles: order.map(function (k) {
         var t = EV[k], on = st.status[k] === 'done', sel = src === k, run = st.status[k] === 'running';
-        return { name: t.name, logo: logo(LOGO[k]), detected: k === 'websdk', on: on, running: run, sel: sel ? 'true' : 'false',
+        return { name: t.name, logo: logo(LOGO[k]), detected: k === 'aa', on: on, running: run, sel: sel ? 'true' : 'false',
           bd: sel || run ? '#18181b' : '#e4e4e7', ring: sel ? '0 0 0 3px #f4f4f5' : 'none',
           pick: function () { self.setState({ src: self.state.src === k ? null : k }); } };
       }),
       hasSrc: !!src, noSrc: !src,
-      name: e.name, logo: logo(LOGO[src || 'websdk']), desc: e.desc, note: e.note, dvLabel: e.dvLabel,
+      name: e.name, logo: logo(LOGO[src || 'aa']), desc: e.desc, note: e.note, dvLabel: e.dvLabel,
       fields: e.fields.map(function (f, i) {
         return { label: f.label, hint: f.hint, ph: f.ph, type: f.type, val: vals[i] != null ? vals[i] : f.val,
           set: function (ev) { var all = Object.assign({}, self.state.vals); all[src] = Object.assign({}, all[src]); all[src][i] = ev.target.value; self.setState({ vals: all }); } };
