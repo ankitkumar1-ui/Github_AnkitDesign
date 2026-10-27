@@ -24,6 +24,7 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 | data | screens/data.html | Onboarding v2 · 2 Connect your data. Starts with a website scan (hero with a canvas scan effect → Allow / Skip, ~75s in the background, toast when done); state lives in `window.ADX_SCAN` |
 | goals | screens/goals.html | Onboarding v2 · Cortex setting up + 3 Your goals |
 | home | screens/home.html | Home (prompt, recommendations, workspace completeness) |
+| exp-goals, experiences, simulate, release, analytics, test-management | screens/studio.html | Experiences + Measure pages from the ADX studio, shown in the prototype shell (see below) |
 | setup | screens/setup.html | ADX Setup · Overview |
 | profiles | screens/profiles.html | ADX Setup · Customer Profiles (data from onboarding + add sources) |
 | catalog | screens/catalog.html | ADX Setup · Product Catalog (data from onboarding + add sources) |
@@ -31,6 +32,14 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 | web-signals | screens/web-signals.html | ADX Setup · Web Signals (simple · site map) |
 | signals | screens/signals.html | ADX Setup · Web Signals · Signals list; `#/signals?id=<signal>` opens the signal detail |
 | add-signal | screens/add-signal.html | ADX Setup · Web Signals · Add signal manually (from "Add manually") |
+
+## Studio pages (Goals → Test Management)
+
+`studio/adx-studio.html` is a copy of `Prototypes/adxWebSdk/server/studio/adx-studio.html`, plus two small embed scripts
+(one at the top of `<head>`, one before `</body>`). `screens/studio.html` loads it in a frame with `?embed=1&mod=<module>`:
+the studio hides its own rail and top bar, skips its onboarding, forces light mode, and asks the prototype to change route
+(postMessage `{ adx: 'route' }`) when you click through to a page the prototype owns. To refresh from the studio, copy the
+file again and re-add both embed scripts.
 
 ## Files
 
