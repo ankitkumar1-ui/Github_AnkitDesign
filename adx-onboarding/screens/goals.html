@@ -73,6 +73,8 @@ body{margin:0}
       </div>
     </sc-if>
 
+    <!-- North star card: hidden for now; flip to {{true}} to bring it back -->
+    <sc-if value="{{false}}">
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; padding: 20px 22px; margin-bottom: 18px">
       <div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap">
         <span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #09090b; color: #fafafa; display: flex; align-items: center; justify-content: center">
@@ -92,6 +94,7 @@ body{margin:0}
         <b style="font-size: 12.5px; font-weight: 700; color: #18181b; background: #f4f4f5; border-radius: 999px; padding: 3px 11px">CLV</b>
       </div>
     </section>
+    </sc-if>
 
     <div role="group" aria-label="Goals" aria-busy="{{busyAttr}}" style="display: flex; flex-direction: column; gap: 8px; opacity: {{listOp}}; pointer-events: {{listPe}}; transition: opacity .5s ease">
       <sc-for list="{{goals}}" as="g" hint-placeholder-count="5">
