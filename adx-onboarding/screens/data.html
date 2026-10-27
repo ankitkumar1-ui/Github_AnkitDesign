@@ -42,7 +42,7 @@ input::placeholder{color:#a1a1aa}
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
       <button type="button" onClick="{{evt.toggle}}" aria-expanded="{{evt.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 22px; border: 0; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
         <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.secDone}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Web signals
             <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></div>
@@ -459,7 +459,7 @@ input::placeholder{color:#a1a1aa}
     <!-- ============ 3 · MORE CONTEXT (optional) ============ -->
     <div style="margin: 14px 2px -6px">
       <div style="font-size: 16px; font-weight: 600; letter-spacing: -0.01em">More context</div>
-      <div style="font-size: 13px; color: #71717a; margin-top: 2px">Each one sharpens what Cortex suggests. You can add these later too.</div>
+      <div style="font-size: 13px; color: #71717a; margin-top: 2px">Optional data layers that give Cortex a fuller picture of your orders, content and service. Add them now or anytime from ADX Setup.</div>
     </div>
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
       <sc-for list="{{opt}}" as="g" hint-placeholder-count="4">
@@ -961,7 +961,7 @@ class Component extends DCLogic {
       g.toggle = function () { var o = Object.assign({}, self.state.open); o[id] = !o[id]; self.setState({ open: o }); };
       return g;
     }
-    accordion(evt, 'evt'); evt.done = evtDone;
+    accordion(evt, 'evt'); evt.secDone = evtDone;
     Object.assign(evt, faces(mode === 'connect' ? doneKeys.map(function (k) { return { logo: logo(LOGO[k]), name: EV[k].name }; }) : []));
     var cat = accordion(group('catalog'), 'catalog'), catDone = cat.done;
     var opt = ['oms', 'cms', 'cs', 'crm'].map(function (gid, i) {
