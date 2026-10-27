@@ -296,6 +296,12 @@ input::placeholder{color:#a1a1aa}
       <sc-if value="{{cat.open}}" hint-placeholder-val="{{false}}">
       <sc-for list="{{catList}}" as="g" hint-placeholder-count="1">
         <div style="padding: 0 22px 22px; display: flex; flex-direction: column; gap: 14px">
+          <div role="tablist" aria-label="How to bring in {{g.noun}}" style="display: inline-flex; flex-wrap: wrap; align-self: flex-start; background: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 10px; padding: 3px; gap: 2px">
+            <sc-for list="{{g.modes}}" as="m" hint-placeholder-count="3">
+              <button type="button" role="tab" aria-selected="{{m.sel}}" onClick="{{m.pick}}" style="font-family: inherit; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border: 0; border-radius: 7px; cursor: pointer; white-space: nowrap; background: {{m.bg}}; color: {{m.fg}}; box-shadow: {{m.shadow}}">{{m.label}}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{g.isConnect}}" hint-placeholder-val="{{true}}">
           <div role="radiogroup" aria-label="{{g.name}} source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
             <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="9">
               <button type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{t.bd}}; box-shadow: {{t.ring}}; border-radius: 10px; padding: 0 11px; background: #fff; font-family: inherit; color: inherit; cursor: pointer">
@@ -369,6 +375,78 @@ input::placeholder{color:#a1a1aa}
               </sc-if>
             </div>
           </sc-if>
+          </sc-if>
+          <!-- CSV -->
+          <sc-if value="{{g.isCsv}}" hint-placeholder-val="{{false}}">
+            <sc-if value="{{g.csvIdle}}" hint-placeholder-val="{{true}}">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <button type="button" onClick="{{g.upload}}" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 24px 16px; border: 1.5px dashed #d4d4d8; border-radius: 12px; background: #fafafa; font-family: inherit; color: #09090b; cursor: pointer">
+                  <span style="width: 40px; height: 40px; border-radius: 11px; background: #fff; border: 1px solid #e4e4e7; display: flex; align-items: center; justify-content: center; color: #3f3f46; margin-bottom: 4px">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4"></path><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"></path></svg></span>
+                  <b style="font-size: 14px; font-weight: 600">Drop your {{g.noun}} export (CSV) here</b>
+                  <span style="font-size: 12.5px; color: #71717a">or <u style="color: #09090b; text-underline-offset: 3px">choose a file</u> · up to 200 MB</span>
+                </button>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; color: #71717a; flex-wrap: wrap">
+                  <span>{{g.csvNeeds}}</span>
+                  <a href="#template" style="font-size: 13px; font-weight: 600; color: #52525b; text-decoration: underline; text-decoration-color: #d4d4d8; text-underline-offset: 3px">Download template</a>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{g.csvHasFile}}" hint-placeholder-val="{{false}}">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #e4e4e7; border-radius: 12px">
+                <span style="width: 34px; height: 34px; border-radius: 9px; background: #f4f4f5; color: #3f3f46; display: flex; align-items: center; justify-content: center; flex: 0 0 auto">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M8 13h8M8 17h5"></path></svg></span>
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+                  <b style="font-size: 13px; font-weight: 600; font-family: 'Geist Mono', ui-monospace, monospace">{{g.csvFile}}</b>
+                  <span style="font-size: 12px; color: #71717a">{{g.csvMeta}}</span>
+                </span>
+                <sc-if value="{{g.csvDone}}" hint-placeholder-val="{{false}}">
+                  <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #15803d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Imported</span>
+                  <button type="button" onClick="{{g.csvReset}}" style="height: 30px; padding: 0 11px; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; color: #09090b; font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">Remove</button>
+                </sc-if>
+              </div>
+              <sc-if value="{{g.csvHasFile}}" hint-placeholder-val="{{false}}">
+                <div style="border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; padding: 6px 14px">
+                  <sc-for list="{{g.csvSteps}}" as="s" hint-placeholder-count="3">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: {{s.bt}}">
+                      <span style="flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; display: flex; align-items: center; justify-content: center">
+                        <sc-if value="{{s.isDone}}" hint-placeholder-val="{{true}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                        <sc-if value="{{s.isActive}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span></sc-if>
+                        <sc-if value="{{s.isWait}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 1.5px dashed #d4d4d8; display: block"></span></sc-if>
+                      </span>
+                      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                        <span style="display: flex; align-items: baseline; gap: 10px">
+                          <b style="flex: 1; font-size: 13px; font-weight: 600; color: {{s.fg}}">{{s.label}}</b>
+                          <sc-if value="{{s.hasPct}}" hint-placeholder-val="{{false}}"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #52525b">{{s.pct}}%</span></sc-if>
+                        </span>
+                        <span style="font-size: 12px; color: #71717a; line-height: 1.45">{{s.detail}}</span>
+                        <sc-if value="{{s.hasBar}}" hint-placeholder-val="{{false}}">
+                          <div style="height: 6px; border-radius: 4px; background: #e4e4e7; overflow: hidden; margin-top: 5px"><div style="height: 100%; border-radius: 4px; background: linear-gradient(90deg, #18181b, #3c8c81); width: {{s.pctW}}"></div></div>
+                        </sc-if>
+                      </span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </sc-if>
+          </sc-if>
+          <!-- MOCK -->
+          <sc-if value="{{g.isMock}}" hint-placeholder-val="{{false}}">
+            <div style="border: 1px solid rgba(60,140,129,0.3); border-radius: 14px; background: linear-gradient(135deg, #f1f7f6, #fff 70%); padding: 16px 17px">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+                <b style="font-size: 14px; font-weight: 600">Sephora · {{g.mockTitle}}</b>
+                <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 999px; padding: 3px 10px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #16a34a; display: block"></span>Ready instantly</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); gap: 0; margin-top: 14px">
+                <sc-for list="{{g.pack}}" as="p" hint-placeholder-count="3">
+                  <div style="padding: 2px 18px; border-left: 1px solid rgba(60,140,129,0.22)">
+                    <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1">{{p.n}}</div>
+                    <div style="font-size: 11.5px; color: #71717a; margin-top: 3px">{{p.l}}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
         </div>
       </sc-for>
       </sc-if>
@@ -401,6 +479,12 @@ input::placeholder{color:#a1a1aa}
           </button>
           <sc-if value="{{g.open}}" hint-placeholder-val="{{false}}">
             <div style="padding: 0 22px 20px; display: flex; flex-direction: column; gap: 14px">
+          <div role="tablist" aria-label="How to bring in {{g.noun}}" style="display: inline-flex; flex-wrap: wrap; align-self: flex-start; background: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 10px; padding: 3px; gap: 2px">
+            <sc-for list="{{g.modes}}" as="m" hint-placeholder-count="3">
+              <button type="button" role="tab" aria-selected="{{m.sel}}" onClick="{{m.pick}}" style="font-family: inherit; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border: 0; border-radius: 7px; cursor: pointer; white-space: nowrap; background: {{m.bg}}; color: {{m.fg}}; box-shadow: {{m.shadow}}">{{m.label}}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{g.isConnect}}" hint-placeholder-val="{{true}}">
               <div role="radiogroup" aria-label="{{g.name}} source" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 8px">
                 <sc-for list="{{g.tiles}}" as="t" hint-placeholder-count="6">
                   <button type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 10px; min-width: 0; height: 52px; box-sizing: border-box; text-align: left; border: 1px solid {{t.bd}}; box-shadow: {{t.ring}}; border-radius: 10px; padding: 0 11px; background: #fff; font-family: inherit; color: inherit; cursor: pointer">
@@ -468,6 +552,78 @@ input::placeholder{color:#a1a1aa}
                   </sc-if>
                 </div>
               </sc-if>
+          </sc-if>
+          <!-- CSV -->
+          <sc-if value="{{g.isCsv}}" hint-placeholder-val="{{false}}">
+            <sc-if value="{{g.csvIdle}}" hint-placeholder-val="{{true}}">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <button type="button" onClick="{{g.upload}}" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 24px 16px; border: 1.5px dashed #d4d4d8; border-radius: 12px; background: #fafafa; font-family: inherit; color: #09090b; cursor: pointer">
+                  <span style="width: 40px; height: 40px; border-radius: 11px; background: #fff; border: 1px solid #e4e4e7; display: flex; align-items: center; justify-content: center; color: #3f3f46; margin-bottom: 4px">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4"></path><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"></path></svg></span>
+                  <b style="font-size: 14px; font-weight: 600">Drop your {{g.noun}} export (CSV) here</b>
+                  <span style="font-size: 12.5px; color: #71717a">or <u style="color: #09090b; text-underline-offset: 3px">choose a file</u> · up to 200 MB</span>
+                </button>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; color: #71717a; flex-wrap: wrap">
+                  <span>{{g.csvNeeds}}</span>
+                  <a href="#template" style="font-size: 13px; font-weight: 600; color: #52525b; text-decoration: underline; text-decoration-color: #d4d4d8; text-underline-offset: 3px">Download template</a>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{g.csvHasFile}}" hint-placeholder-val="{{false}}">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #e4e4e7; border-radius: 12px">
+                <span style="width: 34px; height: 34px; border-radius: 9px; background: #f4f4f5; color: #3f3f46; display: flex; align-items: center; justify-content: center; flex: 0 0 auto">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M8 13h8M8 17h5"></path></svg></span>
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px">
+                  <b style="font-size: 13px; font-weight: 600; font-family: 'Geist Mono', ui-monospace, monospace">{{g.csvFile}}</b>
+                  <span style="font-size: 12px; color: #71717a">{{g.csvMeta}}</span>
+                </span>
+                <sc-if value="{{g.csvDone}}" hint-placeholder-val="{{false}}">
+                  <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #15803d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Imported</span>
+                  <button type="button" onClick="{{g.csvReset}}" style="height: 30px; padding: 0 11px; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; color: #09090b; font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">Remove</button>
+                </sc-if>
+              </div>
+              <sc-if value="{{g.csvHasFile}}" hint-placeholder-val="{{false}}">
+                <div style="border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; padding: 6px 14px">
+                  <sc-for list="{{g.csvSteps}}" as="s" hint-placeholder-count="3">
+                    <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: {{s.bt}}">
+                      <span style="flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; display: flex; align-items: center; justify-content: center">
+                        <sc-if value="{{s.isDone}}" hint-placeholder-val="{{true}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                        <sc-if value="{{s.isActive}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span></sc-if>
+                        <sc-if value="{{s.isWait}}" hint-placeholder-val="{{false}}"><span style="width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 1.5px dashed #d4d4d8; display: block"></span></sc-if>
+                      </span>
+                      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                        <span style="display: flex; align-items: baseline; gap: 10px">
+                          <b style="flex: 1; font-size: 13px; font-weight: 600; color: {{s.fg}}">{{s.label}}</b>
+                          <sc-if value="{{s.hasPct}}" hint-placeholder-val="{{false}}"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #52525b">{{s.pct}}%</span></sc-if>
+                        </span>
+                        <span style="font-size: 12px; color: #71717a; line-height: 1.45">{{s.detail}}</span>
+                        <sc-if value="{{s.hasBar}}" hint-placeholder-val="{{false}}">
+                          <div style="height: 6px; border-radius: 4px; background: #e4e4e7; overflow: hidden; margin-top: 5px"><div style="height: 100%; border-radius: 4px; background: linear-gradient(90deg, #18181b, #3c8c81); width: {{s.pctW}}"></div></div>
+                        </sc-if>
+                      </span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </sc-if>
+          </sc-if>
+          <!-- MOCK -->
+          <sc-if value="{{g.isMock}}" hint-placeholder-val="{{false}}">
+            <div style="border: 1px solid rgba(60,140,129,0.3); border-radius: 14px; background: linear-gradient(135deg, #f1f7f6, #fff 70%); padding: 16px 17px">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+                <b style="font-size: 14px; font-weight: 600">Sephora · {{g.mockTitle}}</b>
+                <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 999px; padding: 3px 10px"><span style="width: 6px; height: 6px; border-radius: 50%; background: #16a34a; display: block"></span>Ready instantly</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); gap: 0; margin-top: 14px">
+                <sc-for list="{{g.pack}}" as="p" hint-placeholder-count="3">
+                  <div style="padding: 2px 18px; border-left: 1px solid rgba(60,140,129,0.22)">
+                    <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1">{{p.n}}</div>
+                    <div style="font-size: 11.5px; color: #71717a; margin-top: 3px">{{p.l}}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
             </div>
           </sc-if>
         </div>
@@ -496,7 +652,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     // base state: nothing connected. runs[k] = { stage: 0 checking · 1 connecting · 2 bringing in data · 3 done, pct }; k is a source or 'csv'
-    this.state = { mode: 'connect', src: null, status: { websdk: 'idle', tealium: 'idle', aa: 'idle', ga: 'idle', csv: 'idle' }, runs: {}, vals: {}, pick: {}, open: { evt: true } };
+    this.state = { mode: 'connect', src: null, status: { websdk: 'idle', tealium: 'idle', aa: 'idle', ga: 'idle', csv: 'idle' }, runs: {}, vals: {}, pick: {}, open: { evt: true }, gmode: {} };
     this.timers = {};
   }
   componentWillUnmount() { for (var k in this.timers) clearInterval(this.timers[k]); }
@@ -732,15 +888,35 @@ class Component extends DCLogic {
         srcs: [['hubspot', 'HubSpot', 'hubspot.com'], ['sfmc', 'Salesforce Marketing Cloud', 'salesforce.com'], ['braze', 'Braze', 'braze.com'],
           ['klaviyo', 'Klaviyo', 'klaviyo.com'], ['iterable', 'Iterable', 'iterable.com'], ['attentive', 'Attentive', 'attentive.com']] }
     };
+    // CSV import and mock data for each group: [file, file meta, what the CSV needs, mock title, mock pack]
+    var ALT = {
+      catalog: ['sephora_catalog.csv', '18 MB · 12,480 rows · 14 columns', 'Needs a product ID, title, price and URL. Cortex maps the rest.', 'Product catalog pack', [['12,480', 'products'], ['640', 'categories'], ['4', 'regions']]],
+      oms: ['sephora_orders_90d.csv', '41 MB · 38,200 rows · 12 columns', 'Needs an order ID, date, items and status. Cortex maps the rest.', 'Orders pack', [['38,200', 'orders'], ['2,140', 'returns'], ['90 days', 'of history']]],
+      cms: ['sephora_content.csv', '6 MB · 1,550 rows · 8 columns', 'Needs a title, URL and body or summary. Cortex maps the rest.', 'Content pack', [['1,240', 'pages and stories'], ['310', 'banners'], ['42', 'guides']]],
+      cs: ['sephora_tickets_90d.csv', '22 MB · 9,860 rows · 10 columns', 'Needs a ticket ID, date, channel and reason. Cortex maps the rest.', 'Service pack', [['9,860', 'tickets and chats'], ['1,120', 'return reasons'], ['90 days', 'of history']]],
+      crm: ['sephora_contacts.csv', '64 MB · 412,000 rows · 11 columns', 'Needs an email or customer ID. Cortex hashes it before import.', 'Contacts pack', [['412K', 'contacts'], ['86', 'segments'], ['64%', 'opted in']]]
+    };
     function group(gid) {
-      var G = GROUPS[gid], pid = st.pick[gid], s = null;
+      var G = GROUPS[gid], A = ALT[gid], pid = st.pick[gid], s = null;
+      var gmode = st.gmode[gid] || 'connect', csvKey = gid + ':csv', cs = st.status[csvKey] || 'idle';
       G.srcs.forEach(function (x) { if (x[0] === pid) s = x; });
       var key = s ? gid + ':' + s[0] : null, gs = key ? st.status[key] || 'idle' : 'idle', gv = (key && st.vals[key]) || {};
       var doneSrcs = G.srcs.filter(function (x) { return st.status[gid + ':' + x[0]] === 'done'; });
       var anyRun = G.srcs.some(function (x) { return st.status[gid + ':' + x[0]] === 'running'; });
-      var gDone = doneSrcs.length > 0;
+      var connDone = doneSrcs.length > 0;
+      var gDone = gmode === 'connect' ? connDone : gmode === 'csv' ? cs === 'done' : true;
       return {
         name: G.name, blurb: G.blurb, noun: G.noun,
+        modes: seg([['csv', 'Upload CSV'], ['connect', 'Connect'], ['mock', 'Mock data']], gmode, function (m) { var o = Object.assign({}, self.state.gmode); o[gid] = m; self.setState({ gmode: o }); }),
+        isConnect: gmode === 'connect', isCsv: gmode === 'csv', isMock: gmode === 'mock',
+        csvIdle: cs === 'idle', csvHasFile: cs !== 'idle', csvDone: cs === 'done', csvFile: A[0], csvMeta: A[1], csvNeeds: A[2],
+        csvSteps: stepsFor(csvKey, [
+          ['Checking the file', 'Reading columns and sampling rows…', A[1].split(' · ').slice(2).join('') + ' found'],
+          ['Mapping fields', 'Matching columns to ADX fields…', 'Columns mapped to ADX ' + G.noun],
+          ['Bringing in ' + G.noun, '', G.done]
+        ], G.total, G.noun, 'Importing ' + G.noun),
+        upload: function () { self.connect(csvKey); }, csvReset: function () { self.disconnect(csvKey); },
+        mockTitle: A[3], pack: A[4].map(function (x) { return { n: x[0], l: x[1] }; }),
         tiles: G.srcs.map(function (x) {
           var k = gid + ':' + x[0], sel = pid === x[0];
           return { name: x[1], logo: logo(x[2]), detected: G.detected === x[0], on: st.status[k] === 'done', running: st.status[k] === 'running', sel: sel ? 'true' : 'false',
@@ -760,7 +936,7 @@ class Component extends DCLogic {
           ['Bringing in ' + G.noun, '', G.done]
         ], G.total, G.noun, 'Reading ' + G.noun) : [],
         start: function () { self.connect(key); }, reset: function () { self.disconnect(key); },
-        done: gDone, stText: gDone ? doneSrcs.map(function (x) { return x[1]; }).join(', ') : anyRun ? 'Connecting…' : 'Add',
+        done: gDone, stText: gDone ? (gmode === 'connect' ? doneSrcs.map(function (x) { return x[1]; }).join(', ') : gmode === 'csv' ? 'CSV imported' : 'Mock data') : anyRun || cs === 'running' ? 'Connecting…' : 'Add',
         stFg: gDone ? '#15803d' : '#71717a', stWeight: gDone ? '600' : '400'
       };
     }
