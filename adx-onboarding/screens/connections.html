@@ -127,8 +127,8 @@ padding:10px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bott
 /* ---- Connections ---- */
 .cn-tbl{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .cn-row{display:grid;grid-template-columns:minmax(220px,2.4fr) minmax(110px,1fr) 104px 120px 96px 150px;align-items:center;gap:14px;padding:13px 18px;border-top:1px solid var(--line);font-size:13.5px}
-.cn-row.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted);padding:10px 18px}
-.cn-row.sub{background:var(--surface-2);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:9px 18px;grid-template-columns:1fr}
+.cn-row.hd{border-top:0;background:var(--sink);font-size:12px;font-weight:600;color:var(--ink-soft);padding:10px 18px}
+.cn-row.sub{background:var(--surface);color:var(--faint);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:14px 18px 6px;grid-template-columns:1fr}
 .cn-src{display:flex;align-items:center;gap:12px;min-width:0}
 .cn-lg{width:34px;height:34px;border-radius:9px;color:#fff;font-weight:800;font-size:11.5px;letter-spacing:-.02em;display:grid;place-items:center;flex:none}
 .cn-src b{display:block;font-weight:600;font-size:13.5px}
@@ -300,6 +300,9 @@ class Component extends DCLogic {
       if (pct >= 100) { clearInterval(self.timers[id]); self.put('runs', id, { stage: 3, pct: 100, edit: edit }); self.put('st', id, 'on'); self.put('last', id, 'Just now'); }
       else self.put('runs', id, { stage: stage, pct: pct, edit: edit });
     }, 120);
+  }
+  componentDidMount() {
+    if (/[?&]add\b/.test(location.hash)) setTimeout(function () { var el = document.getElementById('cn-avail'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 350);
   }
   renderVals() {
     var self = this, st = this.state;
