@@ -237,6 +237,14 @@ body{margin:0}
 .ws-sum>:first-child{grid-column:1/-1}
 @media(max-width:720px){.ws-sum{grid-template-columns:1fr}}
 .ws-spin{width:9px;height:9px;box-sizing:border-box;border-radius:50%;border:1.5px solid #bbf7d0;border-top-color:#16a34a;animation:wsSpin .8s linear infinite;flex:none}
+/* toast after "Add manually" creates a signal (bottom-left, above the screen switcher) */
+@keyframes wsToastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.ws-toast{position:fixed;left:calc(var(--rail, 248px) + 16px);bottom:76px;z-index:9998;display:flex;gap:12px;align-items:flex-start;width:360px;max-width:calc(100vw - 32px);box-sizing:border-box;padding:13px 14px;background:#18181b;color:#fafafa;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.28);font-size:13px;line-height:1.45;animation:wsToastIn .25s ease-out}
+.ws-toast-ico{flex:none;width:22px;height:22px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ws-toast b{font-weight:600;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px}
+.ws-toast p{margin:2px 0 0;color:#a1a1aa;font-size:12.5px}
+.ws-toast a{color:#fafafa;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.ws-toast-x{flex:none;border:0;background:none;color:#a1a1aa;cursor:pointer;padding:0 2px;font-size:16px;line-height:1}
 @keyframes tagFound{from{box-shadow:0 0 0 0 rgba(22,163,74,.45)}to{box-shadow:0 0 0 7px rgba(22,163,74,0)}}
 .found{animation:tagFound .9s ease-out}
 @keyframes tagLand{0%{opacity:.3;transform:translateY(-10px);box-shadow:0 0 0 3px rgba(60,140,129,.35)}35%{opacity:1;transform:none}100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}}
@@ -299,6 +307,13 @@ body{margin:0}
       </div>
     </header>
 <div class="wrap">
+<sc-if value="{{toast}}" hint-placeholder-val="{{false}}">
+  <div class="ws-toast" role="status">
+    <span class="ws-toast-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+    <div style="flex:1;min-width:0"><b>{{toast.name}}</b> added<p>Listening in dev via {{toast.via}}. Pending first event · <a href="#/signals">View signals</a></p></div>
+    <button type="button" class="ws-toast-x" onClick="{{toast.close}}" aria-label="Dismiss">×</button>
+  </div>
+</sc-if>
 
       <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
       <div class="dtabs"><button class="dtab on">Source &amp; mapping</button><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">23</span></a></div>
@@ -637,6 +652,14 @@ class Component extends DCLogic {
     this.state = { tab: 'map', browsing: false, open: 'home', sel: 'home', filter: 'all', act: null, fixed: {}, q: '', term: null, checking: null, found: null, landed: null, scan: 'idle' };
     this.timers = [];
   }
+  // Arriving from Add manually (#/web-signals?added=<name>&via=<method>): toast it, then tidy the URL
+  componentDidMount() {
+    var m = location.hash.match(/[?&]added=([^&]+)/), v = location.hash.match(/[?&]via=([^&]+)/), self = this;
+    if (!m) return;
+    this.setState({ added: { name: decodeURIComponent(m[1]), via: v ? decodeURIComponent(v[1]) : 'SDK call' } });
+    try { history.replaceState(null, '', '#/web-signals'); } catch (e) {}
+    this.timers.push(setTimeout(function () { self.setState({ added: null }); }, 6000));
+  }
   componentWillUnmount() { this.timers.forEach(clearTimeout); }
   // The shopper action just happened: Cortex checks for the tag (rotating green stroke),
   // flashes it as found, then moves it to Captured.
@@ -781,6 +804,7 @@ class Component extends DCLogic {
       });
     });
     return {
+      toast: st.added ? { name: st.added.name, via: st.added.via, close: function () { self.setState({ added: null }); } } : null,
       sum: { cap: cap, miss: miss,
         showMissing: function () { self.setState({ tab: 'list', filter: 'missing' }); } },
       scan: { busy: st.scan === 'run', idle: st.scan !== 'run', label: st.scan === 'run' ? 'Scanning…' : 'Re-scan',

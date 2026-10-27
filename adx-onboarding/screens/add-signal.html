@@ -395,16 +395,8 @@ select.as-input{padding:0 10px}
 .as-next ol{list-style:none;margin:0;padding:0 0 14px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line)}
 .as-next li{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:var(--ink-soft,#3f3f46)}
 .as-num{flex:none;width:22px;height:22px;border-radius:50%;background:#f4f4f5;border:1px solid var(--line);box-sizing:border-box;font-size:11px;font-weight:600;color:#52525b;display:flex;align-items:center;justify-content:center}
-.as-next li.done .as-num{background:#16a34a;border-color:#16a34a;color:#fff}
-.as-next li.cur .as-num{background:#fff;border-color:#18181b;color:#18181b}
 .as-next p{margin:12px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5}
 .as-next p b{color:var(--ink);font-weight:600}
-.as-done{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border:1px solid #bbf7d0;border-radius:14px;background:#f0fdf4}
-.as-done-ico{flex:none;width:34px;height:34px;border-radius:50%;background:#16a34a;color:#fff;display:flex;align-items:center;justify-content:center}
-.as-done p{margin:6px 0 14px;font-size:13.5px;color:#3f3f46;line-height:1.5}
-.as-pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:2px 9px}
-@keyframes asSpin{to{transform:rotate(360deg)}}
-.ws-spin-s{width:9px;height:9px;box-sizing:border-box;border-radius:50%;border:1.5px solid #fde68a;border-top-color:#b45309;animation:asSpin .8s linear infinite}
 </style>
 </head>
 <body>
@@ -455,7 +447,6 @@ select.as-input{padding:0 10px}
 <div class="as-main">
   <div class="pagehead"><div><div class="eyebrow">ADX Setup · Web Signals</div><h1>Add a signal manually</h1><p>For behaviour the scan could not find and Browse &amp; label cannot reach: anything behind a login, or fired only by your own code.</p></div></div>
 
-  <sc-if value="{{editing}}" hint-placeholder-val="{{true}}">
   <div class="as-form">
     <label class="as-field">
       <span class="as-lbl">Signal name</span>
@@ -550,22 +541,7 @@ select.as-input{padding:0 10px}
       <span class="as-hint" style="margin:0">{{createHint}}</span>
     </div>
   </div>
-  </sc-if>
 
-  <!-- created -->
-  <sc-if value="{{created}}" hint-placeholder-val="{{false}}">
-    <div class="as-done">
-      <span class="as-done-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b class="mono" style="font-size:15px">{{name}}</b><span class="as-pill"><span class="ws-spin-s"></span>Pending first event</span></div>
-        <p>Created and listening in dev, captured by <b>{{methodTitle}}</b>. It moves to Ready as soon as the first payload arrives.</p>
-        <div class="as-row">
-          <a class="btn primary" href="#/web-signals" style="text-decoration:none">Back to Web Signals</a>
-          <button type="button" class="btn" onClick="{{again}}">Add another</button>
-        </div>
-      </div>
-    </div>
-  </sc-if>
 </div>
 
 <aside class="as-side">
@@ -573,7 +549,7 @@ select.as-input{padding:0 10px}
     <b class="as-next-h">What happens next</b>
     <ol>
       <sc-for list="{{next}}" as="n" hint-placeholder-count="4">
-        <li class="{{n.cls}}"><span class="as-num">{{n.mark}}</span><span>{{n.t}}</span></li>
+        <li><span class="as-num">{{n.n}}</span><span>{{n.t}}</span></li>
       </sc-for>
     </ol>
     <p>The signal sits in <b>Pending first event</b> until a real payload arrives. It cannot be promoted to production before then.</p>
@@ -612,7 +588,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = { name: 'checkout_step_completed', meaning: 'Shopper completes a named step inside checkout: shipping, payment or review.',
-      method: 'sdk', comparing: false, copied: false, dlSrc: 'adobeDataLayer', dlKey: 'event = checkoutStep', pattern: '/checkout/confirmation*', created: false };
+      method: 'sdk', comparing: false, copied: false, dlSrc: 'adobeDataLayer', dlKey: 'event = checkoutStep', pattern: '/checkout/confirmation*' };
   }
   componentWillUnmount() { clearTimeout(this.copyT); }
   renderVals() {
@@ -649,7 +625,6 @@ class Component extends DCLogic {
     var NEXT = ['Signal is created and starts listening in dev', 'First payload arrives: we infer its object and field types', 'You promote the fields you need into variables', 'Promote the signal to production when it looks right'];
 
     return {
-      editing: !st.created, created: st.created,
       name: name, meaning: st.meaning, meaningOrHint: st.meaning.trim() || 'No description yet',
       onName: function (e) { self.setState({ name: e.target.value.toLowerCase().replace(/[\s-]+/g, '_').replace(/[^a-z0-9_]/g, ''), comparing: false }); },
       onMeaning: function (e) { self.setState({ meaning: e.target.value }); },
@@ -672,13 +647,9 @@ class Component extends DCLogic {
       pattern: st.pattern, onPattern: function (e) { self.setState({ pattern: e.target.value }); },
       urls: urls, urlSummary: !pat ? 'Type a pattern to see which pages match.' : hits ? 'Matches ' + hits + ' of ' + AS_PAGES.length + ' pages Cortex has seen.' : 'No pages Cortex has seen match this yet.',
       cantCreate: !!missing, createHint: missing,
-      create: function () { if (!missing) { self.setState({ created: true }); window.scrollTo(0, 0); } },
-      methodTitle: method[1],
-      again: function () { self.setState({ created: false, name: '', meaning: '', comparing: false, method: 'sdk' }); },
-      next: NEXT.map(function (t, i) {
-        var done = st.created && i === 0, cur = st.created && i === 1;
-        return { t: t, mark: done ? '✓' : String(i + 1), cls: done ? 'done' : cur ? 'cur' : '' };
-      })
+      // back to Web Signals, which shows a toast for the new signal
+      create: function () { if (!missing) location.hash = '#/web-signals?added=' + encodeURIComponent(name) + '&via=' + encodeURIComponent(method[1]); },
+      next: NEXT.map(function (t, i) { return { t: t, n: String(i + 1) }; })
     };
   }
 }
