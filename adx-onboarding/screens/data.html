@@ -8,6 +8,10 @@
 
 body{margin:0}
 @keyframes obSpin{to{transform:rotate(360deg)}}
+.ob-dots{flex:0 0 auto;display:inline-flex;gap:3px;align-items:center}
+.ob-dots i{width:5px;height:5px;border-radius:50%;background:#18181b;animation:obPulse 1.2s ease-in-out infinite}
+.ob-dots i:nth-child(2){animation-delay:.2s}.ob-dots i:nth-child(3){animation-delay:.4s}
+@keyframes obPulse{0%,80%,100%{opacity:.2;transform:scale(.75)}40%{opacity:1;transform:scale(1)}}
 input::placeholder{color:#a1a1aa}
 
 </style>
@@ -83,7 +87,7 @@ input::placeholder{color:#a1a1aa}
                     <span title="Connected" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
                   </sc-if>
                   <sc-if value="{{t.running}}" hint-placeholder-val="{{false}}">
-                    <span title="Connecting" style="flex: 0 0 auto; width: 14px; height: 14px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span>
+                    <span title="Connecting" aria-label="Connecting" class="ob-dots"><i></i><i></i><i></i></span>
                   </sc-if>
                 </button>
               </sc-for>
@@ -318,7 +322,7 @@ input::placeholder{color:#a1a1aa}
                   <span title="Connected" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
                 </sc-if>
                 <sc-if value="{{t.running}}" hint-placeholder-val="{{false}}">
-                  <span title="Connecting" style="flex: 0 0 auto; width: 14px; height: 14px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span>
+                  <span title="Connecting" aria-label="Connecting" class="ob-dots"><i></i><i></i><i></i></span>
                 </sc-if>
               </button>
             </sc-for>
@@ -500,7 +504,7 @@ input::placeholder{color:#a1a1aa}
                       <span title="Connected" style="flex: 0 0 18px; width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
                     </sc-if>
                     <sc-if value="{{t.running}}" hint-placeholder-val="{{false}}">
-                      <span title="Connecting" style="flex: 0 0 auto; width: 14px; height: 14px; box-sizing: border-box; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #18181b; animation: obSpin 0.8s linear infinite; display: block"></span>
+                      <span title="Connecting" aria-label="Connecting" class="ob-dots"><i></i><i></i><i></i></span>
                     </sc-if>
                   </button>
                 </sc-for>
@@ -843,17 +847,17 @@ class Component extends DCLogic {
     var vals = st.vals[src] || {};
 
     var evt = {
-      ok: evtDone, stText: evtDone ? (mode === 'connect' ? doneNames.join(', ') : mode === 'csv' ? 'CSV imported' : 'Mock data') : es === 'running' ? 'Connecting…' : 'Add',
+      ok: evtDone, stText: evtDone ? (mode === 'connect' ? doneNames.join(', ') : mode === 'csv' ? 'CSV imported' : 'Mock data') : order.some(function (k) { return st.status[k] === 'running'; }) ? 'Connecting…' : 'Add',
       anyConn: doneKeys.length > 0 && es !== 'running', connList: connList,
       connHint: left ? 'Pick another source above to add it too, or continue when you\'re ready.' : 'All sources are in. Continue when you\'re ready.',
       stFg: evtDone ? '#15803d' : '#71717a', stWeight: evtDone ? '600' : '400',
       modes: seg([['connect', 'Connect'], ['csv', 'Upload CSV'], ['mock', 'Mock data']], mode, function (m) { self.setState({ mode: m }); }),
       isConnect: mode === 'connect', isCsv: mode === 'csv', isMock: mode === 'mock',
       tiles: order.map(function (k) {
-        var t = EV[k], on = st.status[k] === 'done', sel = src === k;
-        return { name: t.name, logo: logo(LOGO[k]), detected: k === 'websdk', on: on, running: st.status[k] === 'running', sel: sel ? 'true' : 'false',
-          bd: sel ? '#18181b' : '#e4e4e7', ring: sel ? '0 0 0 3px #f4f4f5' : 'none',
-          pick: function () { if (self.state.status[self.state.src] !== 'running') self.setState({ src: self.state.src === k ? null : k }); } };
+        var t = EV[k], on = st.status[k] === 'done', sel = src === k, run = st.status[k] === 'running';
+        return { name: t.name, logo: logo(LOGO[k]), detected: k === 'websdk', on: on, running: run, sel: sel ? 'true' : 'false',
+          bd: sel || run ? '#18181b' : '#e4e4e7', ring: sel ? '0 0 0 3px #f4f4f5' : 'none',
+          pick: function () { self.setState({ src: self.state.src === k ? null : k }); } };
       }),
       hasSrc: !!src, noSrc: !src,
       name: e.name, logo: logo(LOGO[src || 'websdk']), desc: e.desc, note: e.note, dvLabel: e.dvLabel,
@@ -944,10 +948,10 @@ class Component extends DCLogic {
         upload: function () { self.connect(csvKey); }, csvReset: function () { self.disconnect(csvKey); },
         mockTitle: A[3], pack: A[4].map(function (x) { return { n: x[0], l: x[1] }; }),
         tiles: G.srcs.map(function (x) {
-          var k = gid + ':' + x[0], sel = pid === x[0];
-          return { name: x[1], logo: logo(x[2]), detected: G.detected === x[0], on: st.status[k] === 'done', running: st.status[k] === 'running', sel: sel ? 'true' : 'false',
-            bd: sel ? '#18181b' : '#e4e4e7', ring: sel ? '0 0 0 3px #f4f4f5' : 'none',
-            pick: function () { if (self.state.status[key] === 'running') return; var p = Object.assign({}, self.state.pick); p[gid] = p[gid] === x[0] ? null : x[0]; self.setState({ pick: p }); } };
+          var k = gid + ':' + x[0], sel = pid === x[0], run = st.status[k] === 'running';
+          return { name: x[1], logo: logo(x[2]), detected: G.detected === x[0], on: st.status[k] === 'done', running: run, sel: sel ? 'true' : 'false',
+            bd: sel || run ? '#18181b' : '#e4e4e7', ring: sel ? '0 0 0 3px #f4f4f5' : 'none',
+            pick: function () { var p = Object.assign({}, self.state.pick); p[gid] = p[gid] === x[0] ? null : x[0]; self.setState({ pick: p }); } };
         }),
         hasSrc: !!s, noSrc: !s, pickHint: G.detected ? 'We found Salesforce Commerce Cloud on sephora.com. Pick it, or another source.' : 'Pick a source above.',
         src: s ? { name: s[1], logo: logo(s[2]) } : {}, desc: 'Read-only access to your ' + G.noun + '.',
