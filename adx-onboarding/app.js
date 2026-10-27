@@ -17,7 +17,8 @@
     { path: 'catalog',     file: 'screens/catalog.html',     label: 'ADX Setup · Product Catalog' },
     { path: 'connections', file: 'screens/connections.html', label: 'ADX Setup · Connections' },
     { path: 'web-signals', file: 'screens/web-signals.html', label: 'ADX Setup · Web Signals' },
-    { path: 'signals',     file: 'screens/signals.html',     label: 'ADX Setup · Web Signals · Signals' }
+    { path: 'signals',     file: 'screens/signals.html',     label: 'ADX Setup · Web Signals · Signals' },
+    { path: 'add-signal',  file: 'screens/add-signal.html',  label: 'ADX Setup · Add signal manually' }
   ];
 
   var root = document.getElementById('app');

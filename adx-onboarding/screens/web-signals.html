@@ -345,7 +345,7 @@ body{margin:0}
           <button type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="font-family:inherit;font-size:13px;font-weight:600;padding:7px 14px;border:0;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:{{t.bg}};color:{{t.fg}};box-shadow:{{t.shadow}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>{{t.label}}</button>
         </sc-for>
       </div>
-        <span style="margin-left:auto;display:flex;gap:8px"><button class="btn">Add manually</button><button class="btn primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 14 9-14 9z"></path></svg>Browse &amp; label</button></span>
+        <span style="margin-left:auto;display:flex;gap:8px"><a class="btn" href="#/add-signal" style="text-decoration:none">Add manually</a><button class="btn primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 14 9-14 9z"></path></svg>Browse &amp; label</button></span>
       </div>
 
       <sc-if value="{{isMap}}" hint-placeholder-val="{{true}}">
