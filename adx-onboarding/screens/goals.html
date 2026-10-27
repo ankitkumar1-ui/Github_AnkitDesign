@@ -75,7 +75,8 @@ body{margin:0}
     <!-- goals appear only once Cortex has finished setting up -->
     <sc-if value="{{ready}}" hint-placeholder-val="{{false}}">
     <div style="display: flex; flex-direction: column; animation: obIn .5s ease both">
-    <sc-if value="{{ready}}" hint-placeholder-val="{{false}}">
+    <!-- "Cortex picked Convert" note: hidden for now; return pickNote: true from renderVals() to bring it back -->
+    <sc-if value="{{pickNote}}" hint-placeholder-val="{{false}}">
       <div role="status" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 14px; border-radius: 12px; border: 1px solid rgba(60,140,129,0.3); background: linear-gradient(135deg, #f1f7f6, #fff 70%); font-size: 13px; color: #3f3f46; animation: obIn .4s ease-out">
         <svg viewBox="0 0 48 48" width="16" height="16" aria-hidden="true" style="flex: 0 0 auto"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#3c8c81"></path></svg>
         <span><b style="font-weight: 600; color: #09090b">Cortex read your shopper events</b> and picked <b style="font-weight: 600; color: #09090b">Convert</b> as the best place for Sephora to start. Change it or add more.</span>
