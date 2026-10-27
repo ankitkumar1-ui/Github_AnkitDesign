@@ -316,6 +316,25 @@ body{margin:0}
 .sg-mrow.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
 .sg-ms{display:flex;align-items:center;gap:10px}
 .sg-ms .lg{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:10.5px;font-weight:800;color:#fff;flex:none}
+.sg-sub{display:flex;align-items:center;gap:10px;padding:16px 18px 10px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.sg-sub span{text-transform:none;letter-spacing:0;font-weight:400;color:var(--faint)}
+.sg-sub .sg-seg{text-transform:none;letter-spacing:0}
+.sg-flow{display:flex;align-items:stretch;gap:8px;padding:0 18px 4px;flex-wrap:wrap}
+.sg-node{flex:1 1 200px;min-width:0;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;background:var(--surface)}
+.sg-node .h{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:var(--muted)}
+.sg-node .h em{font-style:normal;font-size:11px;font-weight:600;border-radius:999px;padding:1px 8px;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.sg-node.warn .h em{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
+.sg-node.none{border-style:dashed;background:var(--surface-2)}
+.sg-node.none .h em{background:var(--sink);color:var(--muted);border-color:var(--line)}
+.sg-node .sg-code{white-space:normal;word-break:break-word;line-height:1.5}
+.sg-node .m{font-size:12px;color:var(--muted);line-height:1.45}
+.sg-arr{align-self:center;color:var(--faint);flex:none}
+.sg-vars{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;padding:0 18px 4px}
+.sg-var{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.sg-var .h{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.sg-var .h b{font-size:13px;font-weight:600}
+.sg-var .h span{font-size:11.5px;color:var(--faint)}
+.sg-var .m{font-size:11.5px;color:var(--muted)}
 .sg-empty{padding:16px 18px;margin:0;font-size:13px;color:var(--muted)}
 .sg-modal{position:fixed;inset:0;background:rgba(9,9,11,.4);display:grid;place-items:center;z-index:50;padding:16px}
 .sg-modal>div{background:var(--surface);border-radius:14px;max-width:440px;width:100%;padding:20px;box-shadow:0 20px 50px -12px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:12px}
@@ -420,37 +439,49 @@ body{margin:0}
   </div>
 
   <section class="sg-card">
-    <div class="sg-ch"><b>Preparation</b><sc-if value="{{d.excluded}}"><button class="btn sm" style="margin-left:auto" onClick="{{d.include}}">Include Signal</button></sc-if></div>
+    <div class="sg-ch"><b>Objects &amp; variables</b><span>How the website event and tag become this signal</span><sc-if value="{{d.excluded}}"><button class="btn sm" style="margin-left:auto" onClick="{{d.include}}">Include Signal</button></sc-if></div>
     <sc-if value="{{d.excluded}}"><p class="sg-empty" style="padding-bottom:0">Excluded from your signals. Experiences can't use it, and it isn't counted as ready or as needing attention.</p></sc-if>
-    <ol class="sg-chain">
-      <sc-for list="{{d.chain}}" as="c">
-        <li class="{{c.c}}">
-          <span class="sg-ci {{c.c}}"><sc-if value="{{c.ok}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if><sc-if value="{{c.cur}}">!</sc-if></span>
-          <div class="sg-cb">
-            <div class="sg-ct"><b>{{c.label}}</b><span class="{{c.noteCls}}">{{c.note}}</span></div>
-            <sc-if value="{{c.issue}}">
-              <div class="sg-iss">
-                <div class="t">{{d.iss.title}}</div>
-                <p>{{d.iss.text}}</p>
-                <div class="nx"><span>Next step</span>{{d.iss.rec}}</div>
-                <div style="display:flex;gap:8px;margin-top:4px">
-                  <sc-if value="{{d.busy}}"><button class="btn primary" disabled><span class="sg-spin"></span>Checking…</button></sc-if>
-                  <sc-if value="{{d.idle}}"><button class="btn primary" onClick="{{d.fix}}">{{d.iss.btn}}</button></sc-if>
-                  <button class="btn ghost" onClick="{{d.askExclude}}">Exclude</button>
-                </div>
-              </div>
-            </sc-if>
-          </div>
-        </li>
-      </sc-for>
-    </ol>
-    <sc-if value="{{d.ready}}"><div class="sg-okl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Ready. Experiences can use this signal and its variables.</div></sc-if>
-  </section>
 
-  <section class="sg-card">
-    <div class="sg-ch"><b>Event object</b><span>Only variables reach triggers</span>
-      <sc-if value="{{d.hasFields}}"><div class="sg-seg" role="tablist"><button class="{{d.tabFields}}" onClick="{{d.showFields}}">Fields</button><button class="{{d.tabJson}}" onClick="{{d.showJson}}">JSON</button></div></sc-if></div>
-    <sc-if value="{{d.noFields}}"><p class="sg-empty">No event was captured, so there are no fields yet.</p></sc-if>
+    <sc-if value="{{d.showIssue}}">
+      <div class="sg-iss" style="margin:14px 18px 0;max-width:none">
+        <div class="t">{{d.iss.title}}</div>
+        <p>{{d.iss.text}}</p>
+        <div class="nx"><span>Next step</span>{{d.iss.rec}}</div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <sc-if value="{{d.busy}}"><button class="btn primary" disabled><span class="sg-spin"></span>Checking…</button></sc-if>
+          <sc-if value="{{d.idle}}"><button class="btn primary" onClick="{{d.fix}}">{{d.iss.btn}}</button></sc-if>
+          <button class="btn ghost" onClick="{{d.askExclude}}">Exclude</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- website event (js) → tag → signal -->
+    <div class="sg-sub">Mapping</div>
+    <div class="sg-flow">
+      <sc-for list="{{d.flow}}" as="n">
+        <div class="sg-node {{n.c}}">
+          <div class="h"><span>{{n.kind}}</span><em>{{n.state}}</em></div>
+          <code class="sg-code">{{n.code}}</code>
+          <div class="m">{{n.meta}}</div>
+        </div>
+        <sc-if value="{{n.arrow}}"><span class="sg-arr" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></sc-if>
+      </sc-for>
+    </div>
+
+    <!-- variables -->
+    <div class="sg-sub">Variables<span>{{d.nVars}} defined · only variables reach triggers</span></div>
+    <sc-if value="{{d.hasVars}}">
+      <div class="sg-vars">
+        <sc-for list="{{d.vars}}" as="v">
+          <div class="sg-var"><div class="h"><b>{{v.label}}</b><span>{{v.type}}</span></div><code class="sg-code">{{v.path}}</code><div class="m">{{v.meta}}</div></div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{d.noVars}}"><p class="sg-empty" style="padding-top:4px">No variables yet. Turn on a field below to use it in triggers.</p></sc-if>
+
+    <!-- fields / json -->
+    <div class="sg-sub">Event object<sc-if value="{{d.hasFields}}"><div class="sg-seg" role="tablist"><button class="{{d.tabFields}}" onClick="{{d.showFields}}">Fields</button><button class="{{d.tabJson}}" onClick="{{d.showJson}}">JSON</button></div></sc-if></div>
+    <sc-if value="{{d.noFields}}"><p class="sg-empty" style="padding-top:4px">No event was captured, so there are no fields yet.</p></sc-if>
     <sc-if value="{{d.fieldsView}}">
       <div class="sg-frow hd"><span>Field</span><span>Type</span><span>Sample value</span><span>Variable</span></div>
       <sc-for list="{{d.fields}}" as="f">
@@ -460,6 +491,7 @@ body{margin:0}
     </sc-if>
     <sc-if value="{{d.jsonView}}"><pre class="sg-json">{{d.json}}</pre></sc-if>
     <sc-if value="{{d.dirty}}"><div class="sg-dirty"><span><b>{{d.nChanged}} unsaved change{{d.plural}}.</b> Saving creates v2 in Development. Staging and Production keep v1 until you promote.</span><button class="btn" onClick="{{d.discard}}">Discard</button><button class="btn primary" onClick="{{d.save}}">Save</button></div></sc-if>
+    <sc-if value="{{d.ready}}"><div class="sg-okl" style="margin-top:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Ready. Experiences can use this signal and its variables.</div></sc-if>
   </section>
 
   <section class="sg-card">
@@ -493,8 +525,7 @@ var SG_SRC = {
   aa:     { name: 'Adobe Analytics', mono: 'AA', c: '#5C2D91', prefix: 'evar:' },
   label:  { name: 'Browse & Label',  mono: 'BL', c: '#3c8c81', prefix: 'label: ' }
 };
-var SG_STEPS = ['Interaction found', 'Event captured', 'Mapped to signal', 'Data received', 'Ready'];
-// r: reason → [title, failing step, notes for the five steps, found, need, why, next step, button, what the fix does]
+// r: reason → [title, failing step (0 nothing found · 1 no event · 2 mapping · 3+ data), notes, found, need, why, next step, button, what the fix does]
 var SG_WHY = {
   tracking: ['Tracked as a click, not a confirmed add', 2, ['On /product/* during the scan', 'A button click event', 'Mapped to the click', '3 fields in the payload', 'Waiting on the step above'],
     "The Add to Basket button fires this event when it's clicked.", "A click doesn't prove the item was added. The basket can reject it.", 'Experiences could react to items that never reached the basket.',
@@ -612,13 +643,28 @@ class Component extends DCLogic {
     var t = status(sig), W = sig.r ? SG_WHY[sig.r] : null, ready = !sig.r && !sig.excluded;
     var draft = st.draft && st.draft.id === sig.id ? st.draft : null, fields = draft ? draft.fields : sig.fields;
     var nChanged = draft ? fields.filter(function (f, i) { return f.v !== sig.fields[i].v; }).length : 0;
-    var notes = W ? W[2] : ['On ' + ((sig.fields.filter(function (f) { return f.k === 'page_url'; })[0] || {}).sample || '/product/*').replace(/\/P\d+$/, '/*') + ' during the scan',
-      'Seen on ' + (sig.seen || 12) + ' pages', sig.mapped || 'Matched automatically', sig.fields.length + ' fields in the payload', 'Experiences can use it'];
-    var cur = ready ? -1 : W ? W[1] : -1;
-    var chain = SG_STEPS.map(function (l, i) {
-      var c = sig.excluded ? (i < (W ? W[1] : 5) ? 'ok' : 'todo') : ready || i < cur ? 'ok' : i === cur ? 'cur' : 'todo';
-      return { label: l, c: c, ok: c === 'ok', cur: c === 'cur', note: notes[i], noteCls: c === 'cur' ? 'cur' : '', issue: c === 'cur' && !!W };
-    });
+    var page = W ? W[2][0] : 'On ' + ((sig.fields.filter(function (f) { return f.k === 'page_url'; })[0] || {}).sample || '/product/*').replace(/\/P\d+$/, '/*') + ' during the scan';
+    var step = sig.excluded ? -1 : ready ? 9 : W ? W[1] : 9;
+    function human(k) { return k.replace(/_/g, ' ').replace(/\bid\b/, 'ID').replace(/^./, function (c) { return c.toUpperCase(); }); }
+    // website event (js) → tag → signal, as the scan and the tag manager see it
+    var has = function (k) { return sig.via.indexOf(k) >= 0; };
+    var evCode = sig.r === 'tracking' ? 'click · button.add-to-basket'
+      : sig.r === 'ambig' ? 'web.home_played  or  web.home_interaction'
+      : has('label') ? 'click · [data-adx-label="' + sig.id + '"]'
+      : has('aa') && !has('websdk') ? 's.events = "' + (sig.ev || 'purchase').replace('evar:', '') + '"'
+      : has('websdk') ? 'alloy("sendEvent", { xdm: { eventType: "' + (sig.ev || 'web.' + sig.id) + '" } })'
+      : 'adobeDataLayer.push({ event: "' + sig.id + '" })';
+    var tagCode = has('label') ? 'Browse & Label · ' + human(sig.id) : has('aa') && !has('websdk') ? 'Adobe Analytics · purchase event' : 'Launch rule · ' + human(sig.id);
+    var dest = has('websdk') ? 'Adobe Web SDK' : has('aa') ? 'Adobe Analytics' : 'ADX';
+    var nv = sig.fields.filter(function (f) { return f.v; }).length;
+    var flow = [
+      step <= 1 ? { kind: 'Website event (JS)', state: 'Not captured', c: 'none', code: 'No event yet', meta: W ? W[3] : '' }
+        : { kind: 'Website event (JS)', state: sig.r === 'ambig' ? '2 candidates' : 'Captured', c: sig.r === 'ambig' ? 'warn' : '', code: evCode, meta: page.replace(/^On /, 'Fires on ').replace(' during the scan', '') + ' · seen on ' + (sig.seen || 12) + ' pages' },
+      step <= 1 ? { kind: 'Tag', state: 'Not mapped', c: 'none', code: 'No tag yet', meta: 'Maps once a website event is captured' }
+        : step === 2 ? { kind: 'Tag', state: sig.r === 'ambig' ? 'Waiting for you' : 'Click only', c: 'warn', code: sig.r === 'ambig' ? 'Choose which event is ' + sig.id : tagCode, meta: sig.r === 'ambig' ? 'Not mapped until you choose' : 'Fires on the click, not the confirmed add' }
+        : { kind: 'Tag', state: 'Mapped', c: '', code: tagCode, meta: (has('label') ? 'Browse & Label → ADX' : has('aa') && !has('websdk') ? 'Adobe Analytics → ADX' : 'Adobe Launch → ' + dest) + ' · ' + (sig.mapped || 'matched automatically').toLowerCase() },
+      { kind: 'Signal', state: t[0], c: sig.excluded || step <= 1 ? 'none' : ready ? '' : 'warn', code: sig.id + ' · v1', meta: sig.fields.length + ' field' + (sig.fields.length === 1 ? '' : 's') + ' · ' + nv + ' variable' + (nv === 1 ? '' : 's') + (W && !sig.excluded && step > 2 ? ' · ' + W[0].toLowerCase() : '') }
+    ].map(function (n, i) { n.arrow = i < 2; return n; });
     var json = '{\n' + fields.map(function (f, i) { var v = f.type === 'number' ? f.sample : JSON.stringify(f.sample); return '  "' + f.k + '": ' + v + (i < fields.length - 1 ? ',' : ''); }).join('\n') + '\n}';
     function mapsFor(s) {
       return s.via.map(function (k) {
@@ -654,7 +700,10 @@ class Component extends DCLogic {
     return Object.assign(base, {
       back: function () { location.hash = '#/signals'; },
       d: {
-        id: sig.id, desc: sig.desc, status: t[0], cls: t[1], excluded: sig.excluded, ready: ready, chain: chain,
+        id: sig.id, desc: sig.desc, status: t[0], cls: t[1], excluded: sig.excluded, ready: ready, flow: flow,
+        showIssue: !!W && !sig.excluded,
+        vars: fields.filter(function (f) { return f.v; }).map(function (f) { return { label: human(f.k), type: f.type, path: f.k, meta: 'e.g. ' + (f.type === 'number' ? f.sample : '"' + f.sample + '"') }; }),
+        nVars: fields.filter(function (f) { return f.v; }).length, hasVars: fields.some(function (f) { return f.v; }), noVars: !fields.some(function (f) { return f.v; }),
         iss: W ? { title: W[0], text: W[3] + ' ' + W[4] + ' ' + W[5], rec: W[6], btn: W[7] } : {},
         busy: st.busy, idle: !st.busy, fix: fix,
         askExclude: function () { exclude(true); }, include: function () { exclude(false); },
