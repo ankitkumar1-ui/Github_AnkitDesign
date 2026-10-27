@@ -726,6 +726,17 @@ class Component extends DCLogic {
         steps: ['Org ID and token accepted · read-only scope', 'Linked to report suite sephoraglobal'],
         dvLabel: 'Report suite', dvOpts: ['sephoraglobal', 'sephora-app'],
         nums: ['815K', '94K', '70K'], top: [['Page views', '305K', 100], ['Product views (prodView)', '144K', 47], ['Custom link clicks', '115K', 38], ['Cart additions (scAdd)', '40K', 13], ['Checkouts (scCheckout)', '12K', 4]] },
+      cja: { name: 'Customer Journey Analytics', mono: 'CJ', c: '#E2412E', kind: 'Cross-channel journeys from Adobe Experience Platform', rt: false,
+        desc: 'Cross-channel journeys and segments from Adobe Experience Platform datasets. Read-only.',
+        fields: [
+          { label: 'Adobe org ID', hint: '', ph: 'A1B2C3D4E5F6@AdobeOrg', type: 'text', val: '' },
+          { label: 'Data view ID', hint: '', ph: 'dv_6512a3f0c1', type: 'text', val: '' },
+          { label: 'Integration token', hint: '', ph: 'Paste your integration token', type: 'password', val: '' }
+        ],
+        note: 'Create an integration in Adobe Developer Console with read access to the CJA API, then paste its token.',
+        steps: ['Org ID and token accepted · read-only scope', 'Linked to data view Sephora Omnichannel'],
+        dvLabel: 'Data view', dvOpts: ['Sephora Omnichannel', 'Sephora Web only'],
+        nums: ['833K', '95K', '72K'], top: [['Page views', '308K', 100], ['Product views', '146K', 47], ['Link clicks', '117K', 38], ['Cart additions', '41K', 13], ['Checkouts', '12K', 4]] },
       ga: { name: 'Google Analytics 4', mono: 'GA', c: '#E37400', kind: 'GA4 events via BigQuery export', rt: false,
         desc: 'GA4 events from your BigQuery export. Historical only. Read-only.',
         fields: [
@@ -792,8 +803,8 @@ class Component extends DCLogic {
         nums: ['808K', '93K', '69K'], top: [['Pageview', '302K', 100], ['View product', '142K', 47], ['Click', '114K', 38], ['Add to bag', '40K', 13], ['Checkout', '12K', 4]] }
     };
     function logo(d) { return 'assets/logos/' + d + '.png'; }
-    var LOGO = { websdk: 'adobe.com', tealium: 'tealium.com', gtm: 'tagmanager.google.com', aa: 'adobe.com', ga: 'analytics.google.com', segment: 'segment.com', amplitude: 'amplitude.com', mixpanel: 'mixpanel.com', heap: 'heap.io' };
-    var order = ['websdk', 'tealium', 'gtm', 'aa', 'ga', 'segment', 'amplitude', 'mixpanel', 'heap'];
+    var LOGO = { websdk: 'adobe.com', tealium: 'tealium.com', gtm: 'tagmanager.google.com', aa: 'adobe.com', cja: 'adobe.com', ga: 'analytics.google.com', segment: 'segment.com', amplitude: 'amplitude.com', mixpanel: 'mixpanel.com', heap: 'heap.io' };
+    var order = ['websdk', 'aa', 'cja', 'tealium', 'gtm', 'ga', 'segment', 'amplitude', 'mixpanel', 'heap'];
     var mode = st.mode, src = st.src, e = EV[src || 'websdk'], es = st.status[src] || 'idle';
     // several sources can be connected; Continue stays manual so the user can keep adding
     var doneKeys = order.filter(function (k) { return st.status[k] === 'done'; });
