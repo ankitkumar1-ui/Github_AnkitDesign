@@ -42,14 +42,16 @@ input::placeholder{color:#a1a1aa}
     <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
       <button type="button" onClick="{{evt.toggle}}" aria-expanded="{{evt.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 22px; border: 0; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
         <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Web signals
             <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></div>
           <div style="font-size: 13px; color: #71717a; margin-top: 2px">Shopper events: page views, searches, add-to-basket and checkout.</div>
         </div>
+        <sc-if value="{{evt.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{evt.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{evt.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{evt.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 11px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{evt.more}}</span></sc-if></span></sc-if>
+        <sc-if value="{{evt.showText}}" hint-placeholder-val="{{true}}">
         <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; white-space: nowrap; color: {{evt.stFg}}; font-weight: {{evt.stWeight}}">
-          <sc-if value="{{evt.ok}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{evt.stText}}</span>
+          <sc-if value="{{evt.ok}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{evt.stText}}</span></sc-if>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: rotate({{evt.rot}}); transition: transform 0.15s"><path d="m6 9 6 6 6-6"></path></svg>
       </button>
 
@@ -283,14 +285,16 @@ input::placeholder{color:#a1a1aa}
       <!-- ============ 2 · PRODUCT CATALOG (same card) ============ -->
       <button type="button" onClick="{{cat.toggle}}" aria-expanded="{{cat.exp}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 18px 22px; border: 0; border-top: 1px solid #e4e4e7; background: transparent; font-family: inherit; color: inherit; text-align: left; cursor: pointer">
         <span style="position: relative; flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: rgba(60,140,129,0.12); color: #2f7369; display: flex; align-items: center; justify-content: center">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><path d="M7.5 7.5h.01"></path></svg><sc-if value="{{cat.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><path d="M7.5 7.5h.01"></path></svg><sc-if value="{{cat.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Product catalog
             <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #52525b; background: #f4f4f5; border-radius: 5px; padding: 1px 6px">Required</em></div>
           <div style="font-size: 13px; color: #71717a; margin-top: 2px">Products, prices, stock and categories.</div>
         </div>
+        <sc-if value="{{cat.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{cat.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{cat.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{cat.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 11px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{cat.more}}</span></sc-if></span></sc-if>
+        <sc-if value="{{cat.showText}}" hint-placeholder-val="{{true}}">
         <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; white-space: nowrap; color: {{cat.stFg}}; font-weight: {{cat.stWeight}}">
-          <sc-if value="{{cat.done}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{cat.stText}}</span>
+          <sc-if value="{{cat.done}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{cat.stText}}</span></sc-if>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: rotate({{cat.rot}}); transition: transform 0.15s"><path d="m6 9 6 6 6-6"></path></svg>
       </button>
       <sc-if value="{{cat.open}}" hint-placeholder-val="{{false}}">
@@ -466,15 +470,17 @@ input::placeholder{color:#a1a1aa}
               <sc-if value="{{g.isCms}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 9h10M7 13h6"></path></svg></sc-if>
               <sc-if value="{{g.isCs}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"></path><path d="M8 12h.01M12 12h.01M16 12h.01"></path></svg></sc-if>
               <sc-if value="{{g.isCrm}}" hint-placeholder-val="{{false}}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg></sc-if>
-              <sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+              <sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><span title="Connected" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
             </span>
             <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
               <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><b style="font-size: 14.5px; font-weight: 600">{{g.name}}</b>
                 <em style="font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #71717a; border: 1px solid #e4e4e7; border-radius: 5px; padding: 0 5px">Optional</em></span>
               <span style="font-size: 13px; color: #71717a">{{g.blurb}}</span>
             </span>
+            <sc-if value="{{g.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{g.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{g.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{g.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 11px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{g.more}}</span></sc-if></span></sc-if>
+            <sc-if value="{{g.showText}}" hint-placeholder-val="{{true}}">
             <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 13px; white-space: nowrap; color: {{g.stFg}}; font-weight: {{g.stWeight}}">
-              <sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{g.stText}}</span>
+              <sc-if value="{{g.done}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>{{g.stText}}</span></sc-if>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: rotate({{g.rot}}); transition: transform 0.15s"><path d="m6 9 6 6 6-6"></path></svg>
           </button>
           <sc-if value="{{g.open}}" hint-placeholder-val="{{false}}">
@@ -896,6 +902,14 @@ class Component extends DCLogic {
       cs: ['sephora_tickets_90d.csv', '22 MB · 9,860 rows · 10 columns', 'Needs a ticket ID, date, channel and reason. Cortex maps the rest.', 'Service pack', [['9,860', 'tickets and chats'], ['1,120', 'return reasons'], ['90 days', 'of history']]],
       crm: ['sephora_contacts.csv', '64 MB · 412,000 rows · 11 columns', 'Needs an email or customer ID. Cortex hashes it before import.', 'Contacts pack', [['412K', 'contacts'], ['86', 'segments'], ['64%', 'opted in']]]
     };
+    // Stacked app icons for connected sources: up to three, then "+N"
+    function faces(list) {
+      return {
+        faces: list.slice(0, 3).map(function (d, i) { return { logo: d.logo, ml: i ? '-8px' : '0', z: 3 - i }; }),
+        more: list.length > 3 ? '+' + (list.length - 3) : '', hasFaces: list.length > 0, showText: !list.length,
+        facesTitle: list.map(function (d) { return d.name; }).join(', ')
+      };
+    }
     function group(gid) {
       var G = GROUPS[gid], A = ALT[gid], pid = st.pick[gid], s = null;
       var gmode = st.gmode[gid] || 'connect', csvKey = gid + ':csv', cs = st.status[csvKey] || 'idle';
@@ -905,7 +919,8 @@ class Component extends DCLogic {
       var anyRun = G.srcs.some(function (x) { return st.status[gid + ':' + x[0]] === 'running'; });
       var connDone = doneSrcs.length > 0;
       var gDone = gmode === 'connect' ? connDone : gmode === 'csv' ? cs === 'done' : true;
-      return {
+      var fc = faces(gmode === 'connect' ? doneSrcs.map(function (x) { return { logo: logo(x[2]), name: x[1] }; }) : []);
+      return Object.assign(fc, {
         name: G.name, blurb: G.blurb, noun: G.noun,
         modes: seg([['connect', 'Connect'], ['csv', 'Upload CSV'], ['mock', 'Mock data']], gmode, function (m) { var o = Object.assign({}, self.state.gmode); o[gid] = m; self.setState({ gmode: o }); }),
         isConnect: gmode === 'connect', isCsv: gmode === 'csv', isMock: gmode === 'mock',
@@ -938,7 +953,7 @@ class Component extends DCLogic {
         start: function () { self.connect(key); }, reset: function () { self.disconnect(key); },
         done: gDone, stText: gDone ? (gmode === 'connect' ? doneSrcs.map(function (x) { return x[1]; }).join(', ') : gmode === 'csv' ? 'CSV imported' : 'Mock data') : anyRun || cs === 'running' ? 'Connecting…' : 'Add',
         stFg: gDone ? '#15803d' : '#71717a', stWeight: gDone ? '600' : '400'
-      };
+      });
     }
     function accordion(g, id) {
       var open = !!st.open[id];
@@ -947,6 +962,7 @@ class Component extends DCLogic {
       return g;
     }
     accordion(evt, 'evt'); evt.done = evtDone;
+    Object.assign(evt, faces(mode === 'connect' ? doneKeys.map(function (k) { return { logo: logo(LOGO[k]), name: EV[k].name }; }) : []));
     var cat = accordion(group('catalog'), 'catalog'), catDone = cat.done;
     var opt = ['oms', 'cms', 'cs', 'crm'].map(function (gid, i) {
       var g = group(gid);
