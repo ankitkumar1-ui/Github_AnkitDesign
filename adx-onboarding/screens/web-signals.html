@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ADX Setup — Web Signals</title>
+<!-- Styles for this screen only (added while the screen is shown). Fonts are loaded once in index.html. -->
+<style>
+
+:root{--bg:#FAFAFA;--surface:#FFFFFF;--surface-2:#FAFAFA;--sink:#F4F4F5;--ink:#09090B;--ink-soft:#3F3F46;--muted:#71717A;--faint:#A1A1AA;--line:#E4E4E7;--line-strong:#D4D4D8;--accent:#18181B;--accent-soft:#F4F4F5;--accent-ink:#18181B;--ai:#3C8C81;--ai-soft:#EDF6F4;--ai-ink:#2F7A70;--good:#16A34A;--good-soft:#F0FDF4;--warn:#D97706;--warn-soft:#FFFBEB;--crit:#DC2626;--crit-soft:#FEF2F2;--ring:#18181B;--shadow:0 1px 2px 0 rgba(0,0,0,.05);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);--radius:10px;--radius-sm:8px;--rail:224px;--f-display:'Inter',system-ui,sans-serif;--f-body:'Inter',system-ui,sans-serif;--f-mono:'JetBrains Mono',ui-monospace,monospace;--an-c1:#2a78d6;--an-c2:#eb6834;--an-c3:#1baf7a;--an-c4:#eda100;--an-c5:#e87ba4;--an-c6:#008300;--ln-signal:#2a78d6;--ln-model:#1baf7a;--ln-trigger:#eb6834;--av-indigo-bg:#F0F1FF;--av-indigo-fg:#4C487C;--av-coral-bg:#FCEFEA;--av-coral-fg:#8F2B05;--av-teal-bg:#E3F6F0;--av-teal-fg:#005848;--av-sky-bg:#E6F5FF;--av-sky-fg:#105376;--v3cw:clamp(440px,32vw,640px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+* { box-sizing: border-box; }
+h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 600; margin: 0px; letter-spacing: -0.02em; text-wrap: balance; }
+button { font-family: inherit; cursor: pointer; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; color: inherit; }
+.rail { background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0px; padding: 14px 12px; gap: 2px; overflow-y: auto; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px; }
+.brand .glyph { width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto; background: rgb(0, 0, 0); position: relative; box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 3px; object-fit: cover; display: block; }
+.brand b { font-family: var(--f-display); font-weight: 600; font-size: 14.5px; letter-spacing: -0.02em; line-height: 1.15; display: block; }
+.brand span { font-size: 11px; color: var(--muted); letter-spacing: 0.01em; }
+.rail-nav { display: flex; flex-direction: column; }
+.nav-cat { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; font-family: inherit; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 15px 10px 7px; }
+.nav-cat:hover { color: var(--ink-soft); }
+.nav-cat .chev { margin-left: auto; width: 13px; height: 13px; color: var(--faint); transition: transform 0.18s; }
+.nav-cat-group { display: flex; flex-direction: column; gap: 1px; margin-left: 12px; padding-left: 11px; border-left: 1px solid var(--line); overflow: hidden; }
+.subnav-item { display: flex; align-items: center; gap: 9px; text-align: left; width: 100%; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--muted); transition: background 0.12s, color 0.12s; position: relative; }
+.subnav-item::before { content: ""; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 7px; height: 1px; background: var(--line); }
+.subnav-item .sub-ico { width: 16px; height: 16px; flex: 0 0 auto; color: var(--faint); transition: color 0.12s; }
+.subnav-item .sub-ico svg { width: 16px; height: 16px; display: block; }
+.subnav-item:hover { background: var(--sink); color: var(--ink); }
+.subnav-item:hover .sub-ico { color: var(--muted); }
+.subnav-item.on { background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+.subnav-item.on::before { background: var(--accent); }
+.subnav-item.on .sub-ico { color: var(--accent); }
+.nav-cat-wrap { position: relative; }
+.nc-ico { width: 22px; height: 22px; flex: 0 0 auto; color: var(--muted); display: none; place-items: center; }
+.nc-ico svg { width: 19px; height: 19px; }
+.flyout-title { display: none; }
+.rail-toggle { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; color: var(--muted); flex: 0 0 auto; }
+.rail-toggle:hover { background: var(--sink); color: var(--ink); }
+.rail-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+.rail-foot .av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, rgb(233, 162, 59), rgb(217, 104, 59)); color: rgb(255, 255, 255); font-size: 11px; font-weight: 600; display: grid; place-items: center; flex: 0 0 auto; font-family: var(--f-display); }
+.rail-foot .who b { font-size: 12.5px; font-weight: 600; display: block; line-height: 1.2; }
+.rail-foot .who span { font-size: 11px; color: var(--muted); }
+.topbar { height: 56px; flex: 0 0 auto; display: flex; align-items: center; gap: 14px; padding: 0px 22px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.menu-btn { display: none; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); align-items: center; justify-content: center; }
+.crumb { font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+.crumb b { color: var(--ink); font-weight: 600; }
+.env { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; background: var(--surface-2); }
+.env .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
+.top-actions { margin-left: auto; display: flex; align-items: center; gap: 9px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0px 15px; border-radius: var(--radius-sm); font-weight: 500; font-size: 13.5px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); transition: background 0.12s, border-color 0.12s, box-shadow 0.12s, color 0.12s; white-space: nowrap; box-shadow: var(--shadow); }
+.btn:hover { background: var(--sink); }
+.btn:active { transform: translateY(0.5px); }
+.btn.ghost { border-color: transparent; background: transparent; color: var(--ink-soft); box-shadow: none; }
+.btn.ghost:hover { background: var(--sink); color: var(--ink); }
+.btn.sm { height: 30px; padding: 0px 11px; font-size: 12.5px; border-radius: calc(var(--radius-sm) - 2px); }
+.btn .ico { width: 15px; height: 15px; }
+.pagehead { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.pagehead .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+.pagehead h1 { font-size: 25px; line-height: 1.1; }
+.pagehead p { margin: 7px 0px 0px; color: var(--muted); max-width: 60ch; font-size: 13.5px; }
+.dtabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 4px 0px 22px; overflow-x: auto; }
+.dtab { appearance: none; border-width: medium medium 2px; border-style: none none solid; border-color: currentcolor currentcolor transparent; border-image: none; background: none; font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 13.5px; font-weight: 500; color: var(--muted); white-space: nowrap; padding: 10px 15px; cursor: pointer; margin-bottom: -1px; transition: color 0.12s; }
+.dtab:hover { color: var(--ink-soft); }
+.dtab.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--ink); }
+.dtab .tcount { font-size: 11px; font-weight: 600; color: var(--faint); margin-left: 6px; }
+.rail .nav-cat-group, .rail .nav-sub { border-left-width: medium !important; border-left-style: none !important; border-left-color: currentcolor !important; margin-left: 0px !important; padding-left: 0px !important; }
+.rail .subnav-item::before { display: none !important; }
+.setup-wrap .nav-cat-group { margin: 6px 0px 4px !important; }
+.rail-setup { margin-top: auto; padding-top: 12px; }
+.rail-setup + .rail-foot { margin-top: 10px; }
+.setup-wrap { display: flex; flex-direction: column-reverse; background: rgb(24, 24, 27); border: 1px solid rgb(39, 39, 42); border-radius: 12px; padding: 4px; box-shadow: rgba(0, 0, 0, 0.45) 0px 6px 18px -8px; }
+.setup-wrap .nav-cat { color: rgb(228, 228, 231); padding: 10px; border-radius: 9px; }
+.setup-wrap .nav-cat:hover { color: rgb(255, 255, 255); background: rgb(39, 39, 42); }
+.setup-wrap .nav-cat .nc-ico { display: grid; color: rgb(161, 161, 170); width: 18px; height: 18px; }
+.setup-wrap .nav-cat .nc-ico svg { width: 15px; height: 15px; }
+.setup-wrap .nav-cat .chev { color: rgb(113, 113, 122); transform: rotate(180deg); }
+.setup-wrap .nav-cat-group { border-left-color: rgb(63, 63, 70); margin: 6px 0px 4px 18px; padding-left: 9px; }
+.setup-wrap .subnav-item { color: rgb(161, 161, 170); }
+.setup-wrap .subnav-item::before { background: rgb(63, 63, 70); }
+.setup-wrap .subnav-item .sub-ico { color: rgb(113, 113, 122); }
+.setup-wrap .subnav-item:hover { background: rgb(39, 39, 42); color: rgb(250, 250, 250); }
+.setup-wrap .subnav-item.on { background: rgb(250, 250, 250); color: rgb(9, 9, 11); }
+.setup-wrap .subnav-item.on .sub-ico { color: rgb(9, 9, 11); }
+.setup-wrap .subnav-item.on::before { background: rgb(250, 250, 250); }
+.ws-tabs { margin: 2px 0px 18px; }
+.rail-foot .who { min-width: 0px; }
+.rail-foot .who span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tb-cx { width: 34px; height: 34px; padding: 0px; justify-content: center; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; box-shadow: none; border-radius: 11px; }
+.tb-cx svg { display: block; flex: 0 0 auto; transition: transform 0.12s; width: 30px !important; height: 30px !important; }
+.tb-cx:hover svg { transform: scale(1.05); }
+.wrap{max-width:1160px;margin:0 auto;padding:26px 22px 80px}
+.wrap.full{max-width:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 15px;border-radius:var(--radius-sm);
+font-weight:500;font-size:13.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+transition:background .12s,border-color .12s,box-shadow .12s,color .12s;white-space:nowrap;box-shadow:var(--shadow)}
+.btn:hover{background:var(--sink)}
+.btn:active{transform:translateY(.5px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;pointer-events:none}
+.btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+.btn.primary:hover{background:var(--accent);filter:brightness(1.08)}
+.btn.ai{background:var(--ai);color:#fff;border-color:transparent}
+.btn.ai:hover{background:var(--ai);filter:brightness(1.08)}
+.btn.cortex{background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);padding-left:10px}
+.btn.cortex:hover{background:var(--sink)}
+.cx-logo{display:inline-flex;flex:none}
+.cx-logo svg{display:block;border-radius:5px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-soft);box-shadow:none}
+.btn.ghost:hover{background:var(--sink);color:var(--ink)}
+.btn.sm{height:30px;padding:0 11px;font-size:12.5px;border-radius:calc(var(--radius-sm) - 2px)}
+.btn .ico{width:15px;height:15px}
+.btn:focus-visible,.nav-item:focus-visible,.expcard:focus-visible,.subnav-item:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ring)}
+.pagehead{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
+.pagehead .eyebrow{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);
+display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.pagehead h1{font-size:25px;line-height:1.1}
+.pagehead p{margin:7px 0 0;color:var(--muted);max-width:60ch;font-size:13.5px}
+.pagehead .side{margin-left:auto;display:flex;gap:9px;flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.dtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:4px 0 22px;overflow-x:auto}
+.dtab{appearance:none;border:none;background:none;font:inherit;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;
+padding:10px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .12s}
+.dtab:hover{color:var(--ink-soft)}
+.dtab.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+.dtab .tcount{font-size:11px;font-weight:600;color:var(--faint);margin-left:6px}
+.dtab.on .tcount{color:var(--muted)}
+body{margin:0}
+.site{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#111;background:#fff;font-size:13px;line-height:1.35}
+.site *{box-sizing:border-box}
+.tg{position:relative;outline-offset:5px;border-radius:4px;transition:outline-color .25s}
+.pin{position:absolute;top:50%;margin-top:-11px;left:-31px;width:22px;height:22px;border-radius:50%;font:700 11px/1 Geist,ui-sans-serif,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;z-index:6;transition:transform .2s,box-shadow .2s;letter-spacing:0}
+.pin.c{top:-11px;left:-11px;margin-top:0}
+.site .muted{color:#666;font-size:12px}
+.site .sx-promo{background:#6d0f17;color:#fff;text-align:center;font-size:12px;padding:10px 12px}
+.site .sx-head{display:flex;align-items:center;gap:16px;padding:14px 28px 14px 42px;border-bottom:1px solid #eee}
+.site .sx-logo{font-size:21px;letter-spacing:.32em;font-weight:500}
+.site .sx-search{flex:0 1 250px;display:flex;align-items:center;gap:7px;border:1.5px solid #222;border-radius:999px;padding:7px 12px;color:#777;font-size:12px}
+.site .sx-sp{flex:1}
+.site .sx-hi{display:flex;flex-direction:column;font-size:11px;line-height:1.3}
+.site .sx-hi b{font-weight:500}.sx-hi small{font-size:10px;color:#888}
+.site .sx-hi em{font-style:normal;font-size:8.5px;font-weight:700;background:#111;color:#fff;border-radius:3px;padding:0 4px;width:max-content}
+.site .sx-user{flex-direction:row;align-items:center;gap:8px}.sx-user>span:last-child{display:flex;flex-direction:column}
+.site .sx-av{width:26px;height:26px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700}
+.site .sx-ico{display:flex;color:#111}
+.site .sx-nav{display:flex;justify-content:center;gap:24px;background:#000;color:#fff;font-size:12px;padding:11px 20px}
+.site .sx-body{padding:18px 28px 34px 42px}
+.site .crumb{font-size:11px;color:#666;margin-bottom:10px}
+.site .sec-h{font-size:16px;font-weight:700;margin:24px 0 12px}
+.site .row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.site .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.site .row3t{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.site .pc{display:flex;flex-direction:column;gap:3px;font-size:11.5px}
+.site .pimg{height:132px;background:#f6f6f6;border-radius:4px;display:grid;place-items:center;margin-bottom:6px}
+.site .pimg.sm{height:72px;width:64px;margin:0}
+.site .mini{width:40px;height:68px;border-radius:6px 6px 12px 12px;box-shadow:0 -12px 0 -4px #d9c3b7}
+.site .pimg.sm .mini{width:22px;height:38px;box-shadow:0 -7px 0 -2px #d9c3b7}
+.site .pb{font-weight:700;font-size:10.5px;letter-spacing:.04em}
+.site .pn{line-height:1.35;color:#222}.pp{font-weight:700}
+.site .st{font-size:10.5px;letter-spacing:1px}.st i{font-style:normal;color:#777;letter-spacing:0}
+.site .hm-hero{height:220px;background:linear-gradient(110deg,#2b0f14,#6d0f17 48%,#b8483d);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 34px;overflow:visible}
+.site .hm-copy{display:flex;flex-direction:column;gap:7px;max-width:320px}
+.site .hm-k{font-size:10.5px;letter-spacing:.2em;opacity:.8}.hm-copy b{font-size:26px;font-weight:600;line-height:1.15}.hm-copy>span:nth-child(3){font-size:12.5px;opacity:.85}
+.site .hm-btn{margin-top:6px;background:#fff;color:#111;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:700;width:max-content}
+.site .hm-art{position:relative;width:230px;height:170px}
+.site .hm-art span{position:absolute;bottom:0;border-radius:8px 8px 14px 14px}
+.site .hm-art .b1{left:20px;width:56px;height:120px;background:linear-gradient(#f1d7c9,#d8a58c)}
+.site .hm-art .b2{left:90px;width:70px;height:150px;background:linear-gradient(#ffd0d8,#e98aa0)}
+.site .hm-art .b3{left:172px;width:46px;height:96px;background:linear-gradient(#e9e2ff,#a99ad6)}
+.site .story{height:118px;border-radius:4px;padding:12px 14px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;font-size:14px;font-weight:700}
+.site .story small{font-size:9.5px;letter-spacing:.14em;opacity:.85;font-weight:600}
+.site .bi{margin-top:22px;background:#f6f6f6;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.site .pill{background:#111;color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:700}
+.site .pill-o{display:inline-block;border:1.5px solid #111;border-radius:999px;padding:9px 22px;font-size:12.5px;font-weight:700;margin-top:14px}
+.site .plp-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.site .plp-top h2,.site h2{font-size:24px;font-weight:700;margin:0}
+.site .selbox{border:1px solid #ccc;border-radius:4px;padding:7px 12px;font-size:12px;white-space:nowrap}
+.site .plp{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px;align-items:start}
+.site .flt{display:flex;flex-direction:column;gap:16px;padding:2px}
+.site .fg{display:flex;flex-direction:column;gap:7px;font-size:12px;border-bottom:1px solid #eee;padding-bottom:12px}
+.site .fg b{font-size:12.5px}
+.site .fg span{display:flex;align-items:center;gap:8px;color:#333}
+.site .fg i{width:13px;height:13px;border:1.5px solid #999;border-radius:3px}.fg i.on{background:#111;border-color:#111}
+.site .more{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px}
+.site .bar{width:180px;height:3px;background:#e5e5e5;border-radius:2px}.bar i{display:block;height:100%;background:#111}
+.site .pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+.site .gal{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-content:start}
+.site .thumbs{display:flex;flex-direction:column;gap:8px}
+.site .th{width:38px;height:38px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #ddd}.th.on{box-shadow:0 0 0 1.5px #111}
+.site .hero{position:relative;height:330px;display:grid;place-items:center;overflow:hidden;background:#faf7f5}
+.site .bottle{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.site .cap{width:120px;height:78px;border-radius:10px 10px 4px 4px;background:linear-gradient(135deg,#e9d3c7,#c9a593 60%,#b48d7a)}
+.site .glass{width:136px;height:150px;margin-top:-4px;border-radius:12px 12px 24px 24px;background:linear-gradient(160deg,#a0603a,#7b4126 55%,#5e2f1b);display:grid;place-items:center;box-shadow:inset 0 0 0 6px rgba(255,255,255,.12)}
+.site .glass span{color:#f5e9e2;font-size:11px;letter-spacing:.3em;text-align:center;line-height:1.8}
+.site .swoosh{position:absolute;width:280px;height:110px;border-radius:50%;background:linear-gradient(90deg,transparent,#8a4a2a 40%,#6b3720);transform:rotate(-38deg) translate(40px,10px);opacity:.85}
+.site .brand{font-size:12.5px;font-weight:700}.pname{font-size:15px;margin-top:2px}
+.site .rate{background:#f6f6f6;padding:8px 10px;font-size:11.5px;margin:12px 0}.rate .sep{color:#bbb;margin:0 6px}.rate u{color:#1b5ed1}
+.site .price{font-size:12px;color:#555;margin-bottom:10px}.price b{font-size:17px;color:#111}
+.site .color{font-size:12.5px;margin:6px 0 8px}
+.site .swg{display:grid;grid-template-columns:repeat(13,1fr);gap:6px;padding:2px}
+.site .sw{aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}.sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #111}
+.site .find{font-size:12px;color:#1b5ed1;text-decoration:underline;margin:10px 0 14px;width:max-content}
+.site .del{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.site .del>div{border:1px solid #ddd;border-radius:6px;padding:9px;font-size:11px;line-height:1.35}.del>div.on{border:2px solid #111}
+.site .del b{display:block;font-size:11.5px}.del span{color:#666}
+.site .add{height:44px;border-radius:999px;background:#cf112c;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:12px}
+.site .srch{display:flex;align-items:center;gap:10px;border:2px solid #111;border-radius:999px;padding:11px 18px;font-size:15px}
+.site .srch .x{margin-left:auto;color:#999;font-size:18px}
+.site .chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;font-size:12px;width:max-content;max-width:100%;padding:2px}
+.site .chips b{font-weight:500;border:1px solid #ccc;border-radius:999px;padding:6px 12px}
+.site .bk{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:start}
+.site .card{border:1px solid #e5e5e5;border-radius:6px;padding:14px 16px;background:#fff}
+.site .bitem{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #eee;font-size:12px}.bitem:last-child{border-bottom:0}
+.site .bt{flex:1;display:flex;flex-direction:column;gap:2px}
+.site .promo{display:flex;gap:8px;margin-bottom:12px}.promo .inp{flex:1;border:1px solid #ccc;border-radius:4px;padding:8px 10px;font-size:12px;letter-spacing:.06em}
+.site .sum>div{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}.sum .tot{border-top:1px solid #eee;margin-top:6px;padding-top:9px;font-size:13.5px}
+.site .co-head{display:flex;align-items:center;gap:16px;padding:16px 28px 16px 42px;border-bottom:1px solid #eee}
+.site .lnk{font-size:12.5px;text-decoration:underline}
+.site .co .coh{display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:10px}
+.site .co .coh i{width:20px;height:20px;border-radius:50%;background:#111;color:#fff;font-style:normal;font-size:11px;display:grid;place-items:center}
+.site .fields{display:flex;flex-direction:column;gap:3px;font-size:12px;color:#333;padding-left:29px}
+.site .fields.two{flex-direction:row;gap:30px}.fields b{font-weight:500;color:#111}
+.site .radios{display:flex;flex-direction:column;gap:7px;padding-left:29px;font-size:12px}
+.site .radios span{display:flex;align-items:center;gap:8px}.radios i{width:13px;height:13px;border:1.5px solid #999;border-radius:50%}.radios .on i{border:4px solid #111}
+.site .err{margin:10px 0 0 29px;font-size:11.5px;color:#b3261e;background:#fdecea;border-radius:4px;padding:7px 10px}
+.site .sx-in{flex:1;min-width:0;border:0;outline:none;background:transparent;font:inherit;font-size:12px;color:#111;padding:0;-webkit-appearance:none;appearance:none}
+.site .sx-in::placeholder{color:#777}
+.site .lipimg{background:linear-gradient(180deg,#faf6f3,#f1ebe6)}
+.site .lip{display:flex;flex-direction:column;align-items:center;transform:rotate(-8deg)}
+.site .lip i{display:block;width:18px;height:30px;border-radius:3px 9px 2px 2px;clip-path:polygon(0 28%,100% 0,100% 100%,0 100%)}
+.site .lip b{display:block;width:24px;height:52px;border-radius:3px 3px 4px 4px;box-shadow:inset -5px 0 0 rgba(255,255,255,.12),inset 4px 0 0 rgba(0,0,0,.12);margin-top:-1px}
+.fresh{font-size:10px;font-weight:600;color:#3f5f8a;background:#eef2f8;border:1px solid #d6dfec;border-radius:999px;padding:0 6px;white-space:nowrap}
+.gpx{position:absolute;width:2.9px;height:2.9px;border-radius:1px;transition:background-color .55s ease}
+@property --hunt-a{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes huntSpin{to{--hunt-a:360deg}}
+.hunt{animation:huntSpin 1.4s linear infinite}
+@keyframes wsSpin{to{transform:rotate(360deg)}}
+.ws-spin{width:9px;height:9px;box-sizing:border-box;border-radius:50%;border:1.5px solid #bbf7d0;border-top-color:#16a34a;animation:wsSpin .8s linear infinite;flex:none}
+@keyframes tagFound{from{box-shadow:0 0 0 0 rgba(22,163,74,.45)}to{box-shadow:0 0 0 7px rgba(22,163,74,0)}}
+.found{animation:tagFound .9s ease-out}
+@keyframes tagLand{0%{opacity:.3;transform:translateY(-10px);box-shadow:0 0 0 3px rgba(60,140,129,.35)}35%{opacity:1;transform:none}100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}}
+.landed{animation:tagLand 1.3s ease-out}
+.tg.hit{cursor:pointer}
+@keyframes calloutIn{from{opacity:0;transform:translate(10px,6px) scale(.96)}to{opacity:1;transform:none}}
+
+
+
+/* Shared app-shell fixes (keep in sync across home, setup, profiles, catalog, connections, web-signals, signals) */
+.pagehead p{max-width:none}
+.dtabs{border-bottom:0;box-shadow:inset 0 -1px 0 var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.dtabs::-webkit-scrollbar{display:none}
+.dtab{margin-bottom:0;font-weight:500}
+.dtab.on{font-weight:500}
+.dtab:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--ring);border-radius:6px 6px 0 0}
+</style>
+</head>
+<body>
+<!-- Markup: Claude Design "DC" template syntax. See CLAUDE.md for the rules. -->
+<template data-view>
+<div style="display:flex;min-height:100vh;background:var(--bg);font-family:var(--f-body);color:var(--ink)">
+<div style="flex:0 0 var(--rail);width:var(--rail);background:var(--surface);border-right:1px solid var(--line)"><aside class="rail" style="position:sticky;top:0;height:100vh;box-sizing:border-box;border-right:0" id="rail">
+    <div class="brand">
+      <img class="glyph nlogo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAIAAADajyQQAAAIwElEQVR42u1aa0hU3xaf85oZhbEsNUeStOdYiIoh0ZPAlAiRChRKKApEVCojIsPQCqKSQIhMqUArirA0QzKNkjK0poePD31Rw1J7yKjje+bMOXvfDz/uvueO/c1g1Mtl1gcZZtbee/3We6+tTuclL3nJS17ykpe85CUveen/gzjP78j9Z09K6XwBEzyOShRFSikgiaI4v/A8byuTySRJEj7zPD/D5YIgCIKAfQRBEEVRu+f8QIL0kiRlZ2e/fv26q6urra2tpKTEYrFAymnWAtI/MQAeaM4dWhAEQfDz83v+/Dn9bxoZGUlKSpoGG7xXp9MZjcbU1NTy8vKGhobGxsaKioqsrCyz2QxsPM/PDzCdTnfr1i1KqcPhcLlcTqdTlmWn00kpHRsbW7t27T9hg8du3769ra2NTqGfP39mZWVh7VwDgxNaLBaXy6UoCiGEiUUIURSFUvrp0ycfHx9BEFi8aT0wJSUFbNCFw+GYnJyUZdnlcmGfoqKi6f15VgiOlJ6eTimFfISQ0tLSjo4OLbaSkhLGrPXAqKioyclJVVVlWQYnI1VV8T2lNDMzc+Z5yJPATp8+DZVTSn/9+qXT6davXw9ZVVWF7tPS0hg/zMVxXH19PaXU6XSqqkoptdvtlZWV9+7d6+3thV4Ab2BgYMmSJW65d+6AIah6e3shRE5ODtCqqqooysjICIJNkiT4VXR0tKqqkJ5S2tLSsmrVKmwbFBRUU1MDL4BesrOzWUzOHbBTp04pigJgfX19/v7+cJuHDx8CG4T78OGDr6+vKIp6vZ4hd7lchBCHwxETE6PT6fR6PX4NCAj4/v07IcTpdBJCKioqtM78h8j3FDzkBjgP66d4nk9PT+/s7ISaZVmOjY29cuWKoiiAvXz5ckIIIYTjuI6OjtbWVkEQXC6XLMuSJNlstqamJo7jKKUcxyH1g3lWgPE8L4qiJEmoLRzHSZJUVVVVVVVlMBh4nkekUUoFQRgcHDxw4IAsy0hriqJkZGSkpaU5HA6O45qbm3mehy6wCkmVARgdHWVxBVsxBs8n92kUlpiY+O3bt8HBQT8/PzDDVseOHXMLtoiICEh89+5d4GlpadHmBgRhWVkZC923b9/ObiHmeT4pKamkpKShoeHdu3fV1dW5ubmrV68GT3h4eF1dXXBwMDhhXhZsKNyU0o8fP/r6+nIcZzKZ2tvbmdzzAIzlsTdv3kxtEcbGxs6fPw/7LFiwAEJDSnSSixYt6urqQpYDtuLiYuwcGRmpqmpXV5e2Us0RMJy3ZcsWu92OPOb8N8myDB+jlD548ECSJCDRFlMYbePGjUiPDNv+/fvBkJqaevToUdZMzxEwxFVISMiPHz9YqGjNpSiKoigOh4NSWlhYiJSt7cdZn3H8+HG2g6qqw8PDFotFy+bmILMLDGdcu3YNMiEvTU5O1tTUlJWVff78mWGDHXbv3v3bSop9Hj16xPhR2YxGo16vd+OfdWDQYmBg4MDAACEExbS7uzsuLg4Mer2+qKiIVWFFUQYGBsLDw6e2dizYOjs70QoCG4LNrfLOOjCct3PnTq2aYRO9Xs+kefr0qbbDaGxslCSJXYHdct2mTZtYGwkj79u3j90p5xRYZmYmIQRCDA8PL168mBU0fDCbzT09Pej6wIZgY3WcGQ0ud+LECSgCyrLb7WvWrNE6MFpkAEP0NjU1ebIJBjBWYSmlQ0NDCxcu1J4Bnh07dqCRnybY4I34prKyUmtkq9Wq1+vxKwYeOp2uubkZwAgh1dXVnrxx/haYv7+/m/LAdubMGRQD9Ow2my0sLMztjghsHMexyobmkFJaWlqqPfrQoUO4zuHXvLy8mTfBnrEYHBIpvra2FtGIkvDq1SttsLltu3nzZliM3dmePHmSkpKSnJxcWlqK7MLyLeZCHrtrzhAYCwyz2dzb26sNtsuXL0/VNBTBgg0Xzd/eoJE5kDk9OR2YIbCAgIDY2Fh8ZsHGsCUnJ7thg0MCG/pgOKS2NWEu+v79e5PJ5OFB1R+BgSEnJ4cQsm3bNqzKz89nSU9V1f7+/rCwMLf5IXMqg8FQXFysHQFpJ0LPnj3DfdzDw5wZAjt58iSltLu7Ozg4GM0Ugg1GQLCJosiCDVIeOXIkMjKSXXkeP36Mro1SarPZXrx4gTGJJ3PGzLMiAwY119XV4Ruz2dzX14e0hsRw6dIllv3x986dO1+/fo2OjmbHBQUFRUZGRkVF4b78V0Py2QJGKZ2YmKCU5ufnY21CQgLKOkvZLNiw6urVq5TS0dHRCxcurFixwq1dnH707fnRwNRJOrukcBxHCDl48KDRaBQEob6+/uzZs5IkqaqKEcCNGzeWLVumqiokFgSBEGIwGHJzc+/fv+9yuTAtR55AYpxdYHa7ncltMpksFgul1GAwiKII4datW8cQjo2NIXGLonju3Ln6+nq9Xo/ICQwMLC8vx9iHKQW1wWAw6HQ6pPjZGmxM7bJjYmJwHiRuaGjw8fFhPPHx8ePj40juhJDbt2/D39D+hISEsGCDQyLYBEG4fv0663Ex85jrJyKe561WK4RDS2G1Wg8fPrxnz57CwsLx8XG4DZJEQkIC0whiKTExka0Fz969e1mMAVhra+v8PKbs2rULQrDBrVuXAPlqa2u1N3yGraCgQNtG9vf3x8fHv3z5kuUk3ErmdDrPzrt48SKzDAjeJcsybhZfvnwJDQ11A4a5AM/zdXV17OFCS7DhzZs3Z6VezdBueXl57HXHjaxW68qVK3+rdbepCezGPBNQN2zYMD/AmB3i4uLKy8t7enrQuQ4NDTU1NWVnZxuNxml8CRLHx8ej1rGRPT4XFBTMgx9OfVbF83lERERMTMzSpUv/2CJon/m2bt3a3NzMHLKzszMjI8PjqLi/BcYk0JZOnucFQUBWmGYhpvlYGBUVFRoaarPZ2tvbJyYmeJ5n/0Qxz8TKwN9qeir/bLzBcvOlFNaUzUWT4SUveclLXvKSl7zkJS95yUv/e/QvnUs8PX1Cza0AAAAASUVORK5CYII=" alt="Netomi">
+      <div><b>ADX</b><span>Agentic Digital Experience</span></div>
+    </div>
+
+    <nav class="rail-nav" id="railNav"><div class="nav-cat-wrap" data-catwrap="start">
+      <button class="nav-cat" data-cat="start"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg></span><span class="nc-label">Start</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="start"><div class="flyout-title">Start</div><a class="subnav-item" href="#/home" style="text-decoration:none" title="Home"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg></span><span class="sn-label">Home</span></a></div>
+    </div><div class="nav-cat-wrap" data-catwrap="exp">
+      <button class="nav-cat" data-cat="exp"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></span><span class="nc-label">Experiences</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="exp"><div class="flyout-title">Experiences</div><button class="subnav-item" title="Goals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"></circle></svg></span><span class="sn-label">Goals</span></button><button class="subnav-item" title="Experiences"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"></path></svg></span><span class="sn-label">Experiences</span></button><button class="subnav-item" title="Simulate"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span><span class="sn-label">Simulate</span></button><button class="subnav-item" title="Release"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span><span class="sn-label">Release</span></button></div>
+    </div><div class="nav-cat-wrap" data-catwrap="measure">
+      <button class="nav-cat" data-cat="measure"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="11" width="3" height="6"></rect><rect x="12" y="7" width="3" height="10"></rect><rect x="17" y="13" width="3" height="4"></rect></svg></span><span class="nc-label">Measure</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="measure"><div class="flyout-title">Measure</div><button class="subnav-item" title="Analytics"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9M13 17V5M8 17v-3"></path></svg></span><span class="sn-label">Analytics</span></button><button class="subnav-item" title="Test Management"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></path><path d="M6.453 15h11.094M8.5 2h7"></path></svg></span><span class="sn-label">Test Management</span></button></div>
+    </div></nav>
+    <div class="rail-setup" id="railSetup"><div class="nav-cat-wrap setup-wrap" data-catwrap="adx">
+      <button class="nav-cat hascurrent" data-cat="adx"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg></span><span class="nc-label">ADX Setup</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="adx"><div class="flyout-title">ADX Setup</div><a class="subnav-item" href="#/setup" style="text-decoration:none" title="Overview"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span><span class="sn-label">Overview</span></a><a class="subnav-item" href="#/connections" style="text-decoration:none" title="Connections"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg></span><span class="sn-label">Connections</span></a><a class="subnav-item" href="#/profiles" style="text-decoration:none" title="Customer Profiles"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="sn-label">Customer Profiles</span></a><a class="subnav-item" href="#/catalog" style="text-decoration:none" title="Product Catalog"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="M3.3 7 12 12l8.7-5"></path><path d="M12 22V12"></path></svg></span><span class="sn-label">Product Catalog</span></a><a class="subnav-item on" href="#/web-signals" style="text-decoration:none" title="Web Signals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></span><span class="sn-label">Web Signals</span></a><button class="subnav-item" title="Content"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v5h5"></path><path d="M8 13h8M8 17h8M8 9h2"></path></svg></span><span class="sn-label">Content</span></button><button class="subnav-item" title="Customer Service Integration"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"></path><path d="M21 16a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h3z"></path><path d="M3 16a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H3z"></path></svg></span><span class="sn-label">Customer Service Integration</span></button><button class="subnav-item" title="Agents"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2M20 14h2M15 13v2M9 13v2"></path></svg></span><span class="sn-label">Agents</span></button></div>
+    </div></div>
+
+    <div class="rail-foot">
+      <div class="av">EC</div>
+      <div class="who"><b>Emma C.</b><span>Sales Director, East Europe</span></div>
+    </div>
+  </aside></div>
+<div class="main" style="flex:1;min-width:0">
+<header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
+      <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar" title="Collapse sidebar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+      <div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">ADX Setup</span> <span style="color:var(--faint)">›</span> Web Signals <span style="color:var(--faint)">›</span> sephora.com</b></div>
+      <div class="top-actions">
+        <div class="env mock"><span class="dot"></span>Sandbox · Mock data</div>
+        <button class="btn sm tb-cx" id="cxTop" title="Cortex" aria-label="Open Cortex" aria-pressed="false"><svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect x="0" y="0" width="48" height="48" rx="13" fill="#43918A"></rect><path d="M24 11C25 19 29 23 37 24C29 25 25 29 24 37C23 29 19 25 11 24C19 23 23 19 24 11Z" fill="#fff"></path></svg></button>
+        <a class="btn ghost sm" href="#/signin" style="text-decoration:none" title="Replay first-time login"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5M3.5 8a9 9 0 1 0 2.3-3.3L3 8"></path></svg><span class="lbl">Replay onboarding</span></a>
+        <button class="btn sm" id="simBtn"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg>Simulate a shopper</button>
+        <button class="btn sm" id="themeBtn" aria-label="Toggle theme"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+      </div>
+    </header>
+<div class="wrap">
+
+      <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
+      <div class="dtabs"><button class="dtab on">Source &amp; mapping</button><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">23</span></a></div>
+
+      <section style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:0;padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <b style="font-size:17px;font-weight:600;letter-spacing:-.01em">sephora.com</b>
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:3px 11px"><span style="width:6px;height:6px;border-radius:50%;background:#16a34a"></span>Connected</span>
+        <span style="font-size:13px;color:#71717a">Retail · Adobe Launch · 179 rules · 22 other tags on the site</span>
+        <span style="margin-left:auto;display:flex;align-items:center;gap:18px;font-size:13px">
+          <span style="display:inline-flex;align-items:center;gap:7px"><b style="font-weight:600">{{sum.cap}}</b><span style="color:#71717a">captured</span></span>
+          <span style="display:inline-flex;align-items:center;gap:7px"><b style="font-weight:600;color:#c2410c">{{sum.miss}}</b><span style="color:#71717a">missing</span></span>
+          <span style="display:inline-flex;align-items:center;gap:7px;color:#52525b"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Re-scan</span>
+        </span>
+      </section>
+
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0 14px">
+      <div role="tablist" aria-label="View" style="display:inline-flex;background:#f4f4f5;border:1px solid #e4e4e7;border-radius:10px;padding:3px;gap:2px">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+          <button type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="font-family:inherit;font-size:13px;font-weight:600;padding:7px 14px;border:0;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:{{t.bg}};color:{{t.fg}};box-shadow:{{t.shadow}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>{{t.label}}</button>
+        </sc-for>
+      </div>
+        <span style="margin-left:auto;display:flex;gap:8px"><button class="btn">Add manually</button><button class="btn primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 14 9-14 9z"></path></svg>Browse &amp; label</button></span>
+      </div>
+
+      <sc-if value="{{isMap}}" hint-placeholder-val="{{true}}">
+      <section style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:{{map.cols}}">
+        <aside style="border-right:1px solid #e4e4e7;background:#fcfcfc;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:8px;padding:14px 16px 10px">
+            <b style="font-size:13.5px;font-weight:600">Pages</b><span style="font-size:12px;color:#a1a1aa">6</span>
+            <span style="margin-left:auto;font-size:11.5px;font-weight:600;color:#c2410c">{{sum.miss}} missing</span>
+          </div>
+          <sc-for list="{{pages}}" as="p" hint-placeholder-count="6">
+            <div style="border-top:1px solid #f0f0f1">
+              <button type="button" onClick="{{p.toggle}}" aria-expanded="{{p.expanded}}" style="width:100%;display:flex;align-items:center;gap:10px;padding:11px 14px 11px 13px;background:{{p.hbg}};border:0;border-left:3px solid {{p.bar}};font-family:inherit;color:inherit;text-align:left;cursor:pointer">
+                <span style="flex:0 0 28px;width:28px;height:28px;border-radius:8px;background:{{p.icBg}};color:#18181b;display:flex;align-items:center;justify-content:center;border:1px solid #ececee"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{p.icon}}"></path></svg></span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                  <span style="font-size:13.5px;font-weight:600">{{p.name}}</span>
+                  <span style="font-size:11px;color:#a1a1aa;font-family:var(--f-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{p.path}}</span>
+                </span>
+                <sc-if value="{{p.hasMiss}}" hint-placeholder-val="{{true}}"><span style="font-size:11px;font-weight:600;color:#c2410c;background:#fff7ed;border:1px solid #fed7aa;border-radius:999px;padding:1px 8px;white-space:nowrap">{{p.miss}} missing</span></sc-if>
+                <sc-if value="{{p.allOk}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;color:#64748b"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;color:#a1a1aa;transform:{{p.chev}}" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+              <sc-if value="{{p.open}}" hint-placeholder-val="{{false}}">
+                <div style="padding:0 12px 14px 16px;display:flex;flex-direction:column;gap:5px;background:#fff">
+                  <sc-for list="{{p.groups}}" as="g" hint-placeholder-count="2">
+                    <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:{{g.fg}};margin:10px 0 1px">{{g.title}}</div>
+                    <sc-for list="{{g.events}}" as="e" hint-placeholder-count="3">
+                      <div onClick="{{e.pick}}" class="{{e.cls}}" style="display:flex;flex-direction:column;gap:6px;padding:9px 10px;border:{{e.bw}} {{e.bstyle}} {{e.bd}};border-radius:10px;background:{{e.bg}};cursor:pointer;box-shadow:{{e.ring}};transition:box-shadow .2s">
+                        <div style="display:flex;align-items:center;gap:8px">
+                          <span style="flex:0 0 18px;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;background:{{e.bBg}};color:{{e.bFg}};border:1px {{e.bBd}};box-sizing:border-box">{{e.n}}</span>
+                          <span style="flex:1;font-size:12.5px;font-weight:500;line-height:1.3">{{e.when}}</span>
+                        </div>
+                        <sc-if value="{{e.ok}}" hint-placeholder-val="{{true}}">
+                          <div style="display:flex;align-items:center;gap:6px;padding-left:26px">
+                            <span style="font-family:var(--f-mono);font-size:11px;color:#3f3f46;background:#f4f4f5;border-radius:5px;padding:1px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px">{{e.tag}}</span>
+                            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#a1a1aa"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>Edit</span>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{e.idleMiss}}" hint-placeholder-val="{{false}}">
+                          <div style="display:flex;align-items:center;gap:6px;padding-left:26px;font-size:11.5px;color:#a1a1aa"><span style="width:5px;height:5px;border-radius:50%;background:#fb923c"></span>No tag yet<span style="margin-left:auto;display:inline-flex;align-items:center;gap:4px;color:#52525b;font-weight:500">Browse<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span></div>
+                        </sc-if>
+                        <sc-if value="{{e.hunting}}" hint-placeholder-val="{{false}}">
+                          <div style="display:flex;align-items:center;gap:7px;padding-left:26px;font-size:11.5px;color:#15803d;white-space:nowrap;min-width:0"><span class="ws-spin"></span><span style="flex:none">Checking for</span><span style="font-family:var(--f-mono);font-size:11px;overflow:hidden;text-overflow:ellipsis;min-width:0">{{e.sug}}…</span></div>
+                        </sc-if>
+                        <sc-if value="{{e.isFound}}" hint-placeholder-val="{{false}}">
+                          <div style="display:flex;align-items:center;gap:6px;padding-left:26px;font-size:11.5px;font-weight:600;color:#15803d"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Found<span style="font-family:var(--f-mono);font-size:11px;font-weight:400;color:#3f3f46;background:#f0fdf4;border-radius:5px;padding:1px 6px">{{e.sug}}</span></div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </aside>
+
+        <!-- Before browsing: the list leads, with a short invite to go hunting for the missing tags -->
+        <sc-if value="{{map.intro}}" hint-placeholder-val="{{false}}">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:36px 28px;background:radial-gradient(120% 70% at 50% 0%,#f8fafc,#fff 65%)">
+          <svg width="220" height="164" viewBox="0 0 220 164" fill="none" aria-hidden="true">
+            <ellipse cx="112" cy="152" rx="84" ry="6" fill="#f1f5f9"/>
+            <!-- treasure map: folded sheet, dashed trail, round flags (green = found, dashed = still to find) -->
+            <g transform="rotate(-5 92 76)">
+              <path d="M22 26 L70 20 L116 28 L164 22 V128 L116 134 L70 126 L22 132 Z" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M70 20 L116 28 V134 L70 126 Z" fill="#f1f5f9"/>
+              <path d="M70 20 V126 M116 28 V134" stroke="#e2e8f0" stroke-width="1.2"/>
+              <path d="M34 112 C 48 96, 40 80, 60 72 S 92 76, 98 58 S 128 40, 148 48" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/>
+              <path d="M142 42 l8 8 M150 42 l-8 8" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/>
+              <g><path d="M34 112 V98" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/><circle cx="34" cy="94" r="6" fill="#3c8c81"/><path d="M31.4 94 l1.8 1.8 3.4-3.6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+              <g><path d="M60 72 V58" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/><circle cx="60" cy="54" r="6" fill="#3c8c81"/><path d="M57.4 54 l1.8 1.8 3.4-3.6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+              <g><path d="M98 58 V44" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/><circle cx="98" cy="40" r="6" fill="#fff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2.4 2"/></g>
+              <circle cx="84" cy="100" r="3" fill="#e2e8f0"/><circle cx="132" cy="100" r="2" fill="#e2e8f0"/><circle cx="46" cy="44" r="2.5" fill="#e2e8f0"/>
+            </g>
+            <!-- small chest -->
+            <g>
+              <path d="M134 104 L139 86 Q164 78 189 86 L194 104 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.2" stroke-linejoin="round"/>
+              <g transform="rotate(-10 156 100)"><path d="M146 95 h14 l5 5 -5 5 h-14 z" fill="#fff" stroke="#3c8c81" stroke-width="1.3"/><circle cx="150" cy="100" r="1.5" fill="#3c8c81"/></g>
+              <g transform="rotate(12 174 98)"><path d="M166 93 h13 l5 5 -5 5 h-13 z" fill="#fff" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="2.4 2"/></g>
+              <rect x="132" y="104" width="64" height="40" rx="7" fill="#94a3b8"/>
+              <rect x="132" y="104" width="64" height="9" rx="3" fill="#64748b"/>
+              <path d="M152 104 v40 M176 104 v40" stroke="#cbd5e1" stroke-width="3"/>
+              <rect x="158" y="116" width="12" height="14" rx="3" fill="#3c8c81"/>
+              <circle cx="164" cy="121.5" r="1.8" fill="#f8fafc"/><path d="M164 123 v3.4" stroke="#f8fafc" stroke-width="1.6" stroke-linecap="round"/>
+            </g>
+            <path d="M200 66c.6 4.4 2.6 6.4 7 7-4.4.6-6.4 2.6-7 7-.6-4.4-2.6-6.4-7-7 4.4-.6 6.4-2.6 7-7Z" fill="#bfdcd8"/>
+            <path d="M14 140c.4 3 1.8 4.4 4.8 4.8-3 .4-4.4 1.8-4.8 4.8-.4-3-1.8-4.4-4.8-4.8 3-.4 4.4-1.8 4.8-4.8Z" fill="#cbd5e1"/>
+          </svg>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#64748b">{{sum.miss}} tags to find · {{map.pagesLeft}} pages</div>
+          <b style="font-size:17px;font-weight:600;letter-spacing:-.01em;max-width:26ch;line-height:1.3">Browse like a shopper and we'll find them</b>
+          <p style="margin:0;font-size:13px;line-height:1.55;color:#71717a;max-width:34ch">Open sephora.com right here and search, click and scroll the way customers do. Each time something fires, Cortex picks up the tag and ticks it off the list.</p>
+          <button type="button" class="btn primary" onClick="{{map.start}}" style="margin-top:4px">Start browsing<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+          <span style="font-size:12px;color:#a1a1aa">Or pick a missing event on the left to go straight to it.</span>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{map.browsing}}" hint-placeholder-val="{{true}}">
+        <div style="display:flex;flex-direction:column;min-width:0">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #e4e4e7;background:#fff">
+            <button type="button" onClick="{{map.back}}" title="Back to the list" style="height:26px;padding:0 9px;border:1px solid #e4e4e7;border-radius:7px;background:#fff;font-family:inherit;font-size:12px;font-weight:600;color:#3f3f46;display:inline-flex;align-items:center;gap:5px;cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>List</button>
+            <span style="display:flex;gap:5px"><i style="width:9px;height:9px;border-radius:50%;background:#e4e4e7;display:block"></i><i style="width:9px;height:9px;border-radius:50%;background:#e4e4e7;display:block"></i><i style="width:9px;height:9px;border-radius:50%;background:#e4e4e7;display:block"></i></span>
+            <span style="flex:1;font-size:12px;color:#52525b;background:#f4f4f5;border-radius:7px;padding:5px 11px;font-family:var(--f-mono)">https://www.sephora.com{{sel.path}}</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#71717a"><span style="width:9px;height:9px;border-radius:50%;background:#64748b"></span>Captured</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#71717a"><span style="width:9px;height:9px;border-radius:50%;background:#fff7ed;border:1.5px dashed #fb923c;box-sizing:border-box"></span>Missing</span>
+          </div>
+          <div style="position:relative;min-height:940px;background:#fff">
+<sc-if value="{{pg.results}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="crumb">Search results</div>
+  <div class="plp-top"><div><h2>“{{srch.term}}”</h2><span class="muted">1,284 results</span></div><span class="selbox">Sort by: <b>Relevance</b> ⌄</span></div>
+  <div class="chips" style="margin:0 0 16px"><span>Refine:</span><b>Matte</b><b>Satin</b><b>Long-wear</b><b>Red</b><b>Nude</b><b>Under $30</b></div>
+  <div class="row4"><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#9e1b32,#9e1b32 55%,rgba(255,255,255,.35) 62%,#9e1b32 70%)"></i><b style="background:#1c1c1c"></b></span></div><span class="pb">MAC</span><span class="pn">Retro Matte Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$25.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#b9575a,#b9575a 55%,rgba(255,255,255,.35) 62%,#b9575a 70%)"></i><b style="background:#c9a46a"></b></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Matte Revolution Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#7a1f2b,#7a1f2b 55%,rgba(255,255,255,.35) 62%,#7a1f2b 70%)"></i><b style="background:#2a2a2a"></b></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Icon Semi-Matte Refillable Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#c97a6d,#c97a6d 55%,rgba(255,255,255,.35) 62%,#c97a6d 70%)"></i><b style="background:#e8e2da"></b></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Kind Words Matte Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$20.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#c4162a,#c4162a 55%,rgba(255,255,255,.35) 62%,#c4162a 70%)"></i><b style="background:#1f1f1f"></b></span></div><span class="pb">DIOR</span><span class="pn">Rouge Dior Satin Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$47.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#d4334a,#d4334a 55%,rgba(255,255,255,.35) 62%,#d4334a 70%)"></i><b style="background:#c8a24c"></b></span></div><span class="pb">YVES SAINT LAURENT</span><span class="pn">Rouge Pur Couture</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$45.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#8c3a3f,#8c3a3f 55%,rgba(255,255,255,.35) 62%,#8c3a3f 70%)"></i><b style="background:#151515"></b></span></div><span class="pb">NARS</span><span class="pn">Powermatte Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#e0627a,#e0627a 55%,rgba(255,255,255,.35) 62%,#e0627a 70%)"></i><b style="background:#111111"></b></span></div><span class="pb">SEPHORA COLLECTION</span><span class="pn">Rouge Satin Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$14.00</span></div></div>
+</div></div></sc-if>
+<sc-if value="{{pg.home}}" hint-placeholder-val="{{true}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo tg hit" onClick="{{pn.home1.hit}}" style="outline:{{pn.home1.ol}}"><span class="pin" style="background:{{pn.home1.bg}};color:{{pn.home1.fg}};border:1.5px {{pn.home1.bd}};box-shadow:{{pn.home1.sh}};transform:{{pn.home1.tf}}">{{pn.home1.n}}</span>SEPHORA</span><span class="sx-search tg hit" onClick="{{pn.home4.hit}}" style="outline:{{pn.home4.ol}}"><span class="pin c" style="background:{{pn.home4.bg}};color:{{pn.home4.fg}};border:1.5px {{pn.home4.bd}};box-shadow:{{pn.home4.sh}};transform:{{pn.home4.tf}}">{{pn.home4.n}}</span><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="hm-hero tg hit" onClick="{{pn.home2.hit}}" style="outline:{{pn.home2.ol}}"><span class="pin c" style="background:{{pn.home2.bg}};color:{{pn.home2.fg}};border:1.5px {{pn.home2.bd}};box-shadow:{{pn.home2.sh}};transform:{{pn.home2.tf}}">{{pn.home2.n}}</span>
+    <div class="hm-copy"><span class="hm-k">THE HOLIDAY SHOP</span><b>Gifts they'll actually use</b><span>Value sets, minis and stocking stuffers from $10.</span><span class="hm-btn">Shop now</span></div>
+    <div class="hm-art"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  </div>
+  <div class="sec-h">Chosen for you</div>
+  <div class="row4"><div class="tg hit" onClick="{{pn.home3.hit}}" style="outline:{{pn.home3.ol}}"><span class="pin c" style="background:{{pn.home3.bg}};color:{{pn.home3.fg}};border:1.5px {{pn.home3.bd}};box-shadow:{{pn.home3.sh}};transform:{{pn.home3.tf}}">{{pn.home3.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:#e3a9b3"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Soft Pinch Liquid Blush</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$23.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#9ccda9"></span></div><span class="pb">GLOW RECIPE</span><span class="pn">Watermelon Niacinamide Dew Drops</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b9b5d3"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Setting Spray</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$38.00</span></div></div>
+  <div class="tg hit" onClick="{{pn.home5.hit}}" style="outline:{{pn.home5.ol}};margin-top:6px"><span class="pin c" style="background:{{pn.home5.bg}};color:{{pn.home5.fg}};border:1.5px {{pn.home5.bd}};box-shadow:{{pn.home5.sh}};transform:{{pn.home5.tf}}">{{pn.home5.n}}</span>
+    <div class="sec-h">Brand stories</div>
+    <div class="row3"><div class="story" style="background:linear-gradient(160deg,#c7a17a,#6b4a33)"><small>RARE BEAUTY</small>Made to feel good in</div><div class="story" style="background:linear-gradient(160deg,#8fb6a0,#2f5b4b)"><small>GLOW RECIPE</small>Fruit-powered skincare</div><div class="story" style="background:linear-gradient(160deg,#c48a9a,#5e2a3a)"><small>FENTY BEAUTY</small>Beauty for all</div></div>
+  </div>
+  <div class="bi"><span><b>Beauty Insider</b> · Earn points on every purchase and unlock birthday gifts.</span><span class="pill">Join now</span></div>
+</div></div></sc-if>
+<sc-if value="{{pg.plp}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="crumb">Makeup › Face</div>
+  <div class="plp-top"><div class="tg hit" onClick="{{pn.plp1.hit}}" style="outline:{{pn.plp1.ol}}"><span class="pin" style="background:{{pn.plp1.bg}};color:{{pn.plp1.fg}};border:1.5px {{pn.plp1.bd}};box-shadow:{{pn.plp1.sh}};transform:{{pn.plp1.tf}}">{{pn.plp1.n}}</span><h2>Foundation</h2><span class="muted">412 results</span></div>
+    <span class="selbox tg hit" onClick="{{pn.plp4.hit}}" style="outline:{{pn.plp4.ol}}"><span class="pin" style="background:{{pn.plp4.bg}};color:{{pn.plp4.fg}};border:1.5px {{pn.plp4.bd}};box-shadow:{{pn.plp4.sh}};transform:{{pn.plp4.tf}}">{{pn.plp4.n}}</span>Sort by: <b>Relevance</b> ⌄</span></div>
+  <div class="plp">
+    <div class="flt tg hit" onClick="{{pn.plp2.hit}}" style="outline:{{pn.plp2.ol}}"><span class="pin c" style="background:{{pn.plp2.bg}};color:{{pn.plp2.fg}};border:1.5px {{pn.plp2.bd}};box-shadow:{{pn.plp2.sh}};transform:{{pn.plp2.tf}}">{{pn.plp2.n}}</span>
+      <div class="fg"><b>Brand</b><span><i class="on"></i>Fenty Beauty</span><span><i></i>Rare Beauty</span><span><i></i>NARS</span><span><i></i>Huda Beauty</span></div>
+      <div class="fg"><b>Skin type</b><span><i class="on"></i>Oily</span><span><i></i>Combination</span><span><i></i>Dry</span></div>
+      <div class="fg"><b>Price</b><span><i></i>Under $25</span><span><i></i>$25 – $50</span><span><i></i>$50 and above</span></div>
+      <div class="fg"><b>Finish</b><span><i></i>Matte</span><span><i></i>Natural</span><span><i></i>Radiant</span></div>
+    </div>
+    <div>
+      <div class="row3t"><div class="tg hit" onClick="{{pn.plp3.hit}}" style="outline:{{pn.plp3.ol}}"><span class="pin c" style="background:{{pn.plp3.bg}};color:{{pn.plp3.fg}};border:1.5px {{pn.plp3.bd}};box-shadow:{{pn.plp3.sh}};transform:{{pn.plp3.tf}}">{{pn.plp3.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(166,113,77)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Soft Matte Concealer</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(201,147,109)"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Liquid Touch Weightless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(128,82,53)"></span></div><span class="pb">NARS</span><span class="pn">Natural Radiant Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div></div>
+      <div class="more tg hit" onClick="{{pn.plp5.hit}}" style="outline:{{pn.plp5.ol}}"><span class="pin" style="background:{{pn.plp5.bg}};color:{{pn.plp5.fg}};border:1.5px {{pn.plp5.bd}};box-shadow:{{pn.plp5.sh}};transform:{{pn.plp5.tf}}">{{pn.plp5.n}}</span><span class="muted">You've viewed 6 of 412</span><span class="bar"><i style="width:2%"></i></span></div>
+      <div style="text-align:center"><span class="pill-o tg hit" onClick="{{pn.plp6.hit}}" style="outline:{{pn.plp6.ol}}"><span class="pin" style="background:{{pn.plp6.bg}};color:{{pn.plp6.fg}};border:1.5px {{pn.plp6.bd}};box-shadow:{{pn.plp6.sh}};transform:{{pn.plp6.tf}}">{{pn.plp6.n}}</span>Show more products</span></div>
+    </div>
+  </div>
+</div></div></sc-if>
+<sc-if value="{{pg.pdp}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="crumb">Makeup › Face › Foundation</div>
+  <div class="pdp">
+    <div class="gal"><div class="thumbs"><span class="th on" style="background:radial-gradient(circle at 40% 35%,rgb(207,155,118),rgb(157,104,69))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(194,138,100),rgb(142,92,60))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(175,121,85),rgb(128,82,53))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(157,104,69),rgb(114,72,45))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(138,89,58),rgb(101,62,39))"></span></div>
+      <div class="hero"><div class="bottle"><div class="cap"></div><div class="glass"><span>F E N T Y<br>B E A U T Y</span></div></div><div class="swoosh"></div></div></div>
+    <div>
+      <div class="tg hit" onClick="{{pn.pdp1.hit}}" style="outline:{{pn.pdp1.ol}}"><span class="pin" style="background:{{pn.pdp1.bg}};color:{{pn.pdp1.fg}};border:1.5px {{pn.pdp1.bd}};box-shadow:{{pn.pdp1.sh}};transform:{{pn.pdp1.tf}}">{{pn.pdp1.n}}</span><div class="brand">Fenty Beauty by Rihanna</div><div class="pname">Pro Filt'r Soft Matte Longwear Liquid Foundation</div></div>
+      <div class="rate tg hit" onClick="{{pn.pdp6.hit}}" style="outline:{{pn.pdp6.ol}}"><span class="pin" style="background:{{pn.pdp6.bg}};color:{{pn.pdp6.fg}};border:1.5px {{pn.pdp6.bd}};box-shadow:{{pn.pdp6.sh}};transform:{{pn.pdp6.tf}}">{{pn.pdp6.n}}</span><span>★★★★★</span> <u>12.8K reviews</u><span class="sep">|</span>Ask a question<span class="sep">|</span>♥ 8.4K</div>
+      <div class="price"><b>$40.00</b> <span>or 4 payments of $10.00</span></div>
+      <div class="color">Color: <b>330 Medium</b> · neutral undertone</div>
+      <div class="swg tg hit" onClick="{{pn.pdp2.hit}}" style="outline:{{pn.pdp2.ol}}"><span class="pin" style="background:{{pn.pdp2.bg}};color:{{pn.pdp2.fg}};border:1.5px {{pn.pdp2.bd}};box-shadow:{{pn.pdp2.sh}};transform:{{pn.pdp2.tf}}">{{pn.pdp2.n}}</span><span class="sw" style="background:rgb(244,214,192)"></span><span class="sw" style="background:rgb(242,210,186)"></span><span class="sw" style="background:rgb(239,205,180)"></span><span class="sw" style="background:rgb(237,201,174)"></span><span class="sw" style="background:rgb(235,196,168)"></span><span class="sw" style="background:rgb(232,192,162)"></span><span class="sw" style="background:rgb(230,187,156)"></span><span class="sw" style="background:rgb(227,183,150)"></span><span class="sw" style="background:rgb(224,178,144)"></span><span class="sw" style="background:rgb(220,173,138)"></span><span class="sw" style="background:rgb(217,167,132)"></span><span class="sw" style="background:rgb(213,162,126)"></span><span class="sw" style="background:rgb(209,157,121)"></span><span class="sw" style="background:rgb(205,152,115)"></span><span class="sw" style="background:rgb(201,146,109)"></span><span class="sw" style="background:rgb(197,141,103)"></span><span class="sw" style="background:rgb(191,136,98)"></span><span class="sw" style="background:rgb(185,130,93)"></span><span class="sw" style="background:rgb(179,125,88)"></span><span class="sw" style="background:rgb(173,119,83)"></span><span class="sw" style="background:rgb(167,113,78)"></span><span class="sw" style="background:rgb(161,108,73)"></span><span class="sw" style="background:rgb(155,102,68)"></span><span class="sw" style="background:rgb(149,97,63)"></span><span class="sw sel" style="background:rgb(143,93,60)"></span><span class="sw" style="background:rgb(137,88,57)"></span><span class="sw" style="background:rgb(131,84,54)"></span><span class="sw" style="background:rgb(125,79,51)"></span><span class="sw" style="background:rgb(119,75,48)"></span><span class="sw" style="background:rgb(112,70,44)"></span><span class="sw" style="background:rgb(106,66,41)"></span><span class="sw" style="background:rgb(101,62,39)"></span><span class="sw" style="background:rgb(96,59,37)"></span><span class="sw" style="background:rgb(91,56,35)"></span><span class="sw" style="background:rgb(86,53,33)"></span><span class="sw" style="background:rgb(81,49,32)"></span><span class="sw" style="background:rgb(76,46,30)"></span><span class="sw" style="background:rgb(71,43,28)"></span><span class="sw" style="background:rgb(66,40,26)"></span></div>
+      <div class="find tg hit" onClick="{{pn.pdp5.hit}}" style="outline:{{pn.pdp5.ol}}"><span class="pin" style="background:{{pn.pdp5.bg}};color:{{pn.pdp5.fg}};border:1.5px {{pn.pdp5.bd}};box-shadow:{{pn.pdp5.sh}};transform:{{pn.pdp5.tf}}">{{pn.pdp5.n}}</span>Find your shade</div>
+      <div class="del tg hit" onClick="{{pn.pdp4.hit}}" style="outline:{{pn.pdp4.ol}}"><span class="pin" style="background:{{pn.pdp4.bg}};color:{{pn.pdp4.fg}};border:1.5px {{pn.pdp4.bd}};box-shadow:{{pn.pdp4.sh}};transform:{{pn.pdp4.tf}}">{{pn.pdp4.n}}</span><div class="on"><b>Get It Shipped</b><span>Free · by Tue, Nov 3</span></div><div><b>Same-day delivery</b><span>Order in 2 hrs</span></div><div><b>Buy online &amp; pick up</b><span>Ready in 2 hrs</span></div></div>
+      <div class="add tg hit" onClick="{{pn.pdp3.hit}}" style="outline:{{pn.pdp3.ol}}"><span class="pin" style="background:{{pn.pdp3.bg}};color:{{pn.pdp3.fg}};border:1.5px {{pn.pdp3.bd}};box-shadow:{{pn.pdp3.sh}};transform:{{pn.pdp3.tf}}">{{pn.pdp3.n}}</span>Add to Basket</div>
+    </div>
+  </div>
+  <div class="sec-h">Similar foundation</div>
+  <div class="row4"><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(194,138,100)"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Liquid Touch Weightless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(157,104,69)"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Beautiful Skin Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$49.00</span></div></div>
+</div></div></sc-if>
+<sc-if value="{{pg.search}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="srch tg hit" onClick="{{pn.search1.hit}}" style="outline:{{pn.search1.ol}}"><span class="pin" style="background:{{pn.search1.bg}};color:{{pn.search1.fg}};border:1.5px {{pn.search1.bd}};box-shadow:{{pn.search1.sh}};transform:{{pn.search1.tf}}">{{pn.search1.n}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg><span>foundation for oily skin</span><span class="x">×</span></div>
+  <div class="chips tg hit" onClick="{{pn.search3.hit}}" style="outline:{{pn.search3.ol}}"><span class="pin" style="background:{{pn.search3.bg}};color:{{pn.search3.fg}};border:1.5px {{pn.search3.bd}};box-shadow:{{pn.search3.sh}};transform:{{pn.search3.tf}}">{{pn.search3.n}}</span><span>Refine:</span><b>Oily skin</b><b>Long-wear</b><b>Matte finish</b><b>Under $40</b><b>Clean at Sephora</b></div>
+  <div class="muted" style="margin:14px 0 12px">148 results for “foundation for oily skin”</div>
+  <div class="row4"><div class="tg hit" onClick="{{pn.search2.hit}}" style="outline:{{pn.search2.ol}}"><span class="pin c" style="background:{{pn.search2.bg}};color:{{pn.search2.fg}};border:1.5px {{pn.search2.bd}};box-shadow:{{pn.search2.sh}};transform:{{pn.search2.tf}}">{{pn.search2.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(175,121,85)"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$49.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(138,89,58)"></span></div><span class="pb">MAKE UP FOR EVER</span><span class="pn">HD Skin Undetectable Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$45.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(119,75,48)"></span></div><span class="pb">ESTÉE LAUDER</span><span class="pn">Double Wear Stay-in-Place</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(207,155,118)"></span></div><span class="pb">BENEFIT</span><span class="pn">Hello Happy Flawless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(219,171,136)"></span></div><span class="pb">SEPHORA COLLECTION</span><span class="pn">Best Skin Ever Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$29.00</span></div></div>
+</div></div></sc-if>
+<sc-if value="{{pg.basket}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="tg hit" onClick="{{pn.basket1.hit}}" style="outline:{{pn.basket1.ol}};display:inline-block"><span class="pin" style="background:{{pn.basket1.bg}};color:{{pn.basket1.fg}};border:1.5px {{pn.basket1.bd}};box-shadow:{{pn.basket1.sh}};transform:{{pn.basket1.tf}}">{{pn.basket1.n}}</span><h2 style="margin:4px 0 2px">Basket (2)</h2></div>
+  <div class="muted" style="margin-bottom:16px">Get It Shipped · 2 items</div>
+  <div class="bk">
+    <div class="card"><div class="bitem"><div class="pimg sm"><span class="mini" style="background:rgb(147,96,63)"></span></div><div class="bt"><span class="pb">FENTY BEAUTY</span><span>Pro Filt'r Soft Matte Foundation</span><span class="muted">Color: 330 Medium · 1 oz</span></div><span class="selbox tg hit" onClick="{{pn.basket2.hit}}" style="outline:{{pn.basket2.ol}}"><span class="pin" style="background:{{pn.basket2.bg}};color:{{pn.basket2.fg}};border:1.5px {{pn.basket2.bd}};box-shadow:{{pn.basket2.sh}};transform:{{pn.basket2.tf}}">{{pn.basket2.n}}</span>Qty <b>1</b> ⌄</span><b>$40.00</b></div><div class="bitem"><div class="pimg sm"><span class="mini" style="background:#e3a9b3"></span></div><div class="bt"><span class="pb">RARE BEAUTY</span><span>Soft Pinch Liquid Blush</span><span class="muted">Color: Hope · 0.25 oz</span></div><span class="selbox">Qty <b>1</b> ⌄</span><b>$23.00</b></div></div>
+    <div>
+      <div class="promo tg hit" onClick="{{pn.basket3.hit}}" style="outline:{{pn.basket3.ol}}"><span class="pin" style="background:{{pn.basket3.bg}};color:{{pn.basket3.fg}};border:1.5px {{pn.basket3.bd}};box-shadow:{{pn.basket3.sh}};transform:{{pn.basket3.tf}}">{{pn.basket3.n}}</span><span class="inp">HOLIDAY15</span><span class="pill">Apply</span></div>
+      <div class="card sum"><div><span>Merchandise subtotal</span><b>$63.00</b></div><div><span>Promo HOLIDAY15</span><b>−$9.45</b></div><div><span>Shipping</span><b>Free</b></div><div class="tot"><span>Estimated total</span><b>$53.55</b></div></div>
+      <div class="add tg hit" onClick="{{pn.basket4.hit}}" style="outline:{{pn.basket4.ol}}"><span class="pin" style="background:{{pn.basket4.bg}};color:{{pn.basket4.fg}};border:1.5px {{pn.basket4.bd}};box-shadow:{{pn.basket4.sh}};transform:{{pn.basket4.tf}}">{{pn.basket4.n}}</span>Checkout</div>
+    </div>
+  </div>
+</div></div></sc-if>
+<sc-if value="{{pg.checkout}}" hint-placeholder-val="{{false}}"><div class="site"><div class="co-head"><span class="sx-logo">SEPHORA</span><span class="muted" style="display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Secure checkout</span><span class="sx-sp"></span><span class="lnk tg hit" onClick="{{pn.checkout5.hit}}" style="outline:{{pn.checkout5.ol}}"><span class="pin" style="background:{{pn.checkout5.bg}};color:{{pn.checkout5.fg}};border:1.5px {{pn.checkout5.bd}};box-shadow:{{pn.checkout5.sh}};transform:{{pn.checkout5.tf}}">{{pn.checkout5.n}}</span>‹ Back to basket</span></div>
+<div class="sx-body">
+  <div class="bk">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card co tg hit" onClick="{{pn.checkout1.hit}}" style="outline:{{pn.checkout1.ol}}"><span class="pin" style="background:{{pn.checkout1.bg}};color:{{pn.checkout1.fg}};border:1.5px {{pn.checkout1.bd}};box-shadow:{{pn.checkout1.sh}};transform:{{pn.checkout1.tf}}">{{pn.checkout1.n}}</span><b class="coh"><i>1</i>Shipping address</b><div class="fields"><span>Emma Clarke</span><span>420 Market St, Apt 5</span><span>San Francisco, CA 94111</span><span>(415) 555-0142</span></div></div>
+      <div class="card co tg hit" onClick="{{pn.checkout2.hit}}" style="outline:{{pn.checkout2.ol}}"><span class="pin" style="background:{{pn.checkout2.bg}};color:{{pn.checkout2.fg}};border:1.5px {{pn.checkout2.bd}};box-shadow:{{pn.checkout2.sh}};transform:{{pn.checkout2.tf}}">{{pn.checkout2.n}}</span><b class="coh"><i>2</i>Delivery method</b><div class="radios"><span class="on"><i></i>Standard · Free · Nov 3 – 5</span><span><i></i>Express · $9.95 · Nov 1</span><span><i></i>Same-day · $6.95 · today</span></div></div>
+      <div class="card co tg hit" onClick="{{pn.checkout3.hit}}" style="outline:{{pn.checkout3.ol}}"><span class="pin" style="background:{{pn.checkout3.bg}};color:{{pn.checkout3.fg}};border:1.5px {{pn.checkout3.bd}};box-shadow:{{pn.checkout3.sh}};transform:{{pn.checkout3.tf}}">{{pn.checkout3.n}}</span><b class="coh"><i>3</i>Payment</b><div class="fields two"><span>Card number<br><b>•••• •••• •••• 0002</b></span><span>Expiry<br><b>04 / 28</b></span></div><div class="err">Your card was declined. Try another payment method.</div></div>
+    </div>
+    <div>
+      <div class="card sum"><b style="display:block;margin-bottom:8px">Order summary</b><div><span>Subtotal</span><b>$63.00</b></div><div><span>Promo</span><b>−$9.45</b></div><div><span>Shipping</span><b>Free</b></div><div><span>Tax</span><b>$4.62</b></div><div class="tot"><span>Total</span><b>$58.17</b></div></div>
+      <div class="add tg hit" onClick="{{pn.checkout4.hit}}" style="outline:{{pn.checkout4.ol}}"><span class="pin" style="background:{{pn.checkout4.bg}};color:{{pn.checkout4.fg}};border:1.5px {{pn.checkout4.bd}};box-shadow:{{pn.checkout4.sh}};transform:{{pn.checkout4.tf}}">{{pn.checkout4.n}}</span>Place order</div>
+    </div>
+  </div>
+</div></div></sc-if>
+
+            <sc-if value="{{co.show}}" hint-placeholder-val="{{false}}">
+              <div style="position:absolute;right:112px;bottom:50px;background:#fff;border:1px solid #d3e4e0;border-radius:14px;padding:11px 12px 11px 14px;box-shadow:0 12px 32px rgba(15,23,42,.16),0 2px 6px rgba(60,140,129,.12);z-index:30;display:flex;align-items:center;gap:8px;animation:calloutIn .28s cubic-bezier(.22,1,.36,1) both">
+                <span style="font-size:13.5px;font-weight:500;line-height:1.35;color:#18181b;white-space:nowrap">{{co.title}}</span>
+                <span onClick="{{co.close}}" aria-label="Dismiss" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;color:#a1a1aa;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+                <span style="position:absolute;right:-6px;top:50%;margin-top:-5px;width:10px;height:10px;background:#fff;border-right:1px solid #d3e4e0;border-top:1px solid #d3e4e0;border-top-right-radius:2px;transform:rotate(45deg)"></span>
+              </div>
+            </sc-if>
+            <div onClick="{{gl.click}}" style="position:absolute;right:18px;bottom:18px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;z-index:25">
+              <div style="position:relative;width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 12px rgba(15,23,42,.10),0 0 0 1px rgba(15,23,42,.05);display:flex;align-items:center;justify-content:center">
+                <svg width="84" height="84" viewBox="0 0 84 84" style="position:absolute;inset:0" aria-hidden="true">
+                  <circle cx="42" cy="42" r="38.5" fill="none" stroke="#e8ebf0" stroke-width="3"></circle>
+                  <circle cx="42" cy="42" r="38.5" fill="none" stroke="#4a6a96" stroke-width="3" stroke-linecap="round" stroke-dasharray="{{gl.dash}}" transform="rotate(-90 42 42)"></circle>
+                </svg>
+                <svg width="56" height="56" viewBox="0 0 80 80" aria-hidden="true">
+                  <sc-for list="{{gl.px}}" as="d" hint-placeholder-count="600">
+                    <rect x="{{d.x}}" y="{{d.y}}" width="1.45" height="1.45" rx=".25" fill="{{d.c}}" style="transition:fill .6s ease"></rect>
+                  </sc-for>
+                </svg>
+              </div>
+              <span style="font-size:11px;font-weight:600;color:#52525b;font-variant-numeric:tabular-nums;letter-spacing:.01em">{{gl.label}}</span>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </section>
+      </sc-if>
+
+      <sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div role="tablist" aria-label="Filter" style="display:inline-flex;background:#f4f4f5;border:1px solid #e4e4e7;border-radius:10px;padding:3px;gap:2px">
+            <sc-for list="{{filters}}" as="t" hint-placeholder-count="3">
+              <button type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border:0;border-radius:7px;cursor:pointer;background:{{t.bg}};color:{{t.fg}};box-shadow:{{t.shadow}}">{{t.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <section style="border:1px solid #e4e4e7;border-radius:16px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05);overflow:hidden">
+          <div style="display:grid;grid-template-columns:160px minmax(200px,1.4fr) minmax(220px,1.6fr) 130px;gap:16px;padding:12px 20px;background:#fafafa;font-size:11.5px;font-weight:600;letter-spacing:.08em;color:#71717a"><span>PAGE</span><span>WHEN THE VISITOR…</span><span>TAG</span><span>STATUS</span></div>
+          <sc-for list="{{rows}}" as="r" hint-placeholder-count="12">
+            <div style="display:grid;grid-template-columns:160px minmax(200px,1.4fr) minmax(220px,1.6fr) 130px;gap:16px;align-items:center;padding:12px 20px;border-top:1px solid #e4e4e7">
+              <span style="font-size:13px;color:#3f3f46">{{r.page}}</span>
+              <span style="font-size:13.5px;font-weight:500">{{r.when}}</span>
+              <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <sc-if value="{{r.ok}}" hint-placeholder-val="{{true}}"><span style="font-family:var(--f-mono);font-size:12px;color:#3f3f46;background:#f4f4f5;border-radius:6px;padding:2px 8px">{{r.tag}}</span><span style="font-size:12px;color:#a1a1aa">{{r.srcTxt}}</span></sc-if>
+                <sc-if value="{{r.miss}}" hint-placeholder-val="{{false}}"><span style="font-size:12px;color:#a1a1aa">No tag yet</span><span style="display:inline-flex;align-items:center;height:26px;padding:0 10px;border:1px solid #e4e4e7;border-radius:8px;background:#fff;font-size:12px;font-weight:600">Add tag</span></sc-if>
+              </span>
+              <span style="font-size:13px;color:{{r.stFg}};font-weight:{{r.stW}}">{{r.stTxt}}</span>
+            </div>
+          </sc-for>
+        </section>
+      </sc-if>
+
+</div>
+</div>
+</div>
+</template>
+<script type="text/x-dc">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'map', browsing: false, open: 'home', sel: 'home', filter: 'all', act: null, fixed: {}, q: '', term: null, checking: null, found: null, landed: null };
+    this.timers = [];
+  }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); }
+  // The shopper action just happened: Cortex checks for the tag (rotating green stroke),
+  // flashes it as found, then moves it to Captured.
+  detect(key) {
+    var self = this, T = this.timers;
+    if (this.state.fixed[key] || this.state.checking === key || this.state.found === key) return;
+    this.setState({ checking: key });
+    T.push(setTimeout(function () {
+      self.setState({ checking: null, found: key });
+      T.push(setTimeout(function () {
+        var f = Object.assign({}, self.state.fixed); f[key] = true;
+        self.setState({ fixed: f, found: null, landed: key });
+        T.push(setTimeout(function () { if (self.state.landed === key) self.setState({ landed: null }); }, 1400));
+      }, 900));
+    }, 2500));
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var IC = { home: 'M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z', plp: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z', pdp: 'M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8', search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3', basket: 'M6 7h12l-1 13H7zM9 7a3 3 0 0 1 6 0', checkout: 'M2 6h20v12H2zM2 10h20M6 15h4' };
+    var AA = 'Adobe Analytics', AL = 'Adobe Launch', TL = 'Tealium';
+    function c(when, tag, src, rule) { return { when: when, ok: true, tag: tag, src: src, rule: rule }; }
+    function m(when, sug, hint) { return { when: when, ok: false, sug: sug, hint: hint }; }
+    var PAGES = [
+      { id: 'home', name: 'Home', path: '/home', events: [
+        c('Views the home page', 'page_view', AA, 'AA page view'),
+        c('Clicks the hero banner', 'promo_click', AL, '[TMS] hero_click'),
+        c('Clicks a product tile', 'product_clicked', AL, '[TMS] tile_click'),
+        m('Searches from the header', 'search_submitted', 'Search something from the header'),
+        m('Opens a brand story', 'brand_story_open', 'Open any brand story')] },
+      { id: 'plp', name: 'Product list', path: '/shop/foundation-makeup', events: [
+        c('Opens a product list', 'Page view', AA, 'AA page view'),
+        c('Applies a filter', 'Sent as a page view', AA, 'AA filter'),
+        c('Clicks a product', 'Product clicked', AL, '[TMS] plp_click'),
+        m('Sorts the results', 'list_sorted', 'Change \u201cSort by\u201d'),
+        m('Scrolls deep down the list', 'scroll_depth_75', 'Scroll to the end of the grid'),
+        m('Loads more products', 'list_load_more', 'Click \u201cShow more products\u201d')] },
+      { id: 'pdp', name: 'Product page', path: '/product/pro-filtr-foundation', events: [
+        c('Views a product', 'Product viewed', AA, 'AA product view'),
+        c('Picks a shade or size', 'Variant selected', TL, 'tealium variant'),
+        c('Adds to basket', 'add_to_basket', AL, '[TMS] GA4_addToCart'),
+        m('Chooses a delivery option', 'delivery_selected', 'Pick a delivery option'),
+        m('Opens Find your shade', 'shade_finder_open', 'Click \u201cFind your shade\u201d'),
+        m('Reads the reviews', 'reviews_open', 'Open the reviews')] },
+      { id: 'search', name: 'Search results', path: '/search?keyword=foundation', events: [
+        c('Searches for something', 'Search submitted', AA, 'AA search'),
+        m('Clicks a result', 'search_result_click', 'Click any result'),
+        m('Refines the search', 'search_refined', 'Tap a Refine chip')] },
+      { id: 'basket', name: 'Basket', path: '/basket', events: [
+        c('Opens the basket', 'Basket viewed', AA, 'AA basket'),
+        m('Changes an item quantity', 'basket_qty_change', 'Change a quantity'),
+        c('Applies a promo code', 'promo_applied', AL, '[TMS] promo'),
+        c('Starts checkout', 'Checkout started', AL, '[TMS] checkout_start')] },
+      { id: 'checkout', name: 'Checkout', path: '/checkout', events: [
+        c('Enters shipping details', 'shipping_info', AL, '[TMS] ship'),
+        m('Chooses a delivery method', 'delivery_method', 'Pick a delivery method'),
+        m('Sees a payment error', 'payment_error', 'Pay with a declined test card'),
+        c('Places an order', 'Order completed', AA, 'AA purchase'),
+        m('Leaves checkout early', 'checkout_abandon', 'Click \u201cBack to basket\u201d')] }
+    ];
+    var pn = {}, cap = 0, miss = 0;
+    PAGES.forEach(function (p) {
+      p.events.forEach(function (e, i) {
+        e.n = i + 1; e.key = p.id + e.n;
+        if (!e.ok && st.fixed[e.key]) { e.ok = true; e.tag = e.sug; e.src = 'Cortex'; e.rule = (e.key === 'home4' && st.term) ? 'keyword \u201c' + st.term + '\u201d' : 'detected while browsing'; e.fresh = true; }
+        if (e.ok) cap++; else miss++;
+        e.miss = !e.ok; e.srcTxt = e.ok ? e.src + ' · ' + e.rule : '';
+        var on = st.sel === p.id && st.act === e.n;
+        e.pinBg = e.ok ? '#64748b' : '#fff7ed'; e.pinFg = e.ok ? '#fff' : '#c2410c'; e.pinBd = e.ok ? 'solid #fff' : 'dashed #fb923c';
+        e.bd = on ? (e.ok ? '#a1a1aa' : '#fdba74') : (e.ok ? '#e4e4e7' : '#d4d4d8'); e.bg = '#fff'; e.bBg = e.ok ? '#f4f4f5' : '#fff7ed'; e.bFg = e.ok ? '#3f3f46' : '#c2410c'; e.bBd = e.ok ? 'solid #e4e4e7' : 'dashed #fb923c'; e.bstyle = e.ok ? 'solid' : 'dashed';
+        e.ring = on ? '0 1px 3px rgba(0,0,0,.08)' : 'none';
+        // after the shopper action, Cortex checks for the tag (rotating stroke), then it is found
+        var isFound = st.found === e.key, hunting = !e.ok && st.checking === e.key;
+        e.isFound = isFound; e.hunting = hunting; e.idleMiss = !e.ok && !hunting && !isFound; e.bw = '1px'; e.cls = '';
+        if (hunting) { e.cls = 'hunt'; e.bw = '1.5px'; e.bstyle = 'solid'; e.bd = 'transparent'; e.bg = 'linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--hunt-a),#e4e4e7 0 50%,#bbf7d0 68%,#16a34a 86%,#e4e4e7 100%) border-box'; e.ring = '0 1px 3px rgba(0,0,0,.08)'; }
+        if (isFound) { e.cls = 'found'; e.bstyle = 'solid'; e.bd = '#16a34a'; e.bg = '#f0fdf4'; e.bBg = '#16a34a'; e.bFg = '#fff'; e.bBd = 'solid #16a34a'; e.pinBg = '#16a34a'; e.pinFg = '#fff'; e.pinBd = 'solid #fff'; }
+        if (st.landed === e.key) e.cls = 'landed';
+        e.pick = function () { self.setState({ browsing: true, sel: p.id, open: p.id, act: e.n, term: null }); };
+        pn[e.key] = { n: e.n, bg: e.pinBg, fg: e.pinFg, bd: e.pinBd,
+          sh: on ? '0 0 0 6px ' + (e.ok ? 'rgba(100,116,139,.25)' : 'rgba(251,146,60,.28)') + ',0 3px 8px rgba(0,0,0,.2)' : '0 2px 6px rgba(0,0,0,.18)',
+          tf: on ? 'scale(1.3)' : 'none', ol: on ? '2px solid ' + (isFound ? '#16a34a' : e.ok ? '#64748b' : '#fb923c') : '2px solid transparent',
+          // clicking the element on the page is the shopper action; the header search fires on submit instead
+          hit: function (ev) { ev.stopPropagation(); if (e.key === 'home4') return; if (e.ok) { self.setState({ act: e.n, open: p.id }); return; } self.setState({ act: e.n, open: p.id }); self.detect(e.key); } };
+      });
+    });
+    function segs(list, cur, key, icons) {
+      return list.map(function (d) {
+        var on = cur === d[0];
+        return { label: d[1], icon: (icons || {})[d[0]] || '', sel: on ? 'true' : 'false', bg: on ? '#fff' : 'transparent', fg: on ? '#09090b' : '#52525b', shadow: on ? '0 1px 2px rgba(0,0,0,0.05)' : 'none', pick: function () { var o = {}; o[key] = d[0]; self.setState(o); } };
+      });
+    }
+    var pages = PAGES.map(function (p) {
+      var open = st.open === p.id, isSel = st.sel === p.id, mc = p.events.filter(function (e) { return !e.ok; }), cc = p.events.filter(function (e) { return e.ok; });
+      var groups = [];
+      if (mc.length) groups.push({ title: 'Missing · ' + mc.length, fg: '#71717a', events: mc });
+      if (cc.length) groups.push({ title: 'Captured · ' + cc.length, fg: '#71717a', events: cc });
+      return { name: p.name, path: p.path, icon: IC[p.id], miss: mc.length, hasMiss: mc.length > 0, allOk: mc.length === 0,
+        hbg: isSel ? '#fff' : 'transparent', bar: isSel ? '#18181b' : 'transparent', icBg: isSel ? '#f4f4f5' : '#fff',
+        open: open, expanded: open ? 'true' : 'false', chev: open ? 'rotate(180deg)' : 'none', groups: groups,
+        toggle: function () { self.setState({ open: open ? null : p.id, sel: p.id, act: null, term: null }); } };
+    });
+    var cur = PAGES.filter(function (p) { return p.id === st.sel; })[0] || PAGES[0];
+    var pg = {}; PAGES.forEach(function (p) { pg[p.id] = !st.term && p.id === cur.id; }); pg.results = !!st.term;
+    var done = cur.events.filter(function (e) { return e.ok; }).length, total = cur.events.length;
+    var firstMiss = cur.events.filter(function (e) { return !e.ok; })[0];
+
+    // globe icon (outline, meridian ellipse, centre line, equator, two parallels) rasterised into pixels.
+    // Coverage never drops below 80%: mapped pixels are blue, the rest light orange, filled in random patches.
+    var pct = Math.round(80 + 20 * (total ? done / total : 1)), seed = { home: 1, plp: 2, pdp: 3, search: 4, basket: 5, checkout: 6 }[cur.id] || 1;
+    function hsh(a, b) { var v = Math.sin(a * 127.1 + b * 311.7 + seed * 17.3) * 43758.5453; return v - Math.floor(v); }
+    var N = 48, gc = 23.5, R = 21.6, hw = 1.25, ea = 0.48 * R, cells = [];
+    for (var yy = 0; yy < N; yy++) for (var xx = 0; xx < N; xx++) {
+      var dx = xx - gc, dy = yy - gc, rr = Math.sqrt(dx * dx + dy * dy), sg = -1;
+      if (Math.abs(rr - R) < hw) sg = 0;
+      else if (rr < R) {
+        var ee = Math.sqrt(dx * dx / (ea * ea) + dy * dy / (R * R)), gx = dx / (ea * ea * ee || 1), gy = dy / (R * R * ee || 1), gd = Math.sqrt(gx * gx + gy * gy) || 1;
+        if (Math.abs(dx) < hw * 0.9) sg = 1;
+        else if (Math.abs(ee - 1) / gd < hw) sg = 2;
+        else if (Math.abs(dy) < hw * 0.9) sg = 3;
+        else if (Math.abs(Math.abs(dy) - 0.5 * R) < hw * 0.9) sg = 4;
+      }
+      if (sg >= 0) cells.push({ x: xx, y: yy, s: sg, o: 0 , ang: Math.atan2(dy, dx) });
+    }
+    cells.forEach(function (p) { p.o = hsh(Math.floor((p.ang + 4) / 0.7), p.s) * 0.8 + hsh(p.x, p.y) * 0.35; });
+    var cord = cells.slice().sort(function (a, b) { return a.o - b.o; }), nOn = Math.round(cord.length * pct / 100);
+    cord.forEach(function (p, i) { p.on = i < nOn; });
+    var gpix = cells.map(function (p) { var r = hsh(p.x + 3, p.y + 9);
+      return { x: (p.x * 1.66).toFixed(2), y: (p.y * 1.66).toFixed(2), c: p.on ? (r < 0.3 ? '#5b7ca8' : (r < 0.65 ? '#4a6a96' : '#3f5f8a')) : (r < 0.5 ? '#fdba74' : '#fed7aa') }; });
+    var actE = null; cur.events.forEach(function (e) { if (st.act === e.n) actE = e; });
+    var co = { show: !!actE, close: function () { self.setState({ act: null }); } };
+    if (actE) co.title = actE.ok ? (actE.fresh ? 'Captured \u00b7 ' + actE.tag : actE.when) : st.found === actE.key ? 'Found \u00b7 ' + actE.sug : st.checking === actE.key ? 'Checking for ' + actE.sug + '\u2026' : actE.hint;
+    function goSearch(v) { var t = (v || '').trim() || 'lipstick'; self.setState({ term: t, q: t, sel: 'home', open: 'home', act: 4, tab: 'map' }); self.detect('home4'); }
+    var srch = { q: st.q, term: st.term || '', onQ: function (ev) { self.setState({ q: ev.target.value }); }, onKey: function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); goSearch(ev.target.value); } }, go: function () { goSearch(st.q); } };
+    var gl = { px: gpix, dash: (2 * Math.PI * 38.5 * pct / 100).toFixed(1) + ' ' + (2 * Math.PI * 38.5).toFixed(1), label: pct + '% mapped', click: function () { if (firstMiss) self.setState({ act: firstMiss.n, open: cur.id }); } };
+
+    var rows = [];
+    PAGES.forEach(function (p) {
+      var ms = p.events.filter(function (e) { return !e.ok; }), cs = p.events.filter(function (e) { return e.ok; });
+      ms.concat(cs).forEach(function (e) {
+        if (st.filter === 'missing' && e.ok) return;
+        if (st.filter === 'captured' && !e.ok) return;
+        rows.push({ page: p.name, when: e.when, ok: e.ok, miss: !e.ok, tag: e.tag || '', srcTxt: e.srcTxt || '', stTxt: e.ok ? 'Captured' : 'Missing', stFg: e.ok ? '#475569' : '#c2410c', stW: e.ok ? '500' : '600' });
+      });
+    });
+    return {
+      sum: { cap: cap, miss: miss },
+      tabs: segs([['map', 'Site map'], ['list', 'List']], st.tab, 'tab', { map: 'M9 20 3 17V4l6 3 6-3 6 3v13l-6-3zM9 7v13M15 4v13', list: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' }),
+      isMap: st.tab === 'map', isList: st.tab === 'list',
+      map: { browsing: st.browsing, intro: !st.browsing, cols: st.browsing ? '272px minmax(0,1fr)' : 'minmax(0,1fr) minmax(280px,38%)',
+        pagesLeft: pages.filter(function (p) { return p.hasMiss; }).length,
+        start: function () { var p = PAGES.filter(function (x) { return x.events.some(function (e) { return !e.ok; }); })[0] || PAGES[0]; self.setState({ browsing: true, sel: p.id, open: p.id, act: null, term: null }); },
+        back: function () { self.setState({ browsing: false, act: null, term: null }); } },
+      pages: pages, pg: pg, pn: pn, sel: { path: st.term ? '/search?keyword=' + encodeURIComponent(st.term) : cur.path }, srch: srch, co: co, gl: gl, rows: rows,
+      filters: segs([['all', 'All · ' + (cap + miss)], ['missing', 'Missing · ' + miss], ['captured', 'Captured · ' + cap]], st.filter, 'filter')
+    };
+  }
+}
+</script>
+</body>
+</html>

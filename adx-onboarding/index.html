@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADX · Onboarding</title>
+<link rel="icon" href="assets/adx-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Every font any screen uses -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@500;600&family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #fafafa; }
+  #jump { position: fixed; left: 12px; bottom: 12px; z-index: 9999; display: flex; flex-wrap: wrap; gap: 4px; max-width: calc(100vw - 72px);
+          padding: 5px; border-radius: 12px; background: rgba(24,24,27,.86); backdrop-filter: blur(8px); font: 500 11.5px/1 Inter, system-ui, sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+  #jump a { color: #d4d4d8; text-decoration: none; padding: 6px 9px; border-radius: 8px; }
+  #jump a:hover { background: rgba(255,255,255,.08); color: #fff; }
+  #jump a.on { background: #fff; color: #18181b; }
+  #jump.hide, #reset.hide { display: none; }
+  #reset { position: fixed; right: 12px; bottom: 12px; z-index: 9999; width: 36px; height: 36px; border: 0; border-radius: 50%; cursor: pointer;
+           display: flex; align-items: center; justify-content: center; color: #d4d4d8; background: rgba(24,24,27,.86); backdrop-filter: blur(8px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+  #reset:hover { color: #fff; background: rgba(24,24,27,.95); }
+</style>
+<style id="screen-style"></style>
+</head>
+<body>
+<div id="app"></div>
+<nav id="jump" aria-label="Prototype screens"></nav>
+<button id="reset" type="button" title="Reset this screen" aria-label="Reset this screen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></button>
+<script src="runtime.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

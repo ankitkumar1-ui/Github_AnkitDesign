@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ADX Setup — Signals</title>
+<!-- Styles for this screen only (added while the screen is shown). Fonts are loaded once in index.html. -->
+<style>
+
+:root{--bg:#FAFAFA;--surface:#FFFFFF;--surface-2:#FAFAFA;--sink:#F4F4F5;--ink:#09090B;--ink-soft:#3F3F46;--muted:#71717A;--faint:#A1A1AA;--line:#E4E4E7;--line-strong:#D4D4D8;--accent:#18181B;--accent-soft:#F4F4F5;--accent-ink:#18181B;--ai:#3C8C81;--ai-soft:#EDF6F4;--ai-ink:#2F7A70;--good:#16A34A;--good-soft:#F0FDF4;--warn:#D97706;--warn-soft:#FFFBEB;--crit:#DC2626;--crit-soft:#FEF2F2;--ring:#18181B;--shadow:0 1px 2px 0 rgba(0,0,0,.05);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);--radius:10px;--radius-sm:8px;--rail:224px;--f-display:'Inter',system-ui,sans-serif;--f-body:'Inter',system-ui,sans-serif;--f-mono:'JetBrains Mono',ui-monospace,monospace;--an-c1:#2a78d6;--an-c2:#eb6834;--an-c3:#1baf7a;--an-c4:#eda100;--an-c5:#e87ba4;--an-c6:#008300;--ln-signal:#2a78d6;--ln-model:#1baf7a;--ln-trigger:#eb6834;--av-indigo-bg:#F0F1FF;--av-indigo-fg:#4C487C;--av-coral-bg:#FCEFEA;--av-coral-fg:#8F2B05;--av-teal-bg:#E3F6F0;--av-teal-fg:#005848;--av-sky-bg:#E6F5FF;--av-sky-fg:#105376;--v3cw:clamp(440px,32vw,640px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+* { box-sizing: border-box; }
+h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 600; margin: 0px; letter-spacing: -0.02em; text-wrap: balance; }
+button { font-family: inherit; cursor: pointer; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; color: inherit; }
+.rail { background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0px; padding: 14px 12px; gap: 2px; overflow-y: auto; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px; }
+.brand .glyph { width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto; background: rgb(0, 0, 0); position: relative; box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 3px; object-fit: cover; display: block; }
+.brand b { font-family: var(--f-display); font-weight: 600; font-size: 14.5px; letter-spacing: -0.02em; line-height: 1.15; display: block; }
+.brand span { font-size: 11px; color: var(--muted); letter-spacing: 0.01em; }
+.rail-nav { display: flex; flex-direction: column; }
+.nav-cat { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; font-family: inherit; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 15px 10px 7px; }
+.nav-cat:hover { color: var(--ink-soft); }
+.nav-cat .chev { margin-left: auto; width: 13px; height: 13px; color: var(--faint); transition: transform 0.18s; }
+.nav-cat-group { display: flex; flex-direction: column; gap: 1px; margin-left: 12px; padding-left: 11px; border-left: 1px solid var(--line); overflow: hidden; }
+.subnav-item { display: flex; align-items: center; gap: 9px; text-align: left; width: 100%; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--muted); transition: background 0.12s, color 0.12s; position: relative; }
+.subnav-item::before { content: ""; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 7px; height: 1px; background: var(--line); }
+.subnav-item .sub-ico { width: 16px; height: 16px; flex: 0 0 auto; color: var(--faint); transition: color 0.12s; }
+.subnav-item .sub-ico svg { width: 16px; height: 16px; display: block; }
+.subnav-item:hover { background: var(--sink); color: var(--ink); }
+.subnav-item:hover .sub-ico { color: var(--muted); }
+.subnav-item.on { background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+.subnav-item.on::before { background: var(--accent); }
+.subnav-item.on .sub-ico { color: var(--accent); }
+.nav-cat-wrap { position: relative; }
+.nc-ico { width: 22px; height: 22px; flex: 0 0 auto; color: var(--muted); display: none; place-items: center; }
+.nc-ico svg { width: 19px; height: 19px; }
+.flyout-title { display: none; }
+.rail-toggle { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; color: var(--muted); flex: 0 0 auto; }
+.rail-toggle:hover { background: var(--sink); color: var(--ink); }
+.rail-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+.rail-foot .av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, rgb(233, 162, 59), rgb(217, 104, 59)); color: rgb(255, 255, 255); font-size: 11px; font-weight: 600; display: grid; place-items: center; flex: 0 0 auto; font-family: var(--f-display); }
+.rail-foot .who b { font-size: 12.5px; font-weight: 600; display: block; line-height: 1.2; }
+.rail-foot .who span { font-size: 11px; color: var(--muted); }
+.topbar { height: 56px; flex: 0 0 auto; display: flex; align-items: center; gap: 14px; padding: 0px 22px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.menu-btn { display: none; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); align-items: center; justify-content: center; }
+.crumb { font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+.crumb b { color: var(--ink); font-weight: 600; }
+.env { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; background: var(--surface-2); }
+.env .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
+.top-actions { margin-left: auto; display: flex; align-items: center; gap: 9px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0px 15px; border-radius: var(--radius-sm); font-weight: 500; font-size: 13.5px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); transition: background 0.12s, border-color 0.12s, box-shadow 0.12s, color 0.12s; white-space: nowrap; box-shadow: var(--shadow); }
+.btn:hover { background: var(--sink); }
+.btn:active { transform: translateY(0.5px); }
+.btn.ghost { border-color: transparent; background: transparent; color: var(--ink-soft); box-shadow: none; }
+.btn.ghost:hover { background: var(--sink); color: var(--ink); }
+.btn.sm { height: 30px; padding: 0px 11px; font-size: 12.5px; border-radius: calc(var(--radius-sm) - 2px); }
+.btn .ico { width: 15px; height: 15px; }
+.pagehead { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.pagehead .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+.pagehead h1 { font-size: 25px; line-height: 1.1; }
+.pagehead p { margin: 7px 0px 0px; color: var(--muted); max-width: 60ch; font-size: 13.5px; }
+.dtabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 4px 0px 22px; overflow-x: auto; }
+.dtab { appearance: none; border-width: medium medium 2px; border-style: none none solid; border-color: currentcolor currentcolor transparent; border-image: none; background: none; font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 13.5px; font-weight: 500; color: var(--muted); white-space: nowrap; padding: 10px 15px; cursor: pointer; margin-bottom: -1px; transition: color 0.12s; }
+.dtab:hover { color: var(--ink-soft); }
+.dtab.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--ink); }
+.dtab .tcount { font-size: 11px; font-weight: 600; color: var(--faint); margin-left: 6px; }
+.rail .nav-cat-group, .rail .nav-sub { border-left-width: medium !important; border-left-style: none !important; border-left-color: currentcolor !important; margin-left: 0px !important; padding-left: 0px !important; }
+.rail .subnav-item::before { display: none !important; }
+.setup-wrap .nav-cat-group { margin: 6px 0px 4px !important; }
+.rail-setup { margin-top: auto; padding-top: 12px; }
+.rail-setup + .rail-foot { margin-top: 10px; }
+.setup-wrap { display: flex; flex-direction: column-reverse; background: rgb(24, 24, 27); border: 1px solid rgb(39, 39, 42); border-radius: 12px; padding: 4px; box-shadow: rgba(0, 0, 0, 0.45) 0px 6px 18px -8px; }
+.setup-wrap .nav-cat { color: rgb(228, 228, 231); padding: 10px; border-radius: 9px; }
+.setup-wrap .nav-cat:hover { color: rgb(255, 255, 255); background: rgb(39, 39, 42); }
+.setup-wrap .nav-cat .nc-ico { display: grid; color: rgb(161, 161, 170); width: 18px; height: 18px; }
+.setup-wrap .nav-cat .nc-ico svg { width: 15px; height: 15px; }
+.setup-wrap .nav-cat .chev { color: rgb(113, 113, 122); transform: rotate(180deg); }
+.setup-wrap .nav-cat-group { border-left-color: rgb(63, 63, 70); margin: 6px 0px 4px 18px; padding-left: 9px; }
+.setup-wrap .subnav-item { color: rgb(161, 161, 170); }
+.setup-wrap .subnav-item::before { background: rgb(63, 63, 70); }
+.setup-wrap .subnav-item .sub-ico { color: rgb(113, 113, 122); }
+.setup-wrap .subnav-item:hover { background: rgb(39, 39, 42); color: rgb(250, 250, 250); }
+.setup-wrap .subnav-item.on { background: rgb(250, 250, 250); color: rgb(9, 9, 11); }
+.setup-wrap .subnav-item.on .sub-ico { color: rgb(9, 9, 11); }
+.setup-wrap .subnav-item.on::before { background: rgb(250, 250, 250); }
+.ws-tabs { margin: 2px 0px 18px; }
+.rail-foot .who { min-width: 0px; }
+.rail-foot .who span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tb-cx { width: 34px; height: 34px; padding: 0px; justify-content: center; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; box-shadow: none; border-radius: 11px; }
+.tb-cx svg { display: block; flex: 0 0 auto; transition: transform 0.12s; width: 30px !important; height: 30px !important; }
+.tb-cx:hover svg { transform: scale(1.05); }
+.wrap{max-width:1160px;margin:0 auto;padding:26px 22px 80px}
+.wrap.full{max-width:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 15px;border-radius:var(--radius-sm);
+font-weight:500;font-size:13.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+transition:background .12s,border-color .12s,box-shadow .12s,color .12s;white-space:nowrap;box-shadow:var(--shadow)}
+.btn:hover{background:var(--sink)}
+.btn:active{transform:translateY(.5px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;pointer-events:none}
+.btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+.btn.primary:hover{background:var(--accent);filter:brightness(1.08)}
+.btn.ai{background:var(--ai);color:#fff;border-color:transparent}
+.btn.ai:hover{background:var(--ai);filter:brightness(1.08)}
+.btn.cortex{background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);padding-left:10px}
+.btn.cortex:hover{background:var(--sink)}
+.cx-logo{display:inline-flex;flex:none}
+.cx-logo svg{display:block;border-radius:5px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--ink-soft);box-shadow:none}
+.btn.ghost:hover{background:var(--sink);color:var(--ink)}
+.btn.sm{height:30px;padding:0 11px;font-size:12.5px;border-radius:calc(var(--radius-sm) - 2px)}
+.btn .ico{width:15px;height:15px}
+.btn:focus-visible,.nav-item:focus-visible,.expcard:focus-visible,.subnav-item:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ring)}
+.pagehead{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
+.pagehead .eyebrow{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);
+display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.pagehead h1{font-size:25px;line-height:1.1}
+.pagehead p{margin:7px 0 0;color:var(--muted);max-width:60ch;font-size:13.5px}
+.pagehead .side{margin-left:auto;display:flex;gap:9px;flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.dtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:4px 0 22px;overflow-x:auto}
+.dtab{appearance:none;border:none;background:none;font:inherit;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;
+padding:10px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .12s}
+.dtab:hover{color:var(--ink-soft)}
+.dtab.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+.dtab .tcount{font-size:11px;font-weight:600;color:var(--faint);margin-left:6px}
+.dtab.on .tcount{color:var(--muted)}
+body{margin:0}
+.site{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#111;background:#fff;font-size:13px;line-height:1.35}
+.site *{box-sizing:border-box}
+.tg{position:relative;outline-offset:5px;border-radius:4px;transition:outline-color .25s}
+.pin{position:absolute;top:50%;margin-top:-11px;left:-31px;width:22px;height:22px;border-radius:50%;font:700 11px/1 Geist,ui-sans-serif,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;z-index:6;transition:transform .2s,box-shadow .2s;letter-spacing:0}
+.pin.c{top:-11px;left:-11px;margin-top:0}
+.site .muted{color:#666;font-size:12px}
+.site .sx-promo{background:#6d0f17;color:#fff;text-align:center;font-size:12px;padding:10px 12px}
+.site .sx-head{display:flex;align-items:center;gap:16px;padding:14px 28px 14px 42px;border-bottom:1px solid #eee}
+.site .sx-logo{font-size:21px;letter-spacing:.32em;font-weight:500}
+.site .sx-search{flex:0 1 250px;display:flex;align-items:center;gap:7px;border:1.5px solid #222;border-radius:999px;padding:7px 12px;color:#777;font-size:12px}
+.site .sx-sp{flex:1}
+.site .sx-hi{display:flex;flex-direction:column;font-size:11px;line-height:1.3}
+.site .sx-hi b{font-weight:500}.sx-hi small{font-size:10px;color:#888}
+.site .sx-hi em{font-style:normal;font-size:8.5px;font-weight:700;background:#111;color:#fff;border-radius:3px;padding:0 4px;width:max-content}
+.site .sx-user{flex-direction:row;align-items:center;gap:8px}.sx-user>span:last-child{display:flex;flex-direction:column}
+.site .sx-av{width:26px;height:26px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700}
+.site .sx-ico{display:flex;color:#111}
+.site .sx-nav{display:flex;justify-content:center;gap:24px;background:#000;color:#fff;font-size:12px;padding:11px 20px}
+.site .sx-body{padding:18px 28px 34px 42px}
+.site .crumb{font-size:11px;color:#666;margin-bottom:10px}
+.site .sec-h{font-size:16px;font-weight:700;margin:24px 0 12px}
+.site .row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.site .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.site .row3t{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.site .pc{display:flex;flex-direction:column;gap:3px;font-size:11.5px}
+.site .pimg{height:132px;background:#f6f6f6;border-radius:4px;display:grid;place-items:center;margin-bottom:6px}
+.site .pimg.sm{height:72px;width:64px;margin:0}
+.site .mini{width:40px;height:68px;border-radius:6px 6px 12px 12px;box-shadow:0 -12px 0 -4px #d9c3b7}
+.site .pimg.sm .mini{width:22px;height:38px;box-shadow:0 -7px 0 -2px #d9c3b7}
+.site .pb{font-weight:700;font-size:10.5px;letter-spacing:.04em}
+.site .pn{line-height:1.35;color:#222}.pp{font-weight:700}
+.site .st{font-size:10.5px;letter-spacing:1px}.st i{font-style:normal;color:#777;letter-spacing:0}
+.site .hm-hero{height:220px;background:linear-gradient(110deg,#2b0f14,#6d0f17 48%,#b8483d);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 34px;overflow:visible}
+.site .hm-copy{display:flex;flex-direction:column;gap:7px;max-width:320px}
+.site .hm-k{font-size:10.5px;letter-spacing:.2em;opacity:.8}.hm-copy b{font-size:26px;font-weight:600;line-height:1.15}.hm-copy>span:nth-child(3){font-size:12.5px;opacity:.85}
+.site .hm-btn{margin-top:6px;background:#fff;color:#111;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:700;width:max-content}
+.site .hm-art{position:relative;width:230px;height:170px}
+.site .hm-art span{position:absolute;bottom:0;border-radius:8px 8px 14px 14px}
+.site .hm-art .b1{left:20px;width:56px;height:120px;background:linear-gradient(#f1d7c9,#d8a58c)}
+.site .hm-art .b2{left:90px;width:70px;height:150px;background:linear-gradient(#ffd0d8,#e98aa0)}
+.site .hm-art .b3{left:172px;width:46px;height:96px;background:linear-gradient(#e9e2ff,#a99ad6)}
+.site .story{height:118px;border-radius:4px;padding:12px 14px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;font-size:14px;font-weight:700}
+.site .story small{font-size:9.5px;letter-spacing:.14em;opacity:.85;font-weight:600}
+.site .bi{margin-top:22px;background:#f6f6f6;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.site .pill{background:#111;color:#fff;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:700}
+.site .pill-o{display:inline-block;border:1.5px solid #111;border-radius:999px;padding:9px 22px;font-size:12.5px;font-weight:700;margin-top:14px}
+.site .plp-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.site .plp-top h2,.site h2{font-size:24px;font-weight:700;margin:0}
+.site .selbox{border:1px solid #ccc;border-radius:4px;padding:7px 12px;font-size:12px;white-space:nowrap}
+.site .plp{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px;align-items:start}
+.site .flt{display:flex;flex-direction:column;gap:16px;padding:2px}
+.site .fg{display:flex;flex-direction:column;gap:7px;font-size:12px;border-bottom:1px solid #eee;padding-bottom:12px}
+.site .fg b{font-size:12.5px}
+.site .fg span{display:flex;align-items:center;gap:8px;color:#333}
+.site .fg i{width:13px;height:13px;border:1.5px solid #999;border-radius:3px}.fg i.on{background:#111;border-color:#111}
+.site .more{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px}
+.site .bar{width:180px;height:3px;background:#e5e5e5;border-radius:2px}.bar i{display:block;height:100%;background:#111}
+.site .pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+.site .gal{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-content:start}
+.site .thumbs{display:flex;flex-direction:column;gap:8px}
+.site .th{width:38px;height:38px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #ddd}.th.on{box-shadow:0 0 0 1.5px #111}
+.site .hero{position:relative;height:330px;display:grid;place-items:center;overflow:hidden;background:#faf7f5}
+.site .bottle{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.site .cap{width:120px;height:78px;border-radius:10px 10px 4px 4px;background:linear-gradient(135deg,#e9d3c7,#c9a593 60%,#b48d7a)}
+.site .glass{width:136px;height:150px;margin-top:-4px;border-radius:12px 12px 24px 24px;background:linear-gradient(160deg,#a0603a,#7b4126 55%,#5e2f1b);display:grid;place-items:center;box-shadow:inset 0 0 0 6px rgba(255,255,255,.12)}
+.site .glass span{color:#f5e9e2;font-size:11px;letter-spacing:.3em;text-align:center;line-height:1.8}
+.site .swoosh{position:absolute;width:280px;height:110px;border-radius:50%;background:linear-gradient(90deg,transparent,#8a4a2a 40%,#6b3720);transform:rotate(-38deg) translate(40px,10px);opacity:.85}
+.site .brand{font-size:12.5px;font-weight:700}.pname{font-size:15px;margin-top:2px}
+.site .rate{background:#f6f6f6;padding:8px 10px;font-size:11.5px;margin:12px 0}.rate .sep{color:#bbb;margin:0 6px}.rate u{color:#1b5ed1}
+.site .price{font-size:12px;color:#555;margin-bottom:10px}.price b{font-size:17px;color:#111}
+.site .color{font-size:12.5px;margin:6px 0 8px}
+.site .swg{display:grid;grid-template-columns:repeat(13,1fr);gap:6px;padding:2px}
+.site .sw{aspect-ratio:1;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}.sw.sel{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #111}
+.site .find{font-size:12px;color:#1b5ed1;text-decoration:underline;margin:10px 0 14px;width:max-content}
+.site .del{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.site .del>div{border:1px solid #ddd;border-radius:6px;padding:9px;font-size:11px;line-height:1.35}.del>div.on{border:2px solid #111}
+.site .del b{display:block;font-size:11.5px}.del span{color:#666}
+.site .add{height:44px;border-radius:999px;background:#cf112c;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:12px}
+.site .srch{display:flex;align-items:center;gap:10px;border:2px solid #111;border-radius:999px;padding:11px 18px;font-size:15px}
+.site .srch .x{margin-left:auto;color:#999;font-size:18px}
+.site .chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;font-size:12px;width:max-content;max-width:100%;padding:2px}
+.site .chips b{font-weight:500;border:1px solid #ccc;border-radius:999px;padding:6px 12px}
+.site .bk{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:start}
+.site .card{border:1px solid #e5e5e5;border-radius:6px;padding:14px 16px;background:#fff}
+.site .bitem{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #eee;font-size:12px}.bitem:last-child{border-bottom:0}
+.site .bt{flex:1;display:flex;flex-direction:column;gap:2px}
+.site .promo{display:flex;gap:8px;margin-bottom:12px}.promo .inp{flex:1;border:1px solid #ccc;border-radius:4px;padding:8px 10px;font-size:12px;letter-spacing:.06em}
+.site .sum>div{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}.sum .tot{border-top:1px solid #eee;margin-top:6px;padding-top:9px;font-size:13.5px}
+.site .co-head{display:flex;align-items:center;gap:16px;padding:16px 28px 16px 42px;border-bottom:1px solid #eee}
+.site .lnk{font-size:12.5px;text-decoration:underline}
+.site .co .coh{display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:10px}
+.site .co .coh i{width:20px;height:20px;border-radius:50%;background:#111;color:#fff;font-style:normal;font-size:11px;display:grid;place-items:center}
+.site .fields{display:flex;flex-direction:column;gap:3px;font-size:12px;color:#333;padding-left:29px}
+.site .fields.two{flex-direction:row;gap:30px}.fields b{font-weight:500;color:#111}
+.site .radios{display:flex;flex-direction:column;gap:7px;padding-left:29px;font-size:12px}
+.site .radios span{display:flex;align-items:center;gap:8px}.radios i{width:13px;height:13px;border:1.5px solid #999;border-radius:50%}.radios .on i{border:4px solid #111}
+.site .err{margin:10px 0 0 29px;font-size:11.5px;color:#b3261e;background:#fdecea;border-radius:4px;padding:7px 10px}
+.site .sx-in{flex:1;min-width:0;border:0;outline:none;background:transparent;font:inherit;font-size:12px;color:#111;padding:0;-webkit-appearance:none;appearance:none}
+.site .sx-in::placeholder{color:#777}
+.site .lipimg{background:linear-gradient(180deg,#faf6f3,#f1ebe6)}
+.site .lip{display:flex;flex-direction:column;align-items:center;transform:rotate(-8deg)}
+.site .lip i{display:block;width:18px;height:30px;border-radius:3px 9px 2px 2px;clip-path:polygon(0 28%,100% 0,100% 100%,0 100%)}
+.site .lip b{display:block;width:24px;height:52px;border-radius:3px 3px 4px 4px;box-shadow:inset -5px 0 0 rgba(255,255,255,.12),inset 4px 0 0 rgba(0,0,0,.12);margin-top:-1px}
+.fresh{font-size:10px;font-weight:600;color:#3f5f8a;background:#eef2f8;border:1px solid #d6dfec;border-radius:999px;padding:0 6px;white-space:nowrap}
+.gpx{position:absolute;width:2.9px;height:2.9px;border-radius:1px;transition:background-color .55s ease}
+@property --hunt-a{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes huntSpin{to{--hunt-a:360deg}}
+.hunt{animation:huntSpin 1.4s linear infinite}
+@keyframes wsSpin{to{transform:rotate(360deg)}}
+.ws-spin{width:9px;height:9px;box-sizing:border-box;border-radius:50%;border:1.5px solid #bbf7d0;border-top-color:#16a34a;animation:wsSpin .8s linear infinite;flex:none}
+@keyframes tagFound{from{box-shadow:0 0 0 0 rgba(22,163,74,.45)}to{box-shadow:0 0 0 7px rgba(22,163,74,0)}}
+.found{animation:tagFound .9s ease-out}
+@keyframes tagLand{0%{opacity:.3;transform:translateY(-10px);box-shadow:0 0 0 3px rgba(60,140,129,.35)}35%{opacity:1;transform:none}100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}}
+.landed{animation:tagLand 1.3s ease-out}
+.tg.hit{cursor:pointer}
+@keyframes calloutIn{from{opacity:0;transform:translate(10px,6px) scale(.96)}to{opacity:1;transform:none}}
+
+
+
+/* ---- Signals (ported from adx-studio Web Signals · Signals) ---- */
+.sg-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.sg-q{flex:0 1 320px;display:flex;align-items:center;gap:8px;height:36px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);padding:0 11px;color:var(--muted);box-shadow:var(--shadow)}
+.sg-q input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:13.5px;color:var(--ink)}
+.sg-sel{height:36px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font:inherit;font-size:13.5px;color:var(--ink);padding:0 10px;box-shadow:var(--shadow)}
+.sg-sp{flex:1}
+.sg-tbl{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.sg-row{display:grid;grid-template-columns:minmax(200px,2.2fr) 150px minmax(160px,1.6fr) 90px 110px;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:13.5px;width:100%;box-sizing:border-box;background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:inherit;cursor:pointer}
+.sg-row:hover{background:var(--surface-2)}
+.sg-row.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted);cursor:default}
+.sg-row code,.sg-code{font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px}
+.sg-mut{color:var(--muted)}
+.sg-pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;border:1px solid;white-space:nowrap}
+.sg-pill i{width:6px;height:6px;border-radius:50%;display:block;background:currentColor}
+.sg-pill.ready{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.sg-pill.att{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.sg-pill.exc{color:#52525b;background:#f4f4f5;border-color:#e4e4e7}
+.sg-env{display:flex;gap:4px}
+.sg-env i{font-style:normal;width:20px;height:20px;border-radius:5px;border:1px solid var(--line);display:grid;place-items:center;font-size:10.5px;font-weight:600;color:var(--faint)}
+.sg-env i.on{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.sg-none{padding:34px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.sg-none b{color:var(--ink);font-size:14px}
+/* detail */
+.sg-back{display:inline-flex;align-items:center;gap:5px;font:inherit;font-size:13px;color:var(--muted);background:none;border:0;padding:0;cursor:pointer;margin-bottom:12px}
+.sg-back:hover{color:var(--ink)}
+.sg-dh{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.sg-dh h1{font-family:'Geist Mono',ui-monospace,monospace;font-size:24px;font-weight:600;letter-spacing:-.02em;margin:0}
+.sg-dh p{margin:6px 0 0;color:var(--muted);font-size:13.5px}
+.sg-more{position:relative;margin-left:auto}
+.sg-menu{position:absolute;right:0;top:40px;z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px -10px rgba(0,0,0,.25);padding:4px;min-width:170px;display:flex;flex-direction:column}
+.sg-menu button{font:inherit;font-size:13px;text-align:left;background:none;border:0;padding:8px 10px;border-radius:7px;cursor:pointer;color:var(--ink)}
+.sg-menu button:hover{background:var(--sink)}
+.sg-menu button.danger{color:#dc2626}
+.sg-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.sg-ch{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.sg-ch b{font-size:14.5px;font-weight:600}
+.sg-ch span{font-size:12.5px;color:var(--muted)}
+.sg-chain{list-style:none;margin:0;padding:10px 18px 14px}
+.sg-chain li{display:flex;gap:12px;position:relative;padding:8px 0}
+.sg-chain li:not(:last-child)::before{content:"";position:absolute;left:10px;top:30px;bottom:-8px;width:1px;background:var(--line)}
+.sg-ci{flex:0 0 21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;position:relative;z-index:1;background:var(--surface)}
+.sg-ci.ok{background:#dcfce7;color:#15803d}
+.sg-ci.cur{background:#f97316;color:#fff}
+.sg-ci.todo{border:1.5px dashed var(--line-strong)}
+.sg-cb{flex:1;min-width:0}
+.sg-ct{display:flex;align-items:baseline;gap:12px;min-height:21px}
+.sg-ct b{font-size:13.5px;font-weight:600;flex:1}
+.sg-ct span{font-size:12.5px;color:var(--muted);text-align:right}
+.sg-ct span.cur{color:#ea580c;font-weight:500}
+.sg-chain li.todo .sg-ct b{color:var(--faint);font-weight:500}
+.sg-iss{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;max-width:680px;display:flex;flex-direction:column;gap:8px}
+.sg-iss .t{font-size:13.5px;font-weight:600}
+.sg-iss p{margin:0;font-size:13px;line-height:1.55;color:var(--ink-soft)}
+.sg-iss .nx{border-top:1px solid var(--line);padding-top:10px;margin-top:4px;font-size:13px}
+.sg-iss .nx span{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:3px}
+.sg-okl{display:flex;align-items:center;gap:8px;margin:0 18px 16px;padding:10px 12px;border-radius:10px;background:#f0fdf4;color:#166534;font-size:13px}
+.sg-seg{margin-left:auto;display:inline-flex;background:var(--sink);border:1px solid var(--line);border-radius:9px;padding:2px}
+.sg-seg button{font:inherit;font-size:12px;font-weight:600;border:0;background:transparent;color:var(--muted);padding:4px 11px;border-radius:7px;cursor:pointer}
+.sg-seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.sg-frow{display:grid;grid-template-columns:minmax(160px,2fr) 100px minmax(140px,2fr) 80px;align-items:center;gap:14px;padding:11px 18px;border-top:1px solid var(--line);font-size:13px}
+.sg-frow.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
+.sg-fw{display:block;font-style:normal;font-size:11.5px;color:#b45309;margin-top:2px}
+.sg-sw{width:36px;height:20px;border-radius:999px;border:0;background:var(--line-strong);position:relative;cursor:pointer;padding:0}
+.sg-sw i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .12s}
+.sg-sw.on{background:#16a34a}
+.sg-sw.on i{left:18px}
+.sg-json{margin:0;padding:14px 18px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px;line-height:1.7;background:var(--surface-2);white-space:pre;overflow-x:auto}
+.sg-dirty{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:#fffbeb;font-size:13px}
+.sg-dirty span{flex:1;min-width:240px}
+.sg-mrow{display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(150px,1.3fr) minmax(130px,1fr) minmax(160px,1.4fr);align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:13px}
+.sg-mrow.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
+.sg-ms{display:flex;align-items:center;gap:10px}
+.sg-ms .lg{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:10.5px;font-weight:800;color:#fff;flex:none}
+.sg-empty{padding:16px 18px;margin:0;font-size:13px;color:var(--muted)}
+.sg-modal{position:fixed;inset:0;background:rgba(9,9,11,.4);display:grid;place-items:center;z-index:50;padding:16px}
+.sg-modal>div{background:var(--surface);border-radius:14px;max-width:440px;width:100%;padding:20px;box-shadow:0 20px 50px -12px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:12px}
+.sg-modal h3{margin:0;font-size:16px}
+.sg-modal p{margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.sg-toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);background:#18181b;color:#fafafa;font-size:13px;padding:9px 14px;border-radius:9px;z-index:60;box-shadow:0 10px 24px -8px rgba(0,0,0,.4)}
+.sg-spin{width:13px;height:13px;box-sizing:border-box;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sgSpin .8s linear infinite;display:inline-block}
+@keyframes sgSpin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.sg-row{grid-template-columns:1fr auto}.sg-row>:nth-child(3),.sg-row>:nth-child(4),.sg-row>:nth-child(5){display:none}.sg-frow,.sg-mrow{grid-template-columns:1fr 1fr}}
+
+/* Shared app-shell fixes (keep in sync across home, setup, profiles, catalog, connections, web-signals, signals) */
+.pagehead p{max-width:none}
+.dtabs{border-bottom:0;box-shadow:inset 0 -1px 0 var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.dtabs::-webkit-scrollbar{display:none}
+.dtab{margin-bottom:0;font-weight:500}
+.dtab.on{font-weight:500}
+.dtab:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--ring);border-radius:6px 6px 0 0}
+</style>
+</head>
+<body>
+<!-- Markup: Claude Design "DC" template syntax. See CLAUDE.md for the rules. -->
+<template data-view>
+<div style="display:flex;min-height:100vh;background:var(--bg);font-family:var(--f-body);color:var(--ink)">
+<div style="flex:0 0 var(--rail);width:var(--rail);background:var(--surface);border-right:1px solid var(--line)"><aside class="rail" style="position:sticky;top:0;height:100vh;box-sizing:border-box;border-right:0" id="rail">
+    <div class="brand">
+      <img class="glyph nlogo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAIAAADajyQQAAAIwElEQVR42u1aa0hU3xaf85oZhbEsNUeStOdYiIoh0ZPAlAiRChRKKApEVCojIsPQCqKSQIhMqUArirA0QzKNkjK0poePD31Rw1J7yKjje+bMOXvfDz/uvueO/c1g1Mtl1gcZZtbee/3We6+tTuclL3nJS17ykpe85CUveen/gzjP78j9Z09K6XwBEzyOShRFSikgiaI4v/A8byuTySRJEj7zPD/D5YIgCIKAfQRBEEVRu+f8QIL0kiRlZ2e/fv26q6urra2tpKTEYrFAymnWAtI/MQAeaM4dWhAEQfDz83v+/Dn9bxoZGUlKSpoGG7xXp9MZjcbU1NTy8vKGhobGxsaKioqsrCyz2QxsPM/PDzCdTnfr1i1KqcPhcLlcTqdTlmWn00kpHRsbW7t27T9hg8du3769ra2NTqGfP39mZWVh7VwDgxNaLBaXy6UoCiGEiUUIURSFUvrp0ycfHx9BEFi8aT0wJSUFbNCFw+GYnJyUZdnlcmGfoqKi6f15VgiOlJ6eTimFfISQ0tLSjo4OLbaSkhLGrPXAqKioyclJVVVlWQYnI1VV8T2lNDMzc+Z5yJPATp8+DZVTSn/9+qXT6davXw9ZVVWF7tPS0hg/zMVxXH19PaXU6XSqqkoptdvtlZWV9+7d6+3thV4Ab2BgYMmSJW65d+6AIah6e3shRE5ODtCqqqooysjICIJNkiT4VXR0tKqqkJ5S2tLSsmrVKmwbFBRUU1MDL4BesrOzWUzOHbBTp04pigJgfX19/v7+cJuHDx8CG4T78OGDr6+vKIp6vZ4hd7lchBCHwxETE6PT6fR6PX4NCAj4/v07IcTpdBJCKioqtM78h8j3FDzkBjgP66d4nk9PT+/s7ISaZVmOjY29cuWKoiiAvXz5ckIIIYTjuI6OjtbWVkEQXC6XLMuSJNlstqamJo7jKKUcxyH1g3lWgPE8L4qiJEmoLRzHSZJUVVVVVVVlMBh4nkekUUoFQRgcHDxw4IAsy0hriqJkZGSkpaU5HA6O45qbm3mehy6wCkmVARgdHWVxBVsxBs8n92kUlpiY+O3bt8HBQT8/PzDDVseOHXMLtoiICEh89+5d4GlpadHmBgRhWVkZC923b9/ObiHmeT4pKamkpKShoeHdu3fV1dW5ubmrV68GT3h4eF1dXXBwMDhhXhZsKNyU0o8fP/r6+nIcZzKZ2tvbmdzzAIzlsTdv3kxtEcbGxs6fPw/7LFiwAEJDSnSSixYt6urqQpYDtuLiYuwcGRmpqmpXV5e2Us0RMJy3ZcsWu92OPOb8N8myDB+jlD548ECSJCDRFlMYbePGjUiPDNv+/fvBkJqaevToUdZMzxEwxFVISMiPHz9YqGjNpSiKoigOh4NSWlhYiJSt7cdZn3H8+HG2g6qqw8PDFotFy+bmILMLDGdcu3YNMiEvTU5O1tTUlJWVff78mWGDHXbv3v3bSop9Hj16xPhR2YxGo16vd+OfdWDQYmBg4MDAACEExbS7uzsuLg4Mer2+qKiIVWFFUQYGBsLDw6e2dizYOjs70QoCG4LNrfLOOjCct3PnTq2aYRO9Xs+kefr0qbbDaGxslCSJXYHdct2mTZtYGwkj79u3j90p5xRYZmYmIQRCDA8PL168mBU0fDCbzT09Pej6wIZgY3WcGQ0ud+LECSgCyrLb7WvWrNE6MFpkAEP0NjU1ebIJBjBWYSmlQ0NDCxcu1J4Bnh07dqCRnybY4I34prKyUmtkq9Wq1+vxKwYeOp2uubkZwAgh1dXVnrxx/haYv7+/m/LAdubMGRQD9Ow2my0sLMztjghsHMexyobmkFJaWlqqPfrQoUO4zuHXvLy8mTfBnrEYHBIpvra2FtGIkvDq1SttsLltu3nzZliM3dmePHmSkpKSnJxcWlqK7MLyLeZCHrtrzhAYCwyz2dzb26sNtsuXL0/VNBTBgg0Xzd/eoJE5kDk9OR2YIbCAgIDY2Fh8ZsHGsCUnJ7thg0MCG/pgOKS2NWEu+v79e5PJ5OFB1R+BgSEnJ4cQsm3bNqzKz89nSU9V1f7+/rCwMLf5IXMqg8FQXFysHQFpJ0LPnj3DfdzDw5wZAjt58iSltLu7Ozg4GM0Ugg1GQLCJosiCDVIeOXIkMjKSXXkeP36Mro1SarPZXrx4gTGJJ3PGzLMiAwY119XV4Ruz2dzX14e0hsRw6dIllv3x986dO1+/fo2OjmbHBQUFRUZGRkVF4b78V0Py2QJGKZ2YmKCU5ufnY21CQgLKOkvZLNiw6urVq5TS0dHRCxcurFixwq1dnH707fnRwNRJOrukcBxHCDl48KDRaBQEob6+/uzZs5IkqaqKEcCNGzeWLVumqiokFgSBEGIwGHJzc+/fv+9yuTAtR55AYpxdYHa7ncltMpksFgul1GAwiKII4datW8cQjo2NIXGLonju3Ln6+nq9Xo/ICQwMLC8vx9iHKQW1wWAw6HQ6pPjZGmxM7bJjYmJwHiRuaGjw8fFhPPHx8ePj40juhJDbt2/D39D+hISEsGCDQyLYBEG4fv0663Ex85jrJyKe561WK4RDS2G1Wg8fPrxnz57CwsLx8XG4DZJEQkIC0whiKTExka0Fz969e1mMAVhra+v8PKbs2rULQrDBrVuXAPlqa2u1N3yGraCgQNtG9vf3x8fHv3z5kuUk3ErmdDrPzrt48SKzDAjeJcsybhZfvnwJDQ11A4a5AM/zdXV17OFCS7DhzZs3Z6VezdBueXl57HXHjaxW68qVK3+rdbepCezGPBNQN2zYMD/AmB3i4uLKy8t7enrQuQ4NDTU1NWVnZxuNxml8CRLHx8ej1rGRPT4XFBTMgx9OfVbF83lERERMTMzSpUv/2CJon/m2bt3a3NzMHLKzszMjI8PjqLi/BcYk0JZOnucFQUBWmGYhpvlYGBUVFRoaarPZ2tvbJyYmeJ5n/0Qxz8TKwN9qeir/bLzBcvOlFNaUzUWT4SUveclLXvKSl7zkJS95yUv/e/QvnUs8PX1Cza0AAAAASUVORK5CYII=" alt="Netomi">
+      <div><b>ADX</b><span>Agentic Digital Experience</span></div>
+    </div>
+
+    <nav class="rail-nav" id="railNav"><div class="nav-cat-wrap" data-catwrap="start">
+      <button class="nav-cat" data-cat="start"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg></span><span class="nc-label">Start</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="start"><div class="flyout-title">Start</div><a class="subnav-item" href="#/home" style="text-decoration:none" title="Home"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg></span><span class="sn-label">Home</span></a></div>
+    </div><div class="nav-cat-wrap" data-catwrap="exp">
+      <button class="nav-cat" data-cat="exp"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></span><span class="nc-label">Experiences</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="exp"><div class="flyout-title">Experiences</div><button class="subnav-item" title="Goals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"></circle></svg></span><span class="sn-label">Goals</span></button><button class="subnav-item" title="Experiences"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"></path></svg></span><span class="sn-label">Experiences</span></button><button class="subnav-item" title="Simulate"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span><span class="sn-label">Simulate</span></button><button class="subnav-item" title="Release"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span><span class="sn-label">Release</span></button></div>
+    </div><div class="nav-cat-wrap" data-catwrap="measure">
+      <button class="nav-cat" data-cat="measure"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="11" width="3" height="6"></rect><rect x="12" y="7" width="3" height="10"></rect><rect x="17" y="13" width="3" height="4"></rect></svg></span><span class="nc-label">Measure</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="measure"><div class="flyout-title">Measure</div><button class="subnav-item" title="Analytics"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9M13 17V5M8 17v-3"></path></svg></span><span class="sn-label">Analytics</span></button><button class="subnav-item" title="Test Management"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></path><path d="M6.453 15h11.094M8.5 2h7"></path></svg></span><span class="sn-label">Test Management</span></button></div>
+    </div></nav>
+    <div class="rail-setup" id="railSetup"><div class="nav-cat-wrap setup-wrap" data-catwrap="adx">
+      <button class="nav-cat hascurrent" data-cat="adx"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg></span><span class="nc-label">ADX Setup</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
+      <div class="nav-cat-group" data-catgroup="adx"><div class="flyout-title">ADX Setup</div><a class="subnav-item" href="#/setup" style="text-decoration:none" title="Overview"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span><span class="sn-label">Overview</span></a><a class="subnav-item" href="#/connections" style="text-decoration:none" title="Connections"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg></span><span class="sn-label">Connections</span></a><a class="subnav-item" href="#/profiles" style="text-decoration:none" title="Customer Profiles"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="sn-label">Customer Profiles</span></a><a class="subnav-item" href="#/catalog" style="text-decoration:none" title="Product Catalog"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="M3.3 7 12 12l8.7-5"></path><path d="M12 22V12"></path></svg></span><span class="sn-label">Product Catalog</span></a><a class="subnav-item on" href="#/web-signals" style="text-decoration:none" title="Web Signals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></span><span class="sn-label">Web Signals</span></a><button class="subnav-item" title="Content"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v5h5"></path><path d="M8 13h8M8 17h8M8 9h2"></path></svg></span><span class="sn-label">Content</span></button><button class="subnav-item" title="Customer Service Integration"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"></path><path d="M21 16a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h3z"></path><path d="M3 16a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H3z"></path></svg></span><span class="sn-label">Customer Service Integration</span></button><button class="subnav-item" title="Agents"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2M20 14h2M15 13v2M9 13v2"></path></svg></span><span class="sn-label">Agents</span></button></div>
+    </div></div>
+
+    <div class="rail-foot">
+      <div class="av">EC</div>
+      <div class="who"><b>Emma C.</b><span>Sales Director, East Europe</span></div>
+    </div>
+  </aside></div>
+<div class="main" style="flex:1;min-width:0">
+<header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
+      <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar" title="Collapse sidebar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+      <div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">ADX Setup</span> <span style="color:var(--faint)">›</span> Web Signals <span style="color:var(--faint)">›</span> sephora.com</b></div>
+      <div class="top-actions">
+        <div class="env mock"><span class="dot"></span>Sandbox · Mock data</div>
+        <button class="btn sm tb-cx" id="cxTop" title="Cortex" aria-label="Open Cortex" aria-pressed="false"><svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect x="0" y="0" width="48" height="48" rx="13" fill="#43918A"></rect><path d="M24 11C25 19 29 23 37 24C29 25 25 29 24 37C23 29 19 25 11 24C19 23 23 19 24 11Z" fill="#fff"></path></svg></button>
+        <a class="btn ghost sm" href="#/signin" style="text-decoration:none" title="Replay first-time login"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5M3.5 8a9 9 0 1 0 2.3-3.3L3 8"></path></svg><span class="lbl">Replay onboarding</span></a>
+        <button class="btn sm" id="simBtn"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg>Simulate a shopper</button>
+        <button class="btn sm" id="themeBtn" aria-label="Toggle theme"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+      </div>
+    </header>
+<div class="wrap">
+<sc-if value="{{isList}}">
+  <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
+  <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><button class="dtab on">Signals<span class="tcount">{{total}}</span></button></div>
+
+  <div class="sg-tools">
+    <label class="sg-q"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg><input placeholder="Search {{total}} signals" value="{{q}}" onInput="{{onQ}}" aria-label="Search signals"></label>
+    <select class="sg-sel" aria-label="Status" onChange="{{onSt}}"><sc-for list="{{stOpts}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select>
+    <select class="sg-sel" aria-label="Detected via" onChange="{{onSrc}}"><sc-for list="{{srcOpts}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select>
+    <span class="sg-sp"></span>
+    <a class="btn primary" href="#/web-signals" style="text-decoration:none">Add Signals</a>
+  </div>
+
+  <section class="sg-tbl">
+    <div class="sg-row hd"><span>Signal</span><span>Status</span><span>Detected via</span><span>Variables</span><span>Environment</span></div>
+    <sc-for list="{{list}}" as="s">
+      <button type="button" class="sg-row" onClick="{{s.open}}">
+        <code>{{s.id}}</code>
+        <span><span class="sg-pill {{s.cls}}"><i></i>{{s.status}}</span></span>
+        <span class="{{s.viaCls}}">{{s.via}}</span>
+        <span>{{s.nVar}}</span>
+        <span class="sg-env"><sc-for list="{{s.env}}" as="e"><i class="{{e.c}}" title="{{e.t}}">{{e.l}}</i></sc-for></span>
+      </button>
+    </sc-for>
+    <sc-if value="{{noMatch}}"><div class="sg-none"><b>No signals match</b><span>{{noMatchText}}</span><button class="btn sm" onClick="{{clearF}}">Clear Filters</button></div></sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{isDetail}}">
+  <button class="sg-back" onClick="{{back}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>Signals</button>
+  <div class="sg-dh">
+    <div style="min-width:0">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h1>{{d.id}}</h1><span class="sg-pill {{d.cls}}"><i></i>{{d.status}}</span></div>
+      <p>{{d.desc}}</p>
+    </div>
+    <div class="sg-more">
+      <button class="btn" onClick="{{d.toggleMenu}}" aria-label="More actions">···</button>
+      <sc-if value="{{d.menu}}"><div class="sg-menu"><button onClick="{{d.menuExclude}}">{{d.excludeLabel}}</button><button class="danger" onClick="{{d.askRemove}}">Remove Signal</button></div></sc-if>
+    </div>
+  </div>
+
+  <section class="sg-card">
+    <div class="sg-ch"><b>Preparation</b><sc-if value="{{d.excluded}}"><button class="btn sm" style="margin-left:auto" onClick="{{d.include}}">Include Signal</button></sc-if></div>
+    <sc-if value="{{d.excluded}}"><p class="sg-empty" style="padding-bottom:0">Excluded from your signals. Experiences can't use it, and it isn't counted as ready or as needing attention.</p></sc-if>
+    <ol class="sg-chain">
+      <sc-for list="{{d.chain}}" as="c">
+        <li class="{{c.c}}">
+          <span class="sg-ci {{c.c}}"><sc-if value="{{c.ok}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if><sc-if value="{{c.cur}}">!</sc-if></span>
+          <div class="sg-cb">
+            <div class="sg-ct"><b>{{c.label}}</b><span class="{{c.noteCls}}">{{c.note}}</span></div>
+            <sc-if value="{{c.issue}}">
+              <div class="sg-iss">
+                <div class="t">{{d.iss.title}}</div>
+                <p>{{d.iss.text}}</p>
+                <div class="nx"><span>Next step</span>{{d.iss.rec}}</div>
+                <div style="display:flex;gap:8px;margin-top:4px">
+                  <sc-if value="{{d.busy}}"><button class="btn primary" disabled><span class="sg-spin"></span>Checking…</button></sc-if>
+                  <sc-if value="{{d.idle}}"><button class="btn primary" onClick="{{d.fix}}">{{d.iss.btn}}</button></sc-if>
+                  <button class="btn ghost" onClick="{{d.askExclude}}">Exclude</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </li>
+      </sc-for>
+    </ol>
+    <sc-if value="{{d.ready}}"><div class="sg-okl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Ready. Experiences can use this signal and its variables.</div></sc-if>
+  </section>
+
+  <section class="sg-card">
+    <div class="sg-ch"><b>Event object</b><span>Only variables reach triggers</span>
+      <sc-if value="{{d.hasFields}}"><div class="sg-seg" role="tablist"><button class="{{d.tabFields}}" onClick="{{d.showFields}}">Fields</button><button class="{{d.tabJson}}" onClick="{{d.showJson}}">JSON</button></div></sc-if></div>
+    <sc-if value="{{d.noFields}}"><p class="sg-empty">No event was captured, so there are no fields yet.</p></sc-if>
+    <sc-if value="{{d.fieldsView}}">
+      <div class="sg-frow hd"><span>Field</span><span>Type</span><span>Sample value</span><span>Variable</span></div>
+      <sc-for list="{{d.fields}}" as="f">
+        <div class="sg-frow"><span><code class="sg-code">{{f.k}}</code><sc-if value="{{f.warn}}"><em class="sg-fw">{{f.warn}}</em></sc-if></span><span class="sg-mut">{{f.type}}</span><code class="sg-code">{{f.sample}}</code>
+          <span><button class="sg-sw {{f.on}}" role="switch" aria-checked="{{f.aria}}" aria-label="Use {{f.k}} as a variable" onClick="{{f.toggle}}"><i></i></button></span></div>
+      </sc-for>
+    </sc-if>
+    <sc-if value="{{d.jsonView}}"><pre class="sg-json">{{d.json}}</pre></sc-if>
+    <sc-if value="{{d.dirty}}"><div class="sg-dirty"><span><b>{{d.nChanged}} unsaved change{{d.plural}}.</b> Saving creates v2 in Development. Staging and Production keep v1 until you promote.</span><button class="btn" onClick="{{d.discard}}">Discard</button><button class="btn primary" onClick="{{d.save}}">Save</button></div></sc-if>
+  </section>
+
+  <section class="sg-card">
+    <div class="sg-ch"><b>Source mapping</b></div>
+    <div class="sg-mrow hd"><span>Source</span><span>Source event</span><span>Mapping</span><span>Data</span></div>
+    <sc-for list="{{d.maps}}" as="m">
+      <div class="sg-mrow"><span class="sg-ms"><span class="lg" style="background:{{m.c}}">{{m.mono}}</span><b style="font-weight:500">{{m.name}}</b></span><span><code class="sg-code">{{m.ev}}</code></span><span class="sg-mut">{{m.how}}</span><span class="sg-mut">{{m.data}}</span></div>
+    </sc-for>
+    <sc-if value="{{d.noMaps}}"><p class="sg-empty">No source yet.</p></sc-if>
+  </section>
+</sc-if>
+
+<sc-if value="{{modal}}">
+  <div class="sg-modal" onClick="{{closeModal}}"><div onClick="{{stop}}">
+    <h3>{{modalTitle}}</h3><p>{{modalText}}</p>
+    <div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" onClick="{{closeModal}}">{{modalCancel}}</button><button class="btn primary" onClick="{{modalOk}}">{{modalOkLabel}}</button></div>
+  </div></div>
+</sc-if>
+<sc-if value="{{toast}}"><div class="sg-toast">{{toast}}</div></sc-if>
+</div>
+</div>
+</div>
+</template>
+<script type="text/x-dc">
+/* Signals list + signal detail, ported from adx-studio (Web Signals · Signals).
+   Status is derived from each signal's reason code, as in the studio: null = Ready, anything else = Needs attention.
+   Signals live in window.ADX_SIGNALS so exclusions, fixes and variable changes survive moving between list and detail. */
+var SG_SRC = {
+  scan:   { name: 'Website scan',    mono: 'W',  c: '#27272a' },
+  websdk: { name: 'Adobe Web SDK',   mono: 'Ad', c: '#E2412E', prefix: 'web.' },
+  aa:     { name: 'Adobe Analytics', mono: 'AA', c: '#5C2D91', prefix: 'evar:' },
+  label:  { name: 'Browse & Label',  mono: 'BL', c: '#3c8c81', prefix: 'label: ' }
+};
+var SG_STEPS = ['Interaction found', 'Event captured', 'Mapped to signal', 'Data received', 'Ready'];
+// r: reason → [title, failing step, notes for the five steps, found, need, why, next step, button, what the fix does]
+var SG_WHY = {
+  tracking: ['Tracked as a click, not a confirmed add', 2, ['On /product/* during the scan', 'A button click event', 'Mapped to the click', '3 fields in the payload', 'Waiting on the step above'],
+    "The Add to Basket button fires this event when it's clicked.", "A click doesn't prove the item was added. The basket can reject it.", 'Experiences could react to items that never reached the basket.',
+    'Track the confirmed add instead of the click, using Browse & Label.', 'Open Browse & Label', 'label'],
+  unseen: ['Interaction found, but no event captured', 1, ['On /help/* during the scan', "The scan couldn't trigger it", 'Not mapped', 'No data yet', 'Waiting on the step above'],
+    'The scan found this interaction on /help/*.', "It couldn't trigger it, so no event was captured.", "Without an event, ADX can't tell what this signal sends.",
+    'Check whether Adobe Web SDK sends a matching event.', 'Review Match', 'websdk'],
+  nodata: ['No events in the last 24 hours', 3, ['On /product/* during the scan', 'web.sample_dismissed · Adobe Web SDK', 'Matched automatically', 'No events in the last 24 hours', 'Waiting on the step above'],
+    'Mapped to web.sample_dismissed from Adobe Web SDK.', 'No events arrived in the last 24 hours.', "ADX can't confirm the fields until an event arrives.",
+    'Trigger the interaction on your site, then check again.', 'Check Again', 'verify'],
+  ambig: ['Two events could be this signal', 2, ['On / during the scan', '2 candidate events', 'Waiting for your choice', 'No data yet', 'Waiting on the step above'],
+    'Two events could be home_played: web.home_played and web.home_interaction.', "ADX can't tell which one represents this signal, so it didn't pick either.", 'Picking the wrong one would trigger experiences at the wrong moment.',
+    'Choose the event that fires for this interaction.', 'Choose Event', 'websdk'],
+  source: ['The source stopped sending events', 3, ['On /beauty-insider during the scan', 'web.beauty_insider_hovered · Adobe Web SDK', 'Matched automatically', 'No events for 26 hours', 'Waiting on the step above'],
+    'After the scan, this signal comes only from Adobe Web SDK (web.beauty_insider_hovered).', 'No events from Adobe Web SDK for 26 hours.', "Experiences that use this signal won't trigger until events arrive again.",
+    'Check that the tag still fires on your site, then test the connection.', 'Test Connection', 'verify'],
+  quality: ['Values arrive in different spellings', 3, ['On /shop/* during the scan', 'Seen on 41 pages', 'Matched automatically', 'Inconsistent values in filter_type', 'Waiting on the step above'],
+    'filter_type arrives with 3 spellings of the same value: Brand, brand, BRAND.', 'The values need to be made consistent.', 'Triggers that check this value would miss some shoppers.',
+    'Normalize the values to lowercase (brand).', 'Review Normalization', 'normalize'],
+  m_label: ['Not detected on your website', 0, ['Not found on the scanned pages', 'No event yet', 'Not mapped', 'No data yet', 'Waiting on the step above'],
+    "ADX didn't detect this signal on the scanned pages.", 'No event fires for it on the scanned pages.', "Experiences can't use it until ADX receives it.",
+    'Label the interaction in Browse & Label.', 'Open Browse & Label', 'label'],
+  m_creds: ['Not detected on your website', 0, ['Not found on the scanned pages', 'No event yet', 'Not mapped', 'No data yet', 'Waiting on the step above'],
+    "ADX didn't detect checkout_started on the scanned pages.", "These pages need sign-in, so the scan couldn't open them.", "Experiences can't use it until ADX receives it.",
+    'Add a test account so the scan can reach them.', 'Add Scan Credentials', 'creds'],
+  m_batch: ['Not detected on your website', 0, ['Not found on the scanned pages', 'No event yet', 'Not mapped', 'No data yet', 'Waiting on the step above'],
+    "ADX didn't detect order_completed on the scanned pages.", "It isn't on public pages. Orders are confirmed after payment.", "Experiences can't use it until ADX receives it.",
+    'Map it to Adobe Analytics purchase.', 'Review Match', 'batch'],
+  m_spec: ['Not detected on your website', 0, ['Not found on the scanned pages', 'No event yet', 'Not mapped', 'No data yet', 'Waiting on the step above'],
+    "ADX didn't detect this signal on the scanned pages.", 'Nothing on your site sends it yet.', "Experiences can't use it until ADX receives it.",
+    'Ask engineering to send it with the ADX SDK.', 'Copy Spec', 'spec'],
+  batch: ['Data arrives with up to 24 hours delay', 4, ['Orders confirmed after payment', 'evar:purchase · Adobe Analytics', 'Mapped by you', 'Batch, up to 24 h late', 'Not available in real time'],
+    'Adobe Analytics sends it as purchase.', 'It arrives in batches up to 24 hours late, and no real-time source sends it.', "It can feed audiences, but it can't trigger in-session experiences.",
+    'Send it in real time with the ADX SDK.', 'Copy Spec', 'spec']
+};
+function sgF(k, type, sample, v, warn) { return { k: k, type: type, sample: sample, v: !!v, warn: warn || '' }; }
+function sgSeed() {
+  var P = function (id) { return sgF('product_id', 'string', id || 'P483021', 1); };
+  return [
+    { id: 'add_to_cart', desc: 'An item is added to the basket.', r: 'tracking', via: ['scan'], seen: 12, fields: [P(), sgF('page_url', 'string', '/product/P483021'), sgF('price', 'number', '52.00', 1)] },
+    { id: 'chat_expanded', desc: 'Shopper opens the help chat.', r: 'unseen', via: ['scan', 'websdk'], fields: [sgF('page_url', 'string', '/help/returns')] },
+    { id: 'sample_dismissed', desc: 'Shopper closes the free-sample picker.', r: 'nodata', via: ['scan', 'websdk'], fields: [P(), sgF('sample_id', 'string', 'S-2291', 1)] },
+    { id: 'home_played', desc: 'Shopper plays the homepage hero video.', r: 'ambig', via: ['scan', 'websdk'], fields: [sgF('video_id', 'string', 'hero-fall-26', 1), sgF('position', 'number', '1', 1), sgF('page_url', 'string', '/')] },
+    { id: 'beauty_insider_hovered', desc: 'Shopper hovers the Beauty Insider banner.', r: 'source', via: ['scan', 'websdk'], fields: [sgF('tier', 'string', 'insider', 1), sgF('page_url', 'string', '/beauty-insider')] },
+    { id: 'filters_applied', desc: 'Shopper applies a filter on a listing page.', r: 'quality', via: ['scan', 'websdk'], fields: [sgF('filter_type', 'string', 'Brand', 1, '3 spellings of the same value')] },
+    { id: 'variant_selected', desc: 'Shopper picks a shade or size.', r: 'm_label', via: [], fields: [] },
+    { id: 'checkout_started', desc: 'Shopper starts checkout.', r: 'm_creds', via: [], fields: [] },
+    { id: 'order_completed', desc: 'An order is placed.', r: 'm_batch', via: [], fields: [] },
+    { id: 'wishlist_added', desc: 'Shopper adds a product to Loves.', r: 'm_label', via: [], fields: [] },
+    { id: 'promo_code_applied', desc: 'A promo code is applied in the basket.', r: 'm_spec', via: [], fields: [] },
+    { id: 'shade_swatch_selected', desc: 'Shopper taps a shade swatch.', r: 'm_label', via: [], fields: [] },
+    { id: 'quiz_completed', desc: 'Shopper finishes the shade-finder quiz.', r: 'm_spec', via: [], fields: [] },
+    { id: 'product_viewed', desc: 'Shopper opens a product page.', r: null, via: ['scan', 'websdk'], seen: 48, env: 'dsp', fields: [P(), sgF('brand', 'string', 'Fenty Beauty', 1), sgF('category', 'string', 'Foundation', 1), sgF('price', 'number', '40.00')] },
+    { id: 'search_performed', desc: 'Shopper runs a site search.', r: null, via: ['scan', 'websdk'], seen: 31, env: 'ds', fields: [sgF('query', 'string', 'vitamin c serum', 1), sgF('results_count', 'number', '86', 1)] },
+    { id: 'cart_viewed', desc: 'Shopper opens the basket.', r: null, via: ['scan', 'websdk'], seen: 9, env: 'dsp', fields: [sgF('cart_value', 'number', '64.00', 1), sgF('item_count', 'number', '2', 1)] },
+    { id: 'review_read', desc: 'Shopper expands a product review.', r: null, via: ['scan', 'websdk'], seen: 22, env: 'd', fields: [P(), sgF('rating_filter', 'number', '4', 1), sgF('reviews_seen', 'number', '6')] },
+    { id: 'gift_card_completed', desc: 'Shopper finishes the gift-card form.', r: null, via: ['scan', 'websdk'], seen: 3, env: 'd', fields: [sgF('value', 'number', '50.00', 1), sgF('design', 'string', 'holiday-26'), sgF('page_url', 'string', '/gift-cards')] },
+    { id: 'size_guide_scrolled', desc: 'Shopper scrolls the size guide.', r: null, via: ['scan', 'websdk'], seen: 14, env: 'ds', fields: [P(), sgF('depth', 'number', '0.75', 1)] },
+    { id: 'recently_viewed_selected', desc: 'Shopper picks from Recently viewed.', r: null, via: ['scan'], seen: 27, env: 'd', fields: [P(), sgF('position', 'number', '2', 1), sgF('list_name', 'string', 'recently_viewed', 1)] },
+    { id: 'category_viewed', desc: 'Shopper opens a category page.', r: null, via: ['scan', 'websdk'], seen: 63, env: 'dsp', fields: [sgF('category', 'string', 'Skincare', 1), sgF('page_url', 'string', '/shop/skincare')] },
+    { id: 'store_locator_opened', desc: 'Shopper opens the store locator.', r: null, via: ['scan'], seen: 4, env: 'd', fields: [sgF('page_url', 'string', '/happening/stores')] },
+    { id: 'newsletter_signed_up', desc: 'Shopper subscribes to emails.', r: null, via: ['scan', 'websdk'], seen: 5, env: 'ds', fields: [sgF('placement', 'string', 'footer', 1)] }
+  ].map(function (s) { s.env = s.env || (s.via.length ? 'd' : ''); s.excluded = false; return s; });
+}
+function sgStore() { if (!window.ADX_SIGNALS) window.ADX_SIGNALS = { list: sgSeed(), q: '', st: 'all', src: 'all' }; return window.ADX_SIGNALS; }
+function sgFind(id) { return sgStore().list.filter(function (s) { return s.id === id; })[0]; }
+function sgParam() { var m = location.hash.match(/[?&]id=([^&]+)/); return m ? decodeURIComponent(m[1]) : null; }
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tick: 0, view: 'fields', draft: null, menu: false, busy: false, modal: null, toast: '' };
+  }
+  componentWillUnmount() { clearTimeout(this.tt); clearTimeout(this.bt); }
+  bump() { this.setState({ tick: this.state.tick + 1 }); }
+  say(t) { var self = this; clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2600); }
+  renderVals() {
+    var self = this, st = this.state, S = sgStore(), id = sgParam(), sig = id ? sgFind(id) : null;
+    function status(s) { return s.excluded ? ['Excluded', 'exc'] : s.r ? ['Needs attention', 'att'] : ['Ready', 'ready']; }
+    function viaText(s) { return s.via.length ? s.via.map(function (k) { return SG_SRC[k].name; }).join(' + ') : 'Not detected'; }
+    function env(s) { return [['d', 'D', 'Development'], ['s', 'S', 'Staging'], ['p', 'P', 'Production']].map(function (e) { var on = s.env.indexOf(e[0]) >= 0; return { l: e[1], c: on ? 'on' : '', t: e[2] + (on ? ' · v1 active' : ' · not available') }; }); }
+    var modal = st.modal;
+    var base = {
+      modal: !!modal, modalTitle: modal ? modal.title : '', modalText: modal ? modal.text : '', modalCancel: modal ? modal.cancel : '', modalOkLabel: modal ? modal.ok : '',
+      modalOk: function () { var f = self.state.modal && self.state.modal.run; self.setState({ modal: null }); if (f) f(); },
+      closeModal: function () { self.setState({ modal: null }); }, stop: function (e) { e.stopPropagation(); },
+      toast: st.toast, isList: !sig, isDetail: !!sig
+    };
+
+    if (!sig) {
+      var inc = S.list.filter(function (s) { return !s.excluded; }), exc = S.list.length - inc.length;
+      var cnt = { all: inc.length, ready: inc.filter(function (s) { return !s.r; }).length, attention: inc.filter(function (s) { return !!s.r; }).length, excluded: exc };
+      var q = S.q.trim().toLowerCase();
+      var pool = S.st === 'excluded' ? S.list.filter(function (s) { return s.excluded; }) : inc;
+      var list = pool.filter(function (s) {
+        return (!q || s.id.indexOf(q) >= 0) && (S.st === 'all' || S.st === 'excluded' || (S.st === 'ready' ? !s.r : !!s.r)) && (S.src === 'all' || s.via.indexOf(S.src) >= 0);
+      }).sort(function (a, b) { return (b.r ? 1 : 0) - (a.r ? 1 : 0); });
+      var opts = [['all', 'All statuses'], ['ready', 'Ready'], ['attention', 'Needs attention']].concat(exc ? [['excluded', 'Excluded']] : []);
+      return Object.assign(base, {
+        total: inc.length, q: S.q,
+        onQ: function (e) { S.q = e.target.value; self.bump(); },
+        onSt: function (e) { S.st = e.target.value; self.bump(); },
+        onSrc: function (e) { S.src = e.target.value; self.bump(); },
+        stOpts: opts.map(function (o) { return { k: o[0], l: o[1] + ' (' + cnt[o[0]] + ')', sel: S.st === o[0] }; }),
+        srcOpts: [['all', 'All sources'], ['scan', 'Website scan'], ['websdk', 'Adobe Web SDK']].map(function (o) { return { k: o[0], l: o[1], sel: S.src === o[0] }; }),
+        list: list.map(function (s) { var t = status(s);
+          return { id: s.id, status: t[0], cls: t[1], via: viaText(s), viaCls: s.via.length ? '' : 'sg-mut', nVar: s.fields.filter(function (f) { return f.v; }).length, env: env(s),
+            open: function () { location.hash = '#/signals?id=' + encodeURIComponent(s.id); } }; }),
+        noMatch: list.length === 0, noMatchText: q ? 'Nothing named “' + S.q + '”.' : 'No signals with this status.',
+        clearF: function () { S.q = ''; S.st = 'all'; S.src = 'all'; self.bump(); }
+      });
+    }
+
+    // ---------- detail ----------
+    var t = status(sig), W = sig.r ? SG_WHY[sig.r] : null, ready = !sig.r && !sig.excluded;
+    var draft = st.draft && st.draft.id === sig.id ? st.draft : null, fields = draft ? draft.fields : sig.fields;
+    var nChanged = draft ? fields.filter(function (f, i) { return f.v !== sig.fields[i].v; }).length : 0;
+    var notes = W ? W[2] : ['On ' + ((sig.fields.filter(function (f) { return f.k === 'page_url'; })[0] || {}).sample || '/product/*').replace(/\/P\d+$/, '/*') + ' during the scan',
+      'Seen on ' + (sig.seen || 12) + ' pages', sig.mapped || 'Matched automatically', sig.fields.length + ' fields in the payload', 'Experiences can use it'];
+    var cur = ready ? -1 : W ? W[1] : -1;
+    var chain = SG_STEPS.map(function (l, i) {
+      var c = sig.excluded ? (i < (W ? W[1] : 5) ? 'ok' : 'todo') : ready || i < cur ? 'ok' : i === cur ? 'cur' : 'todo';
+      return { label: l, c: c, ok: c === 'ok', cur: c === 'cur', note: notes[i], noteCls: c === 'cur' ? 'cur' : '', issue: c === 'cur' && !!W };
+    });
+    var json = '{\n' + fields.map(function (f, i) { var v = f.type === 'number' ? f.sample : JSON.stringify(f.sample); return '  "' + f.k + '": ' + v + (i < fields.length - 1 ? ',' : ''); }).join('\n') + '\n}';
+    function mapsFor(s) {
+      return s.via.map(function (k) {
+        var src = SG_SRC[k], ev = s.r === 'unseen' ? '—' : k === 'scan' ? s.id : s.r === 'ambig' ? '—' : (s.ev || (src.prefix || '') + s.id);
+        var how = s.r === 'ambig' && k !== 'scan' ? 'Not mapped · 2 candidate events' : ev === '—' ? 'Not mapped' : s.r === 'tracking' ? 'Button click only' : (s.mapped && k !== 'scan' ? s.mapped : 'Matched automatically');
+        var data = k === 'scan' ? (s.r === 'unseen' ? 'Not seen during the scan' : 'Seen on ' + (s.seen || 12) + ' pages during the scan')
+          : s.r === 'unseen' ? 'No matching event yet' : s.r === 'source' ? 'No events for 26 hours' : s.r === 'nodata' ? 'No events in the last 24 hours' : k === 'aa' ? 'Batch · yesterday' : k === 'label' ? 'Captured in Browse & Label · Just now' : 'Events received · Today';
+        return { name: src.name, mono: src.mono, c: src.c, ev: ev, how: how, data: data };
+      });
+    }
+    // what each recommended action does to the signal (simulated)
+    function fix() {
+      var act = W[8];
+      if (act === 'spec') { self.say('Event spec for ' + sig.id + ' copied · it stays here until events arrive'); return; }
+      self.setState({ busy: true });
+      self.bt = setTimeout(function () {
+        var msg = sig.id + ' is ready';
+        if (act === 'label') { if (sig.via.indexOf('label') < 0) sig.via.push('label'); if (!sig.fields.length) sig.fields = [sgF('product_id', 'string', 'P483021', 1), sgF('shade', 'string', '330 Medium', 1)]; sig.mapped = 'Mapped by you'; sig.seen = sig.seen || 1; sig.r = null; msg = 'Label saved · ' + sig.id + ' is ready'; }
+        else if (act === 'websdk') { sig.r = null; sig.mapped = 'Mapped by you'; sig.ev = 'web.' + sig.id; msg = 'Mapped to web.' + sig.id; }
+        else if (act === 'verify') { sig.r = null; msg = 'Events received · ' + sig.id + ' is ready'; }
+        else if (act === 'normalize') { sig.r = null; sig.fields.forEach(function (f) { f.warn = ''; if (f.k === 'filter_type') f.sample = 'brand'; }); msg = 'Values normalized to lowercase'; }
+        else if (act === 'creds') { sig.r = null; sig.via = ['scan']; sig.seen = 2; sig.fields = [sgF('cart_value', 'number', '64.00', 1), sgF('item_count', 'number', '2', 1), sgF('page_url', 'string', '/checkout/shipping')]; msg = sig.id + ' found on /checkout/*'; }
+        else if (act === 'batch') { sig.r = 'batch'; sig.via = ['aa']; sig.ev = 'evar:purchase'; sig.mapped = 'Mapped by you'; sig.fields = [sgF('transaction_id', 'string', 'T-88123'), sgF('value', 'number', '86.00', 1), sgF('currency', 'string', 'USD')]; msg = 'Mapped to Adobe Analytics purchase'; }
+        if (!sig.r && sig.env.indexOf('d') < 0) sig.env = 'd';
+        self.setState({ busy: false }); self.say(msg);
+      }, 1300);
+    }
+    function exclude(on) {
+      if (!on) { sig.excluded = false; self.say(sig.id + ' included'); self.bump(); return; }
+      self.setState({ menu: false, modal: { title: 'Exclude ' + sig.id + '?', text: 'This signal will be excluded from the current signal set. You can continue setting up other signals.', cancel: 'Keep Signal', ok: 'Exclude Signal',
+        run: function () { sig.excluded = true; S.st = 'all'; location.hash = '#/signals'; } } });
+    }
+    return Object.assign(base, {
+      back: function () { location.hash = '#/signals'; },
+      d: {
+        id: sig.id, desc: sig.desc, status: t[0], cls: t[1], excluded: sig.excluded, ready: ready, chain: chain,
+        iss: W ? { title: W[0], text: W[3] + ' ' + W[4] + ' ' + W[5], rec: W[6], btn: W[7] } : {},
+        busy: st.busy, idle: !st.busy, fix: fix,
+        askExclude: function () { exclude(true); }, include: function () { exclude(false); },
+        menu: st.menu, toggleMenu: function () { self.setState({ menu: !self.state.menu }); },
+        excludeLabel: sig.excluded ? 'Include Signal' : 'Exclude Signal', menuExclude: function () { self.setState({ menu: false }); exclude(!sig.excluded); },
+        askRemove: function () { self.setState({ menu: false, modal: { title: 'Remove ' + sig.id + '?', text: 'Experiences that use it stop receiving it. Its configuration and history are deleted.', cancel: 'Cancel', ok: 'Remove',
+          run: function () { S.list = S.list.filter(function (x) { return x !== sig; }); location.hash = '#/signals'; } } }); },
+        hasFields: fields.length > 0, noFields: fields.length === 0,
+        fieldsView: fields.length > 0 && st.view === 'fields', jsonView: fields.length > 0 && st.view === 'json', json: json,
+        tabFields: st.view === 'fields' ? 'on' : '', tabJson: st.view === 'json' ? 'on' : '',
+        showFields: function () { self.setState({ view: 'fields' }); }, showJson: function () { self.setState({ view: 'json' }); },
+        fields: fields.map(function (f, i) {
+          return { k: f.k, type: f.type, sample: f.sample, warn: f.warn, on: f.v ? 'on' : '', aria: f.v ? 'true' : 'false',
+            toggle: function () { var fs = fields.map(function (x) { return Object.assign({}, x); }); fs[i].v = !fs[i].v; self.setState({ draft: { id: sig.id, fields: fs } }); } };
+        }),
+        dirty: nChanged > 0, nChanged: nChanged, plural: nChanged > 1 ? 's' : '',
+        discard: function () { self.setState({ draft: null }); },
+        save: function () { sig.fields = fields; self.setState({ draft: null }); self.say('Saved as v2 in Development'); },
+        maps: mapsFor(sig), noMaps: sig.via.length === 0
+      }
+    });
+  }
+}
+</script>
+</body>
+</html>
