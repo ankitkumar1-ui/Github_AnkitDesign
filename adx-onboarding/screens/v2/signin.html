@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Log in or sign up to ADX</title>
+<!-- Styles for this screen only (added while the screen is shown). Fonts are loaded once in index.html. -->
+<style>
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<!-- Markup: Claude Design "DC" template syntax. See CLAUDE.md for the rules. -->
+<template data-view>
+<div style="display: flex; flex-wrap: wrap; min-height: 1040px; background: #fff; font-family: Geist, ui-sans-serif, system-ui, -apple-system, sans-serif; color: #09090b; -webkit-font-smoothing: antialiased">
+
+  <section style="flex: 5 1 420px; min-width: 0; position: relative; overflow: hidden; background: #0b0b0f; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 56px 40px 88px; box-sizing: border-box">
+    <div aria-hidden="true" style="position: absolute; width: 520px; height: 520px; border-radius: 50%; left: -180px; top: -200px; background: radial-gradient(circle, rgba(60,140,129,0.22), transparent 65%)"></div>
+    <div aria-hidden="true" style="position: absolute; width: 460px; height: 460px; border-radius: 50%; right: -200px; bottom: -160px; background: radial-gradient(circle, rgba(60,140,129,0.30), transparent 65%)"></div>
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center">
+      <img src="assets/adx-logo.png" alt="ADX" width="76" height="76" style="width: 76px; height: 76px; border-radius: 20px; display: block; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 12px 44px rgba(0,0,0,0.35)">
+      <div style="font-family: 'Instrument Sans', Geist, sans-serif; font-size: 54px; font-weight: 600; letter-spacing: -0.03em; line-height: 1">ADX</div>
+      <div style="font-size: 15px; color: rgba(255,255,255,0.72); margin-top: 10px; letter-spacing: 0.01em">Agentic Digital Experience</div>
+      <p style="font-size: 18px; line-height: 1.45; color: #fff; margin: 30px 0 0; max-width: 30ch">Storefronts that adapt to every shopper, run by AI agents you can see and steer.</p>
+    </div>
+    <div style="position: absolute; bottom: 24px; left: 0; right: 0; font-size: 11.5px; color: rgba(255,255,255,0.55)">by netomi · ©2026 Netomi, Inc. All rights reserved.</div>
+  </section>
+
+  <section style="flex: 7 1 520px; min-width: 0; position: relative; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px 96px; box-sizing: border-box">
+    <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column">
+      <h1 style="margin: 0; font-size: 26px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; text-align: center">Log in or sign up to ADX</h1>
+      <p style="margin: 8px 0 28px; font-size: 13.5px; line-height: 1.5; color: #71717a; text-align: center">New here? We'll set up your workspace in about two minutes. No data connection needed to start.</p>
+
+      <a href="#/about" style="height: 46px; display: flex; align-items: center; justify-content: center; gap: 11px; border: 1px solid #d4d4d8; border-radius: 11px; background: #fff; font-size: 14px; font-weight: 600; color: #09090b; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+        Continue with Google</a>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin: 20px 0; color: #71717a; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase">
+        <div style="flex: 1; height: 1px; background: #e4e4e7"></div>or<div style="flex: 1; height: 1px; background: #e4e4e7"></div>
+      </div>
+
+      <form style="margin: 0; display: flex; flex-direction: column">
+        <label for="obEmail" style="font-size: 12px; font-weight: 600; color: #3f3f46; margin-bottom: 7px"><span style="color: #dc2626; margin-right: 3px">*</span>Work email</label>
+        <input id="obEmail" type="email" autocomplete="email" placeholder="you@company.com" style="width: 100%; box-sizing: border-box; border: 1px solid #d4d4d8; border-radius: 11px; padding: 12px 13px; font-family: inherit; font-size: 13.5px; color: #09090b; background: #fff">
+        <a href="#/about" style="height: 46px; margin-top: 14px; border-radius: 11px; background: #09090b; color: #fafafa; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">Continue with email</a>
+      </form>
+
+      <p style="margin: 18px 0 0; font-size: 12px; line-height: 1.55; color: #71717a; text-align: center">By continuing you agree to Netomi's Terms and Privacy Policy. We use LinkedIn and ZoomInfo to pre-fill your profile.</p>
+    </div>
+
+    <div style="position: absolute; bottom: 22px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 12px; color: #71717a">
+      <div style="width: 120px; height: 1px; background: #e4e4e7"></div>
+      <a href="#support" style="color: #52525b; text-decoration: none">Contact support</a>
+      <div style="width: 120px; height: 1px; background: #e4e4e7"></div>
+    </div>
+  </section>
+</div>
+</template>
+<script type="text/x-dc">
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

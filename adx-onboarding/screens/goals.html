@@ -10,6 +10,7 @@ body{margin:0}
 @keyframes obBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
 @keyframes obPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 @keyframes obSpin{to{transform:rotate(360deg)}}
+@keyframes obRing{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}
 @keyframes obIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 </style>
@@ -30,7 +31,7 @@ body{margin:0}
       <span aria-hidden="true" style="color: #d4d4d8; letter-spacing: 3px; font-size: 12px">···</span>
       <span aria-current="step" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 600; white-space: nowrap; background: #18181b; color: #fff; box-shadow: 0 4px 14px rgba(24,24,27,0.3)"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"></path></svg>Your goals</span>
     </nav>
-    <div style="position: absolute; right: 20px; top: 20px; width: 32px; height: 32px; border-radius: 50%; background: #9bdb72; color: #1f4d14; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center" title="emma.clarke@sephora.com">EC</div>
+    <div class="shav" style="position: absolute; right: 20px; top: 20px" title="emma.clarke@sephora.com">EC</div>
   </header>
 
   <main style="max-width: 780px; margin: 0 auto; padding: 40px 24px 110px; box-sizing: border-box; display: flex; flex-direction: column">
@@ -40,35 +41,33 @@ body{margin:0}
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>
       <div style="min-width: 0; flex: 1">
         <h1 style="margin: 0; font-size: 24px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em">Your goals</h1>
-        <p style="margin: 6px 0 0; font-size: 14.5px; line-height: 1.5; color: #71717a">Pick where ADX should start. Cortex suggests one from your data, and you can choose more or add your own.</p>
+        <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: #71717a">Pick where ADX should start. Cortex suggests one from your data, and you can choose more or add your own.</p>
       </div>
     </div>
 
     <sc-if value="{{busy}}" hint-placeholder-val="{{true}}">
-      <div style="display: flex">
-      <section role="status" aria-live="polite" style="width: 100%; box-sizing: border-box; border: 1px solid rgba(60,140,129,0.3); border-radius: 18px; background: linear-gradient(135deg, #f1f7f6, #fff 70%); padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start">
-        <span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 13px; background: #3c8c81; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px -10px rgba(60,140,129,0.7)">
-          <svg viewBox="0 0 48 48" width="20" height="20" style="animation: obPulse 1.5s ease-in-out infinite"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#fff"></path></svg></span>
-        <div style="flex: 1; min-width: 0">
-          <div style="font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px">Cortex is setting up your goals</div>
-          <div style="display: flex; flex-direction: column; gap: 8px">
-            <sc-for list="{{lines}}" as="l" hint-placeholder-count="3">
-              <div style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: {{l.fg}}">
-                <span style="flex: 0 0 18px; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center">
-                  <sc-if value="{{l.done}}" hint-placeholder-val="{{true}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
-                  <sc-if value="{{l.cur}}" hint-placeholder-val="{{false}}"><span style="width: 13px; height: 13px; box-sizing: border-box; border-radius: 50%; border: 2px solid #bfdcd8; border-top-color: #3c8c81; animation: obSpin .8s linear infinite; display: block"></span></sc-if>
-                  <sc-if value="{{l.wait}}" hint-placeholder-val="{{false}}"><span style="width: 12px; height: 12px; box-sizing: border-box; border-radius: 50%; border: 1.5px dashed #d4d4d8; display: block"></span></sc-if>
+      <div role="status" aria-live="polite" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 9vh 0 40px">
+        <div aria-hidden="true" style="position: relative; width: 64px; height: 64px; border-radius: 19px; background: #3c8c81; display: grid; place-items: center; margin-bottom: 22px; box-shadow: 0 10px 30px -10px rgba(60,140,129,0.6)">
+          <svg viewBox="0 0 48 48" width="26" height="26" style="animation: obPulse 1.5s ease-in-out infinite"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#fff"></path></svg>
+          <span style="position: absolute; inset: -7px; border-radius: 25px; border: 2px solid rgba(60,140,129,0.45); animation: obRing 1.7s ease-out infinite"></span>
+        </div>
+        <div style="font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 20px">Cortex is setting up <b style="font-weight: 600; color: #18181b">your goals</b></div>
+        <div style="display: flex; flex-direction: column; gap: 10px; min-width: min(420px, 100%); text-align: left">
+          <sc-for list="{{lines}}" as="l" hint-placeholder-count="3">
+            <sc-if value="{{l.show}}" hint-placeholder-val="{{true}}">
+              <div style="display: flex; align-items: center; gap: 11px; font-size: 14px; color: {{l.fg}}">
+                <span style="width: 20px; height: 20px; display: grid; place-items: center; flex: none">
+                  <sc-if value="{{l.done}}" hint-placeholder-val="{{true}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #16a34a; color: #fff; display: grid; place-items: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+                  <sc-if value="{{l.cur}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><defs><linearGradient id="aiSpG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F5F57"></stop><stop offset="1" stop-color="#3C8C81"></stop></linearGradient></defs><path fill="url(#aiSpG)" d="M10.5 4C11 8.6 14.4 12 19 12.5C14.4 13 11 16.4 10.5 21C10 16.4 6.6 13 2 12.5C6.6 12 10 8.6 10.5 4Z"></path><path fill="url(#aiSpG)" d="M19 1.5C19.2 3.2 20.3 4.3 22 4.5C20.3 4.7 19.2 5.8 19 7.5C18.8 5.8 17.7 4.7 16 4.5C17.7 4.3 18.8 3.2 19 1.5Z"></path><path fill="url(#aiSpG)" d="M19.5 16.5C19.6 17.6 20.4 18.4 21.5 18.5C20.4 18.6 19.6 19.4 19.5 20.5C19.4 19.4 18.6 18.6 17.5 18.5C18.6 18.4 19.4 17.6 19.5 16.5Z"></path></svg></sc-if>
                 </span>
                 <span>{{l.t}}</span>
-                <sc-if value="{{l.cur}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width: 2px; height: 15px; background: #18181b; border-radius: 1px; animation: obBlink 1s steps(2) infinite"></span></sc-if>
               </div>
-            </sc-for>
-          </div>
-          <div style="height: 4px; border-radius: 9px; background: #e4e4e7; margin-top: 16px; overflow: hidden">
-            <div style="width: {{progress}}; height: 100%; border-radius: 9px; background: linear-gradient(90deg, #18181b, #3c8c81); transition: width .8s ease"></div>
-          </div>
+            </sc-if>
+          </sc-for>
         </div>
-      </section>
+        <div style="width: min(420px, 100%); height: 4px; border-radius: 9px; background: #e4e4e7; margin-top: 24px; overflow: hidden">
+          <div style="width: {{progress}}; height: 100%; border-radius: 9px; background: linear-gradient(90deg, #18181b, #3c8c81); transition: width .8s ease"></div>
+        </div>
       </div>
     </sc-if>
 
@@ -77,7 +76,7 @@ body{margin:0}
     <div style="display: flex; flex-direction: column; animation: obIn .5s ease both">
     <!-- "Cortex picked Convert" note: hidden for now; return pickNote: true from renderVals() to bring it back -->
     <sc-if value="{{pickNote}}" hint-placeholder-val="{{false}}">
-      <div role="status" style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 14px; border-radius: 12px; border: 1px solid rgba(60,140,129,0.3); background: linear-gradient(135deg, #f1f7f6, #fff 70%); font-size: 13px; color: #3f3f46; animation: obIn .4s ease-out">
+      <div role="status" class="shalert" style="margin-bottom: 14px; align-items: center">
         <svg viewBox="0 0 48 48" width="16" height="16" aria-hidden="true" style="flex: 0 0 auto"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#3c8c81"></path></svg>
         <span><b style="font-weight: 600; color: #09090b">Cortex read your shopper events</b> and picked <b style="font-weight: 600; color: #09090b">Convert</b> as the best place for Sephora to start. Change it or add more.</span>
       </div>
@@ -90,8 +89,8 @@ body{margin:0}
         <span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #09090b; color: #fafafa; display: flex; align-items: center; justify-content: center">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg></span>
         <div style="flex: 1 1 300px; min-width: 0">
-          <span style="display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #18181b; margin-bottom: 6px">North star · Customer lifetime value</span>
-          <h1 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em">Everything ADX does is measured against customer lifetime value.</h1>
+          <span style="display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #18181b; margin-bottom: 6px">North star · Customer lifetime value</span>
+          <h1 style="margin: 0; font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em">Everything ADX does is measured against customer lifetime value.</h1>
         </div>
       </div>
       <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 16px 0 0 60px">
@@ -101,14 +100,14 @@ body{margin:0}
             <span aria-hidden="true" style="font-size: 12px; color: #a1a1aa">{{s.op}}</span>
           </span>
         </sc-for>
-        <b style="font-size: 12.5px; font-weight: 700; color: #18181b; background: #f4f4f5; border-radius: 999px; padding: 3px 11px">CLV</b>
+        <b style="font-size: 12px; font-weight: 600; color: #18181b; background: #f4f4f5; border-radius: 999px; padding: 3px 11px">CLV</b>
       </div>
     </section>
     </sc-if>
 
     <div role="group" aria-label="Goals" aria-busy="{{busyAttr}}" style="display: flex; flex-direction: column; gap: 8px; opacity: {{listOp}}; pointer-events: {{listPe}}; transition: opacity .5s ease">
       <sc-for list="{{goals}}" as="g" hint-placeholder-count="5">
-        <button type="button" aria-pressed="{{g.pressed}}" onClick="{{g.toggle}}" style="display: flex; align-items: center; gap: 14px; min-height: 74px; padding: 12px 16px; box-sizing: border-box; text-align: left; border-radius: 14px; background: #fff; font-family: inherit; color: inherit; cursor: pointer; border: 1px solid {{g.bd}}; box-shadow: {{g.ring}}">
+        <button type="button" aria-pressed="{{g.pressed}}" onClick="{{g.toggle}}" style="display: flex; align-items: center; gap: 14px; min-height: 74px; padding: 12px 16px; box-sizing: border-box; text-align: left; border-radius: 12px; background: #fff; font-family: inherit; color: inherit; cursor: pointer; border: 1px solid {{g.bd}}; box-shadow: {{g.ring}}">
           <span style="flex: 0 0 38px; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: {{g.icBg}}; color: {{g.icFg}}">
             <sc-if value="{{g.isDropoff}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg></sc-if>
             <sc-if value="{{g.isConvert}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6"></path></svg></sc-if>
@@ -118,29 +117,29 @@ body{margin:0}
           </span>
           <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
             <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
-              <span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #18181b">{{g.move}}</span>
+              <span style="font-size: 12px; font-weight: 500; color: #71717a">{{g.move}}</span>
               <sc-if value="{{g.suggested}}" hint-placeholder-val="{{false}}">
-                <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; color: #2f7a70; background: rgba(60,140,129,0.11); border: 1px solid rgba(60,140,129,0.24); border-radius: 999px; padding: 1px 7px">
+                <span class="shbadge sec">
                   <svg viewBox="0 0 48 48" width="11" height="11" aria-hidden="true"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#3C8C81"></path></svg>Suggested for Sephora</span>
               </sc-if>
             </span>
             <b style="font-size: 14px; font-weight: 600; line-height: 1.3">{{g.label}}</b>
           </span>
-          <span style="flex: 0 0 20px; width: 20px; height: 20px; box-sizing: border-box; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 1.5px solid {{g.tickBd}}; background: {{g.tickBg}}; color: #fff">{{g.rank}}</span>
+          <span class="shck" data-state="{{g.ckState}}" style="width: 20px; height: 20px; font-size: 12px; font-weight: 500">{{g.rank}}</span>
         </button>
       </sc-for>
     </div>
 
-    <section style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 18px 20px; margin-top: 16px">
-      <label for="obGoalIn" style="display: block; font-size: 12px; font-weight: 600; color: #3f3f46; margin-bottom: 7px">Add your own goal</label>
+    <section class="shcard" style="padding: 20px; margin-top: 16px">
+      <label for="obGoalIn" class="shl">Add your own goal</label>
       <div style="display: flex; gap: 9px; margin-top: 8px; flex-wrap: wrap">
-        <input id="obGoalIn" maxlength="90" value="{{draft}}" onChange="{{onDraft}}" placeholder="e.g. Increase newsletter sign-ups from first-time visitors" style="flex: 1 1 280px; min-width: 0; box-sizing: border-box; border: 1px solid #d4d4d8; border-radius: 11px; padding: 12px 13px; font-family: inherit; font-size: 13.5px; color: #09090b; background: #fff">
-        <button type="button" onClick="{{addGoal}}" style="height: 44px; padding: 0 16px; border: 1px solid #e4e4e7; border-radius: 11px; background: #fff; color: #09090b; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">Add goal</button>
+        <input id="obGoalIn" class="shi" maxlength="90" value="{{draft}}" onChange="{{onDraft}}" placeholder="e.g. Increase newsletter sign-ups from first-time visitors" style="flex: 1 1 280px; width: auto">
+        <button type="button" class="shb out" onClick="{{addGoal}}">Add goal</button>
       </div>
       <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px">
         <sc-for list="{{custom}}" as="c" hint-placeholder-count="0">
-          <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #18181b; background: #f4f4f5; border: 1px solid #e4e4e7; border-radius: 999px; padding: 5px 6px 5px 12px">{{c.t}}
-            <button type="button" onClick="{{c.remove}}" aria-label="Remove {{c.t}}" style="width: 20px; height: 20px; border: 0; border-radius: 50%; background: transparent; color: #18181b; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0">
+          <span class="shbadge sec" style="gap: 6px; padding: 2px 4px 2px 8px; font-size: 14px; line-height: 20px">{{c.t}}
+            <button type="button" onClick="{{c.remove}}" aria-label="Remove {{c.t}}" style="width: 20px; height: 20px; border: 0; border-radius: 4px; background: transparent; color: #71717a; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
           </span>
         </sc-for>
@@ -148,19 +147,19 @@ body{margin:0}
     </section>
 
     <div style="display: flex; align-items: center; gap: 12px; margin-top: 26px; flex-wrap: wrap">
-      <a href="#/data" style="height: 48px; padding: 0 18px; border-radius: 999px; font-size: 14px; font-weight: 600; color: #3f3f46; display: inline-flex; align-items: center; gap: 7px; text-decoration: none">
+      <a href="#/data" class="shb ghost lg">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>Back</a>
       <sc-if value="{{hasGoals}}" hint-placeholder-val="{{true}}">
-        <a href="#/home" style="height: 48px; padding: 0 26px; border-radius: 999px; background: #09090b; color: #fafafa; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 9px; text-decoration: none">{{ctaLabel}}
+        <a href="#/home" class="shb pri lg">{{ctaLabel}}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
       </sc-if>
       <sc-if value="{{busy}}" hint-placeholder-val="{{false}}">
-        <button type="button" disabled style="height: 48px; padding: 0 26px; border: 0; border-radius: 999px; background: #09090b; color: #fafafa; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 9px; opacity: 0.35; cursor: progress">Setting up…</button>
+        <button type="button" class="shb pri lg" disabled>Setting up…</button>
       </sc-if>
       <sc-if value="{{noGoals}}" hint-placeholder-val="{{false}}">
-        <button type="button" disabled style="height: 48px; padding: 0 26px; border: 0; border-radius: 999px; background: #09090b; color: #fafafa; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 9px; opacity: 0.35; cursor: not-allowed">Pick at least one</button>
+        <button type="button" class="shb pri lg" disabled>Pick at least one</button>
       </sc-if>
-      <span style="font-size: 12.5px; color: #71717a">Step 3 of 3 · all measured against CLV</span>
+      <span style="font-size: 12px; color: #71717a">Step 3 of 3 · all measured against CLV</span>
     </div>
     </div>
     </sc-if>
@@ -206,7 +205,7 @@ class Component extends DCLogic {
         bd: on ? '#18181b' : '#e4e4e7', ring: on ? '0 0 0 3px #f4f4f5' : 'none',
         icBg: on ? '#18181b' : '#f4f4f5', icFg: on ? '#fff' : '#3f3f46',
         tickBd: on ? '#18181b' : '#d4d4d8', tickBg: on ? '#18181b' : 'transparent',
-        rank: on ? String(idx + 1) : '',
+        rank: on ? String(idx + 1) : '', ckState: on ? 'checked' : 'unchecked',
         toggle: function () {
           var o = self.state.order.slice(), i = o.indexOf(g.id);
           if (i >= 0) o.splice(i, 1); else o.push(g.id);
@@ -228,7 +227,7 @@ class Component extends DCLogic {
       progress: Math.min(100, 12 + step * 30) + '%',
       lines: lines.map(function (t, i) {
         var done = i < step, cur = i === step;
-        return { t: t, done: done, cur: cur, wait: !done && !cur, fg: cur ? '#09090b' : (done ? '#3f3f46' : '#a1a1aa') };
+        return { t: t, done: done, cur: cur, show: done || cur, fg: cur ? '#09090b' : '#71717a' };
       }),
       goals: goals, strip: strip, custom: custom,
       draft: this.state.draft,

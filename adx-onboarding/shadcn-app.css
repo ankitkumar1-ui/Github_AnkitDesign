@@ -1,0 +1,97 @@
+/* shadcn/ui specs for the ADX app screens (Home, ADX Setup, Web Signals…). Loaded once from index.html after shadcn.css.
+   The screens keep their own class names (.btn, .card, .dtab, .sg-pill …); these #app-scoped rules restyle them to the shadcn spec
+   (zinc, radius 0.5rem: controls 6px, tabs list 8px, cards 12px; text-sm 14px / text-xs 12px; weights 400/500). */
+
+/* ---- Sidebar (rail) ---- */
+#app .nav-cat{font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:#71717a;padding:12px 8px 4px}
+#app .subnav-item{min-height:32px;padding:6px 8px;border-radius:6px;font-size:14px;font-weight:400;color:#09090b}
+#app .subnav-item .sub-ico{color:#71717a}
+#app .subnav-item:hover{background:#f4f4f5;color:#09090b}
+#app .subnav-item.on{background:#f4f4f5;color:#09090b;font-weight:500}
+#app .subnav-item.on .sub-ico{color:#09090b}
+#app .brand b{font-size:14px;font-weight:600}
+#app .brand span,#app .rail-foot .who span{font-size:12px}
+#app .rail-foot .who b{font-size:14px;font-weight:500}
+#app .rail-foot .av{width:32px;height:32px;background:#f4f4f5;color:#09090b;font-size:14px;font-weight:400;font-family:inherit}
+/* ADX Setup group: keeps the original dark box */
+#app .setup-wrap .nav-cat{color:#e4e4e7;font-size:14px;font-weight:500;padding:10px;border-radius:9px}
+#app .setup-wrap .nav-cat:hover{color:#fff;background:#27272a}
+#app .setup-wrap .nav-cat .nc-ico{color:#a1a1aa}
+#app .setup-wrap .nav-cat .chev{color:#71717a}
+#app .setup-wrap .subnav-item{color:#a1a1aa}
+#app .setup-wrap .subnav-item .sub-ico{color:#71717a}
+#app .setup-wrap .subnav-item:hover{background:#27272a;color:#fafafa}
+#app .setup-wrap .subnav-item.on{background:#fafafa;color:#09090b;font-weight:500}
+#app .setup-wrap .subnav-item.on .sub-ico{color:#09090b}
+
+/* ---- Top bar ---- */
+#app .crumb{font-size:14px}
+#app .crumb b{font-weight:400}
+#app .env{font-size:12px;font-weight:500;color:#09090b;background:#fff;border-radius:6px;padding:2px 8px}
+
+/* ---- Button ---- */
+#app .btn{height:36px;padding:0 16px;gap:8px;border-radius:6px;font-size:14px;font-weight:500;border:1px solid #e4e4e7;background:#fff;color:#09090b;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+#app .btn:hover{background:#f4f4f5}
+#app .btn.primary,#app .btn.ai{background:#18181b;color:#fafafa;border-color:transparent}
+#app .btn.primary:hover,#app .btn.ai:hover{background:rgba(24,24,27,.9);filter:none}
+#app .btn.cortex{border-color:#e4e4e7;color:#09090b}
+#app .btn.ghost{border-color:transparent;background:transparent;color:#09090b;box-shadow:none}
+#app .btn.ghost:hover{background:#f4f4f5}
+#app .btn.danger{background:#dc2626;color:#fff;border-color:transparent}
+#app .btn.sm{height:32px;padding:0 12px;gap:6px;font-size:14px;border-radius:6px}
+#app .btn:focus-visible{outline:0;border-color:#a1a1aa;box-shadow:0 0 0 3px rgba(161,161,170,.5)}
+#app .btn.tb-cx{border:0;background:none;box-shadow:none}
+
+/* ---- Tabs ---- */
+#app .dtabs{display:inline-flex;align-items:center;width:fit-content;max-width:100%;height:36px;padding:3px;gap:0;border:0;box-shadow:none;border-radius:8px;background:#f4f4f5;color:#71717a;overflow-x:auto;overflow-y:hidden}
+#app .dtab{display:inline-flex;align-items:center;gap:6px;height:calc(100% - 1px);padding:4px 12px;margin:0;border:1px solid transparent;border-radius:6px;font-size:14px;font-weight:500;line-height:1;color:#09090b;background:transparent;box-shadow:none}
+#app .dtab:hover{color:#09090b}
+#app .dtab.on{background:#fff;border-color:transparent;box-shadow:0 1px 2px rgba(0,0,0,.05);font-weight:500}
+#app .dtab .tcount{font-size:12px;font-weight:500;color:#71717a;margin-left:0}
+#app .dtab:focus-visible{box-shadow:0 0 0 3px rgba(161,161,170,.5)}
+#app .sg-seg{height:36px;padding:3px;gap:0;border:0;border-radius:8px;background:#f4f4f5}
+#app .sg-seg button{display:inline-flex;align-items:center;padding:4px 12px;border-radius:6px;font-size:14px;font-weight:500;color:#09090b}
+#app .sg-seg button.on{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+
+/* ---- Page header, Card ---- */
+#app .pagehead .eyebrow{font-size:14px;font-weight:500;letter-spacing:0;text-transform:none;color:#71717a}
+#app .pagehead h1{font-size:24px;font-weight:600}
+#app .pagehead p{font-size:14px}
+#app .card,#app .cn-tbl,#app .hm-ws,#app .hm-rec,#app .hm-ask{border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)}
+#app .hm-ask{border-radius:12px}
+#app .hm-ask:focus-within{border-color:#a1a1aa;box-shadow:0 0 0 3px rgba(161,161,170,.5)}
+
+/* ---- Badge (status pills, tags) ---- */
+#app .hm-pill,#app .hm-tag,#app .cn-pill,#app .sg-pill,#app .cn-used span,#app .sg-node .h em,#app .sg-fw{display:inline-flex;align-items:center;gap:4px;border-radius:6px;border:1px solid #e4e4e7;padding:2px 8px;font-size:12px;font-weight:500;line-height:16px;background:#fff;white-space:nowrap}
+#app .hm-pill,#app .cn-pill,#app .sg-pill{background:#fff !important;border-color:#e4e4e7 !important}
+#app .hm-tag.miss{background:#fff;border-color:#e4e4e7}
+#app .hm-kbd{border-radius:4px;font-size:12px;padding:2px 6px}
+
+/* ---- Input / Label ---- */
+#app .as-input,#app .cn-fields input{height:36px;border-radius:6px;border:1px solid #e4e4e7;padding:4px 12px;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+#app .as-input:focus,#app .cn-fields input:focus{outline:0;border-color:#a1a1aa;box-shadow:0 0 0 3px rgba(161,161,170,.5)}
+#app .as-ta{height:auto}
+#app .as-lbl,#app .cn-fields label{font-size:14px;font-weight:500;color:#09090b}
+#app .as-lbl.sm{font-size:14px}
+#app .hm-go{border-radius:6px;font-size:14px;background:#18181b;color:#fafafa}
+
+/* ---- Switch ---- */
+#app .sg-sw{width:32px;height:18px;background:#e4e4e7}
+#app .sg-sw i{top:1px;left:1px;width:16px;height:16px;box-shadow:none}
+#app .sg-sw.on{background:#18181b}
+#app .sg-sw.on i{left:15px}
+
+/* ---- Alert / Progress / Dropdown ---- */
+#app .sg-okl,#app .as-warn,#app .cn-confirm{border-radius:8px;border:1px solid #e4e4e7;background:#fff;color:#09090b;font-size:14px}
+#app .as-warn b,#app .as-link{color:#09090b;font-weight:500}
+#app .cn-bar{height:8px;border-radius:999px;background:rgba(24,24,27,.2);margin-top:8px}
+#app .cn-bar div{border-radius:999px;background:#18181b}
+#app .sg-menu{border-radius:6px;box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)}
+#app .cn-ok{background:none;color:#16a34a}
+
+/* ---- Sentence-case labels instead of uppercase eyebrows ---- */
+#app .cn-row.sub,#app .sg-sub,#app .dv-or,#app .dv-lbl,#app .dv-tpl .pg,#app .as-cmp-k{text-transform:none;letter-spacing:0;font-size:12px;font-weight:500;color:#71717a}
+#app .cn-row.hd,#app .sg-row.hd,#app .sg-frow.hd,#app .sg-mrow.hd,#app .dv-row.hd{font-weight:500}
+#app .cn-ok svg{width:16px;height:16px;stroke-width:2}
+#app .env,#app .crumb{white-space:nowrap}
+#app .crumb{font-size:13px}

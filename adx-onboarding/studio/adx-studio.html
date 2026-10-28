@@ -5,6 +5,7 @@
 /* Embedded in the ADX onboarding prototype: boot on Goals, which renders without the later script blocks
    (Analytics needs helpers defined further down the file); the embed script at the end opens the requested page. */
 try { if (new URLSearchParams(location.search).get('embed') === '1') localStorage.setItem('acs.mod', 'goals'); } catch (e) {}
+document.documentElement.setAttribute('data-theme', 'light'); try { localStorage.setItem('acs.theme', 'light'); } catch (e) {}
 </script>
 
 <meta charset="utf-8">

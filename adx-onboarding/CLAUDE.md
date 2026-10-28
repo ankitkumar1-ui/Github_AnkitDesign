@@ -21,7 +21,7 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 |---|---|---|
 | signin | screens/signin.html | Onboarding v2 · Sign in |
 | about | screens/about.html | Onboarding v2 · 1 About you |
-| data | screens/data.html | Onboarding v2 · 2 Connect your data. Starts with a website scan (hero with a canvas scan effect → Allow / Skip, ~75s in the background, toast when done); state lives in `window.ADX_SCAN` |
+| data | screens/data.html | Onboarding v2 · 2 Connect your data (V1). Web signals, Product catalog and Content each open on a compact "Auto-scan" card (Allow scan, then progress, then result), then "Or connect manually" tools. One scan fills all three; state lives in `window.ADX_SCAN`, progress shows in each card, toast when done. The earlier scan-hero version is frozen as V2 (`screens/v2/data.html`) |
 | goals | screens/goals.html | Onboarding v2 · Cortex setting up + 3 Your goals |
 | home | screens/home.html | Home (prompt, recommendations, workspace completeness) |
 | exp-goals, experiences, simulate, release, analytics, test-management | screens/studio.html | Experiences + Measure pages from the ADX studio, shown in the prototype shell (see below) |
@@ -31,8 +31,29 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 | connections | screens/connections.html | ADX Setup · Connections (connect / edit / disconnect sources) |
 | web-signals | screens/web-signals.html | ADX Setup · Web Signals (simple · site map) |
 | signals | screens/signals.html | ADX Setup · Web Signals · Signals list; `#/signals?id=<signal>` opens the signal detail |
-| derived | screens/derived.html | ADX Setup · Web Signals · Derived signals (user-built triggers that combine signals; starts empty, saved ones in `window.ADX_DERIVED`) |
+| derived | screens/derived.html | ADX Setup · Web Signals · Derived signals (user-built triggers that combine signals; starts empty, saved ones in `window.ADX_DERIVED`; the six examples follow the project plan sheet's Trigger list) |
 | add-signal | screens/add-signal.html | ADX Setup · Web Signals · Add signal manually (from "Add manually") |
+
+## Versions (V1, V2 …)
+
+The round button above Reset (bottom-right) opens a version flyout. **V1 is the default and the working version**: it uses the
+files listed in `ROUTES`. Each later version is an entry in `VERSIONS` in `app.js` that lists only the screens it changes
+(`files: { <route>: 'screens/v2/<file>.html' }`); every other route falls back to V1. The choice is kept in localStorage
+(`adx-proto-version`), and `?ver=v2` in the URL opens a version directly (handy for sharing). Rule: new changes go into the V1 files; before changing a screen that V2 does not already hold, copy its last committed
+version into `screens/v2/` and list it in `VERSIONS`, so V2 stays the older version. V2 holds the earlier Connect your data
+(auto-scan hero, `screens/v2/data.html`), Derived signals (first examples, `screens/v2/derived.html`) and Signals
+(`screens/v2/signals.html`). Edit `screens/data.html` etc. for V1.
+
+## Prototype layer (not shadcn)
+
+The quick nav (bottom-left), the version button (V1, V2…) and the Reset button (bottom-right) are a separate layer for navigating and demoing the prototype.
+They live in `index.html` / `app.js`, are styled on their own (dark floating controls) and are **not** part of the shadcn UI; keep them as they are.
+Press `\` to hide or show all three together.
+
+## Light mode only
+
+The prototype is light only: `index.html` sets `color-scheme: light`, the theme toggle is removed from the app top bar, and the embedded studio is forced to `data-theme="light"`.
+Do not add dark styles or `prefers-color-scheme` rules.
 
 ## Studio pages (Goals → Test Management)
 
@@ -71,5 +92,12 @@ file again and re-add both embed scripts.
 ## Conventions
 
 - Look: shadcn/ui-style zinc palette, Geist (onboarding) / Inter (app shell), teal `#3c8c81` for Cortex/AI.
+- Onboarding screens (signin, about, data, goals) use shadcn components only, defined in `shadcn.css` (loaded from `index.html`):
+  `.shb` Button (`pri` `sec` `out` `ghost`, sizes `sm` `lg` `icon`), `.shbadge` Badge (`sec` `out` `pri`), `.shi` Input / native Select (`.shsel` wraps a select),
+  `.shig` Input Group, `.shl` Label, `.shtabs` + `.shtab` Tabs, `.shcard` Card, `.shalert` Alert, `.shprog` Progress, `.shav` Avatar,
+  `.shck` Checkbox, `.shspin` Spinner, `.shsep` Separator, `.shbc` Breadcrumb (the step nav), `.shdlg` Dialog. Use these instead of inline-styled lookalikes;
+  sentence-case labels, 14px body / 12px small, weights 400/500 (600 only for titles). The app screens (Home, ADX Setup, Web Signals) keep their own class names (`.btn`, `.card`, `.dtab`, `.sg-pill` …) but `shadcn-app.css`
+  restyles them to the shadcn spec through `#app`-scoped overrides (sidebar, Button, Tabs, Badge, Input, Switch, Alert, Progress). Change a component there, not per screen.
+  The faux Sephora site (`.site …`), data-viz bars and the studio iframe pages (Goals → Test Management) are intentionally left as they are.
 - Keep each screen self-contained: CSS that only one screen needs goes in that screen's `<style>`.
 - After changing the flow, click through it once end to end (sign in → web signals).

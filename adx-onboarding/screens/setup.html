@@ -14,14 +14,14 @@ button { font-family: inherit; cursor: pointer; border-width: medium; border-sty
 .rail { background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0px; padding: 14px 12px; gap: 2px; overflow-y: auto; }
 .brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px; }
 .brand .glyph { width: 30px; height: 30px; border-radius: 9px; flex: 0 0 auto; background: rgb(0, 0, 0); position: relative; box-shadow: rgba(0, 0, 0, 0.18) 0px 1px 3px; object-fit: cover; display: block; }
-.brand b { font-family: var(--f-display); font-weight: 600; font-size: 14.5px; letter-spacing: -0.02em; line-height: 1.15; display: block; }
-.brand span { font-size: 11px; color: var(--muted); letter-spacing: 0.01em; }
+.brand b { font-family: var(--f-display); font-weight: 600; font-size: 14px; letter-spacing: -0.02em; line-height: 1.15; display: block; }
+.brand span { font-size: 12px; color: var(--muted); letter-spacing: 0.01em; }
 .rail-nav { display: flex; flex-direction: column; }
-.nav-cat { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; font-family: inherit; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 15px 10px 7px; }
+.nav-cat { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 15px 10px 7px; }
 .nav-cat:hover { color: var(--ink-soft); }
 .nav-cat .chev { margin-left: auto; width: 13px; height: 13px; color: var(--faint); transition: transform 0.18s; }
 .nav-cat-group { display: flex; flex-direction: column; gap: 1px; margin-left: 12px; padding-left: 11px; border-left: 1px solid var(--line); overflow: hidden; }
-.subnav-item { display: flex; align-items: center; gap: 9px; text-align: left; width: 100%; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 500; color: var(--muted); transition: background 0.12s, color 0.12s; position: relative; }
+.subnav-item { display: flex; align-items: center; gap: 9px; text-align: left; width: 100%; padding: 7px 10px; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--muted); transition: background 0.12s, color 0.12s; position: relative; }
 .subnav-item::before { content: ""; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 7px; height: 1px; background: var(--line); }
 .subnav-item .sub-ico { width: 16px; height: 16px; flex: 0 0 auto; color: var(--faint); transition: color 0.12s; }
 .subnav-item .sub-ico svg { width: 16px; height: 16px; display: block; }
@@ -37,32 +37,32 @@ button { font-family: inherit; cursor: pointer; border-width: medium; border-sty
 .rail-toggle { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; color: var(--muted); flex: 0 0 auto; }
 .rail-toggle:hover { background: var(--sink); color: var(--ink); }
 .rail-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
-.rail-foot .av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, rgb(233, 162, 59), rgb(217, 104, 59)); color: rgb(255, 255, 255); font-size: 11px; font-weight: 600; display: grid; place-items: center; flex: 0 0 auto; font-family: var(--f-display); }
-.rail-foot .who b { font-size: 12.5px; font-weight: 600; display: block; line-height: 1.2; }
-.rail-foot .who span { font-size: 11px; color: var(--muted); }
+.rail-foot .av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, rgb(233, 162, 59), rgb(217, 104, 59)); color: rgb(255, 255, 255); font-size: 12px; font-weight: 600; display: grid; place-items: center; flex: 0 0 auto; font-family: var(--f-display); }
+.rail-foot .who b { font-size: 12px; font-weight: 600; display: block; line-height: 1.2; }
+.rail-foot .who span { font-size: 12px; color: var(--muted); }
 .topbar { height: 56px; flex: 0 0 auto; display: flex; align-items: center; gap: 14px; padding: 0px 22px; border-bottom: 1px solid var(--line); background: var(--surface); }
 .menu-btn { display: none; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); align-items: center; justify-content: center; }
-.crumb { font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+.crumb { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
 .crumb b { color: var(--ink); font-weight: 600; }
-.env { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; background: var(--surface-2); }
+.env { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; background: var(--surface-2); }
 .env .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
 .top-actions { margin-left: auto; display: flex; align-items: center; gap: 9px; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0px 15px; border-radius: var(--radius-sm); font-weight: 500; font-size: 13.5px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); transition: background 0.12s, border-color 0.12s, box-shadow 0.12s, color 0.12s; white-space: nowrap; box-shadow: var(--shadow); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0px 15px; border-radius: var(--radius-sm); font-weight: 500; font-size: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); transition: background 0.12s, border-color 0.12s, box-shadow 0.12s, color 0.12s; white-space: nowrap; box-shadow: var(--shadow); }
 .btn:hover { background: var(--sink); }
 .btn:active { transform: translateY(0.5px); }
 .btn.ghost { border-color: transparent; background: transparent; color: var(--ink-soft); box-shadow: none; }
 .btn.ghost:hover { background: var(--sink); color: var(--ink); }
-.btn.sm { height: 30px; padding: 0px 11px; font-size: 12.5px; border-radius: calc(var(--radius-sm) - 2px); }
+.btn.sm { height: 30px; padding: 0px 11px; font-size: 12px; border-radius: calc(var(--radius-sm) - 2px); }
 .btn .ico { width: 15px; height: 15px; }
 .pagehead { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
-.pagehead .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+.pagehead .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
 .pagehead h1 { font-size: 25px; line-height: 1.1; }
-.pagehead p { margin: 7px 0px 0px; color: var(--muted); max-width: 60ch; font-size: 13.5px; }
+.pagehead p { margin: 7px 0px 0px; color: var(--muted); max-width: 60ch; font-size: 14px; }
 .dtabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 4px 0px 22px; overflow-x: auto; }
-.dtab { appearance: none; border-width: medium medium 2px; border-style: none none solid; border-color: currentcolor currentcolor transparent; border-image: none; background: none; font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 13.5px; font-weight: 500; color: var(--muted); white-space: nowrap; padding: 10px 15px; cursor: pointer; margin-bottom: -1px; transition: color 0.12s; }
+.dtab { appearance: none; border-width: medium medium 2px; border-style: none none solid; border-color: currentcolor currentcolor transparent; border-image: none; background: none; font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 14px; font-weight: 500; color: var(--muted); white-space: nowrap; padding: 10px 15px; cursor: pointer; margin-bottom: -1px; transition: color 0.12s; }
 .dtab:hover { color: var(--ink-soft); }
 .dtab.on { color: var(--ink); font-weight: 600; border-bottom-color: var(--ink); }
-.dtab .tcount { font-size: 11px; font-weight: 600; color: var(--faint); margin-left: 6px; }
+.dtab .tcount { font-size: 12px; font-weight: 600; color: var(--faint); margin-left: 6px; }
 .rail .nav-cat-group, .rail .nav-sub { border-left-width: medium !important; border-left-style: none !important; border-left-color: currentcolor !important; margin-left: 0px !important; padding-left: 0px !important; }
 .rail .subnav-item::before { display: none !important; }
 .setup-wrap .nav-cat-group { margin: 6px 0px 4px !important; }
@@ -91,7 +91,7 @@ button { font-family: inherit; cursor: pointer; border-width: medium; border-sty
 .wrap{max-width:1160px;margin:0 auto;padding:26px 22px 80px}
 .wrap.full{max-width:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 15px;border-radius:var(--radius-sm);
-font-weight:500;font-size:13.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+font-weight:500;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
 transition:background .12s,border-color .12s,box-shadow .12s,color .12s;white-space:nowrap;box-shadow:var(--shadow)}
 .btn:hover{background:var(--sink)}
 .btn:active{transform:translateY(.5px)}
@@ -106,22 +106,22 @@ transition:background .12s,border-color .12s,box-shadow .12s,color .12s;white-sp
 .cx-logo svg{display:block;border-radius:5px}
 .btn.ghost{border-color:transparent;background:transparent;color:var(--ink-soft);box-shadow:none}
 .btn.ghost:hover{background:var(--sink);color:var(--ink)}
-.btn.sm{height:30px;padding:0 11px;font-size:12.5px;border-radius:calc(var(--radius-sm) - 2px)}
+.btn.sm{height:30px;padding:0 11px;font-size:12px;border-radius:calc(var(--radius-sm) - 2px)}
 .btn .ico{width:15px;height:15px}
 .btn:focus-visible,.nav-item:focus-visible,.expcard:focus-visible,.subnav-item:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ring)}
 .pagehead{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
-.pagehead .eyebrow{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);
+.pagehead .eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);
 display:flex;align-items:center;gap:6px;margin-bottom:7px}
 .pagehead h1{font-size:25px;line-height:1.1}
-.pagehead p{margin:7px 0 0;color:var(--muted);max-width:60ch;font-size:13.5px}
+.pagehead p{margin:7px 0 0;color:var(--muted);max-width:60ch;font-size:14px}
 .pagehead .side{margin-left:auto;display:flex;gap:9px;flex:none}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
 .dtabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:4px 0 22px;overflow-x:auto}
-.dtab{appearance:none;border:none;background:none;font:inherit;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;
+.dtab{appearance:none;border:none;background:none;font:inherit;font-size:14px;font-weight:500;color:var(--muted);white-space:nowrap;
 padding:10px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .12s}
 .dtab:hover{color:var(--ink-soft)}
 .dtab.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
-.dtab .tcount{font-size:11px;font-weight:600;color:var(--faint);margin-left:6px}
+.dtab .tcount{font-size:12px;font-weight:600;color:var(--faint);margin-left:6px}
 .dtab.on .tcount{color:var(--muted)}
 
 
@@ -175,70 +175,69 @@ padding:10px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bott
         <button class="btn sm tb-cx" id="cxTop" title="Cortex" aria-label="Open Cortex" aria-pressed="false"><svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect x="0" y="0" width="48" height="48" rx="13" fill="#43918A"></rect><path d="M24 11C25 19 29 23 37 24C29 25 25 29 24 37C23 29 19 25 11 24C19 23 23 19 24 11Z" fill="#fff"></path></svg></button>
         <a class="btn ghost sm" href="#/signin" style="text-decoration:none" title="Replay first-time login"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5M3.5 8a9 9 0 1 0 2.3-3.3L3 8"></path></svg><span class="lbl">Replay onboarding</span></a>
         <button class="btn sm" id="simBtn"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg>Simulate a shopper</button>
-        <button class="btn sm" id="themeBtn" aria-label="Toggle theme"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
       </div>
     </header>
 <div class="wrap">
 <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Get the most out of ADX</h1><p>Everything you can connect so Cortex suggests sharper experiences. Start anywhere; you can run on mock data until real sources are in.</p></div></div>
       <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:24px;padding:20px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
         <div style="width:64px;height:64px;border-radius:50%;background:conic-gradient(#3c8c81 75%,#e4e4e7 0);display:flex;align-items:center;justify-content:center"><span style="width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700">75%</span></div>
-        <div style="flex:1;min-width:240px"><b style="font-size:16px;font-weight:600">Setup is 75% complete</b><div style="font-size:13px;color:#71717a;margin-top:3px">4 connected · 0 on mock data · 1 partial · 1 not started</div></div>
+        <div style="flex:1;min-width:240px"><b style="font-size:16px;font-weight:600">Setup is 75% complete</b><div style="font-size:14px;color:#71717a;margin-top:3px">4 connected · 0 on mock data · 1 partial · 1 not started</div></div>
         <a href="#" class="btn primary" style="text-decoration:none">Next: Customer Service Integration<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px;margin-top:20px">
         <a href="#/profiles" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
           <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:10px;background:#f4f4f5;color:#18181b;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span style="font-size:12px;color:#a1a1aa;font-weight:600">1</span>
-            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:2px 9px"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>Connected</span></div>
+            <span class="shbadge out" style="margin-left:auto;color:#15803d"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>Connected</span></div>
           <b style="font-size:15px;font-weight:600">Customer Profiles</b>
-          <span style="font-size:13px;line-height:1.5;color:#71717a">Who each shopper is: segments, loyalty tier, preferences and purchase history.</span>
-          <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Audience targeting and personalised picks</span>
+          <span style="font-size:14px;line-height:1.5;color:#71717a">Who each shopper is: segments, loyalty tier, preferences and purchase history.</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Audience targeting and personalised picks</span>
           <span style="font-size:12px;color:#a1a1aa">Pulled from Adobe Analytics</span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
         <a href="#/catalog" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
           <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:10px;background:#f4f4f5;color:#18181b;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span><span style="font-size:12px;color:#a1a1aa;font-weight:600">2</span>
-            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:2px 9px"><span style="width:6px;height:6px;border-radius:50%;background:#b45309"></span>18,962 products · no prices yet</span></div>
+            <span class="shbadge out" style="margin-left:auto;color:#b45309"><span style="width:6px;height:6px;border-radius:50%;background:#b45309"></span>18,962 products · no prices yet</span></div>
           <b style="font-size:15px;font-weight:600">Product Catalog</b>
-          <span style="font-size:13px;line-height:1.5;color:#71717a">Your products, variants, sizes, stock and pricing.</span>
-          <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Accurate recommendations and size guidance</span>
+          <span style="font-size:14px;line-height:1.5;color:#71717a">Your products, variants, sizes, stock and pricing.</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Accurate recommendations and size guidance</span>
           <span style="font-size:12px;color:#a1a1aa">Adobe Analytics, add Adobe Commerce</span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-top:2px">Continue<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:2px">Continue<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
         <a href="#/web-signals" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
           <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:10px;background:#f4f4f5;color:#18181b;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><span style="font-size:12px;color:#a1a1aa;font-weight:600">3</span>
-            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:2px 9px"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>12 signals · 23 captured</span></div>
+            <span class="shbadge out" style="margin-left:auto;color:#15803d"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>12 signals · 23 captured</span></div>
           <b style="font-size:15px;font-weight:600">Web Signals</b>
-          <span style="font-size:13px;line-height:1.5;color:#71717a">What shoppers do on site: page views, dwell, scroll, hover. Signals become triggers.</span>
-          <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Real-time triggers for experiences</span>
+          <span style="font-size:14px;line-height:1.5;color:#71717a">What shoppers do on site: page views, dwell, scroll, hover. Signals become triggers.</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Real-time triggers for experiences</span>
           <span style="font-size:12px;color:#a1a1aa">Adobe Web SDK, Adobe Journey Optimizer</span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
         <a href="#" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
           <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:10px;background:#f4f4f5;color:#18181b;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><span style="font-size:12px;color:#a1a1aa;font-weight:600">4</span>
-            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:2px 9px"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>3,400 pages indexed</span></div>
+            <span class="shbadge out" style="margin-left:auto;color:#15803d"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>3,400 pages indexed</span></div>
           <b style="font-size:15px;font-weight:600">Content</b>
-          <span style="font-size:13px;line-height:1.5;color:#71717a">Brand voice, policies, size charts, reviews and help articles Cortex can quote.</span>
-          <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: On-brand answers that cite your content</span>
+          <span style="font-size:14px;line-height:1.5;color:#71717a">Brand voice, policies, size charts, reviews and help articles Cortex can quote.</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: On-brand answers that cite your content</span>
           <span style="font-size:12px;color:#a1a1aa">sephora.com, add a CMS</span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
         <a href="#" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
           <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:10px;background:#f4f4f5;color:#18181b;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="2" y="14" width="5" height="6" rx="1.5"/><rect x="17" y="14" width="5" height="6" rx="1.5"/></svg></span><span style="font-size:12px;color:#a1a1aa;font-weight:600">5</span>
-            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#52525b;background:#f4f4f5;border:1px solid #e4e4e7;border-radius:999px;padding:2px 9px"><span style="width:6px;height:6px;border-radius:50%;background:#52525b"></span>Not started</span></div>
+            <span class="shbadge out" style="margin-left:auto;color:#52525b"><span style="width:6px;height:6px;border-radius:50%;background:#52525b"></span>Not started</span></div>
           <b style="font-size:15px;font-weight:600">Customer Service Integration</b>
-          <span style="font-size:13px;line-height:1.5;color:#71717a">Tickets, order status and returns, plus a hand-off path to your agents.</span>
-          <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Ticket deflection and human hand-off</span>
+          <span style="font-size:14px;line-height:1.5;color:#71717a">Tickets, order status and returns, plus a hand-off path to your agents.</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Ticket deflection and human hand-off</span>
           <span style="font-size:12px;color:#a1a1aa">Zendesk, Salesforce Service Cloud, OMS</span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-top:2px">Set up<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:2px">Set up<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
         <a href="#" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit">
           <div style="display:flex;align-items:center;gap:10px"><span style="width:36px;height:36px;border-radius:10px;background:#f4f4f5;color:#18181b;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 4v4M9 14h.01M15 14h.01"/></svg></span><span style="font-size:12px;color:#a1a1aa;font-weight:600">6</span>
-            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:999px;padding:2px 9px"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>4 agents ready</span></div>
+            <span class="shbadge out" style="margin-left:auto;color:#15803d"><span style="width:6px;height:6px;border-radius:50%;background:#15803d"></span>4 agents ready</span></div>
           <b style="font-size:15px;font-weight:600">Agents</b>
-          <span style="font-size:13px;line-height:1.5;color:#71717a">The AI agents that run inside experiences: recommendation, support, upsell.</span>
-          <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Which actions experiences can take</span>
+          <span style="font-size:14px;line-height:1.5;color:#71717a">The AI agents that run inside experiences: recommendation, support, upsell.</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3f3f46"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>Unlocks: Which actions experiences can take</span>
           <span style="font-size:12px;color:#a1a1aa">Netomi agents</span>
-          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-top:2px">Manage<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
 </div>
