@@ -485,6 +485,19 @@ body{margin:0}
         </button>
       </sc-for>
     </section>
+    <sc-if value="{{hasMore}}">
+      <div class="dv-or" style="margin:40px 0 10px">Suggestions</div>
+      <div class="dv-tpls" style="max-width:none">
+        <sc-for list="{{moreTpls}}" as="t">
+          <button type="button" class="dv-tpl" onClick="{{t.use}}">
+            <span class="pg">{{t.page}}</span>
+            <code class="sg-code">{{t.id}}</code>
+            <span class="r">{{t.rule}}</span>
+            <span class="u">{{t.use_for}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
   </sc-if>
 
   <!-- builder -->
@@ -629,9 +642,11 @@ class Component extends DCLogic {
       isEmpty: !b && D.length === 0, hasList: !b && D.length > 0, building: !!b,
       create: function () { self.open(blank); },
       tpls: DV_TPL.map(function (t) { return { id: t.id, page: t.page, rule: dvRule(t), use_for: t.use_for, use: function () { self.open(t); } }; }),
+      moreTpls: DV_TPL.filter(function (t) { return !D.some(function (s) { return s.id === t.id; }); }).map(function (t) { return { id: t.id, page: t.page, rule: dvRule(t), use_for: t.use_for, use: function () { self.open(t); } }; }),
       list: D.map(function (s, i) { return { id: s.id, desc: s.desc || '—', rule: dvRule(s), uses: dvUses(s), edit: function () { self.open(s, i + 1); } }; }),
       b: {}
     };
+    out.hasMore = out.moreTpls.length > 0;
     if (!b) return out;
 
     var valid = b.conds.filter(function (c) { var k = dvFind(c.what)[2]; return !dvNeedsVal(k, c.op) || (c.val || '').trim(); });

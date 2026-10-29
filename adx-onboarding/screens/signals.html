@@ -250,7 +250,7 @@ body{margin:0}
 .sg-sel{height:36px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font:inherit;font-size:14px;color:var(--ink);padding:0 10px;box-shadow:var(--shadow)}
 .sg-sp{flex:1}
 .sg-tbl{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.sg-row{display:grid;grid-template-columns:minmax(200px,2.2fr) 150px minmax(160px,1.6fr) 90px 110px;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:14px;width:100%;box-sizing:border-box;background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:inherit;cursor:pointer}
+.sg-row{display:grid;grid-template-columns:minmax(200px,1.7fr) 130px minmax(120px,1fr) minmax(170px,1.4fr) 130px;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:14px;width:100%;box-sizing:border-box;background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;font-family:inherit;color:inherit;cursor:pointer}
 .sg-row:hover{background:var(--surface-2)}
 .sg-row.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted);cursor:default}
 .sg-row code,.sg-code{font-family:'Geist Mono',ui-monospace,monospace;font-size:12px}
@@ -259,6 +259,7 @@ body{margin:0}
 .sg-pill i{width:6px;height:6px;border-radius:50%;display:block;background:currentColor}
 .sg-pill.ready{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
 .sg-pill.att{color:#b45309;background:#fffbeb;border-color:#fde68a}
+.sg-pill.pend{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
 .sg-pill.exc{color:#52525b;background:#f4f4f5;border-color:#e4e4e7}
 .sg-env{display:flex;gap:4px}
 .sg-env i{font-style:normal;width:20px;height:20px;border-radius:5px;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--faint)}
@@ -302,7 +303,10 @@ body{margin:0}
 .sg-seg{margin-left:auto;display:inline-flex;background:var(--sink);border:1px solid var(--line);border-radius:9px;padding:2px}
 .sg-seg button{font:inherit;font-size:12px;font-weight:600;border:0;background:transparent;color:var(--muted);padding:4px 11px;border-radius:7px;cursor:pointer}
 .sg-seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
-.sg-frow{display:grid;grid-template-columns:minmax(160px,2fr) 100px minmax(140px,2fr) 80px;align-items:center;gap:14px;padding:11px 18px;border-top:1px solid var(--line);font-size:14px}
+.sg-frow{display:grid;grid-template-columns:minmax(150px,1.4fr) 100px minmax(110px,1.5fr);align-items:center;gap:14px;padding:11px 18px;border-top:1px solid var(--line);font-size:14px}
+.sg-vc{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sg-vn{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink)}
+.sg-cat{display:inline-flex;align-items:center;border-radius:6px;border:1px solid #e4e4e7;background:#fff;padding:2px 8px;font-size:12px;font-weight:500;line-height:16px;color:#09090b}
 .sg-frow.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
 .sg-fw{display:block;font-style:normal;font-size:12px;color:#b45309;margin-top:2px}
 .sg-sw{width:36px;height:20px;border-radius:999px;border:0;background:var(--line-strong);position:relative;cursor:pointer;padding:0}
@@ -312,7 +316,34 @@ body{margin:0}
 .sg-json{margin:0;padding:14px 18px;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;line-height:1.7;background:var(--surface-2);white-space:pre;overflow-x:auto}
 .sg-dirty{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:#fffbeb;font-size:14px}
 .sg-dirty span{flex:1;min-width:240px}
-.sg-mrow{display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(150px,1.3fr) minmax(130px,1fr) minmax(160px,1.4fr);align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:14px}
+.sg-mrow{display:grid;grid-template-columns:minmax(140px,1fr) minmax(170px,1.3fr) minmax(190px,1.4fr) minmax(140px,1fr);align-items:start;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:14px}
+.sg-mrow:not(.hd){line-height:20px}
+.sg-mrow .sg-code{font-family:inherit;font-size:14px;color:var(--ink)}
+.sg-mrow>.sg-mut{color:var(--ink)}
+.sg-cb{display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-height:36px;box-sizing:border-box;margin-top:8px;border:1px solid #e4e4e7;border-radius:6px;padding:4px 8px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.sg-cb:focus-within{border-color:#a1a1aa;box-shadow:0 0 0 3px rgba(161,161,170,.5)}
+.sg-pin{flex:1;min-width:80px;height:26px;border:0;padding:0 4px;font:inherit;font-size:14px;color:var(--ink);outline:0;background:none}
+.sg-cbi{flex:none;color:#71717a;margin-left:auto}
+.sg-pin::placeholder{color:#71717a}
+.sg-loz{display:inline-flex;align-items:center;gap:4px;border-radius:6px;background:#f4f4f5;color:#18181b;padding:2px 4px 2px 8px;font-size:12px;font-weight:500;line-height:16px}
+.sg-loz button{display:grid;place-items:center;width:16px;height:16px;border:0;border-radius:4px;background:none;color:#71717a;cursor:pointer;padding:0}
+.sg-loz button:hover{background:#e4e4e7;color:#18181b}
+.sg-pick{display:flex;flex-direction:column;margin-top:4px;border:1px solid #e4e4e7;border-radius:6px;padding:4px;background:#fff;box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)}
+.sg-opt{display:flex;align-items:center;border:0;background:none;border-radius:4px;padding:6px 8px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer;text-align:left}
+.sg-opt:hover{background:#f4f4f5}
+.sg-addrow{display:flex;align-items:center;gap:12px;padding-left:38px;margin-top:8px}
+.sg-loz-o{padding:2px 8px}
+.sg-lnk{font-size:14px;color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.sg-lg-s{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff;flex:none}
+.sg-ed{width:28px;height:28px;border:0;background:none;border-radius:6px;display:grid;place-items:center;color:var(--muted);cursor:pointer}
+.sg-ed:hover{background:var(--surface-2);color:var(--ink)}
+/* ghost text button (no border), e.g. "Use in an experience" */
+.sg-ghost{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 8px;border-radius:6px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;white-space:nowrap}
+.sg-ghost:hover{background:var(--surface-2);color:var(--ink)}
+.sg-two{display:flex;flex-direction:column;gap:3px;min-width:0}
+.sg-two .sg-mut{font-size:12px;line-height:1.4}
+.sg-tg{display:flex;align-items:center;gap:6px;min-width:0}
+.sg-tg i{font-style:normal;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff;flex:none}
 .sg-mrow.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
 .sg-ms{display:flex;align-items:center;gap:10px}
 .sg-ms .lg{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;flex:none}
@@ -343,6 +374,36 @@ body{margin:0}
 .sg-toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);background:#fff;color:#09090b;border:1px solid #e4e4e7;font-size:14px;padding:10px 14px;border-radius:8px;z-index:60;box-shadow:0 4px 12px rgba(0,0,0,.08)}
 .sg-spin{width:13px;height:13px;box-sizing:border-box;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sgSpin .8s linear infinite;display:inline-block}
 @keyframes sgSpin{to{transform:rotate(360deg)}}
+/* properties, health, used by, environments */
+.sg-chips{display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-width:0}
+.sg-chip{font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;color:#3f3f46;border:1px solid var(--line);border-radius:6px;padding:0 6px;background:#fff;white-space:nowrap}
+.sg-more2{font-size:12px;color:var(--muted)}
+.sg-sub2{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;font-weight:400}
+.sg-on{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sg-vr{width:1px;height:20px;background:var(--line)}
+.sg-on span{font-size:12px;font-weight:500;color:var(--muted);margin-right:2px}
+.sg-on b{font-size:12px;font-weight:500;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:2px 8px;background:#fff;line-height:16px}
+.sg-srcs{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+.sg-sum{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.sg-sum>div{padding:14px 18px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0}
+.sg-sum>div:first-child{border-left:0}
+.sg-sum .k{font-size:12px;color:var(--muted);font-weight:500}
+.sg-sum .v{font-size:14px;color:var(--ink);font-weight:500;overflow-wrap:anywhere;line-height:1.4}
+@media(max-width:900px){.sg-sum{grid-template-columns:repeat(2,minmax(0,1fr))}.sg-sum>div{border-left:0;border-top:1px solid var(--line)}}
+.sg-spark{display:flex;align-items:flex-end;gap:4px;height:64px;padding:16px 18px 0}
+.sg-spark i{flex:1;background:#18181b;border-radius:2px 2px 0 0;min-height:3px;opacity:.85}
+.sg-spark i.z{background:#e4e4e7;opacity:1}
+.sg-hs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);margin-top:16px}
+.sg-hs>div{padding:14px 18px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.sg-hs>div:first-child{border-left:0}
+.sg-hs .k{font-size:12px;color:var(--muted);font-weight:500}
+.sg-hs .v{font-size:14px;font-weight:500}
+@media(max-width:900px){.sg-hs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sg-use{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid var(--line);font-size:14px;text-decoration:none;color:var(--ink)}
+.sg-use:hover{background:var(--surface-2)}
+.sg-use .kd{margin-left:auto}
+.sg-envr{display:grid;grid-template-columns:140px 110px 1fr;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);font-size:14px}
+.sg-req{font-size:12px;color:var(--muted);margin-left:6px}
 @media(max-width:900px){.sg-row{grid-template-columns:1fr auto}.sg-row>:nth-child(3),.sg-row>:nth-child(4),.sg-row>:nth-child(5){display:none}.sg-frow,.sg-mrow{grid-template-columns:1fr 1fr}}
 
 /* Shared app-shell fixes (keep in sync across home, setup, profiles, catalog, connections, web-signals, signals) */
@@ -406,18 +467,18 @@ body{margin:0}
     <select class="sg-sel" aria-label="Status" onChange="{{onSt}}"><sc-for list="{{stOpts}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select>
     <select class="sg-sel" aria-label="Detected via" onChange="{{onSrc}}"><sc-for list="{{srcOpts}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select>
     <span class="sg-sp"></span>
-    <a class="btn primary" href="#/web-signals" style="text-decoration:none">Add Signals</a>
+    <a class="btn primary" href="#/add-signal?from=signals" style="text-decoration:none">Add signal</a>
   </div>
 
   <section class="sg-tbl">
-    <div class="sg-row hd"><span>Signal</span><span>Status</span><span>Detected via</span><span>Variables</span><span>Environment</span></div>
+    <div class="sg-row hd"><span>Signal</span><span>Status</span><span>Source</span><span>Properties</span><span>Experiences using</span></div>
     <sc-for list="{{list}}" as="s">
       <button type="button" class="sg-row" onClick="{{s.open}}">
-        <code>{{s.id}}</code>
+        <span style="min-width:0"><code>{{s.id}}</code><span class="sg-sub2">{{s.desc}}</span></span>
         <span><span class="sg-pill {{s.cls}}"><i></i>{{s.status}}</span></span>
         <span class="{{s.viaCls}}">{{s.via}}</span>
-        <span>{{s.nVar}}</span>
-        <span class="sg-env"><sc-for list="{{s.env}}" as="e"><i class="{{e.c}}" title="{{e.t}}">{{e.l}}</i></sc-for></span>
+        <span class="sg-chips"><sc-for list="{{s.pchips}}" as="pp"><span class="sg-chip">{{pp}}</span></sc-for><sc-if value="{{s.pmore}}"><span class="sg-more2">{{s.pmore}}</span></sc-if><sc-if value="{{s.noProps}}"><span class="sg-mut">None yet</span></sc-if></span>
+        <span class="{{s.usedCls}}">{{s.usedTxt}}</span>
       </button>
     </sc-for>
     <sc-if value="{{noMatch}}"><div class="sg-none"><b>No signals match</b><span>{{noMatchText}}</span><button class="btn sm" onClick="{{clearF}}">Clear Filters</button></div></sc-if>
@@ -427,80 +488,94 @@ body{margin:0}
 <sc-if value="{{isDetail}}">
   <button class="sg-back" onClick="{{back}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>Signals</button>
   <div class="sg-dh">
-    <div style="min-width:0">
+    <div style="min-width:0;flex:1">
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h1>{{d.id}}</h1><span class="sg-pill {{d.cls}}"><i></i>{{d.status}}</span></div>
       <p>{{d.desc}}</p>
+      <div class="sg-srcs"><sc-for list="{{d.srcs}}" as="x"><span class="sg-ms"><span class="lg" style="background:{{x.c}}">{{x.mono}}</span><b style="font-weight:500;font-size:14px">{{x.name}}</b></span></sc-for><sc-if value="{{d.noSrcs}}"><span class="sg-mut">Source not detected yet</span></sc-if><sc-if value="{{d.hasPages}}"><span class="sg-vr"></span><div class="sg-on"><span>Used on</span><sc-for list="{{d.pages}}" as="pg"><b>{{pg}}</b></sc-for></div></sc-if></div>
     </div>
+    <div style="display:flex;align-items:flex-start;gap:8px;flex:none">
+    <sc-if value="{{d.ready}}"><a class="btn primary" style="text-decoration:none" href="#/experiences?signal={{d.id}}">Use in an experience</a></sc-if><sc-if value="{{d.notReady}}"><button class="btn primary" disabled>Use in an experience</button></sc-if>
     <div class="sg-more">
       <button class="btn" onClick="{{d.toggleMenu}}" aria-label="More actions">···</button>
       <sc-if value="{{d.menu}}"><div class="sg-menu"><button onClick="{{d.menuExclude}}">{{d.excludeLabel}}</button><button class="danger" onClick="{{d.askRemove}}">Remove Signal</button></div></sc-if>
     </div>
+    </div>
   </div>
 
+  <sc-if value="{{d.excluded}}"><section class="sg-card"><div class="sg-ch"><b>Excluded</b><button class="btn sm" style="margin-left:auto" onClick="{{d.include}}">Include signal</button></div><p class="sg-empty">Excluded from your signals. Experiences can't use it, and it isn't counted as ready or as needing attention.</p></section></sc-if>
+
+  <sc-if value="{{d.showIssue}}">
   <section class="sg-card">
-    <div class="sg-ch"><b>Objects &amp; variables</b><span>How the website event and tag become this signal</span><sc-if value="{{d.excluded}}"><button class="btn sm" style="margin-left:auto" onClick="{{d.include}}">Include Signal</button></sc-if></div>
-    <sc-if value="{{d.excluded}}"><p class="sg-empty" style="padding-bottom:0">Excluded from your signals. Experiences can't use it, and it isn't counted as ready or as needing attention.</p></sc-if>
-
-    <sc-if value="{{d.showIssue}}">
-      <div class="sg-iss" style="margin:14px 18px 0;max-width:none">
-        <div class="t">{{d.iss.title}}</div>
-        <p>{{d.iss.text}}</p>
-        <div class="nx"><span>Next step</span>{{d.iss.rec}}</div>
-        <div style="display:flex;gap:8px;margin-top:4px">
-          <sc-if value="{{d.busy}}"><button class="btn primary" disabled><span class="sg-spin"></span>Checking…</button></sc-if>
-          <sc-if value="{{d.idle}}"><button class="btn primary" onClick="{{d.fix}}">{{d.iss.btn}}</button></sc-if>
-          <button class="btn ghost" onClick="{{d.askExclude}}">Exclude</button>
-        </div>
+    <div class="sg-ch"><b>Needs attention</b></div>
+    <div class="sg-iss" style="margin:14px 18px 18px;max-width:none">
+      <div class="t">{{d.iss.title}}</div>
+      <p>{{d.iss.text}}</p>
+      <div class="nx"><span>Next step</span>{{d.iss.rec}}</div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <sc-if value="{{d.busy}}"><button class="btn primary" disabled><span class="sg-spin"></span>Checking…</button></sc-if>
+        <sc-if value="{{d.idle}}"><button class="btn primary" onClick="{{d.fix}}">{{d.iss.btn}}</button></sc-if>
+        <button class="btn ghost" onClick="{{d.askExclude}}">Exclude</button>
       </div>
-    </sc-if>
-
-    <!-- website event (js) → tag → signal -->
-    <div class="sg-sub">Mapping</div>
-    <div class="sg-flow">
-      <sc-for list="{{d.flow}}" as="n">
-        <div class="sg-node {{n.c}}">
-          <div class="h"><span>{{n.kind}}</span><em>{{n.state}}</em></div>
-          <code class="sg-code">{{n.code}}</code>
-          <div class="m">{{n.meta}}</div>
-        </div>
-        <sc-if value="{{n.arrow}}"><span class="sg-arr" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></sc-if>
-      </sc-for>
     </div>
+  </section>
+  </sc-if>
 
-    <!-- variables -->
-    <div class="sg-sub">Variables<span>{{d.nVars}} defined · only variables reach triggers</span></div>
-    <sc-if value="{{d.hasVars}}">
-      <div class="sg-vars">
-        <sc-for list="{{d.vars}}" as="v">
-          <div class="sg-var"><div class="h"><b>{{v.label}}</b><span>{{v.type}}</span></div><code class="sg-code">{{v.path}}</code><div class="m">{{v.meta}}</div></div>
-        </sc-for>
+  <section class="sg-card">
+    <div class="sg-ch"><b>Source mapping</b><span>Where this signal comes from</span></div>
+    <div class="sg-flow" style="padding:16px 18px">
+      <div class="sg-node {{d.f0.c}}">
+        <div class="h"><span>Website event</span><em>{{d.f0.state}}</em></div>
+        <code class="sg-code">{{d.f0.code}}</code>
+        <div class="m">{{d.f0.meta}}</div>
       </div>
-    </sc-if>
-    <sc-if value="{{d.noVars}}"><p class="sg-empty" style="padding-top:4px">No variables yet. Turn on a field below to use it in triggers.</p></sc-if>
-
-    <!-- fields / json -->
-    <div class="sg-sub">Event object<sc-if value="{{d.hasFields}}"><div class="sg-seg" role="tablist"><button class="{{d.tabFields}}" onClick="{{d.showFields}}">Fields</button><button class="{{d.tabJson}}" onClick="{{d.showJson}}">JSON</button></div></sc-if></div>
-    <sc-if value="{{d.noFields}}"><p class="sg-empty" style="padding-top:4px">No event was captured, so there are no fields yet.</p></sc-if>
-    <sc-if value="{{d.fieldsView}}">
-      <div class="sg-frow hd"><span>Field</span><span>Type</span><span>Sample value</span><span>Variable</span></div>
-      <sc-for list="{{d.fields}}" as="f">
-        <div class="sg-frow"><span><code class="sg-code">{{f.k}}</code><sc-if value="{{f.warn}}"><em class="sg-fw">{{f.warn}}</em></sc-if></span><span class="sg-mut">{{f.type}}</span><code class="sg-code">{{f.sample}}</code>
-          <span><button class="sg-sw {{f.on}}" role="switch" aria-checked="{{f.aria}}" aria-label="Use {{f.k}} as a variable" onClick="{{f.toggle}}"><i></i></button></span></div>
-      </sc-for>
-    </sc-if>
-    <sc-if value="{{d.jsonView}}"><pre class="sg-json">{{d.json}}</pre></sc-if>
-    <sc-if value="{{d.dirty}}"><div class="sg-dirty"><span><b>{{d.nChanged}} unsaved change{{d.plural}}.</b> Saving creates v2 in Development. Staging and Production keep v1 until you promote.</span><button class="btn" onClick="{{d.discard}}">Discard</button><button class="btn primary" onClick="{{d.save}}">Save</button></div></sc-if>
-    <sc-if value="{{d.ready}}"><div class="sg-okl" style="margin-top:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Ready. Experiences can use this signal and its variables.</div></sc-if>
+      <span class="sg-arr" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      <div class="sg-node {{d.f1.c}}">
+        <div class="h"><span>Source and tag</span><span style="display:flex;align-items:center;gap:6px"><em>{{d.f1.state}}</em><button class="sg-ed" aria-label="Edit source and tag" onClick="{{d.openEdit}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.4 3.6a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></button></span></div>
+        <sc-for list="{{d.maps}}" as="m">
+          <div class="sg-ms" style="align-items:flex-start"><span class="lg" style="background:{{m.c}}">{{m.mono}}</span><span class="sg-two"><span style="font-size:14px;color:var(--ink)">{{m.name}}</span><span class="sg-mut">{{m.tagLine}}</span><sc-if value="{{m.doLine}}"><span class="sg-mut">{{m.doLine}}</span></sc-if></span></div>
+        </sc-for>
+        <sc-if value="{{d.noMaps}}"><div class="m">No source yet</div></sc-if>
+      </div>
+      <span class="sg-arr" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      <div class="sg-node {{d.f2.c}}">
+        <div class="h"><span>Signal</span><em>{{d.f2.state}}</em></div>
+        <code class="sg-code">{{d.f2.code}}</code>
+        <div class="m">{{d.f2.meta}}</div>
+      </div>
+    </div>
   </section>
 
   <section class="sg-card">
-    <div class="sg-ch"><b>Source mapping</b></div>
-    <div class="sg-mrow hd"><span>Source</span><span>Source event</span><span>Mapping</span><span>Data</span></div>
-    <sc-for list="{{d.maps}}" as="m">
-      <div class="sg-mrow"><span class="sg-ms"><span class="lg" style="background:{{m.c}}">{{m.mono}}</span><b style="font-weight:500">{{m.name}}</b></span><span><code class="sg-code">{{m.ev}}</code></span><span class="sg-mut">{{m.how}}</span><span class="sg-mut">{{m.data}}</span></div>
+    <div class="sg-ch"><b>Properties</b><span>What this signal carries · usable in experiences</span><sc-if value="{{d.hasFields}}"><div style="margin-left:auto;display:flex;align-items:center;gap:8px"><sc-if value="{{d.jsonView}}"><button class="btn sm" onClick="{{d.copyJson}}">Copy JSON</button></sc-if><div class="sg-seg" role="tablist"><button class="{{d.tabFields}}" onClick="{{d.showFields}}">Fields</button><button class="{{d.tabJson}}" onClick="{{d.showJson}}">JSON</button></div></div></sc-if></div>
+    <sc-if value="{{d.noFields}}"><p class="sg-empty">No event was captured, so there are no properties yet.</p></sc-if>
+    <sc-if value="{{d.fieldsView}}"><div class="sg-frow hd"><span>Variable</span><span>Type</span><span>Example value</span></div></sc-if>
+    <sc-if value="{{d.jsonView}}"><pre class="sg-json">{{d.json}}</pre></sc-if>
+    <sc-for list="{{d.fieldsRows}}" as="f">
+      <div class="sg-frow"><span class="sg-vc"><span class="sg-vn">{{f.name}}<sc-if value="{{f.cat}}"><span class="sg-cat">From catalog</span></sc-if></span><code class="sg-code sg-mut">{{f.path}}</code><sc-if value="{{f.warn}}"><em class="sg-fw">{{f.warn}}</em></sc-if></span><span class="sg-mut">{{f.type}}</span><code class="sg-code">{{f.sample}}</code></div>
     </sc-for>
-    <sc-if value="{{d.noMaps}}"><p class="sg-empty">No source yet.</p></sc-if>
   </section>
+
+  <section class="sg-card">
+    <div class="sg-ch"><b>Experiences using this signal</b><sc-if value="{{d.ready}}"><a class="sg-ghost" style="margin-left:auto" href="#/experiences?signal={{d.id}}">Use in an experience</a></sc-if><sc-if value="{{d.notReady}}"><button class="sg-ed" style="margin-left:auto;opacity:.5;cursor:not-allowed" disabled aria-label="Use in an experience"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button></sc-if></div>
+    <sc-for list="{{d.used}}" as="u"><a class="sg-use" href="{{u.href}}"><b style="font-weight:500">{{u.name}}</b><span class="sg-more2 kd">{{u.kind}}</span></a></sc-for>
+    <sc-if value="{{d.noUsed}}">
+      <sc-if value="{{d.ready}}"><div class="sg-okl" style="margin:14px 18px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Ready. No experience uses it yet.</div></sc-if>
+      <sc-if value="{{d.notReady}}"><p class="sg-empty">Not ready for experiences. Missing: {{d.missing}}</p></sc-if>
+    </sc-if>
+  </section>
+
+  <sc-if value="{{d.editOpen}}">
+    <div class="sg-modal" onClick="{{d.closeEdit}}"><div onClick="{{stop}}">
+      <h3>Edit source and tag</h3>
+      <p>Choose which sources feed {{d.id}}.</p>
+      <sc-for list="{{d.editRows}}" as="r">
+        <div class="sg-ms" style="align-items:flex-start"><span class="lg" style="background:{{r.c}}">{{r.mono}}</span><span class="sg-two" style="flex:1"><span style="font-size:14px;color:var(--ink)">{{r.name}}</span><sc-if value="{{r.noPick}}"><span class="sg-mut">{{r.tagLine}}</span></sc-if><sc-if value="{{r.hasPick}}"><span class="sg-cb"><sc-for list="{{r.tags}}" as="t"><span class="sg-loz">{{t.name}}<button aria-label="Remove {{t.name}}" onClick="{{t.remove}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></span></sc-for><input class="sg-pin" data-k="{{r.key}}" placeholder="{{r.ph}}" value="{{r.q}}" onInput="{{r.setQ}}" onFocus="{{r.open}}" aria-label="Search tags"><svg class="sg-cbi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg></span><sc-if value="{{r.showList}}"><span class="sg-pick"><sc-for list="{{r.opts}}" as="o"><button class="sg-opt" onClick="{{o.pick}}"><span class="sg-loz sg-loz-o">{{o.name}}</span></button></sc-for><sc-if value="{{r.noOpts}}"><span class="sg-mut" style="padding:6px 8px">No tags match</span></sc-if></span></sc-if></sc-if></span><button class="sg-sw {{r.on}}" role="switch" aria-checked="{{r.aria}}" aria-label="Use {{r.name}}" onClick="{{r.toggle}}"><i></i></button></div>
+      </sc-for>
+      <div class="sg-addrow"><sc-if value="{{d.canAdd}}"><button class="btn sm" onClick="{{d.toggleAdd}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add source</button></sc-if></div>
+      <sc-if value="{{d.addMenu}}"><span class="sg-pick" style="margin:-8px 0 0 38px"><sc-for list="{{d.addOpts}}" as="a"><button class="sg-opt" style="gap:8px" onClick="{{a.pick}}"><span class="lg sg-lg-s" style="background:{{a.c}}">{{a.mono}}</span>{{a.name}}</button></sc-for></span></sc-if>
+      <div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" onClick="{{d.closeEdit}}">Cancel</button><button class="btn primary" onClick="{{d.saveEdit}}" disabled="{{d.editNone}}">Save</button></div>
+    </div></div>
+  </sc-if>
 </sc-if>
 
 <sc-if value="{{modal}}">
@@ -522,8 +597,15 @@ var SG_SRC = {
   scan:   { name: 'Website scan',    mono: 'W',  c: '#27272a' },
   websdk: { name: 'Adobe Web SDK',   mono: 'Ad', c: '#E2412E', prefix: 'web.' },
   aa:     { name: 'Adobe Analytics', mono: 'AA', c: '#5C2D91', prefix: 'evar:' },
-  label:  { name: 'Browse & Label',  mono: 'BL', c: '#3c8c81', prefix: 'label: ' }
+  label:  { name: 'Browse & Label',  mono: 'BL', c: '#3c8c81', prefix: 'label: ' },
+  gtm:    { name: 'Google Tag Manager', mono: 'G', c: '#1A73E8', prefix: '' },
+  ga4:    { name: 'Google Analytics 4', mono: 'GA', c: '#E37400', prefix: '' }
 };
+// apps connected in Connections (mock); Add source in the edit modal offers these
+var SG_CONNECTED = ['websdk', 'aa', 'gtm'];
+function sgTitle(id) { return id.charAt(0).toUpperCase() + id.slice(1).replace(/_/g, ' '); }
+function sgSnake(t) { return t.toLowerCase().replace(/ /g, '_'); }
+function sgTagsOf(s, k) { return (s.tagsBy && s.tagsBy[k]) || (k === 'websdk' && s.tags) || null; }
 // r: reason → [title, failing step (0 nothing found · 1 no event · 2 mapping · 3+ data), notes, found, need, why, next step, button, what the fix does]
 var SG_WHY = {
   tracking: ['Tracked as a click, not a confirmed add', 2, ['On /product/* during the scan', 'A button click event', 'Mapped to the click', '3 fields in the payload', 'Waiting on the step above'],
@@ -589,22 +671,59 @@ function sgSeed() {
     { id: 'newsletter_signed_up', desc: 'Shopper subscribes to emails.', r: null, via: ['scan', 'websdk'], seen: 5, env: 'ds', fields: [sgF('placement', 'string', 'footer', 1)] }
   ].map(function (s) { s.env = s.env || (s.via.length ? 'd' : ''); s.excluded = false; return s; });
 }
-function sgStore() { if (!window.ADX_SIGNALS) window.ADX_SIGNALS = { list: sgSeed(), q: '', st: 'all', src: 'all' }; return window.ADX_SIGNALS; }
+// friendly variable names shown on the signal page (fallback: title-cased key)
+var SG_NAME = { product_id: 'Product ID', page_url: 'Page URL', price: 'Product price', brand: 'Brand', category: 'Category', query: 'Search term', results_count: 'Results count', cart_value: 'Cart value', item_count: 'Items in cart', filter_type: 'Filter type', tier: 'Beauty Insider tier', shade: 'Shade', is_vegan: 'Is vegan', finish_type: 'Finish type' };
+// product signals get attributes joined from the product catalog
+var SG_CAT_SIG = ['product_viewed', 'add_to_cart', 'variant_selected'];
+var SG_CAT_F = [{ k: 'is_vegan', type: 'boolean', sample: 'true', path: 'product.is_vegan' }, { k: 'finish_type', type: 'string', sample: 'natural', path: 'product.finish_type' }];
+var SG_FROM = { product_id: 'product.sku', page_url: 'page.url', price: 'product.price', brand: 'product.brand', category: 'product.category', query: 'search.term', results_count: 'search.resultCount', cart_value: 'cart.total', item_count: 'cart.itemCount', sample_id: 'sample.id', video_id: 'video.id', position: 'event.position', tier: 'user.beautyInsiderTier', filter_type: 'filter.type', rating_filter: 'reviews.ratingFilter', reviews_seen: 'reviews.seen', value: 'gift.value', design: 'gift.design', depth: 'scroll.depth', list_name: 'list.name', placement: 'form.placement', transaction_id: 'order.id', shade: 'product.shade', currency: 'order.currency' };
+var SG_PAGES = { add_to_cart: ['Product pages', 'Basket'], product_viewed: ['Product pages'], search_performed: ['Search results'], cart_viewed: ['Basket'], category_viewed: ['Category pages'], filters_applied: ['Category pages', 'Search results'], checkout_started: ['Checkout'], order_completed: ['Order confirmation'], variant_selected: ['Product pages'], wishlist_added: ['Product pages', 'Loves'], promo_code_applied: ['Basket'] };
+var SG_TAGS = ['Product viewed', 'Product detail viewed', 'Quick view opened', 'Add to basket', 'Basket viewed', 'Search performed', 'Category viewed', 'Filter applied', 'Page viewed', 'Link clicked', 'Video played', 'Promo viewed'];
+var SG_REQ = ['product_id', 'query', 'cart_value', 'value'];
+// who depends on each signal (mock): [kind, name, route]
+var SG_USE = {
+  add_to_cart: [['Experience', 'Add-on at add to basket', '#/experiences'], ['Goal', 'Increase cart value', '#/exp-goals']],
+  product_viewed: [['Experience', 'Intent-aware product picks', '#/experiences'], ['Derived signal', 'browsing_without_clicking', '#/derived']],
+  search_performed: [['Experience', 'Intent-aware search results', '#/experiences']],
+  cart_viewed: [['Experience', 'Cart rescue nudge', '#/experiences'], ['Goal', 'Save abandoning carts', '#/exp-goals']],
+  category_viewed: [['Experience', 'Category guide', '#/experiences']],
+  filters_applied: [['Derived signal', 'few_results', '#/derived']]
+};
+function sgHash(id) { var h = 0; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 9973; return h; }
+// mock health: none for signals with no event yet
+function sgHealth(s) {
+  if (s.excluded || !s.via.length || !s.fields.length) return { has: false, none: true };
+  var h = sgHash(s.id), dead = s.r === 'source' || s.r === 'nodata', seen = s.seen || 6;
+  var weekly = dead ? 0 : seen * (h % 5 + 3) * 120;
+  var bars = []; for (var i = 0; i < 14; i++) { var v = dead && i > 11 ? 0 : 30 + ((h * (i + 3)) % 60); bars.push({ h: v ? v + '%' : '4%', z: v ? '' : 'z' }); }
+  return { has: true, none: false, bars: bars, vol: dead ? 'No events' : weekly.toLocaleString('en-US'), volShort: dead ? 'No events in 24 h' : weekly.toLocaleString('en-US') + ' in 7 days',
+    last: s.r === 'source' ? '26 hours ago' : s.r === 'nodata' ? 'None in 24 h' : ['2 min ago', '5 min ago', '12 min ago'][h % 3],
+    change: dead ? '−100%' : ['+4%', '−2%', '+11%', '+1%'][h % 4], miss: s.r === 'quality' ? '12%' : s.r === 'tracking' ? '3%' : '0%' };
+}
+function sgStore() {
+  if (!window.ADX_SIGNALS) window.ADX_SIGNALS = { list: sgSeed(), q: '', st: 'all', src: 'all' };
+  // signals made with Add signal (screens/add-signal.html) join the top of the list, or replace a "Not detected" one of the same name
+  var L = window.ADX_SIGNALS.list;
+  (window.ADX_NEW_SIGNALS || []).slice().reverse().forEach(function (n) { var i = L.map(function (s) { return s.id; }).indexOf(n.id); if (i < 0) L.unshift(n); else if (L[i] !== n) L[i] = n; });
+  return window.ADX_SIGNALS;
+}
 function sgFind(id) { return sgStore().list.filter(function (s) { return s.id === id; })[0]; }
 function sgParam() { var m = location.hash.match(/[?&]id=([^&]+)/); return m ? decodeURIComponent(m[1]) : null; }
 
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { tick: 0, view: 'fields', draft: null, menu: false, busy: false, modal: null, toast: '' };
+    this.state = { edit: null, tick: 0, view: 'fields', draft: null, menu: false, busy: false, modal: null, toast: '' };
   }
+  // arriving from Add signal (#/signals?added=<name>): toast it, then tidy the URL
+  componentDidMount() { var m = location.hash.match(/[?&]added=([^&]+)/); if (m) { var n = decodeURIComponent(m[1]); history.replaceState(null, '', '#/signals'); this.say(n + ' created in Development'); } }
   componentWillUnmount() { clearTimeout(this.tt); clearTimeout(this.bt); }
   bump() { this.setState({ tick: this.state.tick + 1 }); }
   say(t) { var self = this; clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2600); }
   renderVals() {
     var self = this, st = this.state, S = sgStore(), id = sgParam(), sig = id ? sgFind(id) : null;
-    function status(s) { return s.excluded ? ['Excluded', 'exc'] : s.r ? ['Needs attention', 'att'] : ['Ready', 'ready']; }
-    function viaText(s) { return s.via.length ? s.via.map(function (k) { return SG_SRC[k].name; }).join(' + ') : 'Not detected'; }
+    function status(s) { return s.excluded ? ['Excluded', 'exc'] : s.pending ? ['Pending first event', 'pend'] : s.r ? ['Needs attention', 'att'] : ['Ready', 'ready']; }
+    function viaText(s) { return s.via.length ? s.via.map(function (k) { return SG_SRC[k].name; }).join(' + ') : s.method || 'Not detected'; }
     function env(s) { return [['d', 'D', 'Development'], ['s', 'S', 'Staging'], ['p', 'P', 'Production']].map(function (e) { var on = s.env.indexOf(e[0]) >= 0; return { l: e[1], c: on ? 'on' : '', t: e[2] + (on ? ' · v1 active' : ' · not available') }; }); }
     var modal = st.modal;
     var base = {
@@ -621,7 +740,7 @@ class Component extends DCLogic {
       var pool = S.st === 'excluded' ? S.list.filter(function (s) { return s.excluded; }) : inc;
       var list = pool.filter(function (s) {
         return (!q || s.id.indexOf(q) >= 0) && (S.st === 'all' || S.st === 'excluded' || (S.st === 'ready' ? !s.r : !!s.r)) && (S.src === 'all' || s.via.indexOf(S.src) >= 0);
-      }).sort(function (a, b) { return (b.r ? 1 : 0) - (a.r ? 1 : 0); });
+      }).sort(function (a, b) { return ((b.method ? 2 : 0) + (b.r ? 1 : 0)) - ((a.method ? 2 : 0) + (a.r ? 1 : 0)); }); // signals added by hand first, then needs attention
       var opts = [['all', 'All statuses'], ['ready', 'Ready'], ['attention', 'Needs attention']].concat(exc ? [['excluded', 'Excluded']] : []);
       return Object.assign(base, {
         total: inc.length, q: S.q,
@@ -630,8 +749,10 @@ class Component extends DCLogic {
         onSrc: function (e) { S.src = e.target.value; self.bump(); },
         stOpts: opts.map(function (o) { return { k: o[0], l: o[1] + ' (' + cnt[o[0]] + ')', sel: S.st === o[0] }; }),
         srcOpts: [['all', 'All sources'], ['scan', 'Website scan'], ['websdk', 'Adobe Web SDK']].map(function (o) { return { k: o[0], l: o[1], sel: S.src === o[0] }; }),
-        list: list.map(function (s) { var t = status(s);
-          return { id: s.id, status: t[0], cls: t[1], via: viaText(s), viaCls: s.via.length ? '' : 'sg-mut', nVar: s.fields.filter(function (f) { return f.v; }).length, env: env(s),
+        list: list.map(function (s) { var t = status(s), hl = sgHealth(s), used = (SG_USE[s.id] || []).length;
+          return { id: s.id, desc: s.desc, status: t[0], cls: t[1], via: viaText(s), viaCls: s.via.length ? '' : 'sg-mut', env: env(s),
+            pchips: s.fields.slice(0, 2).map(function (f) { return f.k; }), pmore: s.fields.length > 2 ? '+' + (s.fields.length - 2) : '', noProps: !s.fields.length,
+            hasHealth: hl.has, noHealth: !hl.has, last: hl.last || '', vol: hl.volShort || '', usedTxt: used ? String(used) : '—', usedCls: used ? '' : 'sg-mut',
             open: function () { location.hash = '#/signals?id=' + encodeURIComponent(s.id); } }; }),
         noMatch: list.length === 0, noMatchText: q ? 'Nothing named “' + S.q + '”.' : 'No signals with this status.',
         clearF: function () { S.q = ''; S.st = 'all'; S.src = 'all'; self.bump(); }
@@ -641,6 +762,7 @@ class Component extends DCLogic {
     // ---------- detail ----------
     var t = status(sig), W = sig.r ? SG_WHY[sig.r] : null, ready = !sig.r && !sig.excluded;
     var draft = st.draft && st.draft.id === sig.id ? st.draft : null, fields = draft ? draft.fields : sig.fields;
+    var catF = SG_CAT_SIG.indexOf(sig.id) >= 0 && fields.length ? SG_CAT_F : [], allF = fields.concat(catF);
     var nChanged = draft ? fields.filter(function (f, i) { return f.v !== sig.fields[i].v; }).length : 0;
     var page = W ? W[2][0] : 'On ' + ((sig.fields.filter(function (f) { return f.k === 'page_url'; })[0] || {}).sample || '/product/*').replace(/\/P\d+$/, '/*') + ' during the scan';
     var step = sig.excluded ? -1 : ready ? 9 : W ? W[1] : 9;
@@ -664,14 +786,29 @@ class Component extends DCLogic {
         : { kind: 'Tag', state: 'Mapped', c: '', code: tagCode, meta: (has('label') ? 'Browse & Label → ADX' : has('aa') && !has('websdk') ? 'Adobe Analytics → ADX' : 'Adobe Launch → ' + dest) + ' · ' + (sig.mapped || 'matched automatically').toLowerCase() },
       { kind: 'Signal', state: t[0], c: sig.excluded || step <= 1 ? 'none' : ready ? '' : 'warn', code: sig.id + ' · v1', meta: sig.fields.length + ' field' + (sig.fields.length === 1 ? '' : 's') + ' · ' + nv + ' variable' + (nv === 1 ? '' : 's') + (W && !sig.excluded && step > 2 ? ' · ' + W[0].toLowerCase() : '') }
     ].map(function (n, i) { n.arrow = i < 2; return n; });
-    var json = '{\n' + fields.map(function (f, i) { var v = f.type === 'number' ? f.sample : JSON.stringify(f.sample); return '  "' + f.k + '": ' + v + (i < fields.length - 1 ? ',' : ''); }).join('\n') + '\n}';
-    function mapsFor(s) {
+    var HL = sgHealth(sig), USED = SG_USE[sig.id] || [];
+    var json = '{\n' + allF.map(function (f, i) { var v = f.type === 'number' || f.type === 'boolean' ? f.sample : JSON.stringify(f.sample); return '  "' + f.k + '": ' + v + (i < allF.length - 1 ? ',' : ''); }).join('\n') + '\n}';
+    function mapsFor(s, flowMeta) {
       return s.via.map(function (k) {
-        var src = SG_SRC[k], ev = s.r === 'unseen' ? '—' : k === 'scan' ? s.id : s.r === 'ambig' ? '—' : (s.ev || (src.prefix || '') + s.id);
+        var src = SG_SRC[k], ev = s.r === 'unseen' ? '—' : k === 'scan' ? s.id : s.r === 'ambig' ? '—' : k === 'websdk' ? (s.ev || src.prefix + s.id) : sgTagsOf(s, k) ? (src.prefix || '') + sgSnake(sgTagsOf(s, k)[0]) : (src.prefix || '') + s.id;
         var how = s.r === 'ambig' && k !== 'scan' ? 'Not mapped · 2 candidate events' : ev === '—' ? 'Not mapped' : s.r === 'tracking' ? 'Button click only' : (s.mapped && k !== 'scan' ? s.mapped : 'Matched automatically');
         var data = k === 'scan' ? (s.r === 'unseen' ? 'Not seen during the scan' : 'Seen on ' + (s.seen || 12) + ' pages during the scan')
           : s.r === 'unseen' ? 'No matching event yet' : s.r === 'source' ? 'No events for 26 hours' : s.r === 'nodata' ? 'No events in the last 24 hours' : k === 'aa' ? 'Batch · yesterday' : k === 'label' ? 'Captured in Browse & Label · Just now' : 'Events received · Today';
-        return { name: src.name, mono: src.mono, c: src.c, ev: ev, how: how, data: data };
+        var fires = flowMeta.replace(/ · seen on \d+ pages/, ''), title = (sgTagsOf(s, k) && sgTagsOf(s, k).join(', ')) || (k === 'websdk' && s.tag) || sgTitle(s.id);
+        var tag = '', tagMeta = '', tm = '', tc = '';
+        if (ev === '—') { tag = 'Not mapped'; tagMeta = k === 'scan' ? 'Not found on the page' : how; }
+        else if (k === 'scan') { tag = 'Found on the page'; }
+        else if (k === 'websdk') { tag = 'Launch rule · ' + title; tagMeta = 'Adobe Launch → Adobe Web SDK · ' + how.toLowerCase(); tm = 'Ad'; tc = '#E2412E'; }
+        else if (k === 'aa') { tag = 'Processing rule · ' + title; tagMeta = 'Adobe Analytics → ADX · ' + how.toLowerCase(); tm = 'AA'; tc = '#5C2D91'; }
+        else { tag = 'Label · ' + title; tagMeta = 'Browse & Label → ADX · ' + how.toLowerCase(); tm = 'BL'; tc = '#3c8c81'; }
+        var path = fires.replace(/^Fires on /, ''), tagLine = '', doLine = '';
+        if (ev === '—') { tagLine = 'Not mapped'; }
+        else if (k === 'scan') { tagLine = 'No tag'; doLine = 'Found on ' + path; }
+        else if (k === 'websdk') { tagLine = title; doLine = 'Sends ' + ev + ' on ' + path; }
+        else if (k === 'aa') { tagLine = title; doLine = 'Reads ' + ev; }
+        else if (k === 'label') { tagLine = title; doLine = 'Captured in Browse & Label'; }
+        else { tagLine = title; doLine = 'Sends ' + ev; }
+        return { key: k, tagLine: tagLine, doLine: doLine, app: k === 'websdk' ? 'Adobe Launch' : k === 'aa' ? 'Adobe Analytics' : k === 'label' ? 'Browse & Label' : '', name: src.name, mono: src.mono, c: src.c, ev: ev, evMeta: ev === '—' ? 'No event captured' : k === 'scan' ? fires : k === 'label' ? 'Labelled in the page' : 'Fires on ' + fires.replace(/^Fires on /, ''), how: how, data: data, tag: tag, tagMeta: tagMeta, tm: tm, tc: tc, hasTag: !!tm };
       });
     }
     // what each recommended action does to the signal (simulated)
@@ -713,15 +850,58 @@ class Component extends DCLogic {
         hasFields: fields.length > 0, noFields: fields.length === 0,
         fieldsView: fields.length > 0 && st.view === 'fields', jsonView: fields.length > 0 && st.view === 'json', json: json,
         tabFields: st.view === 'fields' ? 'on' : '', tabJson: st.view === 'json' ? 'on' : '',
+        copyJson: function () { try { navigator.clipboard.writeText(json); } catch (e) {} self.say('JSON copied'); }, fieldsRows: st.view === 'fields' ? allF.map(function (f) { var cat = catF.indexOf(f) >= 0;
+          return { name: SG_NAME[f.k] || f.k.charAt(0).toUpperCase() + f.k.slice(1).replace(/_/g, ' '), path: cat ? f.path : (has('websdk') ? 'xdm.' : 'digitalData.') + (SG_FROM[f.k] || 'event.' + f.k), type: f.type, sample: f.sample, warn: f.warn, cat: cat }; }) : [],
         showFields: function () { self.setState({ view: 'fields' }); }, showJson: function () { self.setState({ view: 'json' }); },
         fields: fields.map(function (f, i) {
-          return { k: f.k, type: f.type, sample: f.sample, warn: f.warn, on: f.v ? 'on' : '', aria: f.v ? 'true' : 'false',
+          return { k: f.k, type: f.type, sample: f.sample, warn: f.warn, req: SG_REQ.indexOf(f.k) >= 0, from: (has('websdk') ? 'xdm.' : 'digitalData.') + (SG_FROM[f.k] || 'event.' + f.k), on: f.v ? 'on' : '', aria: f.v ? 'true' : 'false',
             toggle: function () { var fs = fields.map(function (x) { return Object.assign({}, x); }); fs[i].v = !fs[i].v; self.setState({ draft: { id: sig.id, fields: fs } }); } };
         }),
         dirty: nChanged > 0, nChanged: nChanged, plural: nChanged > 1 ? 's' : '',
         discard: function () { self.setState({ draft: null }); },
-        save: function () { sig.fields = fields; self.setState({ draft: null }); self.say('Saved as v2 in Development'); },
-        maps: mapsFor(sig), noMaps: sig.via.length === 0
+        save: function () { sig.fields = fields; sig.ver = (sig.ver || 1) + 1; self.setState({ draft: null }); self.say('Saved as v' + sig.ver + ' in Development'); },
+        f0: { c: flow[0].c, state: flow[0].state, code: flow[0].code, meta: flow[0].meta.replace(/ · seen on \d+ pages/, '') }, f1: { c: flow[1].c, state: flow[1].state }, f2: { c: flow[2].c, state: flow[2].state, code: flow[2].code, meta: flow[2].meta },
+        editOpen: !!st.edit,
+        editNone: !!st.edit && (function () { var E = st.edit, act = sig.via.concat(E.added).filter(function (k) { return !E.off[k]; });
+          return !act.length || act.some(function (k) { return k !== 'scan' && !(E.tags[k] || []).length; }); })(),
+        openEdit: function () { var tags = {}; sig.via.forEach(function (k) { if (k !== 'scan') tags[k] = (sgTagsOf(sig, k) || [k === 'websdk' && sig.tag || sgTitle(sig.id)]).slice(); });
+          self.setState({ edit: { off: {}, q: {}, open: null, tags: tags, added: [], menu: false } }); },
+        closeEdit: function () { self.setState({ edit: null }); },
+        editRows: !st.edit ? [] : mapsFor(Object.assign({}, sig, { via: sig.via.concat(st.edit.added) }), flow[0].meta).map(function (m) {
+          var E = st.edit, k = m.key, off = E.off[k], upd = function (o) { self.setState({ edit: Object.assign({}, self.state.edit, o) }); };
+          m.on = off ? '' : 'on'; m.aria = off ? 'false' : 'true';
+          m.toggle = function () { var o = Object.assign({}, self.state.edit.off); o[k] = !o[k]; upd({ off: o }); };
+          m.hasPick = k !== 'scan' && !off; m.noPick = !m.hasPick;
+          if (m.hasPick) {
+            var mine = E.tags[k] || [], q = (E.q[k] || '').toLowerCase();
+            var setTags = function (list) { var t = Object.assign({}, self.state.edit.tags); t[k] = list; return t; };
+            m.tags = mine.map(function (t) { return { name: t, remove: function () { upd({ tags: setTags((self.state.edit.tags[k] || []).filter(function (x) { return x !== t; })) }); } }; });
+            m.ph = mine.length ? 'Search to add' : 'Search tags'; m.q = E.q[k] || '';
+            m.setQ = function (e) { var qq = Object.assign({}, self.state.edit.q); qq[k] = e.target.value; upd({ q: qq, open: k }); };
+            m.open = function () { if (self.state.edit.open !== k) upd({ open: k }); };
+            var opts = SG_TAGS.filter(function (t) { return mine.indexOf(t) < 0 && (!q || t.toLowerCase().indexOf(q) >= 0); }).slice(0, 6);
+            m.opts = opts.map(function (t) { return { name: t, pick: function () { var qq = Object.assign({}, self.state.edit.q); qq[k] = ''; upd({ tags: setTags((self.state.edit.tags[k] || []).concat(t)), q: qq });
+              setTimeout(function () { var i = document.querySelector('.sg-pin[data-k="' + k + '"]'); if (i) i.focus(); }, 60); } }; });
+            m.showList = E.open === k || !mine.length; m.noOpts = opts.length === 0;
+          }
+          return m; }),
+        addOpts: !st.edit ? [] : SG_CONNECTED.filter(function (k) { return sig.via.indexOf(k) < 0 && st.edit.added.indexOf(k) < 0; }).map(function (k) { var x = SG_SRC[k];
+          return { name: x.name, mono: x.mono, c: x.c, pick: function () { var E = self.state.edit, t = Object.assign({}, E.tags); t[k] = []; self.setState({ edit: Object.assign({}, E, { added: E.added.concat(k), tags: t, menu: false, open: k }) }); } }; }),
+        addMenu: !!st.edit && st.edit.menu, canAdd: !!st.edit && SG_CONNECTED.some(function (k) { return sig.via.indexOf(k) < 0 && st.edit.added.indexOf(k) < 0; }),
+        toggleAdd: function () { var E = self.state.edit; self.setState({ edit: Object.assign({}, E, { menu: !E.menu }) }); },
+        saveEdit: function () { var E = st.edit; sig.via = sig.via.concat(E.added).filter(function (k) { return !E.off[k]; });
+          sig.tagsBy = {}; sig.via.forEach(function (k) { if (k !== 'scan') sig.tagsBy[k] = (E.tags[k] || []).slice(); });
+          if (sig.tagsBy.websdk && sig.tagsBy.websdk.length) { sig.tags = sig.tagsBy.websdk.slice(); sig.tag = sig.tags[0]; sig.ev = 'web.' + sgSnake(sig.tag); }
+          self.setState({ edit: null }); self.say('Source and tag updated'); },
+        tagMaps: mapsFor(sig, flow[0].meta).filter(function (m) { return m.hasTag; }), noTags: !mapsFor(sig, flow[0].meta).some(function (m) { return m.hasTag; }),
+        maps: mapsFor(sig, flow[0].meta), noMaps: sig.via.length === 0, hasMaps: sig.via.length > 0,
+        srcs: sig.via.map(function (k) { return SG_SRC[k]; }), noSrcs: sig.via.length === 0,
+        sum: { src: sig.via.length ? sig.via.map(function (k) { return SG_SRC[k].name; }).join(' + ') : 'Not detected', fires: step <= 1 ? 'Not captured yet' : flow[0].meta.replace(/ · seen on \d+ pages/, ''),
+          last: HL.has ? HL.last : '—', vol: HL.has ? HL.vol : '—', used: USED.length ? USED.length + (USED.length === 1 ? ' item' : ' items') : 'Nothing yet' },
+        pages: SG_PAGES[sig.id] || [], hasPages: !!SG_PAGES[sig.id], notReady: !ready && !sig.excluded, missing: W ? W[0] : '', health: HL, used: USED.map(function (u) { return { kind: u[0], name: u[1], href: u[2] }; }), noUsed: USED.length === 0,
+        ver: sig.ver || 1, nextVer: (sig.ver || 1) + 1,
+        envs: [['d', 'Development'], ['s', 'Staging'], ['p', 'Production']].map(function (e) { var on = sig.env.indexOf(e[0]) >= 0;
+          return { name: e[1], state: on ? 'Active' : 'Not available', cls: on ? 'ready' : 'exc', note: on ? 'v' + (e[0] === 'd' ? (sig.ver || 1) : 1) + (e[0] === 'd' && (sig.ver || 1) > 1 ? ' · saved just now' : ' · from the website scan') : 'Promote from Development when it is ready' }; })
       }
     });
   }

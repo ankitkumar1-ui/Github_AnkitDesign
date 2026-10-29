@@ -397,6 +397,94 @@ select.as-input{padding:0 10px}
 .as-num{flex:none;width:22px;height:22px;border-radius:50%;background:#f4f4f5;border:1px solid var(--line);box-sizing:border-box;font-size:12px;font-weight:600;color:#52525b;display:flex;align-items:center;justify-content:center}
 .as-next p{margin:12px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
 .as-next p b{color:var(--ink);font-weight:600}
+
+/* ---- Add signal: layout shared with Derived signals ---- */
+.dv-chips{display:flex;flex-wrap:wrap;gap:5px}
+.dv-chips i{font-style:normal;font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;background:var(--sink);border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--ink-soft)}
+.dv-build{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+@media(max-width:1000px){.dv-build{grid-template-columns:1fr}}
+.dv-sec{padding:16px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.sg-ch+.dv-sec{border-top:0}
+.dv-lbl{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.dv-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px}
+.dv-f{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:var(--ink-soft)}
+.dv-f em{font-style:normal;font-weight:400;color:var(--faint)}
+.dv-in{height:36px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font:inherit;font-size:14px;color:var(--ink);padding:0 10px;box-shadow:var(--shadow);min-width:0}
+.dv-in.mono{font-family:'Geist Mono',ui-monospace,monospace;font-size:14px}
+.dv-foot{display:flex;align-items:center;gap:8px;padding:14px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.dv-prev{position:sticky;top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.dv-prev p{margin:0 0 4px;font-size:14px;line-height:1.55;color:var(--ink-soft)}
+.dv-note{font-size:12px;line-height:1.5;color:var(--muted);background:rgba(60,140,129,.07);border-radius:8px;padding:8px 10px}
+.dtab .tcount{font-size:12px;font-weight:600;color:var(--faint);margin-left:6px}
+.dtab.on .tcount{color:var(--muted)}
+.as-req{font-style:normal;color:#dc2626;font-weight:600}
+.as-req-note{font-size:12px;color:var(--muted)}
+.as-req-note i{font-style:normal;color:#dc2626;font-weight:600}
+.dv-f .as-help{font-weight:400;color:var(--muted);line-height:1.4}
+.as-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:700px){.as-mgrid{grid-template-columns:1fr}}
+.as-m{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font:inherit;color:inherit;cursor:pointer}
+.as-m:hover{border-color:#d4d4d8}
+.as-m.on{border-color:#18181b;box-shadow:0 0 0 1px #18181b}
+.as-m.on .as-radio{border-color:#18181b}
+.as-m.on .as-radio span{width:9px;height:9px;border-radius:50%;background:#18181b}
+.as-opt-t em{font-style:normal;font-size:12px;color:var(--faint);margin-top:2px}
+.as-m .as-opt-t span{font-size:13px}
+.as-ok{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#15803d}
+.as-pushes{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.as-pushes-h{display:flex;justify-content:space-between;padding:8px 13px;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
+.as-pushes-h em{font-style:normal;font-weight:400;color:var(--faint)}
+.as-push{display:flex;align-items:center;gap:10px;width:100%;padding:8px 13px;border:0;border-top:1px solid var(--line);background:none;font:inherit;font-size:12px;color:var(--ink);text-align:left;cursor:pointer}
+.as-push:hover{background:var(--surface-2)}
+.as-push .mono{flex:1;min-width:0}
+.as-push.hit .as-dot{background:#16a34a}
+.as-push.hit .as-url-m{color:#15803d;font-weight:600}
+.as-elpick{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px dashed var(--line-strong);border-radius:10px;background:var(--surface)}
+.as-elsel{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-weight:400}
+.as-elsel b{font-size:14px;font-weight:600;color:var(--ink)}
+.as-elsel code{font-size:12px;color:var(--muted)}
+.as-mut{color:var(--muted)}
+.as-a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.as-id{font-family:'Geist Mono',ui-monospace,monospace;font-size:14px;font-weight:600;color:var(--ink)}
+.sg-ch .as-id{font-size:14px}
+.as-pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:600}
+.sg-ch .as-pill{font-size:12px}
+.as-pill i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.as-pill.pend{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+.as-pill.live{color:#15803d;background:#f0fdf4;border-color:#bbf7d0}
+.as-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media(max-width:800px){.as-steps{grid-template-columns:1fr 1fr}}
+.as-steps li{display:flex;gap:9px;align-items:flex-start;font-size:13px}
+.as-steps li>span:last-child{display:flex;flex-direction:column;gap:1px;min-width:0}
+.as-steps b{font-weight:600;color:var(--faint)}
+.as-steps em{font-style:normal;font-size:12px;color:var(--faint)}
+.as-sn{flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--faint)}
+.as-steps li.done b,.as-steps li.cur b{color:var(--ink)}
+.as-steps li.done em,.as-steps li.cur em{color:var(--muted)}
+.as-steps li.done .as-sn{background:#16a34a;border-color:#16a34a;color:#fff}
+.as-steps li.cur .as-sn{border-color:#18181b;color:#18181b}
+.as-wait{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:10px;background:#eff6ff;color:#1e3a8a;font-size:14px;line-height:1.45}
+.as-pulse{flex:none;width:9px;height:9px;border-radius:50%;background:#3b82f6;box-shadow:0 0 0 0 rgba(59,130,246,.5);animation:asPulse 1.6s ease-out infinite}
+@keyframes asPulse{to{box-shadow:0 0 0 8px rgba(59,130,246,0)}}
+.as-test{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:4px;font-size:13px;color:var(--muted)}
+.as-test span{flex:1;min-width:220px}
+.as-gotline{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:#f0fdf4;color:#166534;font-size:14px}
+.as-fields{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.as-frow{display:grid;grid-template-columns:minmax(140px,1.3fr) 90px minmax(120px,1.4fr) 70px;align-items:center;gap:12px;padding:9px 13px;border-top:1px solid var(--line);font-size:13px}
+.as-frow.hd{border-top:0;background:var(--surface-2);font-size:12px;font-weight:600;color:var(--muted)}
+.as-frow code{font-size:12px}
+.as-sum{font-size:13px!important;color:var(--muted)!important}
+.as-nx{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.as-nx li{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:var(--ink-soft,#3f3f46)}
+.as-ta2{height:auto;min-height:72px;padding:8px 10px;line-height:1.5;resize:vertical}
+.as-cands{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto}
+.as-cand{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font:inherit;color:inherit;text-align:left;cursor:pointer}
+.as-cand:hover{border-color:#d4d4d8}
+.as-cand.on{border-color:#18181b;box-shadow:0 0 0 1px #18181b}
+.as-cand.on .as-radio{border-color:#18181b}
+.as-cand.on .as-radio span{width:9px;height:9px;border-radius:50%;background:#18181b}
+.as-cand .as-opt-t{flex:1}
+.as-cand code{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -433,7 +521,7 @@ select.as-input{padding:0 10px}
 <header class="topbar">
       <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
       <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar" title="Collapse sidebar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18"></path></svg></button>
-      <div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">ADX Setup</span> <span style="color:var(--faint)">›</span> <a href="#/web-signals" style="color:var(--muted);font-weight:400;text-decoration:none">sephora.com</a> <span style="color:var(--faint)">›</span> New signal</b></div>
+      <div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">ADX Setup</span> <span style="color:var(--faint)">›</span> <a href="#/web-signals" style="color:var(--muted);font-weight:400;text-decoration:none">Web Signals</a> <span style="color:var(--faint)">›</span> <a href="#/signals" style="color:var(--muted);font-weight:400;text-decoration:none">Signals</a> <span style="color:var(--faint)">›</span> New signal</b></div>
       <div class="top-actions">
         <div class="env mock"><span class="dot"></span>Sandbox · Mock data</div>
         <button class="btn sm tb-cx" id="cxTop" title="Cortex" aria-label="Open Cortex" aria-pressed="false"><svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect x="0" y="0" width="48" height="48" rx="13" fill="#43918A"></rect><path d="M24 11C25 19 29 23 37 24C29 25 25 29 24 37C23 29 19 25 11 24C19 23 23 19 24 11Z" fill="#fff"></path></svg></button>
@@ -442,126 +530,248 @@ select.as-input{padding:0 10px}
       </div>
     </header>
 <div class="wrap">
-<div class="as-grid">
-<div class="as-main">
-  <div class="pagehead"><div><div class="eyebrow">ADX Setup · Web Signals</div><h1>Add a signal manually</h1><p>For behaviour the scan could not find and Browse &amp; label cannot reach: anything behind a login, or fired only by your own code.</p></div></div>
+  <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
+  <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><a class="dtab on" href="#/signals" style="text-decoration:none">Signals<span class="tcount">{{sigN}}</span></a><a class="dtab" href="#/derived" style="text-decoration:none">Derived signals<span class="tcount">{{derivedN}}</span></a></div>
 
-  <div class="as-form">
-    <label class="as-field">
-      <span class="as-lbl">Signal name</span>
-      <input class="as-input mono" value="{{name}}" onInput="{{onName}}" placeholder="e.g. checkout_step_completed" spellcheck="false" autocomplete="off">
-      <span class="as-hint">Lowercase with underscores. This is the name your experiences and triggers use.</span>
-    </label>
-    <sc-if value="{{dupe}}" hint-placeholder-val="{{false}}">
-      <div class="as-warn err"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg><span><b>{{name}}</b> already exists. Pick another name, or open the existing signal.</span></div>
-    </sc-if>
-    <sc-if value="{{near}}" hint-placeholder-val="{{false}}">
-      <div class="as-warn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg><span>Close to <b>{{nearSig.id}}</b>, already active. Different step, or the same thing named twice? <button type="button" class="as-link" onClick="{{toggleCompare}}">{{compareLabel}}</button></span></div>
-      <sc-if value="{{comparing}}" hint-placeholder-val="{{false}}">
-        <div class="as-compare">
-          <div><span class="as-cmp-k">Existing · active</span><b class="mono">{{nearSig.id}}</b><span>{{nearSig.desc}}</span><span class="as-cmp-m">{{nearSig.seen}}</span></div>
-          <div><span class="as-cmp-k">Yours · new</span><b class="mono">{{name}}</b><span>{{meaningOrHint}}</span><span class="as-cmp-m">Not created yet</span></div>
+  <div class="dv-build">
+  <!-- ================= Step 1 · the form ================= -->
+  <sc-if value="{{isForm}}" hint-placeholder-val="{{true}}">
+    <section class="sg-card" style="margin:0">
+      <div class="sg-ch"><b>New signal</b><span>Capture something shoppers do on your site</span><span class="sg-sp"></span><span class="as-req-note"><i>*</i> Required</span></div>
+
+      <div class="dv-sec">
+        <div class="dv-lbl">Name</div>
+        <div class="dv-two">
+          <label class="dv-f"><span>Signal name <i class="as-req">*</i></span><input class="dv-in mono" value="{{name}}" onInput="{{onName}}" placeholder="" spellcheck="false" autocomplete="off"><em class="as-help">Lowercase with underscores. Experiences and triggers use this name.</em></label>
+          <label class="dv-f"><span>What it means <i class="as-req">*</i></span><input class="dv-in" value="{{meaning}}" onInput="{{onMeaning}}" placeholder=""><em class="as-help">One sentence on when it fires. People building triggers read this, not the payload.</em></label>
         </div>
-      </sc-if>
-    </sc-if>
-
-    <label class="as-field">
-      <span class="as-lbl">What it means</span>
-      <textarea class="as-input as-ta" onInput="{{onMeaning}}" placeholder="Shopper completes a named step inside checkout: shipping, payment or review.">{{meaning}}</textarea>
-      <span class="as-hint">Whoever builds a trigger on this reads your sentence, not the payload. Be specific about when it fires.</span>
-    </label>
-
-    <div class="as-field">
-      <span class="as-lbl">How will it be captured?</span>
-      <div role="radiogroup" aria-label="Capture method" class="as-opts">
-        <sc-for list="{{methods}}" as="m" hint-placeholder-count="4">
-          <button type="button" role="radio" aria-checked="{{m.sel}}" onClick="{{m.pick}}" class="as-opt {{m.cls}}">
-            <span class="as-radio"><span></span></span>
-            <span class="as-opt-t"><b>{{m.title}}</b><span>{{m.desc}}</span></span>
-          </button>
-        </sc-for>
+        <sc-if value="{{dupe}}" hint-placeholder-val="{{false}}">
+          <div class="as-warn err"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg><span><b>{{name}}</b> already exists. Pick another name, or <a href="{{dupeHref}}" class="as-link" style="color:inherit">open the existing signal</a>.</span></div>
+        </sc-if>
+        <sc-if value="{{near}}" hint-placeholder-val="{{false}}">
+          <div class="as-warn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg><span>Close to <b>{{nearSig.id}}</b>, already active. Different step, or the same thing named twice? <button type="button" class="as-link" onClick="{{toggleCompare}}">{{compareLabel}}</button></span></div>
+          <sc-if value="{{comparing}}" hint-placeholder-val="{{false}}">
+            <div class="as-compare">
+              <div><span class="as-cmp-k">Existing · active</span><b class="mono">{{nearSig.id}}</b><span>{{nearSig.desc}}</span><span class="as-cmp-m">{{nearSig.seen}}</span></div>
+              <div><span class="as-cmp-k">Yours · new</span><b class="mono">{{name}}</b><span>{{meaningOrHint}}</span><span class="as-cmp-m">Not created yet</span></div>
+            </div>
+          </sc-if>
+        </sc-if>
       </div>
-    </div>
 
-    <!-- SDK call -->
-    <sc-if value="{{isSdk}}" hint-placeholder-val="{{true}}">
-      <div class="as-panel">
-        <b class="as-panel-h">Give this to whoever owns the site</b>
-        <pre class="as-code">{{snippet}}</pre>
-        <div class="as-row">
-          <button type="button" class="btn" onClick="{{copy}}">{{copyLabel}}</button>
-          <a class="btn" href="{{mailto}}" style="text-decoration:none">Email to a developer</a>
-        </div>
-      </div>
-    </sc-if>
-
-    <!-- Data layer key -->
-    <sc-if value="{{isDl}}" hint-placeholder-val="{{false}}">
-      <div class="as-panel">
-        <b class="as-panel-h">Which data layer push should fire it?</b>
-        <div class="as-two">
-          <label class="as-field"><span class="as-lbl sm">Data layer</span>
-            <select class="as-input" onChange="{{onDlSrc}}"><sc-for list="{{dlSrcs}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
-          <label class="as-field"><span class="as-lbl sm">Key and value</span>
-            <input class="as-input mono" value="{{dlKey}}" onInput="{{onDlKey}}" placeholder="event = checkoutStep" spellcheck="false"></label>
-        </div>
-        <span class="as-hint">Cortex listens for this push on every page. Nothing changes on your site.</span>
-        <pre class="as-code">{{dlExample}}</pre>
-      </div>
-    </sc-if>
-
-    <!-- URL pattern -->
-    <sc-if value="{{isUrl}}" hint-placeholder-val="{{false}}">
-      <div class="as-panel">
-        <b class="as-panel-h">Fire when the shopper lands on</b>
-        <input class="as-input mono" value="{{pattern}}" onInput="{{onPattern}}" placeholder="/checkout/confirmation*" spellcheck="false">
-        <span class="as-hint">Use * as a wildcard. Checked against pages Cortex has seen on sephora.com.</span>
-        <div class="as-urls">
-          <sc-for list="{{urls}}" as="u" hint-placeholder-count="5">
-            <div class="as-url {{u.cls}}"><span class="as-dot"></span><span class="mono">{{u.path}}</span><span class="as-url-m">{{u.label}}</span></div>
+      <div class="dv-sec">
+        <div class="dv-lbl">How will it be captured? <i class="as-req">*</i></div>
+        <div role="radiogroup" aria-label="Capture method" class="as-mgrid">
+          <sc-for list="{{methods}}" as="m" hint-placeholder-count="4">
+            <button type="button" role="radio" aria-checked="{{m.sel}}" onClick="{{m.pick}}" class="as-m {{m.cls}}">
+              <span class="as-radio"><span></span></span>
+              <span class="as-opt-t"><b>{{m.title}}</b><span>{{m.desc}}</span><em>{{m.who}}</em></span>
+            </button>
           </sc-for>
         </div>
-        <span class="as-hint">{{urlSummary}}</span>
       </div>
-    </sc-if>
 
-    <!-- Element interaction -->
-    <sc-if value="{{isEl}}" hint-placeholder-val="{{false}}">
-      <div class="as-panel as-el">
-        <span class="as-el-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 4 7 17 2.5-7.5L21 11z"></path></svg></span>
-        <span style="flex:1;min-width:0"><b class="as-panel-h">Point at it on your own site</b><span class="as-hint" style="display:block;margin-top:2px">Browse sephora.com like a shopper and click the button, link or form this signal should track. Cortex records the selector for you.</span></span>
-        <a class="btn" href="#/web-signals" style="text-decoration:none">Open Browse &amp; label</a>
+      <!-- SDK call: the snippet, and who gets it -->
+      <sc-if value="{{isSdk}}" hint-placeholder-val="{{true}}">
+        <div class="dv-sec">
+          <div class="dv-lbl">SDK call</div>
+          <span class="as-hint">Your developer adds this line where the moment happens. Send any properties you like; Cortex reads their types from the first call.</span>
+          <pre class="as-code">{{snippet}}</pre>
+          <div class="as-row">
+            <button type="button" class="btn" onClick="{{copy}}">{{copyLabel}}</button>
+            <button type="button" class="btn" onClick="{{openEmail}}">Send to a developer</button>
+            <sc-if value="{{sentTo}}" hint-placeholder-val="{{false}}"><span class="as-ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Sent to {{sentTo}}</span></sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- Data layer key: which layer, which push -->
+      <sc-if value="{{isDl}}" hint-placeholder-val="{{false}}">
+        <div class="dv-sec">
+          <div class="dv-lbl">Data layer key</div>
+          <div class="as-two">
+            <label class="dv-f"><span>Data layer <i class="as-req">*</i></span>
+              <select class="sg-sel" onChange="{{onDlSrc}}"><sc-for list="{{dlSrcs}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+            <label class="dv-f"><span>Fire on the push where <i class="as-req">*</i></span>
+              <input class="dv-in mono" value="{{dlKey}}" onInput="{{onDlKey}}" placeholder="key = value" spellcheck="false"></label>
+          </div>
+          <div class="as-pushes">
+            <div class="as-pushes-h"><span>Recent pushes on sephora.com</span><em>Pick one to use it</em></div>
+            <sc-for list="{{pushes}}" as="p" hint-placeholder-count="4">
+              <button type="button" class="as-push {{p.cls}}" onClick="{{p.pick}}"><span class="as-dot"></span><span class="mono">{{p.key}}</span><span class="as-url-m">{{p.count}}</span></button>
+            </sc-for>
+          </div>
+          <span class="as-hint">{{dlSummary}}</span>
+        </div>
+      </sc-if>
+
+      <!-- URL pattern: which pages, how often -->
+      <sc-if value="{{isUrl}}" hint-placeholder-val="{{false}}">
+        <div class="dv-sec">
+          <div class="dv-lbl">URL pattern</div>
+          <div class="as-two">
+            <label class="dv-f"><span>Fire when the shopper lands on <i class="as-req">*</i></span>
+              <input class="dv-in mono" value="{{pattern}}" onInput="{{onPattern}}" placeholder="" spellcheck="false"></label>
+            <label class="dv-f"><span>Fire</span>
+              <select class="sg-sel" onChange="{{onFreq}}"><sc-for list="{{freqs}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+          </div>
+          <span class="as-hint">Use * as a wildcard. Checked against pages Cortex has seen on sephora.com.</span>
+          <div class="as-urls">
+            <sc-for list="{{urls}}" as="u" hint-placeholder-count="5">
+              <div class="as-url {{u.cls}}"><span class="as-dot"></span><span class="mono">{{u.path}}</span><span class="as-url-m">{{u.label}}</span></div>
+            </sc-for>
+          </div>
+          <span class="as-hint">{{urlSummary}}</span>
+        </div>
+      </sc-if>
+
+      <!-- Element interaction: page, element, interaction -->
+      <sc-if value="{{isEl}}" hint-placeholder-val="{{false}}">
+        <div class="dv-sec">
+          <div class="dv-lbl">Element interaction</div>
+          <div class="as-two">
+            <label class="dv-f"><span>Page <i class="as-req">*</i></span>
+              <select class="sg-sel" onChange="{{onElPage}}"><sc-for list="{{elPages}}" as="o"><option value="{{o.k}}" selected="{{o.sel}}">{{o.l}}</option></sc-for></select></label>
+            <div class="dv-f"><span>When the shopper <i class="as-req">*</i></span>
+              <span class="sg-seg" style="margin:0;align-self:flex-start"><sc-for list="{{elActs}}" as="a"><button type="button" class="{{a.cls}}" onClick="{{a.pick}}">{{a.l}}</button></sc-for></span></div>
+          </div>
+          <div class="dv-f"><span>Element <i class="as-req">*</i></span>
+            <div class="as-elpick">
+              <sc-if value="{{elChosen}}" hint-placeholder-val="{{false}}"><span class="as-elsel"><b>{{elLabel}}</b><code class="mono">{{elSel}}</code></span></sc-if>
+              <sc-if value="{{elNone}}" hint-placeholder-val="{{true}}"><span class="as-elsel as-mut">No element picked yet</span></sc-if>
+              <button type="button" class="btn" onClick="{{openPick}}">{{pickLabel}}</button>
+            </div>
+          </div>
+          <span class="as-hint">Prefer clicking it on the live page? <a href="#/web-signals" class="as-a">Open Browse &amp; label</a> and Cortex records the selector for you.</span>
+        </div>
+      </sc-if>
+
+      <div class="dv-foot">
+        <span class="as-hint" style="margin:0">{{createHint}}</span>
+        <span class="sg-sp"></span>
+        <a class="btn" href="{{backHref}}" style="text-decoration:none">Cancel</a>
+        <button type="button" class="btn primary" onClick="{{create}}" disabled="{{cantCreate}}">Create signal</button>
       </div>
-    </sc-if>
+    </section>
+  </sc-if>
 
-    <div class="as-actions">
-      <button type="button" class="btn primary lg" onClick="{{create}}" disabled="{{cantCreate}}">Create signal</button>
-      <a class="btn lg" href="#/web-signals" style="text-decoration:none">Cancel</a>
-      <span class="as-hint" style="margin:0">{{createHint}}</span>
-    </div>
-  </div>
+  <!-- ================= Step 2 · created: what happens next for this method ================= -->
+  <sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+    <section class="sg-card" style="margin:0">
+      <div class="sg-ch"><code class="as-id">{{name}}</code><span class="as-pill {{pillCls}}"><i></i>{{pillText}}</span><span class="sg-sp"></span><span>Created in Development · via {{methodName}}</span></div>
 
-</div>
+      <div class="dv-sec">
+        <div class="dv-lbl">Progress</div>
+        <ol class="as-steps">
+          <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+            <li class="{{s.cls}}"><span class="as-sn">{{s.n}}</span><span><b>{{s.t}}</b><em>{{s.d}}</em></span></li>
+          </sc-for>
+        </ol>
+      </div>
 
-<aside class="as-side">
-  <div class="card as-next">
-    <b class="as-next-h">What happens next</b>
-    <ol>
+      <!-- waiting for the first event -->
+      <sc-if value="{{waiting}}" hint-placeholder-val="{{true}}">
+        <div class="dv-sec">
+          <div class="dv-lbl">{{waitTitle}}</div>
+          <div class="as-wait"><span class="as-pulse"></span><span>{{waitText}}</span></div>
+          <sc-if value="{{isSdk}}" hint-placeholder-val="{{true}}">
+            <pre class="as-code">{{snippet}}</pre>
+            <div class="as-row">
+              <button type="button" class="btn" onClick="{{copy}}">{{copyLabel}}</button>
+              <button type="button" class="btn" onClick="{{openEmail}}">Send to a developer</button>
+              <sc-if value="{{sentTo}}" hint-placeholder-val="{{false}}"><span class="as-ok"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Sent to {{sentTo}}</span></sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{isEl}}" hint-placeholder-val="{{false}}">
+            <div class="as-row"><a class="btn" href="#/web-signals" style="text-decoration:none">Try it in Browse &amp; label</a></div>
+          </sc-if>
+          <div class="as-test">
+            <span>No traffic in Development yet? Fire one yourself to check the setup.</span>
+            <button type="button" class="btn" onClick="{{test}}" disabled="{{testing}}">{{testLabel}}</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- first event in: payload and variables -->
+      <sc-if value="{{got}}" hint-placeholder-val="{{false}}">
+        <div class="dv-sec">
+          <div class="dv-lbl">{{gotTitle}}</div>
+          <div class="as-gotline"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span>{{gotText}}</span></div>
+          <div class="as-fields">
+            <div class="as-frow hd"><span>Field</span><span>Type</span><span>Sample</span><span>Variable</span></div>
+            <sc-for list="{{fields}}" as="f" hint-placeholder-count="3">
+              <div class="as-frow"><code class="mono">{{f.k}}</code><span class="as-mut">{{f.type}}</span><span class="mono as-mut">{{f.sample}}</span><button type="button" class="sg-sw {{f.on}}" onClick="{{f.toggle}}" aria-label="Use {{f.k}} as a variable"><i></i></button></div>
+            </sc-for>
+          </div>
+          <span class="as-hint">Variables are the fields experiences can read and target on. You can change these later on the signal.</span>
+        </div>
+      </sc-if>
+
+      <div class="dv-foot">
+        <button type="button" class="btn ghost" onClick="{{another}}">Add another signal</button>
+        <span class="sg-sp"></span>
+        <a class="btn" href="{{openHref}}" style="text-decoration:none">Open signal</a>
+        <a class="btn primary" href="{{doneHref}}" style="text-decoration:none">{{doneLabel}}</a>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- preview / next steps, like Derived signals -->
+  <aside class="dv-prev">
+    <div class="dv-lbl" style="padding:0">Preview</div>
+    <code class="as-id">{{idShown}}</code>
+    <p>{{meaningOrHint}}</p>
+    <div class="dv-lbl" style="padding:0">Captured by</div>
+    <div class="dv-chips"><i>{{methodName}}</i></div>
+    <p class="as-sum">{{methodSummary}}</p>
+    <div class="dv-lbl" style="padding:0">What happens next</div>
+    <ol class="as-nx">
       <sc-for list="{{next}}" as="n" hint-placeholder-count="4">
         <li><span class="as-num">{{n.n}}</span><span>{{n.t}}</span></li>
       </sc-for>
     </ol>
-    <p>The signal sits in <b>Pending first event</b> until a real payload arrives. It cannot be promoted to production before then.</p>
+    <div class="dv-note">{{noteText}}</div>
+  </aside>
   </div>
-</aside>
-</div>
+
+  <!-- Send to a developer -->
+  <sc-if value="{{emailOpen}}" hint-placeholder-val="{{false}}">
+    <div class="sg-modal" onClick="{{closeModal}}"><div onClick="{{stop}}" style="max-width:560px">
+      <h3>Send to a developer</h3>
+      <p>They get the snippet, what the signal means and where it should fire. You'll see the first call here as soon as their code runs in Development.</p>
+      <label class="dv-f"><span>To <i class="as-req">*</i></span><input class="dv-in" value="{{mailTo}}" onInput="{{onMailTo}}" placeholder="Email address"></label>
+      <label class="dv-f"><span>Note</span><textarea class="dv-in as-ta2" onInput="{{onMailNote}}">{{mailNote}}</textarea></label>
+      <pre class="as-code" style="margin:0">{{snippet}}</pre>
+      <div class="as-row" style="justify-content:flex-end"><button type="button" class="btn" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn primary" onClick="{{sendMail}}" disabled="{{cantSend}}">Send</button></div>
+    </div></div>
+  </sc-if>
+
+  <!-- Pick an element on the page -->
+  <sc-if value="{{pickOpen}}" hint-placeholder-val="{{false}}">
+    <div class="sg-modal" onClick="{{closeModal}}"><div onClick="{{stop}}" style="max-width:620px">
+      <h3>Pick the element</h3>
+      <p>Elements Cortex found on <code class="mono">{{elPage}}</code> during the scan. Pick the one this signal should track.</p>
+      <div class="as-cands">
+        <sc-for list="{{cands}}" as="c" hint-placeholder-count="4">
+          <button type="button" class="as-cand {{c.cls}}" onClick="{{c.pick}}"><span class="as-radio"><span></span></span><span class="as-opt-t"><b>{{c.l}}</b><code class="mono">{{c.sel}}</code></span><span class="as-url-m">{{c.seen}}</span></button>
+        </sc-for>
+      </div>
+      <label class="dv-f"><span>Or type a CSS selector</span><input class="dv-in mono" value="{{draftSel}}" onInput="{{onDraftSel}}" placeholder="" spellcheck="false"></label>
+      <div class="as-row"><a href="#/web-signals" class="as-a">Point at it on the live page instead</a><span class="sg-sp"></span><button type="button" class="btn" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn primary" onClick="{{usePick}}" disabled="{{cantUse}}">Use this element</button></div>
+    </div></div>
+  </sc-if>
+
+  <sc-if value="{{toast}}" hint-placeholder-val="{{false}}"><div class="sg-toast">{{toast}}</div></sc-if>
 </div>
 </div>
 </div>
 </template>
 <script type="text/x-dc">
-/* Add a signal manually (Web Signals · Add manually).
-   Prefilled with the example from the canvas so the "close to an active signal" check shows straight away. */
+/* Add a signal manually (Web Signals · Signals → Add signal, or "Add tag" on a missing event).
+   Step 1 is the form (name, meaning, capture method + that method's settings); step 2 shows what happens next for
+   the method: waiting for the first event (SDK call, data layer, element) or live straight away (URL pattern),
+   then the first payload with its fields to keep as variables.
+   New signals go into window.ADX_NEW_SIGNALS; the Signals list merges them in as "Pending first event". */
 var AS_ACTIVE = [
   { id: 'checkout_started', desc: 'Shopper opens checkout from the basket.', seen: 'Seen 18 times today' },
   { id: 'product_viewed', desc: 'Shopper opens a product page.', seen: 'Seen 48 times today' },
@@ -574,39 +784,95 @@ var AS_ACTIVE = [
   { id: 'newsletter_signed_up', desc: 'Shopper subscribes to emails.', seen: 'Seen 5 times today' },
   { id: 'store_locator_opened', desc: 'Shopper opens the store locator.', seen: 'Seen 4 times today' }
 ];
+// [key, title, description, who does the work]
 var AS_METHODS = [
-  ['sdk', 'SDK call', 'Your developer adds one line. We generate it below. Best when the event has data only your code knows.'],
-  ['dl', 'Data layer key', 'Listen for a key your tag manager already pushes. No code change.'],
-  ['url', 'URL pattern', 'Fires on navigation matching a pattern. Good for confirmation and thank-you pages.'],
-  ['el', 'Element interaction', 'Point at it on your own site instead. Opens Browse & label.']
+  ['sdk', 'SDK call', 'A developer adds one line where it happens. Best for data only your code knows.', 'Needs a developer'],
+  ['dl', 'Data layer key', 'Listen for a push your tag manager already sends. Nothing changes on the site.', 'No code change'],
+  ['url', 'URL pattern', 'Fires when a matching page loads. Good for confirmation and thank-you pages.', 'No code change · live at once'],
+  ['el', 'Element interaction', 'A click, hover or view on a button, link or form on one page.', 'No code change']
 ];
-var AS_DL = [['adobeDataLayer', 'adobeDataLayer (Adobe)'], ['utag_data', 'utag_data (Tealium)'], ['dataLayer', 'dataLayer (GTM)']];
+// what happens after Create, per method (also the right-hand preview)
+var AS_NEXT = {
+  sdk: ['Send the snippet to a developer', 'They add it where the moment happens', 'The first call arrives in Development and Cortex reads its fields', 'Pick the fields to keep as variables, then promote'],
+  dl: ['Cortex listens to the data layer on every page', 'The next matching push becomes the first event', 'Pick the fields to keep as variables', 'Promote to production when it looks right'],
+  url: ['Live at once on the matching pages', 'Each visit sends the page URL, referrer and query', 'Pick the fields to keep as variables', 'Promote to production when it looks right'],
+  el: ['Cortex attaches a listener to the element', 'The next interaction becomes the first event', 'Pick the fields to keep as variables', 'Promote to production when it looks right']
+};
+var AS_DL = [['adobeDataLayer', 'adobeDataLayer · Adobe Launch'], ['utag_data', 'utag_data · Tealium'], ['dataLayer', 'dataLayer · Google Tag Manager']];
+// recent pushes Cortex has seen per data layer: [key = value, count, fields]
+var AS_PUSHES = {
+  adobeDataLayer: [
+    ['event = checkoutStep', 14, [['step', 'string', 'shipping'], ['cart.value', 'number', '68.50'], ['cart.item_count', 'number', '3']]],
+    ['event = cart.add', 41, [['product.sku', 'string', 'P483021'], ['product.price', 'number', '40.00'], ['quantity', 'number', '1']]],
+    ['event = promo.click', 9, [['promo.id', 'string', 'holiday-hero'], ['promo.position', 'number', '1']]],
+    ['event = page.loaded', 312, [['page.type', 'string', 'product'], ['page.name', 'string', "Pro Filt'r Foundation"]]]
+  ],
+  utag_data: [
+    ['tealium_event = checkout_step', 12, [['checkout_step', 'string', 'shipping'], ['order_subtotal', 'number', '68.50']]],
+    ['tealium_event = cart_add', 38, [['product_id', 'string', 'P483021'], ['product_price', 'number', '40.00']]],
+    ['tealium_event = view', 290, [['page_type', 'string', 'product']]]
+  ],
+  dataLayer: [
+    ['event = add_shipping_info', 11, [['shipping_tier', 'string', 'standard'], ['value', 'number', '68.50']]],
+    ['event = add_to_cart', 40, [['items.item_id', 'string', 'P483021'], ['value', 'number', '40.00']]],
+    ['event = page_view', 305, [['page_location', 'string', '/product/P483021']]]
+  ]
+};
 var AS_PAGES = ['/checkout/shipping', '/checkout/payment', '/checkout/review', '/checkout/confirmation?order=SEP-48213', '/basket', '/product/P483021', '/shop/skincare'];
+// elements Cortex saw on each page during the scan: [label, selector, seen]
+var AS_EL = {
+  '/checkout/shipping': [['Continue to payment', 'button.checkout-step__next', 'Seen on every visit'], ['Same-day delivery option', 'input[name="ship"][value="sameday"]', 'Seen on 62% of visits'], ['Edit basket', 'a.co-edit-basket', 'Seen on every visit'], ['Apply promo code', 'button.promo-apply', 'Seen on every visit']],
+  '/product/P483021': [['Add to Loves', 'button.loves-toggle', 'Seen on every visit'], ['Find your shade', 'button.shade-finder', 'Seen on every visit'], ['See all reviews', 'a.reviews-all', 'Seen on every visit'], ['Shade swatch', 'button.swatch', 'Seen on every visit']],
+  '/basket': [['Checkout', 'button.checkout-cta', 'Seen on every visit'], ['You may also like tile', 'div.reco-tile a', 'Seen on 88% of visits'], ['Remove item', 'button.item-remove', 'Seen on every visit']],
+  '/shop/makeup': [['Subcategory tile', 'a.cat-tile', 'Seen on every visit'], ['Filter: Brand', 'button.filter-brand', 'Seen on every visit'], ['Show more products', 'button.load-more', 'Seen on 71% of visits']]
+};
+var AS_EL_PAGE_NAMES = { '/checkout/shipping': 'Checkout · shipping', '/product/P483021': 'Product page', '/basket': 'Basket', '/shop/makeup': 'Category page' };
+var AS_ACTS = [['click', 'Clicks'], ['hover', 'Hovers'], ['view', 'Sees it']];
+
+function asQuery() {
+  var q = {}, m = location.hash.split('?')[1];
+  (m || '').split('&').forEach(function (kv) { var p = kv.split('='); if (p[0]) q[p[0]] = decodeURIComponent((p[1] || '').replace(/\+/g, ' ')); });
+  return q;
+}
 
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { name: 'checkout_step_completed', meaning: 'Shopper completes a named step inside checkout: shipping, payment or review.',
-      method: 'sdk', comparing: false, copied: false, dlSrc: 'adobeDataLayer', dlKey: 'event = checkoutStep', pattern: '/checkout/confirmation*' };
+    var q = asQuery(), pre = !!q.name;
+    this.from = q.from || 'signals';
+    var page = q.page && AS_EL[q.page] ? q.page : '/checkout/shipping';
+    this.state = {
+      phase: 'form',
+      name: pre ? q.name : '',
+      meaning: pre ? (q.meaning || '') : '',
+      method: q.method && AS_NEXT[q.method] ? q.method : 'sdk', comparing: false, copied: false,
+      dlSrc: 'adobeDataLayer', dlKey: '', pattern: '', freq: 'every',
+      elPage: page, elAct: 'click', elSel: '', elLabel: '', draftSel: '', draftLabel: '',
+      modal: null, mailTo: '', mailNote: '', sentTo: '', toast: '', testing: false, got: false, fields: [], sig: null
+    };
   }
-  componentWillUnmount() { clearTimeout(this.copyT); }
+  componentWillUnmount() { clearTimeout(this.copyT); clearTimeout(this.tt); clearTimeout(this.testT); }
+  say(t) { var self = this; clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2600); }
   renderVals() {
     var self = this, st = this.state, name = st.name;
     var dupe = AS_ACTIVE.filter(function (s) { return s.id === name; })[0];
     var head = name.split('_')[0];
     var near = !dupe && head.length > 2 ? AS_ACTIVE.filter(function (s) { return s.id.split('_')[0] === head; })[0] : null;
     var nameOk = /^[a-z][a-z0-9_]*[a-z0-9]$/.test(name);
+    var method = AS_METHODS.filter(function (m) { return m[0] === st.method; })[0];
 
     // SDK snippet: a checkout-shaped payload for checkout signals, a minimal one otherwise
     var sig = name || 'your_signal';
-    var payload = /checkout|cart|basket|order/.test(sig)
-      ? "  step: 'shipping',\n  cart: { value: 68.50, item_count: 3 }"
-      : "  page_url: location.pathname";
+    var checkouty = /checkout|cart|basket|order/.test(sig);
+    var payload = checkouty ? "  step: 'shipping',\n  cart: { value: 68.50, item_count: 3 }" : "  page_url: location.pathname";
     var snippet = "adx.track('" + sig + "', {\n" + payload + "\n});";
 
-    // data layer: "key = value" → example push
+    // data layer: the typed key against the pushes Cortex has seen
     var kv = st.dlKey.split('='), dk = (kv[0] || '').trim(), dv = (kv[1] || '').trim();
-    var dlExample = 'window.' + st.dlSrc + '.push({\n  ' + (dk || 'event') + ": '" + (dv || '…') + "',\n  // the rest of the push becomes the signal's payload\n});";
+    var norm = function (s) { return s.replace(/\s+/g, ''); };
+    var pushList = AS_PUSHES[st.dlSrc] || [];
+    var dlHit = pushList.filter(function (p) { return norm(p[0]) === norm(st.dlKey); })[0];
+    var dlSrcName = AS_DL.filter(function (d) { return d[0] === st.dlSrc; })[0][1].split(' · ')[0];
 
     // URL pattern: * is a wildcard; the query string is ignored unless the pattern has one
     var pat = st.pattern.trim(), rx = null;
@@ -618,37 +884,132 @@ class Component extends DCLogic {
       return { path: u, cls: hit ? 'hit' : '', label: hit ? 'Matches' : '' };
     });
 
+    // element interaction
+    var cands = AS_EL[st.elPage] || [];
+    var act = AS_ACTS.filter(function (a) { return a[0] === st.elAct; })[0];
+
     var missing = !nameOk ? 'Add a signal name' : dupe ? 'Pick a name that isn’t taken' : !st.meaning.trim() ? 'Say what it means'
-      : st.method === 'url' && !hits ? 'The pattern matches no pages yet' : st.method === 'dl' && !dk ? 'Add the data layer key' : '';
-    var method = AS_METHODS.filter(function (m) { return m[0] === st.method; })[0];
-    var NEXT = ['Signal is created and starts listening in dev', 'First payload arrives: we infer its object and field types', 'You promote the fields you need into variables', 'Promote the signal to production when it looks right'];
+      : st.method === 'url' && !hits ? 'The pattern matches no pages yet' : st.method === 'dl' && (!dk || !dv) ? 'Add the data layer key and value'
+      : st.method === 'el' && !st.elSel ? 'Pick the element' : '';
+
+    var summary = st.method === 'sdk' ? 'Fires when your code calls adx.track(\'' + sig + '\').'
+      : st.method === 'dl' ? 'Fires when window.' + st.dlSrc + ' gets a push with ' + (dk || 'key') + ' = ' + (dv || '…') + '.'
+      : st.method === 'url' ? (hits ? 'Fires ' + (st.freq === 'session' ? 'once per session' : 'on every visit') + ' to ' + pat + ' (' + hits + ' page' + (hits > 1 ? 's' : '') + ').' : 'Fires when a page matching the pattern loads.')
+      : st.elSel ? 'Fires when the shopper ' + act[1].toLowerCase().replace('sees it', 'sees') + ' ' + (st.elLabel || st.elSel) + ' on ' + st.elPage + '.' : 'Fires on an element you pick on one page.';
+
+    // fields the first event brings, per method
+    function firstFields() {
+      var F = function (k, t, s, v) { return { k: k, type: t, sample: s, v: !!v }; };
+      if (st.method === 'sdk') return checkouty ? [F('step', 'string', 'shipping', 1), F('cart.value', 'number', '68.50', 1), F('cart.item_count', 'number', '3')] : [F('page_url', 'string', '/checkout/shipping', 1)];
+      if (st.method === 'dl') { var p = dlHit || [0, 0, [[dk || 'event', 'string', dv || 'value']]]; return p[2].map(function (f, i) { return F(f[0], f[1], f[2], i < 2); }).concat([F('page_url', 'string', '/checkout/shipping')]); }
+      if (st.method === 'url') return [F('page_url', 'string', pat.replace(/\*.*$/, '') || '/', 1), F('referrer', 'string', '/checkout/review'), F('query.order', 'string', 'SEP-48213', 1)];
+      return [F('element_text', 'string', st.elLabel || 'Element', 1), F('page_url', 'string', st.elPage, 1), F('selector', 'string', st.elSel)];
+    }
+    // the signal as the Signals list sees it
+    function register(got, fields) {
+      var list = window.ADX_NEW_SIGNALS || (window.ADX_NEW_SIGNALS = []);
+      var s = list.filter(function (x) { return x.id === name; })[0];
+      if (!s) { s = { id: name, desc: st.meaning.trim(), r: null, via: [], env: 'd', seen: 0, fields: [], pending: true, method: method[1] }; list.unshift(s); }
+      s.pending = !got; s.seen = got ? 1 : 0;
+      s.fields = got ? fields.map(function (f) { return { k: f.k, type: f.type, sample: f.sample, v: f.v, warn: '' }; }) : [];
+      return s;
+    }
+    function receive() { var f = firstFields(); register(true, f); self.setState({ testing: false, got: true, fields: f }); self.say('First event received for ' + name); }
+
+    var isForm = st.phase === 'form', isDone = st.phase === 'done';
+    var backHref = this.from === 'signals' ? '#/signals' : '#/web-signals';
+    var testLabel = st.testing ? 'Waiting…' : st.method === 'sdk' ? 'Send a test event' : st.method === 'dl' ? 'Send a test push' : st.method === 'el' ? 'Simulate a ' + (st.elAct === 'click' ? 'click' : st.elAct === 'hover' ? 'hover' : 'view') : 'Visit a matching page';
+    var waitTitle = st.method === 'sdk' ? 'Waiting for the first call' : st.method === 'dl' ? 'Listening to the data layer' : st.method === 'el' ? 'Listening on the page' : 'Live';
+    var waitText = st.method === 'sdk' ? 'Waiting for adx.track(\'' + sig + '\') to run in Development. Send the snippet to whoever owns the site.'
+      : st.method === 'dl' ? 'Listening to window.' + st.dlSrc + ' for ' + st.dlKey.trim() + '. No matching push yet.'
+      : st.method === 'el' ? 'Listening for ' + act[1].toLowerCase() + ' on ' + st.elSel + ' on ' + st.elPage + '.'
+      : 'Live on ' + hits + ' matching page' + (hits > 1 ? 's' : '') + '.';
+    var gotTitle = st.method === 'url' ? 'Live on matching pages' : st.method === 'dl' && dlHit ? 'Matched recent pushes' : 'First event received';
+    var gotText = st.method === 'url' ? 'Fired on a visit to ' + (pat.replace(/\*.*$/, '') || '/') + ' just now. About 214 visits a day match, based on the scan.'
+      : st.method === 'dl' && dlHit ? dlHit[1] + ' pushes with ' + dlHit[0] + ' in the last hour. Cortex read the fields from the latest one.'
+      : st.method === 'sdk' ? 'adx.track(\'' + sig + '\') ran in Development just now.'
+      : st.method === 'el' ? 'A shopper ' + (st.elAct === 'click' ? 'clicked' : st.elAct === 'hover' ? 'hovered over' : 'saw') + ' ' + (st.elLabel || st.elSel) + ' just now.'
+      : 'A matching push arrived just now.';
+    var steps = [
+      ['Created in Development', 'Listening via ' + method[1], 'done'],
+      ['First event', st.got ? 'Received' : 'Waiting', st.got ? 'done' : 'cur'],
+      ['Pick variables', 'Fields experiences can use', st.got ? 'cur' : ''],
+      ['Promote to production', 'From the signal page', '']
+    ];
 
     return {
-      name: name, meaning: st.meaning, meaningOrHint: st.meaning.trim() || 'No description yet',
+      sigN: window.ADX_SIGNALS ? window.ADX_SIGNALS.list.filter(function (s) { return !s.excluded; }).length : 23,
+      derivedN: (window.ADX_DERIVED || []).length,
+      isForm: isForm, isDone: isDone,
+      name: name, meaning: st.meaning, meaningOrHint: st.meaning.trim() || 'Say what it means to see it here.', idShown: name || 'unnamed_signal',
       onName: function (e) { self.setState({ name: e.target.value.toLowerCase().replace(/[\s-]+/g, '_').replace(/[^a-z0-9_]/g, ''), comparing: false }); },
       onMeaning: function (e) { self.setState({ meaning: e.target.value }); },
-      dupe: !!dupe, near: !!near, nearSig: near || {}, comparing: st.comparing, compareLabel: st.comparing ? 'Hide' : 'Compare',
+      dupe: !!dupe, dupeHref: '#/signals?id=' + encodeURIComponent(name), near: !!near, nearSig: near || {}, comparing: st.comparing, compareLabel: st.comparing ? 'Hide' : 'Compare',
       toggleCompare: function () { self.setState({ comparing: !self.state.comparing }); },
       methods: AS_METHODS.map(function (m) {
-        return { title: m[1], desc: m[2], sel: st.method === m[0] ? 'true' : 'false', cls: st.method === m[0] ? 'on' : '',
+        return { title: m[1], desc: m[2], who: m[3], sel: st.method === m[0] ? 'true' : 'false', cls: st.method === m[0] ? 'on' : '',
           pick: function () { self.setState({ method: m[0] }); } };
       }),
       isSdk: st.method === 'sdk', isDl: st.method === 'dl', isUrl: st.method === 'url', isEl: st.method === 'el',
+      methodName: method[1], methodSummary: summary,
       snippet: snippet, copyLabel: st.copied ? 'Copied' : 'Copy snippet',
       copy: function () {
         try { navigator.clipboard.writeText(snippet); } catch (e) {}
         self.setState({ copied: true }); clearTimeout(self.copyT); self.copyT = setTimeout(function () { self.setState({ copied: false }); }, 1600);
       },
-      mailto: 'mailto:?subject=' + encodeURIComponent('ADX signal to add: ' + sig) + '&body=' + encodeURIComponent((st.meaning ? st.meaning + '\n\n' : '') + 'Please add this where it happens on sephora.com:\n\n' + snippet + '\n'),
+      sentTo: st.sentTo,
+      openEmail: function () { self.setState({ modal: 'email', mailNote: self.state.mailNote || ((self.state.meaning.trim() ? self.state.meaning.trim() + '\n\n' : '') + 'Please add this line where it happens on sephora.com. It only needs to run in Development for now.') }); },
+      emailOpen: st.modal === 'email', mailTo: st.mailTo, mailNote: st.mailNote,
+      onMailTo: function (e) { self.setState({ mailTo: e.target.value }); }, onMailNote: function (e) { self.setState({ mailNote: e.target.value }); },
+      cantSend: !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(st.mailTo.trim()),
+      sendMail: function () { var to = self.state.mailTo.trim(); self.setState({ modal: null, sentTo: to }); self.say('Snippet sent to ' + to); },
+      // data layer
       dlSrcs: AS_DL.map(function (d) { return { k: d[0], l: d[1], sel: st.dlSrc === d[0] }; }),
-      onDlSrc: function (e) { self.setState({ dlSrc: e.target.value }); },
-      dlKey: st.dlKey, onDlKey: function (e) { self.setState({ dlKey: e.target.value }); }, dlExample: dlExample,
+      onDlSrc: function (e) { var k = e.target.value; self.setState({ dlSrc: k, dlKey: '' }); },
+      dlKey: st.dlKey, onDlKey: function (e) { self.setState({ dlKey: e.target.value }); },
+      pushes: pushList.map(function (p) { var on = norm(p[0]) === norm(st.dlKey); return { key: p[0], count: p[1] + ' in the last hour', cls: on ? 'hit' : '', pick: function () { self.setState({ dlKey: p[0] }); } }; }),
+      dlSummary: dlHit ? 'Matches ' + dlHit[1] + ' pushes in the last hour. It starts with real data as soon as you create it.' : dk && dv ? 'Nothing pushed this yet. Cortex keeps listening and the first matching push becomes the first event.' : 'Type key = value, or pick a recent push.',
+      // URL pattern
       pattern: st.pattern, onPattern: function (e) { self.setState({ pattern: e.target.value }); },
+      freqs: [['every', 'On every visit'], ['session', 'Once per session']].map(function (o) { return { k: o[0], l: o[1], sel: st.freq === o[0] }; }),
+      onFreq: function (e) { self.setState({ freq: e.target.value }); },
       urls: urls, urlSummary: !pat ? 'Type a pattern to see which pages match.' : hits ? 'Matches ' + hits + ' of ' + AS_PAGES.length + ' pages Cortex has seen.' : 'No pages Cortex has seen match this yet.',
-      cantCreate: !!missing, createHint: missing,
-      // back to Web Signals, which shows a toast for the new signal
-      create: function () { if (!missing) location.hash = '#/web-signals?added=' + encodeURIComponent(name) + '&via=' + encodeURIComponent(method[1]); },
-      next: NEXT.map(function (t, i) { return { t: t, n: String(i + 1) }; })
+      // element interaction
+      elPages: Object.keys(AS_EL).map(function (k) { return { k: k, l: (AS_EL_PAGE_NAMES[k] || k) + ' · ' + k, sel: st.elPage === k }; }),
+      onElPage: function (e) { self.setState({ elPage: e.target.value, elSel: '', elLabel: '' }); },
+      elActs: AS_ACTS.map(function (a) { return { l: a[1], cls: st.elAct === a[0] ? 'on' : '', pick: function () { self.setState({ elAct: a[0] }); } }; }),
+      elChosen: !!st.elSel, elNone: !st.elSel, elSel: st.elSel, elLabel: st.elLabel || 'Custom selector', elPage: st.elPage,
+      pickLabel: st.elSel ? 'Change' : 'Pick the element',
+      openPick: function () { self.setState({ modal: 'pick', draftSel: self.state.elSel, draftLabel: self.state.elLabel }); },
+      pickOpen: st.modal === 'pick',
+      cands: cands.map(function (c) { var on = st.draftSel === c[1]; return { l: c[0], sel: c[1], seen: c[2], cls: on ? 'on' : '', pick: function () { self.setState({ draftSel: c[1], draftLabel: c[0] }); } }; }),
+      draftSel: st.draftSel, onDraftSel: function (e) { self.setState({ draftSel: e.target.value, draftLabel: '' }); },
+      cantUse: !st.draftSel.trim(),
+      usePick: function () { self.setState({ modal: null, elSel: self.state.draftSel.trim(), elLabel: self.state.draftLabel }); },
+      closeModal: function () { self.setState({ modal: null }); }, stop: function (e) { e.stopPropagation(); },
+      // create → step 2. URL patterns and data layer keys that already have pushes start with real data
+      cantCreate: !!missing, createHint: missing || 'Ready to create in Development.', backHref: backHref,
+      create: function () {
+        if (missing) return;
+        var live = st.method === 'url' || (st.method === 'dl' && !!dlHit), f = live ? firstFields() : [];
+        register(live, f);
+        self.setState({ phase: 'done', got: live, fields: f }); window.scrollTo(0, 0);
+      },
+      // step 2
+      pillCls: st.got ? 'live' : 'pend', pillText: st.got ? 'Receiving events' : 'Pending first event',
+      steps: steps.map(function (s, i) { return { n: s[2] === 'done' ? '✓' : String(i + 1), t: s[0], d: s[1], cls: s[2] }; }),
+      waiting: isDone && !st.got, got: isDone && st.got, waitTitle: waitTitle, waitText: waitText, gotTitle: gotTitle, gotText: gotText,
+      testing: st.testing, testLabel: testLabel,
+      test: function () { self.setState({ testing: true }); clearTimeout(self.testT); self.testT = setTimeout(receive, 1400); },
+      fields: st.fields.map(function (f, i) { return { k: f.k, type: f.type, sample: f.sample, on: f.v ? 'on' : '',
+        toggle: function () { var fs = self.state.fields.slice(); fs[i] = Object.assign({}, fs[i], { v: !fs[i].v }); register(true, fs); self.setState({ fields: fs }); } }; }),
+      another: function () { self.setState({ phase: 'form', name: '', meaning: '', got: false, fields: [], sentTo: '', elSel: '', elLabel: '', comparing: false }); window.scrollTo(0, 0); },
+      openHref: '#/signals?id=' + encodeURIComponent(name),
+      doneHref: this.from === 'signals' ? '#/signals?added=' + encodeURIComponent(name) : '#/web-signals',
+      doneLabel: this.from === 'signals' ? 'Done' : 'Back to Source & mapping',
+      next: AS_NEXT[st.method].map(function (t, i) { return { t: t, n: String(i + 1) }; }),
+      noteText: st.got ? 'Receiving events in Development. Promote it to production from the signal page once the fields look right.' : 'Created in Development as Pending first event. It can\'t go to production until a real event arrives.',
+      toast: st.toast
     };
   }
 }

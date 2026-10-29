@@ -34,7 +34,7 @@
   // lists only the screens it changes (route path → file). Add new versions to the end.
   var VERSIONS = [
     { id: 'v1', label: 'V1', note: 'Working version' },
-    { id: 'v2', label: 'V2', note: 'Earlier version', files: { data: 'screens/v2/data.html', derived: 'screens/v2/derived.html', signals: 'screens/v2/signals.html', about: 'screens/v2/about.html', goals: 'screens/v2/goals.html', signin: 'screens/v2/signin.html' } }
+    { id: 'v2', label: 'V2', note: 'Earlier version', files: { data: 'screens/v2/data.html', derived: 'screens/v2/derived.html', signals: 'screens/v2/signals.html', about: 'screens/v2/about.html', goals: 'screens/v2/goals.html', signin: 'screens/v2/signin.html', 'web-signals': 'screens/v2/web-signals.html', 'add-signal': 'screens/v2/add-signal.html' } }
   ];
   var VER_KEY = 'adx-proto-version';
   function verId() {

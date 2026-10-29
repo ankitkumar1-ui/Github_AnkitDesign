@@ -146,6 +146,16 @@ body{margin:0}
 .site .crumb{font-size:11px;color:#666;margin-bottom:10px}
 .site .sec-h{font-size:16px;font-weight:700;margin:24px 0 12px}
 .site .row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.site .wish{margin-top:8px;border:1.5px solid #111;border-radius:999px;padding:10px 0;text-align:center;font-size:13px;font-weight:700}
+.site .rv-top{display:flex;align-items:center;gap:12px;font-size:12.5px;margin-bottom:12px}
+.site .rv-top>b{font-size:24px}
+.site .rv-top .selbox{margin-left:auto}
+.site .rv-list{display:flex;flex-direction:column;gap:10px;padding:2px}
+.site .rv{border-top:1px solid #eee;padding-top:10px;display:flex;flex-direction:column;gap:3px;font-size:12.5px}
+.site .rv p{margin:2px 0 0;color:#333}
+.site .cat-tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:16px;padding:2px}
+.site .cat-tiles span{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;font-weight:600}
+.site .cat-tiles i{width:100%;aspect-ratio:1;border-radius:8px;opacity:.85}
 .site .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .site .row3t{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .site .pc{display:flex;flex-direction:column;gap:3px;font-size:11.5px}
@@ -247,9 +257,48 @@ body{margin:0}
 .ws-toast-x{flex:none;border:0;background:none;color:#71717a;cursor:pointer;padding:0 2px;font-size:16px;line-height:1}
 @keyframes tagFound{from{box-shadow:0 0 0 0 rgba(22,163,74,.45)}to{box-shadow:0 0 0 7px rgba(22,163,74,0)}}
 .found{animation:tagFound .9s ease-out}
+@keyframes wsEdPulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.4)}70%{box-shadow:0 0 0 7px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.editing{cursor:default!important}
+.ad-pane{display:flex;flex-direction:column;gap:12px;padding:14px 12px 16px 16px}
+.ad-hint{display:flex;align-items:center;gap:8px;border:1px dashed #d4d4d8;border-radius:10px;padding:12px;font-size:12px;color:#71717a;background:#fff}
+.ad-card{display:flex;flex-direction:column;gap:6px;padding:9px 10px;border:1.5px solid #3c8c81;border-radius:10px;background:#f1f7f6;box-shadow:0 0 0 3px rgba(60,140,129,.16)}
+.ad-n{flex:0 0 18px;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;background:#3c8c81;color:#fff}
+.ad-new{flex:none;display:inline-flex;align-items:center;border-radius:6px;border:1px solid #e4e4e7;background:#fff;padding:2px 8px;font-size:12px;font-weight:500;line-height:16px;color:#09090b}
+.ad-code{font-family:var(--f-mono);font-size:12px;color:#3f3f46;background:#fff;border:1px solid #e4e4e7;border-radius:5px;padding:2px 6px;width:max-content;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.adding,.adding *{cursor:crosshair!important}
+.ad-sk{display:block;border-radius:6px;background:linear-gradient(90deg,#ececee 25%,#f6f6f7 50%,#ececee 75%);background-size:200% 100%;animation:adSk 1s linear infinite}
+@keyframes adSk{from{background-position:200% 0}to{background-position:-200% 0}}
+.ad-hov,.ad-sel,.ad-mine{position:absolute;z-index:30;pointer-events:none;border-radius:4px;box-sizing:border-box}
+.ad-hov{outline:1.5px dashed #3c8c81;outline-offset:3px;background:rgba(60,140,129,.06)}
+.ad-sel{outline:2px solid #3c8c81;outline-offset:4px}
+.ad-pin{position:absolute;top:50%;margin-top:-11px;left:-31px;width:22px;height:22px;border-radius:50%;background:#3c8c81;color:#fff;border:1.5px solid #fff;font:700 11px/1 Geist,ui-sans-serif,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.ws-edbtn{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;color:#71717a;background:none;border:0;border-radius:6px;padding:2px 6px;cursor:pointer}
+.ws-edbtn:hover{background:#f4f4f5;color:#09090b}
+.ws-ed{display:flex;flex-direction:column;gap:6px;padding:4px 0 2px 26px;cursor:default}
+.ws-lbl{font-size:12px;font-weight:500;color:#09090b;margin-top:4px}
+.ws-cb{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-height:36px;box-sizing:border-box;border:1px solid #e4e4e7;border-radius:6px;padding:4px 30px 4px 8px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.ws-cb:focus-within{border-color:#a1a1aa;box-shadow:0 0 0 3px rgba(161,161,170,.5)}
+.ws-in{flex:1;min-width:70px;height:24px;border:0;padding:0 2px;font:inherit;font-size:14px;color:#09090b;outline:0;background:none}
+.ws-in::placeholder{color:#71717a}
+.ws-cbi{position:absolute;right:10px;top:10px;color:#71717a}
+.ws-loz{display:inline-flex;align-items:center;gap:4px;border-radius:6px;background:#f4f4f5;color:#18181b;padding:2px 4px 2px 8px;font-size:12px;font-weight:500;line-height:16px}
+.ws-loz button{display:grid;place-items:center;width:16px;height:16px;border:0;border-radius:4px;background:none;color:#71717a;cursor:pointer;padding:0}
+.ws-loz button:hover{background:#e4e4e7;color:#18181b}
+.ws-pick{display:flex;flex-direction:column;border:1px solid #e4e4e7;border-radius:6px;padding:4px;background:#fff;box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)}
+.ws-opt{display:flex;align-items:center;border:0;background:none;border-radius:4px;padding:4px 6px;cursor:pointer;text-align:left;font:inherit}
+.ws-opt:hover{background:#f4f4f5}
 @keyframes tagLand{0%{opacity:.3;transform:translateY(-10px);box-shadow:0 0 0 3px rgba(60,140,129,.35)}35%{opacity:1;transform:none}100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}}
 .landed{animation:tagLand 1.3s ease-out}
 .tg.hit{cursor:pointer}
+@keyframes gxBlink{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes coGlow{0%,100%{box-shadow:0 1.9px 4.3px -1.9px rgba(60,140,129,.35),0 0 0 0 rgba(60,140,129,.22)}50%{box-shadow:0 2.9px 7.2px -1.5px rgba(60,140,129,.6),0 0 0 1.5px rgba(60,140,129,.14)}}
+@media (prefers-reduced-motion:reduce){[role=status]{animation:none!important}}
+@keyframes coSlideA{from{opacity:0;transform:translateY(-56px)}to{opacity:1;transform:none}}
+@keyframes coSlideB{from{opacity:0;transform:translateY(-56px)}to{opacity:1;transform:none}}
+/* the hint bar arrives light green and settles to white (A/B names restart it for each new event) */
+@property --co-fill{syntax:'<color>';inherits:false;initial-value:#fff}
+@keyframes coFillA{0%,25%{--co-fill:#dcf3e8}100%{--co-fill:#fff}}
+@keyframes coFillB{0%,25%{--co-fill:#dcf3e8}100%{--co-fill:#fff}}
 @keyframes calloutIn{from{opacity:0;transform:translate(10px,6px) scale(.96)}to{opacity:1;transform:none}}
 
 
@@ -261,6 +310,17 @@ body{margin:0}
 .dtab{margin-bottom:0;font-weight:500}
 .dtab.on{font-weight:500}
 .dtab:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--ring);border-radius:6px 6px 0 0}
+/* Web Signals · List: page group rows + sortable columns */
+.wl{border:1px solid #e4e4e7;border-radius:16px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05);overflow:hidden}
+.wl-row{display:grid;grid-template-columns:minmax(220px,1.4fr) 130px minmax(240px,1.6fr);gap:16px;align-items:center;padding:12px 20px;border-top:1px solid #e4e4e7}
+.wl-head{border-top:0;padding:6px 12px;background:#fafafa}
+.wl-sort{justify-self:start;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px;border:0;border-radius:6px;background:transparent;font-family:inherit;font-size:13px;font-weight:500;color:#71717a;cursor:pointer}
+.wl-sort:hover{background:#f4f4f5;color:#09090b}
+.wl-sort[aria-sort="ascending"],.wl-sort[aria-sort="descending"]{color:#09090b}
+.wl-group{display:flex;align-items:baseline;gap:10px;padding:10px 20px;border-top:1px solid #e4e4e7;background:#fcfcfc}
+.wl-group b{font-size:14px;font-weight:600;color:#09090b}
+.wl-path{font-family:var(--f-mono);font-size:12px;color:#a1a1aa}
+.wl-count{margin-left:auto;font-size:12px;color:#71717a}
 </style>
 </head>
 <body>
@@ -359,12 +419,41 @@ body{margin:0}
           <button type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="font-family:inherit;font-size:14px;font-weight:600;padding:7px 14px;border:0;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:{{t.bg}};color:{{t.fg}};box-shadow:{{t.shadow}}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>{{t.label}}</button>
         </sc-for>
       </div>
-        <span style="margin-left:auto;display:flex;gap:8px"><a class="btn" href="#/add-signal" style="text-decoration:none">Add manually</a><button class="btn primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 14 9-14 9z"></path></svg>Browse &amp; label</button></span>
+        <span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn" onClick="{{ad.start}}">Add manually</button><button class="btn primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 14 9-14 9z"></path></svg>Browse &amp; label</button></span>
       </div>
 
       <sc-if value="{{isMap}}" hint-placeholder-val="{{true}}">
       <section style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:{{map.cols}}">
         <aside style="border-right:1px solid #e4e4e7;background:#fcfcfc;display:flex;flex-direction:column">
+          <sc-if value="{{ad.on}}" hint-placeholder-val="{{false}}">
+          <div class="ad-pane">
+            <div style="display:flex;align-items:center;gap:8px"><b style="font-size:14px;font-weight:600">Add an event</b><button type="button" class="ws-edbtn" onClick="{{ad.cancel}}">Cancel</button></div>
+            <span class="shsel"><select class="shi" aria-label="Page" onChange="{{ad.setPage}}"><option value="home" selected="{{ad.ps.home}}">Home · /home</option><option value="cat" selected="{{ad.ps.cat}}">Category page · /shop/makeup</option><option value="plp" selected="{{ad.ps.plp}}">Product list · /shop/foundation-makeup</option><option value="pdp" selected="{{ad.ps.pdp}}">Product page · /product/pro-filtr-foundation</option><option value="search" selected="{{ad.ps.search}}">Search results · /search</option><option value="basket" selected="{{ad.ps.basket}}">Basket · /basket</option><option value="checkout" selected="{{ad.ps.checkout}}">Checkout · /checkout</option></select><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
+            <sc-if value="{{ad.empty}}"><div class="ad-hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l7 17 2.5-7.5L21 11z"></path></svg>Pick an element on the page</div></sc-if>
+            <sc-if value="{{ad.has}}">
+              <div class="ad-card">
+                <div style="display:flex;align-items:center;gap:8px"><span class="ad-n">{{ad.n}}</span><span style="flex:1;min-width:0;font-size:14px;font-weight:500;line-height:1.3">{{ad.p.when}}</span><sc-if value="{{ad.canMap}}"><span class="ad-new">New</span></sc-if></div>
+                <div class="ws-ed">
+                  <label class="ws-lbl">Website event</label>
+                  <code class="ad-code">{{ad.p.code}}</code>
+                  <sc-if value="{{ad.have}}"><span style="font-size:12px;color:#71717a">Already captured as {{ad.p.tag}}</span></sc-if>
+                  <sc-if value="{{ad.canMap}}">
+                    <sc-if value="{{ad.loading}}"><label class="ws-lbl">App</label><span class="ad-sk" style="height:36px"></span><label class="ws-lbl">Tag</label><span class="ad-sk" style="height:36px"></span></sc-if>
+                    <sc-if value="{{ad.ready}}">
+                    <label class="ws-lbl">App</label>
+                    <span class="shsel"><select class="shi" aria-label="App" onChange="{{ad.setSrc}}"><option value="Adobe Analytics" selected="{{ad.app.aa}}">Adobe Analytics</option><option value="Adobe Launch" selected="{{ad.app.al}}">Adobe Launch</option><option value="Tealium" selected="{{ad.app.tl}}">Tealium</option><option value="Google Tag Manager" selected="{{ad.app.gtm}}">Google Tag Manager</option><option value="Adobe Web SDK" selected="{{ad.app.sdk}}">Adobe Web SDK</option></select><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
+                    <label class="ws-lbl">Tag</label>
+                    <span class="ws-cb"><sc-for list="{{ad.tags}}" as="t"><span class="ws-loz">{{t.name}}<button type="button" aria-label="Remove {{t.name}}" onClick="{{t.remove}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></span></sc-for><input class="ws-in" placeholder="{{ad.ph}}" value="{{ad.q}}" onInput="{{ad.setQ}}" onFocus="{{ad.openList}}" aria-label="Search tags"><svg class="ws-cbi" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg></span>
+                    <sc-if value="{{ad.show}}"><span class="ws-pick"><sc-for list="{{ad.opts}}" as="o"><button type="button" class="ws-opt" onClick="{{o.pick}}"><span class="ws-loz" style="padding:2px 8px">{{o.name}}</span></button></sc-for><sc-if value="{{ad.none}}"><span style="padding:6px 8px;font-size:12px;color:#71717a">No tags match</span></sc-if></span></sc-if>
+                    </sc-if>
+                    <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:2px"><button type="button" class="btn sm" onClick="{{ad.cancel}}">Cancel</button><button type="button" class="btn sm primary" onClick="{{ad.save}}" disabled="{{ad.noSave}}">Save</button></div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          </sc-if>
+          <sc-if value="{{ad.off}}" hint-placeholder-val="{{true}}">
           <div style="display:flex;align-items:center;gap:8px;padding:14px 16px 10px">
             <b style="font-size:14px;font-weight:600">Pages</b><span style="font-size:12px;color:#a1a1aa">6</span>
             <span style="margin-left:auto;font-size:12px;font-weight:600;color:#c2410c">{{sum.miss}} missing</span>
@@ -391,14 +480,27 @@ body{margin:0}
                           <span style="flex:0 0 18px;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;background:{{e.bBg}};color:{{e.bFg}};border:1px {{e.bBd}};box-sizing:border-box">{{e.n}}</span>
                           <span style="flex:1;font-size:12px;font-weight:500;line-height:1.3">{{e.when}}</span>
                         </div>
-                        <sc-if value="{{e.ok}}" hint-placeholder-val="{{true}}">
+                        <sc-if value="{{e.okView}}" hint-placeholder-val="{{true}}">
                           <div style="display:flex;align-items:center;gap:6px;padding-left:26px">
                             <span style="font-family:var(--f-mono);font-size:12px;color:#3f3f46;background:#f4f4f5;border-radius:5px;padding:1px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px">{{e.tag}}</span>
-                            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#a1a1aa"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>Edit</span>
+                            <button type="button" class="ws-edbtn" onClick="{{e.startEdit}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>Edit</button>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{e.editing}}" hint-placeholder-val="{{false}}">
+                          <div class="ws-ed" onClick="{{e.stop}}">
+                            <label class="ws-lbl">App</label>
+                            <span class="shsel"><select class="shi" aria-label="App" onChange="{{e.ed.setSrc}}"><option value="Adobe Analytics" selected="{{e.ed.app.aa}}">Adobe Analytics</option><option value="Adobe Launch" selected="{{e.ed.app.al}}">Adobe Launch</option><option value="Tealium" selected="{{e.ed.app.tl}}">Tealium</option><option value="Google Tag Manager" selected="{{e.ed.app.gtm}}">Google Tag Manager</option><option value="Adobe Web SDK" selected="{{e.ed.app.sdk}}">Adobe Web SDK</option></select><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
+                            <label class="ws-lbl">Tag</label>
+                            <span class="ws-cb"><sc-for list="{{e.ed.tags}}" as="t"><span class="ws-loz">{{t.name}}<button type="button" aria-label="Remove {{t.name}}" onClick="{{t.remove}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></span></sc-for><input class="ws-in" placeholder="{{e.ed.ph}}" value="{{e.ed.q}}" onInput="{{e.ed.setQ}}" onFocus="{{e.ed.openList}}" aria-label="Search tags"><svg class="ws-cbi" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3-3"></path></svg></span>
+                            <sc-if value="{{e.ed.show}}"><span class="ws-pick"><sc-for list="{{e.ed.opts}}" as="o"><button type="button" class="ws-opt" onClick="{{o.pick}}"><span class="ws-loz" style="padding:2px 8px">{{o.name}}</span></button></sc-for><sc-if value="{{e.ed.none}}"><span style="padding:6px 8px;font-size:12px;color:#71717a">No tags match</span></sc-if></span></sc-if>
+                            <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:2px"><button type="button" class="btn sm" onClick="{{e.ed.cancel}}">Cancel</button><button type="button" class="btn sm primary" onClick="{{e.ed.save}}" disabled="{{e.ed.empty}}">Save</button></div>
                           </div>
                         </sc-if>
                         <sc-if value="{{e.idleMiss}}" hint-placeholder-val="{{false}}">
                           <div style="display:flex;align-items:center;gap:6px;padding-left:26px;font-size:12px;color:#a1a1aa"><span style="width:5px;height:5px;border-radius:50%;background:#fb923c"></span>No tag yet<span style="margin-left:auto;display:inline-flex;align-items:center;gap:4px;color:#52525b;font-weight:500">Browse<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></span></div>
+                        </sc-if>
+                        <sc-if value="{{e.waiting}}" hint-placeholder-val="{{false}}">
+                          <div style="display:flex;align-items:center;gap:7px;padding-left:26px;font-size:12px;font-weight:600;color:#2f7a70"><span style="width:6px;height:6px;border-radius:50%;background:#3c8c81;animation:gxBlink 1.2s ease-in-out infinite"></span>Do it on the page</div>
                         </sc-if>
                         <sc-if value="{{e.hunting}}" hint-placeholder-val="{{false}}">
                           <div style="display:flex;align-items:center;gap:7px;padding-left:26px;font-size:12px;color:#15803d;white-space:nowrap;min-width:0"><span class="ws-spin"></span><span style="flex:none">Checking for</span><span style="font-family:var(--f-mono);font-size:12px;overflow:hidden;text-overflow:ellipsis;min-width:0">{{e.sug}}…</span></div>
@@ -413,6 +515,7 @@ body{margin:0}
               </sc-if>
             </div>
           </sc-for>
+          </sc-if>
         </aside>
 
         <!-- Before browsing: the list leads, with a short invite to go hunting for the missing tags -->
@@ -455,15 +558,27 @@ body{margin:0}
         </sc-if>
 
         <sc-if value="{{map.browsing}}" hint-placeholder-val="{{true}}">
-        <div style="display:flex;flex-direction:column;min-width:0">
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #e4e4e7;background:#fff">
-            <button type="button" onClick="{{map.back}}" title="Back to the list" style="height:26px;padding:0 9px;border:1px solid #e4e4e7;border-radius:7px;background:#fff;font-family:inherit;font-size:12px;font-weight:600;color:#3f3f46;display:inline-flex;align-items:center;gap:5px;cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>List</button>
-            <span style="display:flex;gap:5px"><i style="width:9px;height:9px;border-radius:50%;background:#e4e4e7;display:block"></i><i style="width:9px;height:9px;border-radius:50%;background:#e4e4e7;display:block"></i><i style="width:9px;height:9px;border-radius:50%;background:#e4e4e7;display:block"></i></span>
-            <span style="flex:1;font-size:12px;color:#52525b;background:#f4f4f5;border-radius:7px;padding:5px 11px;font-family:var(--f-mono)">https://www.sephora.com{{sel.path}}</span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#71717a"><span style="width:9px;height:9px;border-radius:50%;background:#64748b"></span>Captured</span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#71717a"><span style="width:9px;height:9px;border-radius:50%;background:#fff7ed;border:1.5px dashed #fb923c;box-sizing:border-box"></span>Missing</span>
+        <div style="position:relative;display:flex;flex-direction:column;min-width:0">
+          <sc-if value="{{co.show}}" hint-placeholder-val="{{false}}">
+            <div style="position:absolute;top:0;left:10px;right:10px;z-index:40;animation:{{co.anim}} .42s cubic-bezier(.2,.9,.25,1) both">
+              <div class="{{co.cls}}" role="status" aria-live="polite" style="height:46px;box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:0 8px 0 12px;border:1.5px solid transparent;border-top:0;border-radius:0 0 12px 12px;background:{{co.barBg}};color:#09090b;animation:huntSpin 2.6s linear infinite,coGlow 1.8s ease-in-out infinite,{{co.fill}} 2s ease-out both">
+              <span style="flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:{{co.dot}};display:flex;align-items:center;justify-content:center">
+                <sc-if value="{{co.isTodo}}" hint-placeholder-val="{{true}}"><svg viewBox="0 0 48 48" width="13" height="13" aria-hidden="true"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#3c8c81"></path></svg></sc-if>
+                <sc-if value="{{co.isCheck}}" hint-placeholder-val="{{false}}"><span style="width:12px;height:12px;box-sizing:border-box;border-radius:50%;border:2px solid rgba(24,24,27,.15);border-top-color:#3c8c81;animation:wsSpin .8s linear infinite;display:block"></span></sc-if>
+                <sc-if value="{{co.isDone}}" hint-placeholder-val="{{false}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+              </span>
+              <span style="flex:1;min-width:0;display:flex;align-items:baseline;justify-content:center;gap:8px;white-space:nowrap;overflow:hidden"><span style="flex:none;font-size:12px;font-weight:600;color:#71717a">{{co.kicker}}</span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:13px;font-weight:500">{{co.title}}</span></span>
+              <span onClick="{{co.close}}" role="button" aria-label="Dismiss" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;color:#a1a1aa;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+              </div>
+            </div>
+          </sc-if>
+          <div style="padding:10px 14px;border-bottom:1px solid #e4e4e7;background:#fff">
+            <div style="height:34px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:0 12px;border-radius:8px;background:#f4f4f5"><span style="font-size:12px;color:#52525b;font-family:var(--f-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">https://www.sephora.com{{sel.path}}</span></div>
           </div>
-          <div style="position:relative;min-height:940px;background:#fff">
+          <div data-addroot class="{{ad.rootCls}}" onClick="{{ad.click}}" onMouseOver="{{ad.over}}" onMouseLeave="{{ad.leave}}" style="position:relative;min-height:940px;background:#fff">
+            <sc-if value="{{ad.hov}}"><div class="ad-hov" style="top:{{ad.hb.t}}px;left:{{ad.hb.l}}px;width:{{ad.hb.w}}px;height:{{ad.hb.h}}px"></div></sc-if>
+            <sc-if value="{{ad.has}}"><div class="ad-sel" style="top:{{ad.sb.t}}px;left:{{ad.sb.l}}px;width:{{ad.sb.w}}px;height:{{ad.sb.h}}px"><span class="ad-pin">{{ad.n}}</span></div></sc-if>
+            <sc-for list="{{ad.pins}}" as="mp"><div class="ad-mine" style="top:{{mp.t}}px;left:{{mp.l}}px;width:{{mp.w}}px;height:{{mp.h}}px"><span class="ad-pin" style="background:#64748b">{{mp.n}}</span></div></sc-for>
 <sc-if value="{{pg.results}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
 <div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
   <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
@@ -477,23 +592,38 @@ body{margin:0}
   <div class="row4"><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#9e1b32,#9e1b32 55%,rgba(255,255,255,.35) 62%,#9e1b32 70%)"></i><b style="background:#1c1c1c"></b></span></div><span class="pb">MAC</span><span class="pn">Retro Matte Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$25.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#b9575a,#b9575a 55%,rgba(255,255,255,.35) 62%,#b9575a 70%)"></i><b style="background:#c9a46a"></b></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Matte Revolution Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#7a1f2b,#7a1f2b 55%,rgba(255,255,255,.35) 62%,#7a1f2b 70%)"></i><b style="background:#2a2a2a"></b></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Icon Semi-Matte Refillable Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#c97a6d,#c97a6d 55%,rgba(255,255,255,.35) 62%,#c97a6d 70%)"></i><b style="background:#e8e2da"></b></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Kind Words Matte Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$20.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#c4162a,#c4162a 55%,rgba(255,255,255,.35) 62%,#c4162a 70%)"></i><b style="background:#1f1f1f"></b></span></div><span class="pb">DIOR</span><span class="pn">Rouge Dior Satin Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$47.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#d4334a,#d4334a 55%,rgba(255,255,255,.35) 62%,#d4334a 70%)"></i><b style="background:#c8a24c"></b></span></div><span class="pb">YVES SAINT LAURENT</span><span class="pn">Rouge Pur Couture</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$45.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#8c3a3f,#8c3a3f 55%,rgba(255,255,255,.35) 62%,#8c3a3f 70%)"></i><b style="background:#151515"></b></span></div><span class="pb">NARS</span><span class="pn">Powermatte Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg lipimg"><span class="lip"><i style="background:linear-gradient(90deg,#e0627a,#e0627a 55%,rgba(255,255,255,.35) 62%,#e0627a 70%)"></i><b style="background:#111111"></b></span></div><span class="pb">SEPHORA COLLECTION</span><span class="pn">Rouge Satin Lipstick</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$14.00</span></div></div>
 </div></div></sc-if>
 <sc-if value="{{pg.home}}" hint-placeholder-val="{{true}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
-<div class="sx-head"><span class="sx-logo tg hit" onClick="{{pn.home1.hit}}" style="outline:{{pn.home1.ol}}"><span class="pin" style="background:{{pn.home1.bg}};color:{{pn.home1.fg}};border:1.5px {{pn.home1.bd}};box-shadow:{{pn.home1.sh}};transform:{{pn.home1.tf}}">{{pn.home1.n}}</span>SEPHORA</span><span class="sx-search tg hit" onClick="{{pn.home4.hit}}" style="outline:{{pn.home4.ol}}"><span class="pin c" style="background:{{pn.home4.bg}};color:{{pn.home4.fg}};border:1.5px {{pn.home4.bd}};box-shadow:{{pn.home4.sh}};transform:{{pn.home4.tf}}">{{pn.home4.n}}</span><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+<div class="sx-head"><span class="sx-logo tg hit" onClick="{{pn.home1.hit}}" style="outline:{{pn.home1.ol}}"><span class="pin" style="display:{{pn.home1.dsp}};background:{{pn.home1.bg}};color:{{pn.home1.fg}};border:1.5px {{pn.home1.bd}};box-shadow:{{pn.home1.sh}};animation:{{pn.home1.an}};transform:{{pn.home1.tf}}">{{pn.home1.n}}</span>SEPHORA</span><span class="sx-search tg hit" onClick="{{pn.home4.hit}}" style="outline:{{pn.home4.ol}}"><span class="pin c" style="display:{{pn.home4.dsp}};background:{{pn.home4.bg}};color:{{pn.home4.fg}};border:1.5px {{pn.home4.bd}};box-shadow:{{pn.home4.sh}};animation:{{pn.home4.an}};transform:{{pn.home4.tf}}">{{pn.home4.n}}</span><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
   <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
   <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
   <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
 <div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
 <div class="sx-body">
-  <div class="hm-hero tg hit" onClick="{{pn.home2.hit}}" style="outline:{{pn.home2.ol}}"><span class="pin c" style="background:{{pn.home2.bg}};color:{{pn.home2.fg}};border:1.5px {{pn.home2.bd}};box-shadow:{{pn.home2.sh}};transform:{{pn.home2.tf}}">{{pn.home2.n}}</span>
+  <div class="hm-hero tg hit" onClick="{{pn.home2.hit}}" style="outline:{{pn.home2.ol}}"><span class="pin c" style="display:{{pn.home2.dsp}};background:{{pn.home2.bg}};color:{{pn.home2.fg}};border:1.5px {{pn.home2.bd}};box-shadow:{{pn.home2.sh}};animation:{{pn.home2.an}};transform:{{pn.home2.tf}}">{{pn.home2.n}}</span>
     <div class="hm-copy"><span class="hm-k">THE HOLIDAY SHOP</span><b>Gifts they'll actually use</b><span>Value sets, minis and stocking stuffers from $10.</span><span class="hm-btn">Shop now</span></div>
     <div class="hm-art"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
   </div>
   <div class="sec-h">Chosen for you</div>
-  <div class="row4"><div class="tg hit" onClick="{{pn.home3.hit}}" style="outline:{{pn.home3.ol}}"><span class="pin c" style="background:{{pn.home3.bg}};color:{{pn.home3.fg}};border:1.5px {{pn.home3.bd}};box-shadow:{{pn.home3.sh}};transform:{{pn.home3.tf}}">{{pn.home3.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:#e3a9b3"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Soft Pinch Liquid Blush</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$23.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#9ccda9"></span></div><span class="pb">GLOW RECIPE</span><span class="pn">Watermelon Niacinamide Dew Drops</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b9b5d3"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Setting Spray</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$38.00</span></div></div>
-  <div class="tg hit" onClick="{{pn.home5.hit}}" style="outline:{{pn.home5.ol}};margin-top:6px"><span class="pin c" style="background:{{pn.home5.bg}};color:{{pn.home5.fg}};border:1.5px {{pn.home5.bd}};box-shadow:{{pn.home5.sh}};transform:{{pn.home5.tf}}">{{pn.home5.n}}</span>
+  <div class="row4"><div class="tg hit" onClick="{{pn.home3.hit}}" style="outline:{{pn.home3.ol}}"><span class="pin c" style="display:{{pn.home3.dsp}};background:{{pn.home3.bg}};color:{{pn.home3.fg}};border:1.5px {{pn.home3.bd}};box-shadow:{{pn.home3.sh}};animation:{{pn.home3.an}};transform:{{pn.home3.tf}}">{{pn.home3.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:#e3a9b3"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Soft Pinch Liquid Blush</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$23.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#9ccda9"></span></div><span class="pb">GLOW RECIPE</span><span class="pn">Watermelon Niacinamide Dew Drops</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$35.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b9b5d3"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Setting Spray</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$38.00</span></div></div>
+  <div class="tg hit" onClick="{{pn.home5.hit}}" style="outline:{{pn.home5.ol}};margin-top:6px"><span class="pin c" style="display:{{pn.home5.dsp}};background:{{pn.home5.bg}};color:{{pn.home5.fg}};border:1.5px {{pn.home5.bd}};box-shadow:{{pn.home5.sh}};animation:{{pn.home5.an}};transform:{{pn.home5.tf}}">{{pn.home5.n}}</span>
     <div class="sec-h">Brand stories</div>
     <div class="row3"><div class="story" style="background:linear-gradient(160deg,#c7a17a,#6b4a33)"><small>RARE BEAUTY</small>Made to feel good in</div><div class="story" style="background:linear-gradient(160deg,#8fb6a0,#2f5b4b)"><small>GLOW RECIPE</small>Fruit-powered skincare</div><div class="story" style="background:linear-gradient(160deg,#c48a9a,#5e2a3a)"><small>FENTY BEAUTY</small>Beauty for all</div></div>
   </div>
   <div class="bi"><span><b>Beauty Insider</b> · Earn points on every purchase and unlock birthday gifts.</span><span class="pill">Join now</span></div>
+</div></div></sc-if>
+<sc-if value="{{pg.cat}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
+<div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
+  <span class="sx-hi"><b>AI Beauty Chat</b><em>NEW</em></span>
+  <span class="sx-hi sx-user"><span class="sx-av">E</span><span><b>Sign in</b><small>for free shipping</small></span></span>
+  <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
+<div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
+<div class="sx-body">
+  <div class="crumb">Home › Makeup</div>
+  <div class="tg hit" onClick="{{pn.cat1.hit}}" style="outline:{{pn.cat1.ol}};display:inline-block"><span class="pin" style="display:{{pn.cat1.dsp}};background:{{pn.cat1.bg}};color:{{pn.cat1.fg}};border:1.5px {{pn.cat1.bd}};box-shadow:{{pn.cat1.sh}};animation:{{pn.cat1.an}};transform:{{pn.cat1.tf}}">{{pn.cat1.n}}</span><h2 style="margin:0">Makeup</h2><span class="muted">2,140 products</span></div>
+  <div class="cat-tiles tg hit" onClick="{{pn.cat2.hit}}" style="outline:{{pn.cat2.ol}}"><span class="pin" style="display:{{pn.cat2.dsp}};background:{{pn.cat2.bg}};color:{{pn.cat2.fg}};border:1.5px {{pn.cat2.bd}};box-shadow:{{pn.cat2.sh}};animation:{{pn.cat2.an}};transform:{{pn.cat2.tf}}">{{pn.cat2.n}}</span><span><i style="background:#d9a58a"></i>Face</span><span><i style="background:#8a6a9e"></i>Eye</span><span><i style="background:#c2475a"></i>Lip</span><span><i style="background:#e39a9a"></i>Cheek</span><span><i style="background:#9c8b7a"></i>Brushes &amp; tools</span><span><i style="background:#c9b29b"></i>Palettes</span></div>
+  <div class="chips tg hit" onClick="{{pn.cat3.hit}}" style="outline:{{pn.cat3.ol}}"><span class="pin" style="display:{{pn.cat3.dsp}};background:{{pn.cat3.bg}};color:{{pn.cat3.fg}};border:1.5px {{pn.cat3.bd}};box-shadow:{{pn.cat3.sh}};animation:{{pn.cat3.an}};transform:{{pn.cat3.tf}}">{{pn.cat3.n}}</span><span>Filter:</span><b>Brand ⌄</b><b>Price ⌄</b><b>Skin type ⌄</b><b>Finish ⌄</b><b>Clean at Sephora</b></div>
+  <div class="sec-h">Bestsellers in Makeup</div>
+  <div class="row4"><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#c2475a"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Soft Pinch Liquid Blush</span><span class="st">★★★★★ <i>9.6K</i></span><span class="pp">$23.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#8a6a9e"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">Empowered Eyeshadow Palette</span><span class="st">★★★★☆ <i>1.3K</i></span><span class="pp">$67.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b97a5d"></span></div><span class="pb">NARS</span><span class="pn">Radiant Creamy Concealer</span><span class="st">★★★★★ <i>8.1K</i></span><span class="pp">$32.00</span></div></div>
+  <div class="more tg hit" onClick="{{pn.cat4.hit}}" style="outline:{{pn.cat4.ol}}"><span class="pin" style="display:{{pn.cat4.dsp}};background:{{pn.cat4.bg}};color:{{pn.cat4.fg}};border:1.5px {{pn.cat4.bd}};box-shadow:{{pn.cat4.sh}};animation:{{pn.cat4.an}};transform:{{pn.cat4.tf}}">{{pn.cat4.n}}</span><span class="muted">You've seen 4 of 2,140</span><span class="bar"><i style="width:1%"></i></span></div>
 </div></div></sc-if>
 <sc-if value="{{pg.plp}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
 <div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
@@ -503,19 +633,19 @@ body{margin:0}
 <div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
 <div class="sx-body">
   <div class="crumb">Makeup › Face</div>
-  <div class="plp-top"><div class="tg hit" onClick="{{pn.plp1.hit}}" style="outline:{{pn.plp1.ol}}"><span class="pin" style="background:{{pn.plp1.bg}};color:{{pn.plp1.fg}};border:1.5px {{pn.plp1.bd}};box-shadow:{{pn.plp1.sh}};transform:{{pn.plp1.tf}}">{{pn.plp1.n}}</span><h2>Foundation</h2><span class="muted">412 results</span></div>
-    <span class="selbox tg hit" onClick="{{pn.plp4.hit}}" style="outline:{{pn.plp4.ol}}"><span class="pin" style="background:{{pn.plp4.bg}};color:{{pn.plp4.fg}};border:1.5px {{pn.plp4.bd}};box-shadow:{{pn.plp4.sh}};transform:{{pn.plp4.tf}}">{{pn.plp4.n}}</span>Sort by: <b>Relevance</b> ⌄</span></div>
+  <div class="plp-top"><div class="tg hit" onClick="{{pn.plp1.hit}}" style="outline:{{pn.plp1.ol}}"><span class="pin" style="display:{{pn.plp1.dsp}};background:{{pn.plp1.bg}};color:{{pn.plp1.fg}};border:1.5px {{pn.plp1.bd}};box-shadow:{{pn.plp1.sh}};animation:{{pn.plp1.an}};transform:{{pn.plp1.tf}}">{{pn.plp1.n}}</span><h2>Foundation</h2><span class="muted">412 results</span></div>
+    <span class="selbox tg hit" onClick="{{pn.plp4.hit}}" style="outline:{{pn.plp4.ol}}"><span class="pin" style="display:{{pn.plp4.dsp}};background:{{pn.plp4.bg}};color:{{pn.plp4.fg}};border:1.5px {{pn.plp4.bd}};box-shadow:{{pn.plp4.sh}};animation:{{pn.plp4.an}};transform:{{pn.plp4.tf}}">{{pn.plp4.n}}</span>Sort by: <b>Relevance</b> ⌄</span></div>
   <div class="plp">
-    <div class="flt tg hit" onClick="{{pn.plp2.hit}}" style="outline:{{pn.plp2.ol}}"><span class="pin c" style="background:{{pn.plp2.bg}};color:{{pn.plp2.fg}};border:1.5px {{pn.plp2.bd}};box-shadow:{{pn.plp2.sh}};transform:{{pn.plp2.tf}}">{{pn.plp2.n}}</span>
+    <div class="flt tg hit" onClick="{{pn.plp2.hit}}" style="outline:{{pn.plp2.ol}}"><span class="pin c" style="display:{{pn.plp2.dsp}};background:{{pn.plp2.bg}};color:{{pn.plp2.fg}};border:1.5px {{pn.plp2.bd}};box-shadow:{{pn.plp2.sh}};animation:{{pn.plp2.an}};transform:{{pn.plp2.tf}}">{{pn.plp2.n}}</span>
       <div class="fg"><b>Brand</b><span><i class="on"></i>Fenty Beauty</span><span><i></i>Rare Beauty</span><span><i></i>NARS</span><span><i></i>Huda Beauty</span></div>
       <div class="fg"><b>Skin type</b><span><i class="on"></i>Oily</span><span><i></i>Combination</span><span><i></i>Dry</span></div>
       <div class="fg"><b>Price</b><span><i></i>Under $25</span><span><i></i>$25 – $50</span><span><i></i>$50 and above</span></div>
       <div class="fg"><b>Finish</b><span><i></i>Matte</span><span><i></i>Natural</span><span><i></i>Radiant</span></div>
     </div>
     <div>
-      <div class="row3t"><div class="tg hit" onClick="{{pn.plp3.hit}}" style="outline:{{pn.plp3.ol}}"><span class="pin c" style="background:{{pn.plp3.bg}};color:{{pn.plp3.fg}};border:1.5px {{pn.plp3.bd}};box-shadow:{{pn.plp3.sh}};transform:{{pn.plp3.tf}}">{{pn.plp3.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(166,113,77)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Soft Matte Concealer</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(201,147,109)"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Liquid Touch Weightless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(128,82,53)"></span></div><span class="pb">NARS</span><span class="pn">Natural Radiant Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div></div>
-      <div class="more tg hit" onClick="{{pn.plp5.hit}}" style="outline:{{pn.plp5.ol}}"><span class="pin" style="background:{{pn.plp5.bg}};color:{{pn.plp5.fg}};border:1.5px {{pn.plp5.bd}};box-shadow:{{pn.plp5.sh}};transform:{{pn.plp5.tf}}">{{pn.plp5.n}}</span><span class="muted">You've viewed 6 of 412</span><span class="bar"><i style="width:2%"></i></span></div>
-      <div style="text-align:center"><span class="pill-o tg hit" onClick="{{pn.plp6.hit}}" style="outline:{{pn.plp6.ol}}"><span class="pin" style="background:{{pn.plp6.bg}};color:{{pn.plp6.fg}};border:1.5px {{pn.plp6.bd}};box-shadow:{{pn.plp6.sh}};transform:{{pn.plp6.tf}}">{{pn.plp6.n}}</span>Show more products</span></div>
+      <div class="row3t"><div class="tg hit" onClick="{{pn.plp3.hit}}" style="outline:{{pn.plp3.ol}}"><span class="pin c" style="display:{{pn.plp3.dsp}};background:{{pn.plp3.bg}};color:{{pn.plp3.fg}};border:1.5px {{pn.plp3.bd}};box-shadow:{{pn.plp3.sh}};animation:{{pn.plp3.an}};transform:{{pn.plp3.tf}}">{{pn.plp3.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(166,113,77)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Soft Matte Concealer</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(201,147,109)"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Liquid Touch Weightless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(128,82,53)"></span></div><span class="pb">NARS</span><span class="pn">Natural Radiant Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div></div>
+      <div class="more tg hit" onClick="{{pn.plp5.hit}}" style="outline:{{pn.plp5.ol}}"><span class="pin" style="display:{{pn.plp5.dsp}};background:{{pn.plp5.bg}};color:{{pn.plp5.fg}};border:1.5px {{pn.plp5.bd}};box-shadow:{{pn.plp5.sh}};animation:{{pn.plp5.an}};transform:{{pn.plp5.tf}}">{{pn.plp5.n}}</span><span class="muted">You've viewed 6 of 412</span><span class="bar"><i style="width:2%"></i></span></div>
+      <div style="text-align:center"><span class="pill-o tg hit" onClick="{{pn.plp6.hit}}" style="outline:{{pn.plp6.ol}}"><span class="pin" style="display:{{pn.plp6.dsp}};background:{{pn.plp6.bg}};color:{{pn.plp6.fg}};border:1.5px {{pn.plp6.bd}};box-shadow:{{pn.plp6.sh}};animation:{{pn.plp6.an}};transform:{{pn.plp6.tf}}">{{pn.plp6.n}}</span>Show more products</span></div>
     </div>
   </div>
 </div></div></sc-if>
@@ -531,18 +661,27 @@ body{margin:0}
     <div class="gal"><div class="thumbs"><span class="th on" style="background:radial-gradient(circle at 40% 35%,rgb(207,155,118),rgb(157,104,69))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(194,138,100),rgb(142,92,60))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(175,121,85),rgb(128,82,53))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(157,104,69),rgb(114,72,45))"></span><span class="th" style="background:radial-gradient(circle at 40% 35%,rgb(138,89,58),rgb(101,62,39))"></span></div>
       <div class="hero"><div class="bottle"><div class="cap"></div><div class="glass"><span>F E N T Y<br>B E A U T Y</span></div></div><div class="swoosh"></div></div></div>
     <div>
-      <div class="tg hit" onClick="{{pn.pdp1.hit}}" style="outline:{{pn.pdp1.ol}}"><span class="pin" style="background:{{pn.pdp1.bg}};color:{{pn.pdp1.fg}};border:1.5px {{pn.pdp1.bd}};box-shadow:{{pn.pdp1.sh}};transform:{{pn.pdp1.tf}}">{{pn.pdp1.n}}</span><div class="brand">Fenty Beauty by Rihanna</div><div class="pname">Pro Filt'r Soft Matte Longwear Liquid Foundation</div></div>
-      <div class="rate tg hit" onClick="{{pn.pdp6.hit}}" style="outline:{{pn.pdp6.ol}}"><span class="pin" style="background:{{pn.pdp6.bg}};color:{{pn.pdp6.fg}};border:1.5px {{pn.pdp6.bd}};box-shadow:{{pn.pdp6.sh}};transform:{{pn.pdp6.tf}}">{{pn.pdp6.n}}</span><span>★★★★★</span> <u>12.8K reviews</u><span class="sep">|</span>Ask a question<span class="sep">|</span>♥ 8.4K</div>
+      <div class="tg hit" onClick="{{pn.pdp1.hit}}" style="outline:{{pn.pdp1.ol}}"><span class="pin" style="display:{{pn.pdp1.dsp}};background:{{pn.pdp1.bg}};color:{{pn.pdp1.fg}};border:1.5px {{pn.pdp1.bd}};box-shadow:{{pn.pdp1.sh}};animation:{{pn.pdp1.an}};transform:{{pn.pdp1.tf}}">{{pn.pdp1.n}}</span><div class="brand">Fenty Beauty by Rihanna</div><div class="pname">Pro Filt'r Soft Matte Longwear Liquid Foundation</div></div>
+      <div class="rate tg hit" onClick="{{pn.pdp6.hit}}" style="outline:{{pn.pdp6.ol}}"><span class="pin" style="display:{{pn.pdp6.dsp}};background:{{pn.pdp6.bg}};color:{{pn.pdp6.fg}};border:1.5px {{pn.pdp6.bd}};box-shadow:{{pn.pdp6.sh}};animation:{{pn.pdp6.an}};transform:{{pn.pdp6.tf}}">{{pn.pdp6.n}}</span><span>★★★★★</span> <u>12.8K reviews</u><span class="sep">|</span>Ask a question<span class="sep">|</span>♥ 8.4K</div>
       <div class="price"><b>$40.00</b> <span>or 4 payments of $10.00</span></div>
-      <div class="color">Color: <b>330 Medium</b> · neutral undertone</div>
-      <div class="swg tg hit" onClick="{{pn.pdp2.hit}}" style="outline:{{pn.pdp2.ol}}"><span class="pin" style="background:{{pn.pdp2.bg}};color:{{pn.pdp2.fg}};border:1.5px {{pn.pdp2.bd}};box-shadow:{{pn.pdp2.sh}};transform:{{pn.pdp2.tf}}">{{pn.pdp2.n}}</span><span class="sw" style="background:rgb(244,214,192)"></span><span class="sw" style="background:rgb(242,210,186)"></span><span class="sw" style="background:rgb(239,205,180)"></span><span class="sw" style="background:rgb(237,201,174)"></span><span class="sw" style="background:rgb(235,196,168)"></span><span class="sw" style="background:rgb(232,192,162)"></span><span class="sw" style="background:rgb(230,187,156)"></span><span class="sw" style="background:rgb(227,183,150)"></span><span class="sw" style="background:rgb(224,178,144)"></span><span class="sw" style="background:rgb(220,173,138)"></span><span class="sw" style="background:rgb(217,167,132)"></span><span class="sw" style="background:rgb(213,162,126)"></span><span class="sw" style="background:rgb(209,157,121)"></span><span class="sw" style="background:rgb(205,152,115)"></span><span class="sw" style="background:rgb(201,146,109)"></span><span class="sw" style="background:rgb(197,141,103)"></span><span class="sw" style="background:rgb(191,136,98)"></span><span class="sw" style="background:rgb(185,130,93)"></span><span class="sw" style="background:rgb(179,125,88)"></span><span class="sw" style="background:rgb(173,119,83)"></span><span class="sw" style="background:rgb(167,113,78)"></span><span class="sw" style="background:rgb(161,108,73)"></span><span class="sw" style="background:rgb(155,102,68)"></span><span class="sw" style="background:rgb(149,97,63)"></span><span class="sw sel" style="background:rgb(143,93,60)"></span><span class="sw" style="background:rgb(137,88,57)"></span><span class="sw" style="background:rgb(131,84,54)"></span><span class="sw" style="background:rgb(125,79,51)"></span><span class="sw" style="background:rgb(119,75,48)"></span><span class="sw" style="background:rgb(112,70,44)"></span><span class="sw" style="background:rgb(106,66,41)"></span><span class="sw" style="background:rgb(101,62,39)"></span><span class="sw" style="background:rgb(96,59,37)"></span><span class="sw" style="background:rgb(91,56,35)"></span><span class="sw" style="background:rgb(86,53,33)"></span><span class="sw" style="background:rgb(81,49,32)"></span><span class="sw" style="background:rgb(76,46,30)"></span><span class="sw" style="background:rgb(71,43,28)"></span><span class="sw" style="background:rgb(66,40,26)"></span></div>
-      <div class="find tg hit" onClick="{{pn.pdp5.hit}}" style="outline:{{pn.pdp5.ol}}"><span class="pin" style="background:{{pn.pdp5.bg}};color:{{pn.pdp5.fg}};border:1.5px {{pn.pdp5.bd}};box-shadow:{{pn.pdp5.sh}};transform:{{pn.pdp5.tf}}">{{pn.pdp5.n}}</span>Find your shade</div>
-      <div class="del tg hit" onClick="{{pn.pdp4.hit}}" style="outline:{{pn.pdp4.ol}}"><span class="pin" style="background:{{pn.pdp4.bg}};color:{{pn.pdp4.fg}};border:1.5px {{pn.pdp4.bd}};box-shadow:{{pn.pdp4.sh}};transform:{{pn.pdp4.tf}}">{{pn.pdp4.n}}</span><div class="on"><b>Get It Shipped</b><span>Free · by Tue, Nov 3</span></div><div><b>Same-day delivery</b><span>Order in 2 hrs</span></div><div><b>Buy online &amp; pick up</b><span>Ready in 2 hrs</span></div></div>
-      <div class="add tg hit" onClick="{{pn.pdp3.hit}}" style="outline:{{pn.pdp3.ol}}"><span class="pin" style="background:{{pn.pdp3.bg}};color:{{pn.pdp3.fg}};border:1.5px {{pn.pdp3.bd}};box-shadow:{{pn.pdp3.sh}};transform:{{pn.pdp3.tf}}">{{pn.pdp3.n}}</span>Add to Basket</div>
+      <div class="tg hit" onClick="{{pn.pdp7.hit}}" style="outline:{{pn.pdp7.ol}};display:inline-block"><span class="pin" style="display:{{pn.pdp7.dsp}};background:{{pn.pdp7.bg}};color:{{pn.pdp7.fg}};border:1.5px {{pn.pdp7.bd}};box-shadow:{{pn.pdp7.sh}};animation:{{pn.pdp7.an}};transform:{{pn.pdp7.tf}}">{{pn.pdp7.n}}</span><div class="color">Color: <b>330 Medium</b> · neutral undertone</div></div>
+      <div class="swg tg hit" onClick="{{pn.pdp2.hit}}" style="outline:{{pn.pdp2.ol}}"><span class="pin" style="display:{{pn.pdp2.dsp}};background:{{pn.pdp2.bg}};color:{{pn.pdp2.fg}};border:1.5px {{pn.pdp2.bd}};box-shadow:{{pn.pdp2.sh}};animation:{{pn.pdp2.an}};transform:{{pn.pdp2.tf}}">{{pn.pdp2.n}}</span><span class="sw" style="background:rgb(244,214,192)"></span><span class="sw" style="background:rgb(242,210,186)"></span><span class="sw" style="background:rgb(239,205,180)"></span><span class="sw" style="background:rgb(237,201,174)"></span><span class="sw" style="background:rgb(235,196,168)"></span><span class="sw" style="background:rgb(232,192,162)"></span><span class="sw" style="background:rgb(230,187,156)"></span><span class="sw" style="background:rgb(227,183,150)"></span><span class="sw" style="background:rgb(224,178,144)"></span><span class="sw" style="background:rgb(220,173,138)"></span><span class="sw" style="background:rgb(217,167,132)"></span><span class="sw" style="background:rgb(213,162,126)"></span><span class="sw" style="background:rgb(209,157,121)"></span><span class="sw" style="background:rgb(205,152,115)"></span><span class="sw" style="background:rgb(201,146,109)"></span><span class="sw" style="background:rgb(197,141,103)"></span><span class="sw" style="background:rgb(191,136,98)"></span><span class="sw" style="background:rgb(185,130,93)"></span><span class="sw" style="background:rgb(179,125,88)"></span><span class="sw" style="background:rgb(173,119,83)"></span><span class="sw" style="background:rgb(167,113,78)"></span><span class="sw" style="background:rgb(161,108,73)"></span><span class="sw" style="background:rgb(155,102,68)"></span><span class="sw" style="background:rgb(149,97,63)"></span><span class="sw sel" style="background:rgb(143,93,60)"></span><span class="sw" style="background:rgb(137,88,57)"></span><span class="sw" style="background:rgb(131,84,54)"></span><span class="sw" style="background:rgb(125,79,51)"></span><span class="sw" style="background:rgb(119,75,48)"></span><span class="sw" style="background:rgb(112,70,44)"></span><span class="sw" style="background:rgb(106,66,41)"></span><span class="sw" style="background:rgb(101,62,39)"></span><span class="sw" style="background:rgb(96,59,37)"></span><span class="sw" style="background:rgb(91,56,35)"></span><span class="sw" style="background:rgb(86,53,33)"></span><span class="sw" style="background:rgb(81,49,32)"></span><span class="sw" style="background:rgb(76,46,30)"></span><span class="sw" style="background:rgb(71,43,28)"></span><span class="sw" style="background:rgb(66,40,26)"></span></div>
+      <div class="find tg hit" onClick="{{pn.pdp5.hit}}" style="outline:{{pn.pdp5.ol}}"><span class="pin" style="display:{{pn.pdp5.dsp}};background:{{pn.pdp5.bg}};color:{{pn.pdp5.fg}};border:1.5px {{pn.pdp5.bd}};box-shadow:{{pn.pdp5.sh}};animation:{{pn.pdp5.an}};transform:{{pn.pdp5.tf}}">{{pn.pdp5.n}}</span>Find your shade</div>
+      <div class="del tg hit" onClick="{{pn.pdp4.hit}}" style="outline:{{pn.pdp4.ol}}"><span class="pin" style="display:{{pn.pdp4.dsp}};background:{{pn.pdp4.bg}};color:{{pn.pdp4.fg}};border:1.5px {{pn.pdp4.bd}};box-shadow:{{pn.pdp4.sh}};animation:{{pn.pdp4.an}};transform:{{pn.pdp4.tf}}">{{pn.pdp4.n}}</span><div class="on"><b>Get It Shipped</b><span>Free · by Tue, Nov 3</span></div><div><b>Same-day delivery</b><span>Order in 2 hrs</span></div><div><b>Buy online &amp; pick up</b><span>Ready in 2 hrs</span></div></div>
+      <div class="add tg hit" onClick="{{pn.pdp3.hit}}" style="outline:{{pn.pdp3.ol}}"><span class="pin" style="display:{{pn.pdp3.dsp}};background:{{pn.pdp3.bg}};color:{{pn.pdp3.fg}};border:1.5px {{pn.pdp3.bd}};box-shadow:{{pn.pdp3.sh}};animation:{{pn.pdp3.an}};transform:{{pn.pdp3.tf}}">{{pn.pdp3.n}}</span>Add to Basket</div>
+      <div class="wish tg hit" onClick="{{pn.pdp8.hit}}" style="outline:{{pn.pdp8.ol}}"><span class="pin" style="display:{{pn.pdp8.dsp}};background:{{pn.pdp8.bg}};color:{{pn.pdp8.fg}};border:1.5px {{pn.pdp8.bd}};box-shadow:{{pn.pdp8.sh}};animation:{{pn.pdp8.an}};transform:{{pn.pdp8.tf}}">{{pn.pdp8.n}}</span>♡ Add to Loves</div>
     </div>
   </div>
   <div class="sec-h">Similar foundation</div>
-  <div class="row4"><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(194,138,100)"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Liquid Touch Weightless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(157,104,69)"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Beautiful Skin Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$49.00</span></div></div>
+  <div class="row4"><div class="tg hit" onClick="{{pn.pdp11.hit}}" style="outline:{{pn.pdp11.ol}}"><span class="pin" style="display:{{pn.pdp11.dsp}};background:{{pn.pdp11.bg}};color:{{pn.pdp11.fg}};border:1.5px {{pn.pdp11.bd}};box-shadow:{{pn.pdp11.sh}};animation:{{pn.pdp11.an}};transform:{{pn.pdp11.tf}}">{{pn.pdp11.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(194,138,100)"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Liquid Touch Weightless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(157,104,69)"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Beautiful Skin Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$49.00</span></div></div>
+
+  <div class="sec-h">Ratings &amp; reviews</div>
+  <div class="rv-top"><b>4.4</b><span>★★★★★ · 12.8K reviews</span><span class="selbox tg hit" onClick="{{pn.pdp9.hit}}" style="outline:{{pn.pdp9.ol}}"><span class="pin" style="display:{{pn.pdp9.dsp}};background:{{pn.pdp9.bg}};color:{{pn.pdp9.fg}};border:1.5px {{pn.pdp9.bd}};box-shadow:{{pn.pdp9.sh}};animation:{{pn.pdp9.an}};transform:{{pn.pdp9.tf}}">{{pn.pdp9.n}}</span>Sort by: <b>Most helpful</b> ⌄</span></div>
+  <div class="rv-list tg hit" onClick="{{pn.pdp10.hit}}" style="outline:{{pn.pdp10.ol}}"><span class="pin" style="display:{{pn.pdp10.dsp}};background:{{pn.pdp10.bg}};color:{{pn.pdp10.fg}};border:1.5px {{pn.pdp10.bd}};box-shadow:{{pn.pdp10.sh}};animation:{{pn.pdp10.an}};transform:{{pn.pdp10.tf}}">{{pn.pdp10.n}}</span>
+    <div class="rv"><b>Finally a matte that lasts</b><span class="muted">★★★★★ · Oily skin · 2 days ago</span><p>Stays put all day and doesn't settle into lines. Shade 330 is spot on for me.</p></div>
+    <div class="rv"><b>Great coverage, a bit drying</b><span class="muted">★★★★☆ · Combination skin · 1 week ago</span><p>Full coverage with one pump. I need a hydrating primer under it.</p></div>
+    <div class="rv"><b>Shade range is amazing</b><span class="muted">★★★★★ · Normal skin · 2 weeks ago</span><p>Found my match on the first try with Find your shade.</p></div>
+  </div>
 </div></div></sc-if>
 <sc-if value="{{pg.search}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
 <div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
@@ -551,10 +690,10 @@ body{margin:0}
   <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
 <div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
 <div class="sx-body">
-  <div class="srch tg hit" onClick="{{pn.search1.hit}}" style="outline:{{pn.search1.ol}}"><span class="pin" style="background:{{pn.search1.bg}};color:{{pn.search1.fg}};border:1.5px {{pn.search1.bd}};box-shadow:{{pn.search1.sh}};transform:{{pn.search1.tf}}">{{pn.search1.n}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg><span>foundation for oily skin</span><span class="x">×</span></div>
-  <div class="chips tg hit" onClick="{{pn.search3.hit}}" style="outline:{{pn.search3.ol}}"><span class="pin" style="background:{{pn.search3.bg}};color:{{pn.search3.fg}};border:1.5px {{pn.search3.bd}};box-shadow:{{pn.search3.sh}};transform:{{pn.search3.tf}}">{{pn.search3.n}}</span><span>Refine:</span><b>Oily skin</b><b>Long-wear</b><b>Matte finish</b><b>Under $40</b><b>Clean at Sephora</b></div>
+  <div class="srch tg hit" onClick="{{pn.search1.hit}}" style="outline:{{pn.search1.ol}}"><span class="pin" style="display:{{pn.search1.dsp}};background:{{pn.search1.bg}};color:{{pn.search1.fg}};border:1.5px {{pn.search1.bd}};box-shadow:{{pn.search1.sh}};animation:{{pn.search1.an}};transform:{{pn.search1.tf}}">{{pn.search1.n}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg><span>foundation for oily skin</span><span class="x">×</span></div>
+  <div class="chips tg hit" onClick="{{pn.search3.hit}}" style="outline:{{pn.search3.ol}}"><span class="pin" style="display:{{pn.search3.dsp}};background:{{pn.search3.bg}};color:{{pn.search3.fg}};border:1.5px {{pn.search3.bd}};box-shadow:{{pn.search3.sh}};animation:{{pn.search3.an}};transform:{{pn.search3.tf}}">{{pn.search3.n}}</span><span>Refine:</span><b>Oily skin</b><b>Long-wear</b><b>Matte finish</b><b>Under $40</b><b>Clean at Sephora</b></div>
   <div class="muted" style="margin:14px 0 12px">148 results for “foundation for oily skin”</div>
-  <div class="row4"><div class="tg hit" onClick="{{pn.search2.hit}}" style="outline:{{pn.search2.ol}}"><span class="pin c" style="background:{{pn.search2.bg}};color:{{pn.search2.fg}};border:1.5px {{pn.search2.bd}};box-shadow:{{pn.search2.sh}};transform:{{pn.search2.tf}}">{{pn.search2.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(175,121,85)"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$49.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(138,89,58)"></span></div><span class="pb">MAKE UP FOR EVER</span><span class="pn">HD Skin Undetectable Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$45.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(119,75,48)"></span></div><span class="pb">ESTÉE LAUDER</span><span class="pn">Double Wear Stay-in-Place</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(207,155,118)"></span></div><span class="pb">BENEFIT</span><span class="pn">Hello Happy Flawless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(219,171,136)"></span></div><span class="pb">SEPHORA COLLECTION</span><span class="pn">Best Skin Ever Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$29.00</span></div></div>
+  <div class="row4"><div class="tg hit" onClick="{{pn.search2.hit}}" style="outline:{{pn.search2.ol}}"><span class="pin c" style="display:{{pn.search2.dsp}};background:{{pn.search2.bg}};color:{{pn.search2.fg}};border:1.5px {{pn.search2.bd}};box-shadow:{{pn.search2.sh}};animation:{{pn.search2.an}};transform:{{pn.search2.tf}}">{{pn.search2.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(147,96,63)"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Soft Matte Longwear Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(185,130,93)"></span></div><span class="pb">HUDA BEAUTY</span><span class="pn">FauxFilter Luminous Matte Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$40.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(213,163,127)"></span></div><span class="pb">NARS</span><span class="pn">Light Reflecting Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(175,121,85)"></span></div><span class="pb">CHARLOTTE TILBURY</span><span class="pn">Airbrush Flawless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$49.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(138,89,58)"></span></div><span class="pb">MAKE UP FOR EVER</span><span class="pn">HD Skin Undetectable Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$45.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(119,75,48)"></span></div><span class="pb">ESTÉE LAUDER</span><span class="pn">Double Wear Stay-in-Place</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$52.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(207,155,118)"></span></div><span class="pb">BENEFIT</span><span class="pn">Hello Happy Flawless Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$32.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:rgb(219,171,136)"></span></div><span class="pb">SEPHORA COLLECTION</span><span class="pn">Best Skin Ever Foundation</span><span class="st">★★★★★ <i>2.1K</i></span><span class="pp">$29.00</span></div></div>
 </div></div></sc-if>
 <sc-if value="{{pg.basket}}" hint-placeholder-val="{{false}}"><div class="site"><div class="sx-promo">Beauty Insiders get <b>free standard shipping</b> on every order · <u>Sign in</u></div>
 <div class="sx-head"><span class="sx-logo ">SEPHORA</span><span class="sx-search "><span onClick="{{srch.go}}" style="display:flex;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></span><input class="sx-in" type="search" value="{{srch.q}}" onChange="{{srch.onQ}}" onKeyDown="{{srch.onKey}}" placeholder="Search" aria-label="Search sephora.com"></span><span class="sx-sp"></span>
@@ -563,28 +702,30 @@ body{margin:0}
   <span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path></svg></span><span class="sx-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span></div>
 <div class="sx-nav"><span>New</span><span>Makeup</span><span>Skincare</span><span>Fragrance</span><span>Hair</span><span>Bath &amp; Body</span><span>Brands</span><span>Sale &amp; Offers</span></div>
 <div class="sx-body">
-  <div class="tg hit" onClick="{{pn.basket1.hit}}" style="outline:{{pn.basket1.ol}};display:inline-block"><span class="pin" style="background:{{pn.basket1.bg}};color:{{pn.basket1.fg}};border:1.5px {{pn.basket1.bd}};box-shadow:{{pn.basket1.sh}};transform:{{pn.basket1.tf}}">{{pn.basket1.n}}</span><h2 style="margin:4px 0 2px">Basket (2)</h2></div>
+  <div class="tg hit" onClick="{{pn.basket1.hit}}" style="outline:{{pn.basket1.ol}};display:inline-block"><span class="pin" style="display:{{pn.basket1.dsp}};background:{{pn.basket1.bg}};color:{{pn.basket1.fg}};border:1.5px {{pn.basket1.bd}};box-shadow:{{pn.basket1.sh}};animation:{{pn.basket1.an}};transform:{{pn.basket1.tf}}">{{pn.basket1.n}}</span><h2 style="margin:4px 0 2px">Basket (2)</h2></div>
   <div class="muted" style="margin-bottom:16px">Get It Shipped · 2 items</div>
   <div class="bk">
-    <div class="card"><div class="bitem"><div class="pimg sm"><span class="mini" style="background:rgb(147,96,63)"></span></div><div class="bt"><span class="pb">FENTY BEAUTY</span><span>Pro Filt'r Soft Matte Foundation</span><span class="muted">Color: 330 Medium · 1 oz</span></div><span class="selbox tg hit" onClick="{{pn.basket2.hit}}" style="outline:{{pn.basket2.ol}}"><span class="pin" style="background:{{pn.basket2.bg}};color:{{pn.basket2.fg}};border:1.5px {{pn.basket2.bd}};box-shadow:{{pn.basket2.sh}};transform:{{pn.basket2.tf}}">{{pn.basket2.n}}</span>Qty <b>1</b> ⌄</span><b>$40.00</b></div><div class="bitem"><div class="pimg sm"><span class="mini" style="background:#e3a9b3"></span></div><div class="bt"><span class="pb">RARE BEAUTY</span><span>Soft Pinch Liquid Blush</span><span class="muted">Color: Hope · 0.25 oz</span></div><span class="selbox">Qty <b>1</b> ⌄</span><b>$23.00</b></div></div>
+    <div class="card"><div class="bitem"><div class="pimg sm"><span class="mini" style="background:rgb(147,96,63)"></span></div><div class="bt"><span class="pb">FENTY BEAUTY</span><span>Pro Filt'r Soft Matte Foundation</span><span class="muted">Color: 330 Medium · 1 oz</span></div><span class="selbox tg hit" onClick="{{pn.basket2.hit}}" style="outline:{{pn.basket2.ol}}"><span class="pin" style="display:{{pn.basket2.dsp}};background:{{pn.basket2.bg}};color:{{pn.basket2.fg}};border:1.5px {{pn.basket2.bd}};box-shadow:{{pn.basket2.sh}};animation:{{pn.basket2.an}};transform:{{pn.basket2.tf}}">{{pn.basket2.n}}</span>Qty <b>1</b> ⌄</span><b>$40.00</b></div><div class="bitem"><div class="pimg sm"><span class="mini" style="background:#e3a9b3"></span></div><div class="bt"><span class="pb">RARE BEAUTY</span><span>Soft Pinch Liquid Blush</span><span class="muted">Color: Hope · 0.25 oz</span></div><span class="selbox">Qty <b>1</b> ⌄</span><b>$23.00</b></div></div>
     <div>
-      <div class="promo tg hit" onClick="{{pn.basket3.hit}}" style="outline:{{pn.basket3.ol}}"><span class="pin" style="background:{{pn.basket3.bg}};color:{{pn.basket3.fg}};border:1.5px {{pn.basket3.bd}};box-shadow:{{pn.basket3.sh}};transform:{{pn.basket3.tf}}">{{pn.basket3.n}}</span><span class="inp">HOLIDAY15</span><span class="pill">Apply</span></div>
+      <div class="promo tg hit" onClick="{{pn.basket3.hit}}" style="outline:{{pn.basket3.ol}}"><span class="pin" style="display:{{pn.basket3.dsp}};background:{{pn.basket3.bg}};color:{{pn.basket3.fg}};border:1.5px {{pn.basket3.bd}};box-shadow:{{pn.basket3.sh}};animation:{{pn.basket3.an}};transform:{{pn.basket3.tf}}">{{pn.basket3.n}}</span><span class="inp">HOLIDAY15</span><span class="pill">Apply</span></div>
       <div class="card sum"><div><span>Merchandise subtotal</span><b>$63.00</b></div><div><span>Promo HOLIDAY15</span><b>−$9.45</b></div><div><span>Shipping</span><b>Free</b></div><div class="tot"><span>Estimated total</span><b>$53.55</b></div></div>
-      <div class="add tg hit" onClick="{{pn.basket4.hit}}" style="outline:{{pn.basket4.ol}}"><span class="pin" style="background:{{pn.basket4.bg}};color:{{pn.basket4.fg}};border:1.5px {{pn.basket4.bd}};box-shadow:{{pn.basket4.sh}};transform:{{pn.basket4.tf}}">{{pn.basket4.n}}</span>Checkout</div>
+      <div class="add tg hit" onClick="{{pn.basket4.hit}}" style="outline:{{pn.basket4.ol}}"><span class="pin" style="display:{{pn.basket4.dsp}};background:{{pn.basket4.bg}};color:{{pn.basket4.fg}};border:1.5px {{pn.basket4.bd}};box-shadow:{{pn.basket4.sh}};animation:{{pn.basket4.an}};transform:{{pn.basket4.tf}}">{{pn.basket4.n}}</span>Checkout</div>
     </div>
   </div>
+  <div class="sec-h">You may also like</div>
+  <div class="row4"><div class="tg hit" onClick="{{pn.basket5.hit}}" style="outline:{{pn.basket5.ol}}"><span class="pin" style="display:{{pn.basket5.dsp}};background:{{pn.basket5.bg}};color:{{pn.basket5.fg}};border:1.5px {{pn.basket5.bd}};box-shadow:{{pn.basket5.sh}};animation:{{pn.basket5.an}};transform:{{pn.basket5.tf}}">{{pn.basket5.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:#d8a0a8"></span></div><span class="pb">RARE BEAUTY</span><span class="pn">Positive Light Liquid Luminizer</span><span class="st">★★★★★ <i>3.4K</i></span><span class="pp">$26.00</span></div></div><div class="tg hit" onClick="{{pn.basket6.hit}}" style="outline:{{pn.basket6.ol}}"><span class="pin" style="display:{{pn.basket6.dsp}};background:{{pn.basket6.bg}};color:{{pn.basket6.fg}};border:1.5px {{pn.basket6.bd}};box-shadow:{{pn.basket6.sh}};animation:{{pn.basket6.an}};transform:{{pn.basket6.tf}}">{{pn.basket6.n}}</span><div class="pc"><div class="pimg"><span class="mini" style="background:#c98b6b"></span></div><span class="pb">FENTY BEAUTY</span><span class="pn">Pro Filt'r Instant Retouch Primer</span><span class="st">★★★★★ <i>5.2K</i></span><span class="pp">$38.00</span></div></div><div class="pc"><div class="pimg"><span class="mini" style="background:#e9c7b0"></span></div><span class="pb">SEPHORA COLLECTION</span><span class="pn">Makeup Sponge Duo</span><span class="st">★★★★☆ <i>980</i></span><span class="pp">$12.00</span></div><div class="pc"><div class="pimg"><span class="mini" style="background:#b97a5d"></span></div><span class="pb">NARS</span><span class="pn">Radiant Creamy Concealer</span><span class="st">★★★★★ <i>8.1K</i></span><span class="pp">$32.00</span></div></div>
 </div></div></sc-if>
-<sc-if value="{{pg.checkout}}" hint-placeholder-val="{{false}}"><div class="site"><div class="co-head"><span class="sx-logo">SEPHORA</span><span class="muted" style="display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Secure checkout</span><span class="sx-sp"></span><span class="lnk tg hit" onClick="{{pn.checkout5.hit}}" style="outline:{{pn.checkout5.ol}}"><span class="pin" style="background:{{pn.checkout5.bg}};color:{{pn.checkout5.fg}};border:1.5px {{pn.checkout5.bd}};box-shadow:{{pn.checkout5.sh}};transform:{{pn.checkout5.tf}}">{{pn.checkout5.n}}</span>‹ Back to basket</span></div>
+<sc-if value="{{pg.checkout}}" hint-placeholder-val="{{false}}"><div class="site"><div class="co-head"><span class="sx-logo">SEPHORA</span><span class="muted" style="display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Secure checkout</span><span class="sx-sp"></span><span class="lnk tg hit" onClick="{{pn.checkout5.hit}}" style="outline:{{pn.checkout5.ol}}"><span class="pin" style="display:{{pn.checkout5.dsp}};background:{{pn.checkout5.bg}};color:{{pn.checkout5.fg}};border:1.5px {{pn.checkout5.bd}};box-shadow:{{pn.checkout5.sh}};animation:{{pn.checkout5.an}};transform:{{pn.checkout5.tf}}">{{pn.checkout5.n}}</span>‹ Back to basket</span></div>
 <div class="sx-body">
   <div class="bk">
     <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="card co tg hit" onClick="{{pn.checkout1.hit}}" style="outline:{{pn.checkout1.ol}}"><span class="pin" style="background:{{pn.checkout1.bg}};color:{{pn.checkout1.fg}};border:1.5px {{pn.checkout1.bd}};box-shadow:{{pn.checkout1.sh}};transform:{{pn.checkout1.tf}}">{{pn.checkout1.n}}</span><b class="coh"><i>1</i>Shipping address</b><div class="fields"><span>Emma Clarke</span><span>420 Market St, Apt 5</span><span>San Francisco, CA 94111</span><span>(415) 555-0142</span></div></div>
-      <div class="card co tg hit" onClick="{{pn.checkout2.hit}}" style="outline:{{pn.checkout2.ol}}"><span class="pin" style="background:{{pn.checkout2.bg}};color:{{pn.checkout2.fg}};border:1.5px {{pn.checkout2.bd}};box-shadow:{{pn.checkout2.sh}};transform:{{pn.checkout2.tf}}">{{pn.checkout2.n}}</span><b class="coh"><i>2</i>Delivery method</b><div class="radios"><span class="on"><i></i>Standard · Free · Nov 3 – 5</span><span><i></i>Express · $9.95 · Nov 1</span><span><i></i>Same-day · $6.95 · today</span></div></div>
-      <div class="card co tg hit" onClick="{{pn.checkout3.hit}}" style="outline:{{pn.checkout3.ol}}"><span class="pin" style="background:{{pn.checkout3.bg}};color:{{pn.checkout3.fg}};border:1.5px {{pn.checkout3.bd}};box-shadow:{{pn.checkout3.sh}};transform:{{pn.checkout3.tf}}">{{pn.checkout3.n}}</span><b class="coh"><i>3</i>Payment</b><div class="fields two"><span>Card number<br><b>•••• •••• •••• 0002</b></span><span>Expiry<br><b>04 / 28</b></span></div><div class="err">Your card was declined. Try another payment method.</div></div>
+      <div class="card co tg hit" onClick="{{pn.checkout1.hit}}" style="outline:{{pn.checkout1.ol}}"><span class="pin" style="display:{{pn.checkout1.dsp}};background:{{pn.checkout1.bg}};color:{{pn.checkout1.fg}};border:1.5px {{pn.checkout1.bd}};box-shadow:{{pn.checkout1.sh}};animation:{{pn.checkout1.an}};transform:{{pn.checkout1.tf}}">{{pn.checkout1.n}}</span><b class="coh"><i>1</i>Shipping address</b><div class="fields"><span>Emma Clarke</span><span>420 Market St, Apt 5</span><span>San Francisco, CA 94111</span><span>(415) 555-0142</span></div></div>
+      <div class="card co tg hit" onClick="{{pn.checkout2.hit}}" style="outline:{{pn.checkout2.ol}}"><span class="pin" style="display:{{pn.checkout2.dsp}};background:{{pn.checkout2.bg}};color:{{pn.checkout2.fg}};border:1.5px {{pn.checkout2.bd}};box-shadow:{{pn.checkout2.sh}};animation:{{pn.checkout2.an}};transform:{{pn.checkout2.tf}}">{{pn.checkout2.n}}</span><b class="coh"><i>2</i>Delivery method</b><div class="radios"><span class="on"><i></i>Standard · Free · Nov 3 – 5</span><span><i></i>Express · $9.95 · Nov 1</span><span><i></i>Same-day · $6.95 · today</span></div></div>
+      <div class="card co tg hit" onClick="{{pn.checkout3.hit}}" style="outline:{{pn.checkout3.ol}}"><span class="pin" style="display:{{pn.checkout3.dsp}};background:{{pn.checkout3.bg}};color:{{pn.checkout3.fg}};border:1.5px {{pn.checkout3.bd}};box-shadow:{{pn.checkout3.sh}};animation:{{pn.checkout3.an}};transform:{{pn.checkout3.tf}}">{{pn.checkout3.n}}</span><b class="coh"><i>3</i>Payment</b><div class="fields two"><span>Card number<br><b>•••• •••• •••• 0002</b></span><span>Expiry<br><b>04 / 28</b></span></div><div class="err">Your card was declined. Try another payment method.</div></div>
     </div>
     <div>
       <div class="card sum"><b style="display:block;margin-bottom:8px">Order summary</b><div><span>Subtotal</span><b>$63.00</b></div><div><span>Promo</span><b>−$9.45</b></div><div><span>Shipping</span><b>Free</b></div><div><span>Tax</span><b>$4.62</b></div><div class="tot"><span>Total</span><b>$58.17</b></div></div>
-      <div class="add tg hit" onClick="{{pn.checkout4.hit}}" style="outline:{{pn.checkout4.ol}}"><span class="pin" style="background:{{pn.checkout4.bg}};color:{{pn.checkout4.fg}};border:1.5px {{pn.checkout4.bd}};box-shadow:{{pn.checkout4.sh}};transform:{{pn.checkout4.tf}}">{{pn.checkout4.n}}</span>Place order</div>
+      <div class="add tg hit" onClick="{{pn.checkout4.hit}}" style="outline:{{pn.checkout4.ol}}"><span class="pin" style="display:{{pn.checkout4.dsp}};background:{{pn.checkout4.bg}};color:{{pn.checkout4.fg}};border:1.5px {{pn.checkout4.bd}};box-shadow:{{pn.checkout4.sh}};animation:{{pn.checkout4.an}};transform:{{pn.checkout4.tf}}">{{pn.checkout4.n}}</span>Place order</div>
     </div>
   </div>
 </div></div></sc-if>
@@ -627,18 +768,29 @@ body{margin:0}
             </sc-for>
           </div>
         </div>
-        <section style="border:1px solid #e4e4e7;border-radius:16px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05);overflow:hidden">
-          <div style="display:grid;grid-template-columns:160px minmax(200px,1.4fr) minmax(220px,1.6fr) 130px;gap:16px;padding:12px 20px;background:#fafafa;font-size:12px;font-weight:600;letter-spacing:.08em;color:#71717a"><span>PAGE</span><span>WHEN THE VISITOR…</span><span>TAG</span><span>STATUS</span></div>
-          <sc-for list="{{rows}}" as="r" hint-placeholder-count="12">
-            <div style="display:grid;grid-template-columns:160px minmax(200px,1.4fr) minmax(220px,1.6fr) 130px;gap:16px;align-items:center;padding:12px 20px;border-top:1px solid #e4e4e7">
-              <span style="font-size:14px;color:#3f3f46">{{r.page}}</span>
-              <span style="font-size:14px;font-weight:500">{{r.when}}</span>
-              <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                <sc-if value="{{r.ok}}" hint-placeholder-val="{{true}}"><span style="font-family:var(--f-mono);font-size:12px;color:#3f3f46;background:#f4f4f5;border-radius:6px;padding:2px 8px">{{r.tag}}</span><span style="font-size:12px;color:#a1a1aa">{{r.srcTxt}}</span></sc-if>
-                <sc-if value="{{r.miss}}" hint-placeholder-val="{{false}}"><span style="font-size:12px;color:#a1a1aa">No tag yet</span><span style="display:inline-flex;align-items:center;height:26px;padding:0 10px;border:1px solid #e4e4e7;border-radius:8px;background:#fff;font-size:12px;font-weight:600">Add tag</span></sc-if>
-              </span>
-              <span style="font-size:14px;color:{{r.stFg}};font-weight:{{r.stW}}">{{r.stTxt}}</span>
-            </div>
+        <!-- Rows grouped under a page row; columns sort within each page (shadcn data-table header buttons) -->
+        <section class="wl">
+          <div class="wl-row wl-head">
+            <sc-for list="{{cols}}" as="c" hint-placeholder-count="3">
+              <button type="button" class="wl-sort" onClick="{{c.pick}}" aria-sort="{{c.aria}}">{{c.label}}
+                <sc-if value="{{c.none}}" hint-placeholder-val="{{true}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 16-4 4-4-4M17 20V4M3 8l4-4 4 4M7 4v16"></path></svg></sc-if>
+                <sc-if value="{{c.asc}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7M12 19V5"></path></svg></sc-if>
+                <sc-if value="{{c.desc}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg></sc-if>
+              </button>
+            </sc-for>
+          </div>
+          <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+            <div class="wl-group"><b>{{g.name}}</b><span class="wl-path">{{g.path}}</span><span class="wl-count">{{g.count}}</span></div>
+            <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
+              <div class="wl-row">
+                <span style="font-size:14px;font-weight:500">{{r.when}}</span>
+                <span style="font-size:14px;color:{{r.stFg}};font-weight:{{r.stW}}">{{r.stTxt}}</span>
+                <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0">
+                  <sc-if value="{{r.ok}}" hint-placeholder-val="{{true}}"><span style="font-family:var(--f-mono);font-size:12px;color:#3f3f46;background:#f4f4f5;border-radius:6px;padding:2px 8px">{{r.tag}}</span><span style="font-size:12px;color:#a1a1aa">{{r.srcTxt}}</span></sc-if>
+                  <sc-if value="{{r.miss}}" hint-placeholder-val="{{false}}"><a class="btn" href="{{r.addHref}}" style="height:28px;padding:0 10px;font-size:12px;text-decoration:none">Add tag</a></sc-if>
+                </span>
+              </div>
+            </sc-for>
           </sc-for>
         </section>
       </sc-if>
@@ -651,7 +803,7 @@ body{margin:0}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { tab: 'map', browsing: false, open: 'home', sel: 'home', filter: 'all', act: null, fixed: {}, q: '', term: null, checking: null, found: null, landed: null, scan: 'idle' };
+    this.state = { add: null, manual: [], edit: null, over: {}, tab: 'map', browsing: false, open: 'home', sel: 'home', filter: 'all', act: null, fixed: {}, q: '', term: null, checking: null, found: null, landed: null, barDone: null, scan: 'idle', sortBy: null, sortDir: 'asc' };
     this.timers = [];
   }
   // Arriving from Add manually (#/web-signals?added=<name>&via=<method>): toast it, then tidy the URL
@@ -663,6 +815,30 @@ class Component extends DCLogic {
     this.timers.push(setTimeout(function () { self.setState({ added: null }); }, 6000));
   }
   componentWillUnmount() { this.timers.forEach(clearTimeout); }
+  // Add manually: the box of an element, relative to the site frame
+  boxOf(el) { var root = el.closest('[data-addroot]'); if (!root) return null; var a = el.getBoundingClientRect(), b = root.getBoundingClientRect(); return { t: Math.round(a.top - b.top), l: Math.round(a.left - b.left), w: Math.round(a.width), h: Math.round(a.height) }; }
+  // a clicked element worth naming: the tagged element, or the nearest one with a short label
+  addTarget(t) {
+    var el = t.closest('.tg') || t, n = 0;
+    while (el && n < 4 && !(el.innerText || el.getAttribute('placeholder') || '').trim()) { el = el.parentElement; n++; }
+    if (!el || el.hasAttribute('data-addroot') || el.classList.contains('site')) return null;
+    return el;
+  }
+  addPick(el, ev0, page) {
+    var self = this, box = this.boxOf(el), p;
+    if (ev0) {
+      p = ev0.ok ? { kind: 'have', when: ev0.when, code: ev0.sug || ev0.tag.toLowerCase().replace(/[^a-z0-9]+/g, '_'), tag: ev0.tag, src: ev0.src, tags: [] }
+        : { kind: 'miss', key: ev0.key, when: ev0.when, code: ev0.sug, src: ev0.via[0], tags: [ev0.sug.charAt(0).toUpperCase() + ev0.sug.slice(1).replace(/_/g, ' ')] };
+    } else {
+      var txt = (el.innerText || el.getAttribute('placeholder') || '').trim().split('\n')[0].slice(0, 28).trim(), code = 'click_' + txt.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+      var apps = ['Adobe Launch', 'Tealium', 'Adobe Analytics'], h = 0; for (var i = 0; i < txt.length; i++) h += txt.charCodeAt(i);
+      p = { kind: 'new', when: 'Clicks \u201c' + txt + '\u201d', code: code, src: apps[h % 3], tags: [txt + ' click'] };
+    }
+    p.box = box; p.page = page || this.state.sel; p.q = ''; p.open = false; p.loading = p.kind !== 'have';
+    self.setState({ add: Object.assign({}, this.state.add, { pick: p, hover: null }) });
+    // looking up the app and tag takes a moment: skeleton, then the fields
+    if (p.loading) this.timers.push(setTimeout(function () { var A = self.state.add; if (A && A.pick === p) self.setState({ add: Object.assign({}, A, { pick: Object.assign({}, p, { loading: false }) }) }); }, 600 + Math.round(Math.random() * 200)));
+  }
   // The shopper action just happened: Cortex checks for the tag (rotating green stroke),
   // flashes it as found, then moves it to Captured.
   detect(key) {
@@ -673,17 +849,24 @@ class Component extends DCLogic {
       self.setState({ checking: null, found: key });
       T.push(setTimeout(function () {
         var f = Object.assign({}, self.state.fixed); f[key] = true;
-        self.setState({ fixed: f, found: null, landed: key });
+        self.setState({ fixed: f, found: null, landed: key, barDone: key });
+        // the bar tells where it was picked up, then goes back to the URL
+        T.push(setTimeout(function () {
+          if (self.state.barDone !== key) return;
+          var n = +(key.match(/(\d+)$/) || [0, -1])[1];
+          self.setState({ barDone: null, act: self.state.act === n ? null : self.state.act });
+        }, 2000));
         T.push(setTimeout(function () { if (self.state.landed === key) self.setState({ landed: null }); }, 1400));
       }, 900));
     }, 2500));
   }
   renderVals() {
     var self = this, st = this.state;
-    var IC = { home: 'M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z', plp: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z', pdp: 'M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8', search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3', basket: 'M6 7h12l-1 13H7zM9 7a3 3 0 0 1 6 0', checkout: 'M2 6h20v12H2zM2 10h20M6 15h4' };
+    var IC = { home: 'M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z', cat: 'M3 3h18v6H3zM3 13h8v8H3zM15 13h6v8h-6z', plp: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z', pdp: 'M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8', search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3', basket: 'M6 7h12l-1 13H7zM9 7a3 3 0 0 1 6 0', checkout: 'M2 6h20v12H2zM2 10h20M6 15h4' };
     var AA = 'Adobe Analytics', AL = 'Adobe Launch', TL = 'Tealium';
     function c(when, tag, src, rule) { return { when: when, ok: true, tag: tag, src: src, rule: rule }; }
-    function m(when, sug, hint) { return { when: when, ok: false, sug: sug, hint: hint }; }
+    var VIA = [[TL], [AA], [AL], [TL, AA], [AL, AA], [TL, AL]];
+    function m(when, sug, hint) { var h = 0; for (var i = 0; i < sug.length; i++) h += sug.charCodeAt(i); return { when: when, ok: false, sug: sug, hint: hint, via: VIA[h % VIA.length] }; }
     var PAGES = [
       { id: 'home', name: 'Home', path: '/home', events: [
         c('Views the home page', 'page_view', AA, 'AA page view'),
@@ -691,6 +874,11 @@ class Component extends DCLogic {
         c('Clicks a product tile', 'product_clicked', AL, '[TMS] tile_click'),
         m('Searches from the header', 'search_submitted', 'Search something from the header'),
         m('Opens a brand story', 'brand_story_open', 'Open any brand story')] },
+      { id: 'cat', name: 'Category page', path: '/shop/makeup', events: [
+        c('Opens a category page', 'Page view', AA, 'AA category view'),
+        m('Clicks a subcategory', 'category_clicked', 'Click a subcategory tile'),
+        m('Applies a filter', 'category_filtered', 'Pick a filter'),
+        m('Scrolls down the page', 'scroll_depth_75', 'Scroll to the bottom')] },
       { id: 'plp', name: 'Product list', path: '/shop/foundation-makeup', events: [
         c('Opens a product list', 'Page view', AA, 'AA page view'),
         c('Applies a filter', 'Sent as a page view', AA, 'AA filter'),
@@ -702,9 +890,14 @@ class Component extends DCLogic {
         c('Views a product', 'Product viewed', AA, 'AA product view'),
         c('Picks a shade or size', 'Variant selected', TL, 'tealium variant'),
         c('Adds to basket', 'add_to_basket', AL, '[TMS] GA4_addToCart'),
-        m('Chooses a delivery option', 'delivery_selected', 'Pick a delivery option'),
+        m('Checks delivery or pickup options', 'delivery_selected', 'Pick a delivery option'),
         m('Opens Find your shade', 'shade_finder_open', 'Click \u201cFind your shade\u201d'),
-        m('Reads the reviews', 'reviews_open', 'Open the reviews')] },
+        m('Reads the reviews', 'reviews_open', 'Open the reviews'),
+        m('Hovers over a shade or size', 'variant_hover', 'Hover over a shade'),
+        m('Saves to their wishlist', 'wishlist_added', 'Click \u201cAdd to Loves\u201d'),
+        m('Sorts or filters the reviews', 'reviews_sorted', 'Change the review sort'),
+        m('Scrolls through the reviews', 'reviews_scrolled', 'Scroll the reviews'),
+        m('Clicks a recommended product', 'reco_clicked', 'Click a similar product')] },
       { id: 'search', name: 'Search results', path: '/search?keyword=foundation', events: [
         c('Searches for something', 'Search submitted', AA, 'AA search'),
         m('Clicks a result', 'search_result_click', 'Click any result'),
@@ -713,7 +906,9 @@ class Component extends DCLogic {
         c('Opens the basket', 'Basket viewed', AA, 'AA basket'),
         m('Changes an item quantity', 'basket_qty_change', 'Change a quantity'),
         c('Applies a promo code', 'promo_applied', AL, '[TMS] promo'),
-        c('Starts checkout', 'Checkout started', AL, '[TMS] checkout_start')] },
+        c('Clicks Checkout', 'Checkout started', AL, '[TMS] checkout_start'),
+        m('Clicks a recommendation in the basket', 'basket_reco_click', 'Click a \u201cYou may also like\u201d product'),
+        m('Hovers over a basket recommendation', 'basket_reco_hover', 'Hover over a recommendation')] },
       { id: 'checkout', name: 'Checkout', path: '/checkout', events: [
         c('Enters shipping details', 'shipping_info', AL, '[TMS] ship'),
         m('Chooses a delivery method', 'delivery_method', 'Pick a delivery method'),
@@ -721,31 +916,87 @@ class Component extends DCLogic {
         c('Places an order', 'Order completed', AA, 'AA purchase'),
         m('Leaves checkout early', 'checkout_abandon', 'Click \u201cBack to basket\u201d')] }
     ];
+    // events registered with Add manually join their page's Captured list
+    st.manual.forEach(function (m) { var pg0 = PAGES.filter(function (p) { return p.id === m.page; })[0]; var ev0 = c(m.when, m.tags.join(', '), m.src, 'added by you'); ev0.box = m.box; pg0.events.push(ev0); });
+    // tags each app already sends (from the captured events) plus common ones, for the tag search in edit
+    var CAT = { _: ['Page view', 'Product viewed', 'Product clicked', 'Add to cart', 'Search submitted', 'Basket viewed', 'Checkout started', 'Order completed', 'Promo click'] };
+    PAGES.forEach(function (p) { p.events.forEach(function (e) { if (e.ok) { (CAT[e.src] = CAT[e.src] || []); if (CAT[e.src].indexOf(e.tag) < 0) CAT[e.src].push(e.tag); } }); });
+    Object.keys(CAT).forEach(function (k) { if (k !== '_') CAT._.forEach(function (t) { if (CAT[k].indexOf(t) < 0) CAT[k].push(t); }); });
     var pn = {}, cap = 0, miss = 0;
     PAGES.forEach(function (p) {
       p.events.forEach(function (e, i) {
         e.n = i + 1; e.key = p.id + e.n;
         if (!e.ok && st.fixed[e.key]) { e.ok = true; e.tag = e.sug; e.src = 'Cortex'; e.rule = (e.key === 'home4' && st.term) ? 'keyword \u201c' + st.term + '\u201d' : 'detected while browsing'; e.fresh = true; }
+        if (st.over[e.key]) { e.tag = st.over[e.key].tags.join(', '); e.src = st.over[e.key].src; e.rule = 'edited by you'; }
         if (e.ok) cap++; else miss++;
         e.miss = !e.ok; e.srcTxt = e.ok ? e.src + ' · ' + e.rule : '';
         var on = st.sel === p.id && st.act === e.n;
         e.pinBg = e.ok ? '#64748b' : '#fff7ed'; e.pinFg = e.ok ? '#fff' : '#c2410c'; e.pinBd = e.ok ? 'solid #fff' : 'dashed #fb923c';
         e.bd = on ? (e.ok ? '#a1a1aa' : '#fdba74') : (e.ok ? '#e4e4e7' : '#d4d4d8'); e.bg = '#fff'; e.bBg = e.ok ? '#f4f4f5' : '#fff7ed'; e.bFg = e.ok ? '#3f3f46' : '#c2410c'; e.bBd = e.ok ? 'solid #e4e4e7' : 'dashed #fb923c'; e.bstyle = e.ok ? 'solid' : 'dashed';
         e.ring = on ? '0 1px 3px rgba(0,0,0,.08)' : 'none';
+        // the event you picked: solid teal edge, soft halo and a filled number, so it reads as the one the bar is asking about
+        if (on && !e.ok) { e.bd = '#3c8c81'; e.bstyle = 'solid'; e.bg = '#f1f7f6'; e.bBg = '#3c8c81'; e.bFg = '#fff'; e.bBd = 'solid #3c8c81'; e.ring = '0 0 0 3px rgba(60,140,129,.16)'; }
         // after the shopper action, Cortex checks for the tag (rotating stroke), then it is found
         var isFound = st.found === e.key, hunting = !e.ok && st.checking === e.key;
-        e.isFound = isFound; e.hunting = hunting; e.idleMiss = !e.ok && !hunting && !isFound; e.bw = '1px'; e.cls = '';
+        e.isFound = isFound; e.hunting = hunting; e.waiting = !e.ok && !hunting && !isFound && on; e.idleMiss = !e.ok && !hunting && !isFound && !on; e.bw = on && !e.ok ? '1.5px' : '1px'; e.cls = '';
         if (hunting) { e.cls = 'hunt'; e.bw = '1.5px'; e.bstyle = 'solid'; e.bd = 'transparent'; e.bg = 'linear-gradient(#fff,#fff) padding-box,conic-gradient(from var(--hunt-a),#e4e4e7 0 50%,#bbf7d0 68%,#16a34a 86%,#e4e4e7 100%) border-box'; e.ring = '0 1px 3px rgba(0,0,0,.08)'; }
         if (isFound) { e.cls = 'found'; e.bstyle = 'solid'; e.bd = '#16a34a'; e.bg = '#f0fdf4'; e.bBg = '#16a34a'; e.bFg = '#fff'; e.bBd = 'solid #16a34a'; e.pinBg = '#16a34a'; e.pinFg = '#fff'; e.pinBd = 'solid #fff'; }
         if (st.landed === e.key) e.cls = 'landed';
+        // editing a captured event: green pulsing stroke on the card, pin and page object; app + tag fields in the card
+        var ed = st.edit && st.edit.key === e.key;
+        e.editing = !!ed; e.okView = e.ok && !ed; e.stop = function (ev) { ev.stopPropagation(); };
+        e.startEdit = function (ev) { ev.stopPropagation(); self.setState({ browsing: true, sel: p.id, open: p.id, act: e.n, term: null, edit: { key: e.key, src: e.src, tags: e.tag ? [e.tag] : [], q: '', open: false } }); };
+        if (ed) {
+          var E = st.edit, upd = function (o) { self.setState({ edit: Object.assign({}, self.state.edit, o) }); }, qq = (E.q || '').toLowerCase();
+          e.cls = 'editing'; e.bd = '#3c8c81'; e.bw = '1.5px'; e.bstyle = 'solid'; e.bg = '#f1f7f6'; e.ring = '0 0 0 3px rgba(60,140,129,.16)'; e.bBg = '#3c8c81'; e.bFg = '#fff'; e.bBd = 'solid #3c8c81';
+          var opts = (CAT[E.src] || CAT._).filter(function (t) { return E.tags.indexOf(t) < 0 && (!qq || t.toLowerCase().indexOf(qq) >= 0); }).slice(0, 6);
+          e.ed = { app: { aa: E.src === AA, al: E.src === AL, tl: E.src === TL, gtm: E.src === 'Google Tag Manager', sdk: E.src === 'Adobe Web SDK' },
+            tags: E.tags.map(function (t) { return { name: t, remove: function () { upd({ tags: self.state.edit.tags.filter(function (x) { return x !== t; }) }); } }; }),
+            ph: E.tags.length ? 'Search to add' : 'Search tags', q: E.q, show: E.open || !E.tags.length, none: !opts.length, empty: !E.tags.length,
+            opts: opts.map(function (t) { return { name: t, pick: function () { upd({ tags: self.state.edit.tags.concat(t), q: '' }); } }; }),
+            setSrc: function (ev) { upd({ src: ev.target.value, tags: [], q: '', open: true }); },
+            setQ: function (ev) { upd({ q: ev.target.value, open: true }); }, openList: function () { if (!self.state.edit.open) upd({ open: true }); },
+            cancel: function () { self.setState({ edit: null }); },
+            save: function () { var o = Object.assign({}, self.state.over); o[e.key] = { src: self.state.edit.src, tags: self.state.edit.tags.slice() }; self.setState({ over: o, edit: null }); } };
+        }
         e.pick = function () { self.setState({ browsing: true, sel: p.id, open: p.id, act: e.n, term: null }); };
-        pn[e.key] = { n: e.n, bg: e.pinBg, fg: e.pinFg, bd: e.pinBd,
+        if (ed) { e.pinBg = '#16a34a'; e.pinFg = '#fff'; e.pinBd = 'solid #fff'; }
+        pn[e.key] = { n: e.n, dsp: (e.ok || isFound) ? 'flex' : 'none', bg: e.pinBg, fg: e.pinFg, bd: e.pinBd,
           sh: on ? '0 0 0 6px ' + (e.ok ? 'rgba(100,116,139,.25)' : 'rgba(251,146,60,.28)') + ',0 3px 8px rgba(0,0,0,.2)' : '0 2px 6px rgba(0,0,0,.18)',
-          tf: on ? 'scale(1.3)' : 'none', ol: on ? '2px solid ' + (isFound ? '#16a34a' : e.ok ? '#64748b' : '#fb923c') : '2px solid transparent',
+          tf: on ? 'scale(1.3)' : 'none', ol: ed ? '2px solid #16a34a' : on && (e.ok || isFound) ? '2px solid ' + (isFound ? '#16a34a' : '#64748b') : '2px solid transparent', an: ed ? 'wsEdPulse 1.8s ease-out infinite' : 'none',
           // clicking the element on the page is the shopper action; the header search fires on submit instead
-          hit: function (ev) { ev.stopPropagation(); if (e.key === 'home4') return; if (e.ok) { self.setState({ act: e.n, open: p.id }); return; } self.setState({ act: e.n, open: p.id }); self.detect(e.key); } };
+          hit: function (ev) { ev.stopPropagation(); if (self.state.add) { self.addPick(ev.currentTarget, e, p.id); return; } if (e.key === 'home4') return; if (e.ok) { self.setState({ act: e.n, open: p.id }); return; } self.setState({ act: e.n, open: p.id }); self.detect(e.key); } };
       });
     });
+    var A = st.add, AP = A && A.pick, curId = st.sel || 'home';
+    var ad = { on: !!A, off: !A, rootCls: A ? 'adding' : '', ps: {}, empty: !!A && !AP, has: !!AP, p: AP || {}, n: 0, pins: [],
+      start: function () { self.setState({ add: { pick: null, hover: null }, browsing: true, sel: st.sel || 'home', open: st.sel || 'home', act: null, term: null, edit: null }); },
+      cancel: function () { self.setState({ add: null }); },
+      setPage: function (ev) { var v = ev.target.value; self.setState({ sel: v, open: v, term: null, add: { pick: null, hover: null } }); },
+      click: function (ev) { if (!self.state.add) return; var el = self.addTarget(ev.target); if (el) self.addPick(el, null); },
+      over: function (ev) { if (!self.state.add) return; var el = self.addTarget(ev.target), b = el && self.boxOf(el); var h = self.state.add.hover;
+        if (b && h && h.t === b.t && h.l === b.l && h.w === b.w) return; self.setState({ add: Object.assign({}, self.state.add, { hover: b }) }); },
+      leave: function () { if (self.state.add && self.state.add.hover) self.setState({ add: Object.assign({}, self.state.add, { hover: null }) }); } };
+    ['home', 'cat', 'plp', 'pdp', 'search', 'basket', 'checkout'].forEach(function (k) { ad.ps[k] = curId === k; });
+    ad.hov = !!(A && A.hover); ad.hb = (A && A.hover) || {};
+    var curP = PAGES.filter(function (p) { return p.id === curId; })[0] || PAGES[0];
+    curP.events.forEach(function (e) { if (e.box) ad.pins.push({ n: e.n, t: e.box.t, l: e.box.l, w: e.box.w, h: e.box.h }); });
+    if (AP) {
+      var upA = function (o) { self.setState({ add: Object.assign({}, self.state.add, { pick: Object.assign({}, self.state.add.pick, o) }) }); }, qa = (AP.q || '').toLowerCase();
+      ad.n = AP.kind === 'new' ? curP.events.length + 1 : AP.kind === 'miss' ? +(AP.key.match(/(\d+)$/) || [0, 0])[1] : '';
+      ad.sb = AP.box || {}; ad.have = AP.kind === 'have'; ad.canMap = !ad.have;
+      ad.app = { aa: AP.src === AA, al: AP.src === AL, tl: AP.src === TL, gtm: AP.src === 'Google Tag Manager', sdk: AP.src === 'Adobe Web SDK' };
+      var aopts = (CAT[AP.src] || CAT._).filter(function (t) { return AP.tags.indexOf(t) < 0 && (!qa || t.toLowerCase().indexOf(qa) >= 0); }).slice(0, 6);
+      ad.tags = AP.tags.map(function (t) { return { name: t, remove: function () { upA({ tags: self.state.add.pick.tags.filter(function (x) { return x !== t; }) }); } }; });
+      ad.ph = AP.tags.length ? 'Search to add' : 'Search tags'; ad.q = AP.q; ad.show = AP.open || !AP.tags.length; ad.none = !aopts.length; ad.noTag = !AP.tags.length; ad.loading = !!AP.loading; ad.ready = !AP.loading; ad.noSave = !!AP.loading || !AP.tags.length;
+      ad.opts = aopts.map(function (t) { return { name: t, pick: function () { upA({ tags: self.state.add.pick.tags.concat(t), q: '' }); } }; });
+      ad.setSrc = function (ev) { upA({ src: ev.target.value, tags: [], q: '', open: true }); };
+      ad.setQ = function (ev) { upA({ q: ev.target.value, open: true }); }; ad.openList = function () { if (!self.state.add.pick.open) upA({ open: true }); };
+      ad.save = function () { var P = self.state.add.pick;
+        if (P.kind === 'miss') { var f = Object.assign({}, self.state.fixed), o = Object.assign({}, self.state.over); f[P.key] = true; o[P.key] = { src: P.src, tags: P.tags.slice() }; self.setState({ fixed: f, over: o, add: null, open: P.page, landed: P.key }); }
+        else { var mm = self.state.manual.concat({ page: P.page, when: P.when, src: P.src, tags: P.tags.slice(), box: P.box }); self.setState({ manual: mm, add: null, open: P.page, landed: P.page + (curP.events.length + 1) }); }
+        self.timers.push(setTimeout(function () { self.setState({ landed: null }); }, 1400)); };
+    }
     function segs(list, cur, key, icons) {
       return list.map(function (d) {
         var on = cur === d[0];
@@ -790,20 +1041,45 @@ class Component extends DCLogic {
     var gpix = cells.map(function (p) { var r = hsh(p.x + 3, p.y + 9);
       return { x: (p.x * 1.66).toFixed(2), y: (p.y * 1.66).toFixed(2), c: p.on ? (r < 0.3 ? '#5b7ca8' : (r < 0.65 ? '#4a6a96' : '#3f5f8a')) : (r < 0.5 ? '#fdba74' : '#fed7aa') }; });
     var actE = null; cur.events.forEach(function (e) { if (st.act === e.n) actE = e; });
-    var co = { show: !!actE, close: function () { self.setState({ act: null }); } };
-    if (actE) co.title = actE.ok ? (actE.fresh ? 'Captured \u00b7 ' + actE.tag : actE.when) : st.found === actE.key ? 'Found \u00b7 ' + actE.sug : st.checking === actE.key ? 'Checking for ' + actE.sug + '\u2026' : actE.hint;
+    var barOn = !!actE && (!actE.ok || st.barDone === actE.key);
+    var co = { show: barOn, url: !barOn, cls: barOn ? 'hunt' : '', barBg: barOn ? 'linear-gradient(var(--co-fill),var(--co-fill)) padding-box,conic-gradient(from var(--hunt-a),#e4e4e7 0 35%,#f4f4f5 52%,#bbf7d0 72%,#16a34a 90%,#e4e4e7 100%) border-box' : '#f4f4f5', close: function () { self.setState({ act: null }); } };
+    if (barOn) {
+      var cState = actE.ok ? 'done' : st.found === actE.key ? 'found' : st.checking === actE.key ? 'check' : 'todo';
+      co.anim = actE.n % 2 ? 'coSlideA' : 'coSlideB'; co.fill = actE.n % 2 ? 'coFillA' : 'coFillB';
+      co.isTodo = cState === 'todo'; co.isCheck = cState === 'check'; co.isDone = cState === 'found' || cState === 'done';
+      co.dot = cState === 'todo' ? 'rgba(60,140,129,.14)' : cState === 'check' ? '#f4f4f5' : '#dcfce7';
+      co.kicker = cState === 'todo' ? 'Try it on the page' : cState === 'check' ? 'Cortex is checking' : cState === 'found' ? 'Found' : 'Captured';
+    }
+    if (barOn) co.title = actE.ok ? 'Added ' + actE.tag + ' from ' + (actE.via || [actE.src]).join(' and ') : st.found === actE.key ? 'Found \u00b7 ' + actE.sug : st.checking === actE.key ? 'Checking for ' + actE.sug + '\u2026' : actE.hint;
     function goSearch(v) { var t = (v || '').trim() || 'lipstick'; self.setState({ term: t, q: t, sel: 'home', open: 'home', act: 4, tab: 'map' }); self.detect('home4'); }
     var srch = { q: st.q, term: st.term || '', onQ: function (ev) { self.setState({ q: ev.target.value }); }, onKey: function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); goSearch(ev.target.value); } }, go: function () { goSearch(st.q); } };
     var gl = { show: false, px: gpix, dash: (2 * Math.PI * 38.5 * pct / 100).toFixed(1) + ' ' + (2 * Math.PI * 38.5).toFixed(1), label: pct + '% mapped', click: function () { if (firstMiss) self.setState({ act: firstMiss.n, open: cur.id }); } };
 
-    var rows = [];
+    // List: one group row per page; a column header sorts the rows inside each page (asc, desc, off)
+    var sortKey = { when: function (r) { return r.when.toLowerCase(); }, status: function (r) { return r.ok ? 1 : 0; }, tag: function (r) { return r.ok ? r.tag.toLowerCase() : '\uffff'; } };
+    var cols = [['when', 'When the visitor…'], ['status', 'Status'], ['tag', 'Tag']].map(function (c) {
+      var on = st.sortBy === c[0], dir = on ? st.sortDir : null;
+      return { label: c[1], none: !on, asc: dir === 'asc', desc: dir === 'desc', aria: on ? (dir === 'asc' ? 'ascending' : 'descending') : 'none',
+        pick: function () { if (!on) self.setState({ sortBy: c[0], sortDir: 'asc' }); else if (dir === 'asc') self.setState({ sortDir: 'desc' }); else self.setState({ sortBy: null, sortDir: 'asc' }); } };
+    });
+    var groups = [];
     PAGES.forEach(function (p) {
       var ms = p.events.filter(function (e) { return !e.ok; }), cs = p.events.filter(function (e) { return e.ok; });
+      var rows = [];
       ms.concat(cs).forEach(function (e) {
         if (st.filter === 'missing' && e.ok) return;
         if (st.filter === 'captured' && !e.ok) return;
-        rows.push({ page: p.name, when: e.when, ok: e.ok, miss: !e.ok, tag: e.tag || '', srcTxt: e.srcTxt || '', stTxt: e.ok ? 'Captured' : 'Missing', stFg: e.ok ? '#475569' : '#c2410c', stW: e.ok ? '500' : '600' });
+        // "Add tag" opens Add signal prefilled with this event (element interaction on pages it knows)
+        var elPage = { cat: '/shop/makeup', pdp: '/product/P483021', basket: '/basket', checkout: '/checkout/shipping' }[p.id];
+        var addHref = '#/add-signal?from=list&name=' + encodeURIComponent(e.sug || '') + '&meaning=' + encodeURIComponent('Shopper ' + e.when.charAt(0).toLowerCase() + e.when.slice(1) + '.') + (elPage ? '&method=el&page=' + encodeURIComponent(elPage) : '');
+        rows.push({ addHref: addHref, when: e.when, ok: e.ok, miss: !e.ok, tag: e.tag || '', srcTxt: e.srcTxt || '', stTxt: e.ok ? 'Captured' : 'Missing', stFg: e.ok ? '#475569' : '#c2410c', stW: e.ok ? '500' : '600' });
       });
+      if (!rows.length) return;
+      if (st.sortBy) {
+        var k = sortKey[st.sortBy], d = st.sortDir === 'desc' ? -1 : 1;
+        rows.sort(function (a, b) { var x = k(a), y = k(b); return x < y ? -d : x > y ? d : 0; });
+      }
+      groups.push({ name: p.name, path: p.path, rows: rows, count: ms.length ? ms.length + ' missing · ' + cs.length + ' captured' : cs.length + ' captured' });
     });
     return {
       toast: st.added ? { name: st.added.name, via: st.added.via, close: function () { self.setState({ added: null }); } } : null,
@@ -814,12 +1090,12 @@ class Component extends DCLogic {
         when: st.scan === 'done' ? 'Scanned just now' : st.scan === 'run' ? 'Scanning 31 pages…' : 'Scanned today, 08:12',
         go: function () { self.setState({ scan: 'run' }); self.timers.push(setTimeout(function () { self.setState({ scan: 'done' }); }, 2200)); } },
       tabs: segs([['map', 'Site map'], ['list', 'List']], st.tab, 'tab', { map: 'M9 20 3 17V4l6 3 6-3 6 3v13l-6-3zM9 7v13M15 4v13', list: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' }),
-      isMap: st.tab === 'map', isList: st.tab === 'list',
+      isMap: st.tab === 'map', isList: st.tab === 'list', cols: cols, groups: groups,
       map: { browsing: st.browsing, intro: !st.browsing, cols: st.browsing ? '272px minmax(0,1fr)' : 'minmax(0,1fr) minmax(280px,38%)',
         pagesLeft: pages.filter(function (p) { return p.hasMiss; }).length,
         start: function () { var p = PAGES.filter(function (x) { return x.events.some(function (e) { return !e.ok; }); })[0] || PAGES[0]; self.setState({ browsing: true, sel: p.id, open: p.id, act: null, term: null }); },
         back: function () { self.setState({ browsing: false, act: null, term: null }); } },
-      pages: pages, pg: pg, pn: pn, sel: { path: st.term ? '/search?keyword=' + encodeURIComponent(st.term) : cur.path }, srch: srch, co: co, gl: gl, rows: rows,
+      ad: ad, pages: pages, pg: pg, pn: pn, sel: { path: st.term ? '/search?keyword=' + encodeURIComponent(st.term) : cur.path }, srch: srch, co: co, gl: gl,
       filters: segs([['all', 'All · ' + (cap + miss)], ['missing', 'Missing · ' + miss], ['captured', 'Captured · ' + cap]], st.filter, 'filter')
     };
   }

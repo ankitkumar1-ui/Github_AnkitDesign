@@ -12,6 +12,16 @@ body{margin:0}
 @keyframes obSpin{to{transform:rotate(360deg)}}
 @keyframes obRing{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}
 @keyframes obIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes gxBlink{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes aiSp1{0%{transform:scale(.78) rotate(0)}50%{transform:scale(1.06) rotate(45deg)}100%{transform:scale(.78) rotate(90deg)}}
+@keyframes aiSp2{0%,100%{opacity:.15;transform:scale(.4)}45%{opacity:1;transform:scale(1.1)}}
+.ai-spark{width:20px;height:20px;display:block;overflow:visible}
+.ai-spark path{transform-box:fill-box;transform-origin:center}
+.ai-spark .s1{animation:aiSp1 1.6s cubic-bezier(.45,0,.25,1) infinite}
+.ai-spark .s2{animation:aiSp2 1.6s ease-in-out infinite}
+.ai-spark .s3{animation:aiSp2 1.6s ease-in-out .55s infinite}
+.gx-caret{width:2px;height:16px;border-radius:1px;background:#18181b;flex:none;animation:gxBlink 1s steps(2) infinite}
+@media (prefers-reduced-motion:reduce){.ai-spark path,.gx-caret{animation:none}}
 
 </style>
 </head>
@@ -36,6 +46,8 @@ body{margin:0}
 
   <main style="max-width: 780px; margin: 0 auto; padding: 40px 24px 110px; box-sizing: border-box; display: flex; flex-direction: column">
 
+    <!-- page header: only once Cortex has finished setting up -->
+    <sc-if value="{{ready}}" hint-placeholder-val="{{false}}">
     <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px">
       <span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #f4f4f5; color: #18181b; border: 1px solid #e4e4e7; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>
@@ -44,6 +56,7 @@ body{margin:0}
         <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: #71717a">Pick where ADX should start. Cortex suggests one from your data, and you can choose more or add your own.</p>
       </div>
     </div>
+    </sc-if>
 
     <sc-if value="{{busy}}" hint-placeholder-val="{{true}}">
       <div role="status" aria-live="polite" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 9vh 0 40px">
@@ -55,18 +68,18 @@ body{margin:0}
         <div style="display: flex; flex-direction: column; gap: 10px; min-width: min(420px, 100%); text-align: left">
           <sc-for list="{{lines}}" as="l" hint-placeholder-count="3">
             <sc-if value="{{l.show}}" hint-placeholder-val="{{true}}">
-              <div style="display: flex; align-items: center; gap: 11px; font-size: 14px; color: {{l.fg}}">
+              <div style="display: flex; align-items: center; gap: 11px; font-size: 14px; color: {{l.fg}}; animation: obIn .3s ease both">
                 <span style="width: 20px; height: 20px; display: grid; place-items: center; flex: none">
                   <sc-if value="{{l.done}}" hint-placeholder-val="{{true}}"><span style="width: 20px; height: 20px; border-radius: 50%; background: #16a34a; color: #fff; display: grid; place-items: center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
-                  <sc-if value="{{l.cur}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><defs><linearGradient id="aiSpG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F5F57"></stop><stop offset="1" stop-color="#3C8C81"></stop></linearGradient></defs><path fill="url(#aiSpG)" d="M10.5 4C11 8.6 14.4 12 19 12.5C14.4 13 11 16.4 10.5 21C10 16.4 6.6 13 2 12.5C6.6 12 10 8.6 10.5 4Z"></path><path fill="url(#aiSpG)" d="M19 1.5C19.2 3.2 20.3 4.3 22 4.5C20.3 4.7 19.2 5.8 19 7.5C18.8 5.8 17.7 4.7 16 4.5C17.7 4.3 18.8 3.2 19 1.5Z"></path><path fill="url(#aiSpG)" d="M19.5 16.5C19.6 17.6 20.4 18.4 21.5 18.5C20.4 18.6 19.6 19.4 19.5 20.5C19.4 19.4 18.6 18.6 17.5 18.5C18.6 18.4 19.4 17.6 19.5 16.5Z"></path></svg></sc-if>
+                  <sc-if value="{{l.cur}}" hint-placeholder-val="{{false}}"><svg class="ai-spark" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="aiSpG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F5F57"></stop><stop offset="1" stop-color="#3C8C81"></stop></linearGradient></defs><path class="s1" fill="url(#aiSpG)" d="M10.5 4C11 8.6 14.4 12 19 12.5C14.4 13 11 16.4 10.5 21C10 16.4 6.6 13 2 12.5C6.6 12 10 8.6 10.5 4Z"></path><path class="s2" fill="url(#aiSpG)" d="M19 1.5C19.2 3.2 20.3 4.3 22 4.5C20.3 4.7 19.2 5.8 19 7.5C18.8 5.8 17.7 4.7 16 4.5C17.7 4.3 18.8 3.2 19 1.5Z"></path><path class="s3" fill="url(#aiSpG)" d="M19.5 16.5C19.6 17.6 20.4 18.4 21.5 18.5C20.4 18.6 19.6 19.4 19.5 20.5C19.4 19.4 18.6 18.6 17.5 18.5C18.6 18.4 19.4 17.6 19.5 16.5Z"></path></svg></sc-if>
                 </span>
-                <span>{{l.t}}</span>
+                <span>{{l.t}}</span><sc-if value="{{l.caret}}" hint-placeholder-val="{{false}}"><span class="gx-caret" aria-hidden="true"></span></sc-if>
               </div>
             </sc-if>
           </sc-for>
         </div>
         <div style="width: min(420px, 100%); height: 4px; border-radius: 9px; background: #e4e4e7; margin-top: 24px; overflow: hidden">
-          <div style="width: {{progress}}; height: 100%; border-radius: 9px; background: linear-gradient(90deg, #18181b, #3c8c81); transition: width .8s ease"></div>
+          <div style="width: {{progress}}; height: 100%; border-radius: 9px; background: linear-gradient(90deg, #18181b, #3c8c81); transition: width 2s linear"></div>
         </div>
       </div>
     </sc-if>
@@ -171,21 +184,23 @@ body{margin:0}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    // step 0-2: Cortex setting up (one line each), 3: all lines done (brief pause), 4: goals shown with Convert pre-picked
-    this.state = { step: 0, order: [], custom: [], draft: '' };
+    // step 0-2: Cortex setting up (one line each, typed out), 3: all lines done (brief pause), 4: goals shown with Convert pre-picked
+    this.state = { step: 0, typed: 0, order: [], custom: [], draft: '' };
   }
   componentDidMount() {
-    var self = this;
-    this.timer = setInterval(function () {
-      var step = self.state.step + 1;
-      self.setState({ step: step });
-      if (step >= 3) {
-        clearInterval(self.timer);
-        self.timer = setTimeout(function () { self.setState({ step: 4, order: self.state.order.length ? self.state.order : ['convert'] }); }, 700);
-      }
-    }, 1100);
+    var self = this, LINES = this.lines(), PER = 2000;
+    // each line types out with a caret, then turns into a tick as the next one starts
+    function line(i) {
+      if (i >= LINES.length) { self.setState({ step: LINES.length }); self.timer = setTimeout(function () { self.setState({ step: 4, order: self.state.order.length ? self.state.order : ['convert'] }); }, 350); return; }
+      var text = LINES[i], typeMs = Math.min(1100, text.length * 28), gap = Math.max(14, Math.round(typeMs / text.length)), c = 0;
+      self.setState({ step: i, typed: 0 });
+      (function type() { c += 1; self.setState({ typed: c }); if (c < text.length) self.typer = setTimeout(type, gap); })();
+      self.timer = setTimeout(function () { line(i + 1); }, PER);
+    }
+    line(0);
   }
-  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.timer); }
+  componentWillUnmount() { clearTimeout(this.timer); clearTimeout(this.typer); }
+  lines() { return ['Saving your data connections', 'Reading your shopper events', 'Finding goals that fit Beauty & Cosmetics']; }
   renderVals() {
     var self = this;
     var order = this.state.order;
@@ -221,13 +236,13 @@ class Component extends DCLogic {
       return { t: t, remove: function () { var c = self.state.custom.slice(); c.splice(i, 1); self.setState({ custom: c }); } };
     });
     var n = order.length + this.state.custom.length, step = this.state.step, busy = step < 4;
-    var lines = ['Saving your data connections', 'Reading your shopper events', 'Finding goals that fit Beauty & Cosmetics'];
+    var lines = this.lines(), typed = this.state.typed;
     return {
       busy: busy, ready: !busy, busyAttr: busy ? 'true' : 'false', listOp: busy ? '0.45' : '1', listPe: busy ? 'none' : 'auto',
-      progress: Math.min(100, 12 + step * 30) + '%',
+      progress: Math.round(Math.min(step + 1, lines.length) / lines.length * 100) + '%',
       lines: lines.map(function (t, i) {
         var done = i < step, cur = i === step;
-        return { t: t, done: done, cur: cur, show: done || cur, fg: cur ? '#09090b' : '#71717a' };
+        return { t: cur ? t.slice(0, typed) : t, done: done, cur: cur, show: done || cur, caret: cur && typed < t.length, fg: cur ? '#09090b' : '#71717a' };
       }),
       goals: goals, strip: strip, custom: custom,
       draft: this.state.draft,

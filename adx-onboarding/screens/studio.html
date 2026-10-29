@@ -205,7 +205,8 @@ class Component extends DCLogic {
     var route = (location.hash.replace(/^#\/?/, '').split('?')[0]) || 'experiences', s = STUDIO[route] || STUDIO.experiences, on = {}, cur = {};
     Object.keys(STUDIO).forEach(function (r) { on[r.replace('-', '_')] = r === route ? 'on' : ''; });
     cur.exp = s[1] === 'Experiences' ? 'hascurrent' : ''; cur.measure = s[1] === 'Measure' ? 'hascurrent' : '';
-    return { src: 'studio/adx-studio.html?embed=1&mod=' + s[0], cat: s[1], label: s[2], on: on, cur: cur };
+    var sg = location.hash.match(/[?&]signal=([^&]+)/);
+    return { src: 'studio/adx-studio.html?embed=1&mod=' + s[0] + (sg ? '&sig=' + sg[1] : ''), cat: s[1], label: s[2], on: on, cur: cur };
   }
 }
 </script>

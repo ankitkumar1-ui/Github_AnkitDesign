@@ -7,6 +7,12 @@
 <style>
 
 body{margin:0}
+@keyframes obSpin{to{transform:rotate(360deg)}}
+@keyframes rsShim{from{background-position:200% 0}to{background-position:-200% 0}}
+@keyframes rsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.rs-shim{flex:1;display:block;height:12px;margin-top:5px;border-radius:5px;background:linear-gradient(90deg,#f4f4f5 8%,#e4e4e7 20%,#f4f4f5 33%);background-size:200% 100%;animation:rsShim 1.25s linear infinite}
+.rs-i{animation:rsIn .35s cubic-bezier(.22,1,.36,1)}
+@media (prefers-reduced-motion:reduce){.rs-shim,.rs-i{animation:none}}
 
 </style>
 </head>
@@ -71,18 +77,25 @@ body{margin:0}
 
     <section aria-live="polite" style="border: 1px solid #e4e4e7; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 18px 24px 22px">
       <div style="display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; margin-bottom: 12px">
-        <span style="width: 22px; height: 22px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
-        Research complete
+        <sc-if value="{{rsDone}}" hint-placeholder-val="{{true}}">
+          <span style="width: 22px; height: 22px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+          Research complete
+        </sc-if>
+        <sc-if value="{{rsBusy}}" hint-placeholder-val="{{false}}">
+          <span aria-hidden="true" style="width: 20px; height: 20px; box-sizing: border-box; border-radius: 50%; border: 2px solid #18181b; border-right-color: transparent; animation: obSpin 0.7s linear infinite; flex: none"></span>
+          Doing a bit of research so you have a great experience…
+        </sc-if>
       </div>
       <div style="display: flex; flex-direction: column">
         <sc-for list="{{research}}" as="r" hint-placeholder-count="3">
-          <div style="display: flex; gap: 14px; font-size: 14px; color: #3f3f46; line-height: 1.55; padding-bottom: {{r.pad}}">
+          <div class="rs-i" style="display: flex; gap: 14px; font-size: 14px; color: #3f3f46; line-height: 1.55; padding-bottom: {{r.pad}}">
             <span style="flex: 0 0 20px; display: flex; flex-direction: column; align-items: center">
               <span style="width: 20px; height: 20px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid #d4d4d8; background: #fff; display: flex; align-items: center; justify-content: center; margin-top: 1px"><span style="width: 5px; height: 5px; border-radius: 50%; background: #a1a1aa; display: block"></span></span>
               <span style="flex: 1; width: 1px; background: {{r.line}}; margin-top: 3px"></span>
             </span>
-            <span>{{r.t}}</span>
+            <sc-if value="{{r.text}}" hint-placeholder-val="{{true}}"><span>{{r.t}}</span></sc-if>
+            <sc-if value="{{r.shim}}" hint-placeholder-val="{{false}}"><span class="rs-shim"></span></sc-if>
           </div>
         </sc-for>
       </div>
@@ -120,6 +133,20 @@ body{margin:0}
 </template>
 <script type="text/x-dc">
 class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { rs: 0 }; }
+  // research streams in one finding at a time, like an AI chain of thought
+  componentDidMount() {
+    var self = this;
+    var tick = function () {
+      self.timer = setTimeout(function () {
+        if (self.state.rs >= 3) return;
+        self.setState({ rs: self.state.rs + 1 });
+        tick();
+      }, self.state.rs === 0 ? 900 : 750);
+    };
+    tick();
+  }
+  componentWillUnmount() { clearTimeout(this.timer); }
   renderVals() {
     var inds = ['Beauty & Cosmetics', 'Fashion & Apparel', 'Consumer Electronics', 'Home & Living', 'Health & Wellness', 'Grocery & Gourmet', 'Travel & Hospitality', 'Sporting Goods'];
     var research = [
@@ -127,11 +154,13 @@ class Component extends DCLogic {
       'Sephora sells online and through its stores across Europe, the Americas, the Middle East and Asia, with a loyalty programme at the centre of its CRM.',
       "As Sales Director for East Europe, you're likely focused on regional growth, conversion and a localized shopping experience."
     ];
+    var n = this.state.rs;
     return {
       industries: inds.map(function (n, i) { return { n: n, sel: i === 0 }; }),
-      research: research.map(function (t, i) {
-        var last = i === research.length - 1;
-        return { t: t, pad: last ? '0' : '14px', line: last ? 'transparent' : '#e4e4e7' };
+      rsDone: this.state.rs >= research.length, rsBusy: this.state.rs < research.length,
+      research: research.map(function (t, i) { return { t: t, i: i }; }).filter(function (r) { return r.i <= n; }).map(function (r, k, arr) {
+        var last = k === arr.length - 1;
+        return { t: r.t, text: r.i < n, shim: r.i === n, pad: last ? '0' : '14px', line: last ? 'transparent' : '#e4e4e7' };
       })
     };
   }

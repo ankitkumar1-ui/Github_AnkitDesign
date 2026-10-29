@@ -12174,7 +12174,11 @@ function dsLogo(s){ return DS_LOGO[s.id]?`<span class="lg lg-img"><img src="${DS
   var q = new URLSearchParams(location.search);
   if (q.get('embed') !== '1') return;
   var css = document.createElement('style');
-  css.textContent = '.app{grid-template-columns:1fr!important}.app>.rail,.app .topbar,#scrim{display:none!important}';
+  css.textContent = '.app{grid-template-columns:1fr!important}.app>.rail,.app .topbar,#scrim{display:none!important}'
+    // audience tiles in Cortex: two columns
+    + '.v3-ans[aria-label="Audience segments"],.v3-ans[aria-label="Other audiences"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}'
+    + '.v3-flowpv{margin:14px 0 4px}.v3-flowpv .card-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}.v3-flowpv h3{margin:0;font-size:14px;font-weight:600}'
+    + '@media(max-width:620px){.v3-ans[aria-label="Audience segments"],.v3-ans[aria-label="Other audiences"]{grid-template-columns:1fr}}';
   document.head.appendChild(css);
   document.documentElement.setAttribute('data-theme', 'light'); // the prototype shell is light
   var ob = document.getElementById('ob'); if (ob) ob.hidden = true;
@@ -12189,6 +12193,90 @@ function dsLogo(s){ return DS_LOGO[s.id]?`<span class="lg lg-img"><img src="${DS
     return studioGo.apply(this, arguments);
   };
   studioGo(mine);
+
+  // Arriving from a signal ("Use in an experience" on #/signals?id=…): open Cortex with that signal as the trigger
+  // and three starting ideas for it. The signal's description and properties come from the prototype's store.
+  var sigId = q.get('sig');
+  if (!sigId) return;
+  var store = null; try { store = window.parent && window.parent.ADX_SIGNALS; } catch (e) {}
+  var rec = store && store.list ? store.list.filter(function (x) { return x.id === sigId; })[0] : null;
+  var human = sigId.charAt(0).toUpperCase() + sigId.slice(1).replace(/_/g, ' ');
+  var NAME = { product_id: 'Product ID', price: 'Product price', brand: 'Brand', category: 'Category', query: 'Search term', results_count: 'Results count', cart_value: 'Cart value', item_count: 'Items in cart', page_url: 'Page URL', filter_type: 'Filter type' };
+  var props = rec && rec.fields ? rec.fields.map(function (f) { return NAME[f.k] || f.k; }) : [];
+  var PAGE = { product_viewed: 'Product detail page', add_to_cart: 'Product detail page', variant_selected: 'Product detail page', search_performed: 'Search results', cart_viewed: 'Basket', checkout_started: 'Basket', category_viewed: 'Category page', filters_applied: 'Category page' };
+  // which set of studio interventions fits the signal (CV_RECOS keys)
+  var KEY = { product_viewed: 'viewed', variant_selected: 'viewed', add_to_cart: 'abandon', cart_viewed: 'abandon', checkout_started: 'abandon', search_performed: 'search', category_viewed: 'compare', filters_applied: 'compare' };
+  var recos = v3SephRecos(CV_RECOS[KEY[sigId] || 'viewed'] || CV_RECOS.viewed);
+  var TRIG = { id: 'sig_' + sigId, name: human, page: PAGE[sigId] || 'Product detail page', path: '/*', src: 'Signal · ' + sigId, conds: [{ s: sigId, op: 'is', v: 'fired' }], label: human, short: human, ic: 'swap' };
+
+  // Preview card (same look as the Experience page's Preview): the Sephora page with the picked intervention on it
+  function recFor(id) { var l = (V3 && (V3.recos || V3.recosNext)) || recos; return l.filter(function (x) { return x.uc === id; })[0] || recos[0]; }
+  function preview(id) {
+    var mob = V3.pvDev === 'mobile';
+    var seg = '<div class="v3-seg" role="group" aria-label="Device"><button class="' + (mob ? '' : 'on') + '" data-pvdev="desktop">' + v3i('desktop') + 'Desktop</button><button class="' + (mob ? 'on' : '') + '" data-pvdev="mobile">' + v3i('mobile') + 'Mobile</button></div>';
+    return '<section class="card v3-sec v3-flowpv"><div class="card-h"><h3>Preview</h3><span class="r">' + seg + '</span></div><div class="v3-secb"><div class="card-b"><div class="v3-stage">' +
+      v3SephPage({ trig: V3.trig || TRIG, recos: [recFor(id)] }, { unit: id, w: 'intro', mobile: mob }) + '</div></div></div></section>';
+  }
+
+  var origActive = v3ActiveHTML, origSel = v3SelDefault, origWire = v3Wire;
+  v3SelDefault = function () { return V3 && (V3.step === 'sigstart' || V3.step === 'sigask') ? null : origSel.apply(this, arguments); };
+  v3ActiveHTML = function () {
+    if (V3 && V3.step === 'sigask') return '<div class="cv-cardwrap"><div class="cv-actions" style="margin-top:0"><button class="btn primary" id="sgYes">Yes, proceed' + gxArrow() + '</button><button class="btn" id="sgMore">Show me other ideas</button></div></div>';
+    if (V3 && V3.step === 'sigstart') {
+      var opt = function (r, i) { var on = V3.sel === r.uc; return '<div class="gx-opt v3-o v3-sgi ' + (on ? 'on' : '') + '" role="radio" aria-checked="' + on + '" tabindex="0" data-v3sel="' + esc(r.uc) + '"><span class="v3-rd" aria-hidden="true"></span><span style="min-width:0;flex:1"><span class="cvs-top"><span class="cvs-tag">' + esc(r.tag) + '</span>' + (i ? '' : '<span class="cvs-rec">Recommended</span>') + '</span><b>' + esc(r.name) + '</b><span>' + esc(r.why) + '</span>' +
+        (r.q ? '<span class="v3-sgm"><span class="gx-imp q">' + v3i('<path d="M7 14l5-5 5 5"/>', 12) + esc(r.q) + '</span>' + (r.conf ? '<span class="gx-imp">' + esc(r.conf) + '</span>' : '') + '</span>' : '') +
+        (r.an ? '<span class="cvs-an"><b>' + esc(r.an) + '</b> ' + esc(r.anT || '') + '</span>' : '') + '</span></div>'; };
+      return '<div class="cv-cardwrap"><div class="cv-ch">What should the Experience do?<span class="cv-req">Pick one</span></div><div class="v3-ans" role="radiogroup" aria-label="Ideas">' + recos.map(opt).join('') + '</div>' + (V3.sel ? preview(V3.sel) : '') + v3SubmitRow() + '</div>';
+    }
+    var h = origActive.apply(this, arguments);
+    // the suggestion step also shows what the first picked option looks like on the site
+    if (V3 && V3.step === 'suggest' && V3.suggSel && V3.S && V3.S.key === 'sephora') {
+      var first = V3.S.sugg.filter(function (r) { return V3.suggSel.has(r.id); })[0];
+      var at = h.lastIndexOf('<div class="cv-actions">');
+      if (first && at > 0) h = h.slice(0, at) + preview(first.id) + h.slice(at);
+    }
+    return h;
+  };
+  // re-render without the thread jumping to the bottom
+  function rr() { var t = document.getElementById('v3Thread'), y = t ? t.scrollTop : 0; v3Render(); var n = document.getElementById('v3Thread'); if (n) n.scrollTo({ top: y, behavior: 'instant' }); }
+  v3Wire = function (root) {
+    origWire.apply(this, arguments);
+    if (!V3) return;
+    root.querySelectorAll('[data-pvdev]').forEach(function (b) { b.addEventListener('click', function () { V3.pvDev = b.dataset.pvdev; rr(); }); });
+    if (V3.step === 'suggest') root.querySelectorAll('[data-v3sg]').forEach(function (b) { b.addEventListener('click', function () { setTimeout(rr, 0); }); });
+    if (V3.step === 'sigask') {
+      var go = function (said, lines, msg) { v3User(said); V3.step = null; v3Think(lines, 2400, function () { v3Say(msg); V3.step = 'sigstart'; }, 'Sizing the options'); };
+      var y = document.getElementById('sgYes'), m = document.getElementById('sgMore');
+      if (y) y.addEventListener('click', function () { go('Yes, proceed', ['Checking return reasons for ' + human.toLowerCase() + ' sessions', 'Sizing the impact on your mock data', 'Comparing it with other options'], 'Here is what I would run, sized from your data. <b>' + esc(recos[0].name) + '</b> comes first. Pick one to see it on the page.'); });
+      if (m) m.addEventListener('click', function () { go('Show me other ideas', ['Looking for other moments on the ' + TRIG.page.toLowerCase(), 'Sizing each option'], 'Here are the options for <b>' + esc(sigId) + '</b>, sized from your data. Pick one to see it on the page.'); });
+      return;
+    }
+    if (V3.step !== 'sigstart') return;
+    root.querySelectorAll('[data-v3sel]').forEach(function (b) { b.addEventListener('click', function () { setTimeout(rr, 0); }); });
+    var sub = document.getElementById('v3Submit');
+    if (sub) sub.addEventListener('click', function () {
+      var r = recFor(V3.sel);
+      V3.step = null; V3.name = r.name;
+      v3SetSugg([r.uc]);
+    });
+  };
+  setTimeout(function () {
+    clearTimeout(V3_T);
+    var S = v3SephS(recos, null);
+    V3 = { prompt: 'Use ' + sigId + ' in an experience', S: S, recos: recos, pvDev: 'desktop', step: null, msgs: [], thinking: null, aud: null, trig: TRIG, trigFromPrompt: true, goal: undefined, hintAud: null,
+      action: S.action, does: S.does, copy: S.copy, name: S.name, acts: S.acts, sugg: null, alt: false, returnTo: null, reached: false, freq: 'Once per session', notes: [], seen: 0, panel: false, flash: null, pendingGoal: null, customTrig: null };
+    v3User('Use ' + sigId + ' in an experience');
+    var r = document.getElementById('cv'); r.hidden = false; r.classList.add('v3');
+    var lines = ['Reading ' + sigId, 'Checking where it fires · ' + TRIG.page];
+    if (props.length) lines.push('Looking at what it carries · ' + props.slice(0, 3).join(', '));
+    v3Think(lines, 2200, function () {
+      var first = recos[0];
+      v3Say('<b>' + esc(sigId) + '</b> fires when ' + esc(rec && rec.desc ? rec.desc.replace(/\.$/, '').toLowerCase() : human.toLowerCase()) + (rec && /page/i.test(rec.desc || '') ? '' : ', on the ' + esc(TRIG.page.toLowerCase())) +
+        (rec && rec.seen ? ' (seen on ' + rec.seen + ' pages)' : '') + '.' + (props.length ? ' Each event carries <b>' + esc(props.join(', ')) + '</b>, so I know which product, brand and price the shopper is looking at.' : '') +
+        "<br><br>I've set it as the trigger. I'd use it for <b>" + esc(first.name.toLowerCase()) + '</b>: ' + esc(first.why.charAt(0).toLowerCase() + first.why.slice(1)) + ' Should I proceed?');
+      V3.step = 'sigask';
+    }, 'Reading the signal');
+  }, 300);
 })();
 </script>
 </body>
