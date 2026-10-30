@@ -966,16 +966,16 @@ body{margin:0}
    window.ADX_SCAN.scans[kind] = { st: 'idle' | 'running' | 'done', t0, done }, kind = 'evt' | 'cat' | 'cms'.
    One shared ticker (window.ADX_SCAN.timer) advances every running scan and sends each its own toast,
    whichever screen is open. */
-var SCAN_SITE = 'sephora.com', SCAN_MS = 75000;
+var SCAN_SITE = 'sephora.com', SCAN_MS = 6000;
 var SCAN_FOUND = { pages: 120, events: 142, signals: 23, products: 12480, content: 1240 };
 // per kind: phase copy, a running count, the finished toast and where it links
 var SCAN_KIND = {
   evt: { phases: ['Opening ' + SCAN_SITE + '…', 'Reading pages', 'Matching events to signals', 'Drafting signals'],
     count: function (p) { return Math.round(SCAN_FOUND.events * p) + ' events found'; },
-    toast: ['Web signals scan complete', SCAN_FOUND.events + ' events · ' + SCAN_FOUND.signals + ' signals drafted', '#/signals', 'View signals'] },
+    toast: ['Web signals scan complete', SCAN_FOUND.events + ' events · ' + SCAN_FOUND.signals + ' signals drafted', null, null] },
   cat: { phases: ['Opening ' + SCAN_SITE + '…', 'Reading product pages', 'Matching products and prices', 'Building the catalog'],
     count: function (p) { return Math.round(SCAN_FOUND.products * p).toLocaleString('en-US') + ' products found'; },
-    toast: ['Product catalog scan complete', SCAN_FOUND.products.toLocaleString('en-US') + ' products', '#/catalog', 'View catalog'] },
+    toast: ['Product catalog scan complete', SCAN_FOUND.products.toLocaleString('en-US') + ' products', null, null] },
   cms: { phases: ['Opening ' + SCAN_SITE + '…', 'Reading guides and banners', 'Indexing content', 'Building the library'],
     count: function (p) { return Math.round(SCAN_FOUND.content * p).toLocaleString('en-US') + ' pages found'; },
     toast: ['Content scan complete', SCAN_FOUND.content.toLocaleString('en-US') + ' pages, guides and banners', null, null] }
@@ -993,7 +993,7 @@ function scanPhase(p, kind) {
 }
 function scanLeft(p) {
   var s = SCAN_MS * (1 - p) / 1000;
-  return s < 10 ? 'less than 10s left' : s >= 60 ? 'about 1 min left' : 'about ' + Math.round(s / 5) * 5 + 's left';
+  return s < 10 ? 'a few seconds left' : s >= 60 ? 'about 1 min left' : 'about ' + Math.round(s / 5) * 5 + 's left';
 }
 function scanNotify() { var S = scanStore(); S.subs.slice().forEach(function (f) { try { f(); } catch (e) {} }); }
 function scanTick() {
@@ -1022,10 +1022,13 @@ function scanToast(kind) {
   t.style.cssText = 'position:fixed;right:20px;bottom:' + (20 + stack * 76) + 'px;z-index:9999;display:flex;align-items:flex-start;gap:11px;width:356px;max-width:calc(100vw - 40px);box-sizing:border-box;padding:14px 16px;border-radius:8px;background:#fff;color:#09090b;border:1px solid #e4e4e7;font:13px/1.45 Geist,ui-sans-serif,system-ui,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.08);transition:opacity .25s,transform .25s;opacity:0;transform:translateY(8px)';
   t.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>'
     + '<span style="flex:1;min-width:0"><b style="display:block;font-weight:500">' + T[0] + '</b><span style="color:#71717a">' + T[1] + '</span></span>'
-    + (T[2] ? '<a href="' + T[2] + '" style="flex:none;align-self:center;height:24px;padding:0 8px;border-radius:4px;background:#18181b;color:#fafafa;font-size:12px;font-weight:500;display:inline-flex;align-items:center;text-decoration:none">' + T[3] + '</a>' : '');
+    + '<button type="button" data-ok style="flex:none;align-self:center;height:24px;padding:0 10px;border:0;border-radius:4px;background:#18181b;color:#fafafa;font:inherit;font-size:12px;font-weight:500;cursor:pointer">OK</button>'
+    + '<button type="button" data-x aria-label="Close" style="flex:none;width:20px;height:20px;margin:-2px -6px 0 -4px;border:0;border-radius:4px;background:none;color:#71717a;display:grid;place-items:center;cursor:pointer;padding:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>';
   document.body.appendChild(t);
   requestAnimationFrame(function () { t.style.opacity = '1'; t.style.transform = 'none'; });
-  setTimeout(function () { t.style.opacity = '0'; t.style.transform = 'translateY(8px)'; setTimeout(function () { t.remove(); }, 300); }, 6000);
+  var gone = false, hide = function () { if (gone) return; gone = true; t.style.opacity = '0'; t.style.transform = 'translateY(8px)'; setTimeout(function () { t.remove(); }, 300); };
+  t.querySelector('[data-ok]').addEventListener('click', hide); t.querySelector('[data-x]').addEventListener('click', hide);
+  setTimeout(hide, 6000);
 }
 // resume the ticker if the screen script is re-evaluated mid-scan
 (function () { var S = scanStore(); if (!S.timer && Object.keys(S.scans).some(function (k) { return S.scans[k].st === 'running'; })) S.timer = setInterval(scanTick, 500); })();
@@ -1421,7 +1424,7 @@ class Component extends DCLogic {
     }
     moreTiles('evt', evt);
     evt.scanTile = scanTile('evt', 'We browse your site like a shopper and note the events it sends.', SCAN_FOUND.events + ' events found · ' + SCAN_FOUND.signals + ' signals drafted',
-      [{ n: SCAN_FOUND.events, l: 'events found' }, { n: SCAN_FOUND.signals, l: 'signals drafted' }, PAGES_STAT], ['#/signals', 'View signals']);
+      [{ n: SCAN_FOUND.events, l: 'events found' }, { n: SCAN_FOUND.signals, l: 'signals drafted' }, PAGES_STAT]);
     evt.sub = scanDoneOf('evt') && !evtDone ? SCAN_FOUND.events + ' events found by the scan · connect a source to keep them live' : 'Shopper events: page views, searches, add-to-basket and checkout.';
     evt.subFg = scanDoneOf('evt') && !evtDone ? '#2f7a70' : '#71717a';
     Object.assign(evt, faces(mode === 'connect' ? doneKeys.map(function (k) { return { logo: logo(LOGO[k]), name: EV[k].name }; }) : []));
@@ -1429,7 +1432,7 @@ class Component extends DCLogic {
     var cat = accordion(group('catalog'), 'catalog'), catDone = cat.done;
     scanned(cat, catDone, 'cat');
     cat.scanTile = scanTile('cat', 'We browse your product pages like a shopper and list products, brands and prices.', SCAN_FOUND.products.toLocaleString('en-US') + ' products found',
-      [{ n: SCAN_FOUND.products.toLocaleString('en-US'), l: 'products found' }, PAGES_STAT], ['#/catalog', 'View catalog']);
+      [{ n: SCAN_FOUND.products.toLocaleString('en-US'), l: 'products found' }, PAGES_STAT]);
     function ctxGroup(gid, i, first) {
       var g = group(gid);
       g.bt = i || !first ? '1px solid #e4e4e7' : '0';
