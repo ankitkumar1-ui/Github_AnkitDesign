@@ -1,0 +1,95 @@
+{
+  "_about": "Hard-coded voice script for the ADX end-user prototype. The shopper says something; the first turn whose match words appear in what they said wins; the assistant replies with 'say'. Edit freely. {{today}} is filled from the browser date.",
+  "persona": {
+    "shopper": "Linda, Beauty Insider Rouge",
+    "context": "Foundation page. Color IQ 526N (neutral). March order 516W (warm). Shade 526N selected, hovering over Add to Basket."
+  },
+  "opening": {
+    "id": "open",
+    "say": "Your March bottle was 516W and your Color IQ reads 526N. Can you share what changed since March?"
+  },
+  "turns": [
+    {
+      "id": "tan",
+      "intent": "Got a tan",
+      "match": ["tan", "tanner", "darker", "sun", "outside", "summer"],
+      "say": "That makes sense. I've kept 526N for you, since it suits your deeper tone now. Want me to add it to your basket?"
+    },
+    {
+      "id": "dry",
+      "intent": "Drier skin, wants glow",
+      "match": ["dry", "drier", "glow", "dewy", "flaky"],
+      "say": "Got it. Here's a hydrating formula in the same 526N shade, with a more glowy finish. Shall I swap it in?"
+    },
+    {
+      "id": "orange",
+      "intent": "Last shade oxidised",
+      "match": ["orange", "oxidis", "oxidiz", "turned", "went darker by"],
+      "say": "Thanks for telling me. I'll steer you one step cooler than 516W. 526N is a good match. Want to try it?"
+    },
+    {
+      "id": "same",
+      "intent": "Nothing changed",
+      "match": ["nothing", "same", "no change", "not really"],
+      "say": "No problem. I'll keep 516W from your last order. Would you like me to add it to your basket?"
+    },
+    {
+      "id": "yes",
+      "intent": "Confirm",
+      "match": ["yes", "sure", "okay", "ok", "add it", "go ahead", "please"],
+      "say": "Done. It's in your basket. You're $27 away from your offer. Want a brush that goes with this shade?"
+    },
+    {
+      "id": "no",
+      "intent": "Decline",
+      "match": ["no thanks", "not now", "no", "skip", "later"],
+      "say": "No worries. I'll leave your basket as it is. Ask me anything else about this shade."
+    },
+    {
+      "id": "brush",
+      "intent": "Brush or sponge",
+      "match": ["brush", "sponge", "blender", "fingers", "apply"],
+      "say": "Do you usually apply foundation with a brush, a sponge or your fingers?"
+    },
+    {
+      "id": "undertone",
+      "intent": "Undertone",
+      "match": ["undertone", "warm", "cool", "neutral", "golden"],
+      "say": "Which undertone suits you now: warm, neutral or cool? If you're not sure, I can help you find out."
+    },
+    {
+      "id": "occasion",
+      "intent": "Use occasion",
+      "match": ["wedding", "event", "photos", "everyday", "work", "party", "wear it for"],
+      "say": "What will you mostly wear it for? I'll show you reviews from people who wore it the same way."
+    },
+    {
+      "id": "search",
+      "intent": "Search clarification",
+      "match": ["matte", "oily", "long wear", "all day", "fragrance"],
+      "say": "Only three results for that. Which matters more to you: a matte finish, all-day wear, or fragrance-free?"
+    },
+    {
+      "id": "delivery",
+      "intent": "Delivery",
+      "match": ["deliver", "shipping", "arrive", "when will"],
+      "say": "Standard shipping is free over $50, and it usually arrives in three to five days."
+    },
+    {
+      "id": "date",
+      "intent": "Date question",
+      "match": ["date", "today", "what day"],
+      "say": "Today is {{today}}."
+    },
+    {
+      "id": "hello",
+      "intent": "Greeting",
+      "match": ["hello", "hi ", "hey"],
+      "say": "Hi Linda, welcome back. I can help you pick the right shade."
+    }
+  ],
+  "fallback": {
+    "id": "fallback",
+    "say": "Sorry, I didn't catch that. You can ask me about shades, delivery, or what changed since your last order."
+  }
+}

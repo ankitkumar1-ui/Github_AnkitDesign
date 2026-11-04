@@ -9,6 +9,14 @@
         "dev"
       ],
       "port": 3000
+    },
+    {
+      "name": "proto",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serve.mjs"
+      ],
+      "port": 5173
     }
   ]
 }
