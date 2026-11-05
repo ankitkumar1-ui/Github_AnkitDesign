@@ -302,6 +302,12 @@ class Component extends DCLogic {
       ['cart', 'Increase cart value through intelligent cross-selling', 'Suggest the one or two products that genuinely go with what is in the basket.', ['Catalog', 'Orders']],
       ['grid', 'Improve category page engagement and conversions', 'Rank category pages for each shopper so the most relevant products lead.', ['Catalog', 'Events']]
     ];
+    // the request Cortex starts from when you click Build (same flow as the studio's New Experience)
+    var ASK = [
+      'When shoppers search and find nothing useful, understand what they meant (a skin concern, shade, product type or brand) and show relevant, in-stock products instead of a dead end. Turn failed searches into product views and orders.',
+      'When shoppers add something to their basket, suggest the one or two products that genuinely go with it, like a primer with a foundation or a brush with a concealer. Raise basket value without cluttering checkout.',
+      'When shoppers browse category pages extensively without finding what they need, understand their intent (a skin concern, shade, product type or brand) and surface more relevant, in-stock recommendations. Turn unproductive browsing into product discovery that drives more product views and orders.'
+    ];
     var h = new Date().getHours();
     var empty = !st.prompt.trim();
     function submit() { if (!empty) location.hash = '#/missing'; }
@@ -310,10 +316,10 @@ class Component extends DCLogic {
       prompt: st.prompt, empty: empty, submit: submit,
       onPrompt: function (e) { self.setState({ prompt: e.target.value }); },
       onKey: function (e) { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); submit(); } },
-      recs: RECS.map(function (r) {
+      recs: RECS.map(function (r, i) {
         return { icon: I[r[0]], title: r[1], desc: r[2],
           tags: r[3].map(function (t) { return { l: t, cls: have[t] ? '' : 'miss', tip: have[t] ? t + ' connected' : t + ' not connected yet' }; }),
-          use: function () { self.setState({ prompt: r[1] }); } };
+          use: function () { location.hash = '#/experiences?ask=' + encodeURIComponent(ASK[i]); } };
       }),
       pct: pct, next: next ? next[0] : 'Review sources',
       summary: n.ok + ' connected · ' + n.part + ' partial · ' + n.none + ' not started',

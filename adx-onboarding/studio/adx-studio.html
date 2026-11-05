@@ -12196,6 +12196,10 @@ function dsLogo(s){ return DS_LOGO[s.id]?`<span class="lg lg-img"><img src="${DS
 
   // Arriving from a signal ("Use in an experience" on #/signals?id=…): open Cortex with that signal as the trigger
   // and three starting ideas for it. The signal's description and properties come from the prototype's store.
+  // Arriving from a Home recommendation ("Build"): open Cortex's New Experience with that request typed in
+  var ask = q.get('ask');
+  if (ask) { setTimeout(function () { v3Open({ text: ask }); }, 300); return; }
+
   var sigId = q.get('sig');
   if (!sigId) return;
   var store = null; try { store = window.parent && window.parent.ADX_SIGNALS; } catch (e) {}
