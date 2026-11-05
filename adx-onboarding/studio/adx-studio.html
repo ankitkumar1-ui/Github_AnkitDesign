@@ -12181,6 +12181,12 @@ function dsLogo(s){ return DS_LOGO[s.id]?`<span class="lg lg-img"><img src="${DS
     + '.v3-ans[aria-label="Audience segments"],.v3-ans[aria-label="Other audiences"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}'
     + '.v3-flowpv{margin:14px 0 4px}.v3-flowpv .card-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}.v3-flowpv h3{margin:0;font-size:14px;font-weight:600}'
     + '@media(max-width:620px){.v3-ans[aria-label="Audience segments"],.v3-ans[aria-label="Other audiences"]{grid-template-columns:1fr}}';
+  // Sephora page previews (v3SephPage, Simulate): the drawn products become their real sephora.com photos (V3_SEPH_PRODUCTS order)
+  var PH = ['s2590081-main-zoom.jpg', 's2911741-main-zoom.jpg', 's2404846-main-zoom.jpg', 's2368439-main-zoom.jpg', 's2473361-main-zoom.jpg', 's2818680-main-zoom.jpg'];
+  var phUrl = function (f, w) { return 'url("https://www.sephora.com/productimages/sku/' + f + '?imwidth=' + w + '")'; };
+  css.textContent += PH.map(function (f, i) { return 'html body .sp-thumb.t' + i + '{background:#fff ' + phUrl(f, 200) + ' center/contain no-repeat}html body .sp-thumb.t' + i + '::after{display:none}'; }).join('')
+    + 'html body .sp-img{background:#fff ' + phUrl(PH[0], 500) + ' center/contain no-repeat}html body .sp-img .sp-bottle{visibility:hidden}';
+  try { V3_SEPH_PRODUCTS[5][1] = 'Micellar Cleansing Water'; } catch (e) {} // the photo's real name; prices stay (the basket subtotal adds them up)
   document.head.appendChild(css);
   document.documentElement.setAttribute('data-theme', 'light'); // the prototype shell is light
   var ob = document.getElementById('ob'); if (ob) ob.hidden = true;
