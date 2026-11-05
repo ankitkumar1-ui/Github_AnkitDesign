@@ -12596,8 +12596,8 @@ cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments)
   };
   try {
     if (PW && PW.ADX_EXPS) Object.keys(PW.ADX_EXPS).reverse().forEach(function (id) {
-      if (EXPERIENCES.some(function (e) { return e.id === id; })) return;
-      var e = JSON.parse(PW.ADX_EXPS[id]); ADX_MINE[id] = 1; EXPERIENCES.unshift(e);
+      var e = JSON.parse(PW.ADX_EXPS[id]), at = EXPERIENCES.findIndex(function (x) { return x.id === id; }); ADX_MINE[id] = 1;
+      if (at >= 0) EXPERIENCES[at] = e; else EXPERIENCES.unshift(e); // a shipped one whose status you changed keeps it
     });
   } catch (e) {}
   window.addEventListener('pagehide', adxSave);
@@ -12820,30 +12820,69 @@ cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments)
     };
   }
 
-  // ---------- Draft → Staging → Production ----------
-  var envSync = function () {
-    try { // Experiences list
-      document.querySelectorAll('tr[data-open] .pill.draft').forEach(function (p) {
-        var x = EXPERIENCES.find(function (e) { return e.id === p.closest('tr').dataset.open; });
-        if (x && x.v3 && x.v3.env === 'staging') { p.className = 'pill learning'; p.innerHTML = '<span class="d"></span>Staging'; }
-      });
+  // ---------- Status: Draft, Active or Inactive only ----------
+  // Internally the studio keeps live / paused; they read Active / Inactive. Learning counts as Active.
+  // A couple of the shipped experiences start as drafts so the list has all three.
+  try {
+    STATUS_LABEL.live = 'Active'; STATUS_LABEL.learning = 'Active'; STATUS_LABEL.paused = 'Inactive';
+    EXPERIENCES.forEach(function (e) { if (e.status === 'learning') e.status = 'live'; if (e.v3 && e.v3.env) { delete e.v3.env; } });
+    [/^Reviews matched to her/, /^Rebuy what she uses/].forEach(function (re) {
+      var e = EXPERIENCES.find(function (x) { return re.test(x.name); });
+      if (e && !e._adxDraft && !ADX_MINE[e.id]) { e._adxDraft = 1; e.status = 'draft'; e.metric = 'Draft'; e.metricState = 'flat'; if (e.v3) e.v3.hist = [{ t: 'Draft created', s: 'Oct 2026' }]; }
+    });
+  } catch (e) {}
+  css.textContent += '.tbl .pill.paused,.v3d-meta .pill.paused{background:var(--surface);color:var(--muted);border-color:var(--line)}.tbl .pill.paused .d,.v3d-meta .pill.paused .d{background:transparent;border:1.5px solid var(--faint);box-sizing:border-box}'
+    + '.adx-fl{cursor:pointer;font:inherit}.adx-fl:hover{background:var(--sink)}';
+  // Experiences list: All / Active / Inactive / Draft, and they filter the table
+  var EXP_FL = 'all';
+  // (the list is drawn through the router's own reference, so follow the DOM)
+  var listSync = function () {
+    try {
+      var first = [].filter.call(document.querySelectorAll('#view .tag.acc, .tag.acc'), function (t) { return /^All experiences/.test(t.textContent); })[0];
+      var bar = first && first.parentElement; if (!bar || bar.dataset.adxFl) return;
+      bar.dataset.adxFl = '1';
+      var n = function (st) { return EXPERIENCES.filter(function (e) { return st === 'all' || e.status === st; }).length; };
+      var draw = function () {
+        bar.innerHTML = [['all', 'All experiences'], ['live', 'Active'], ['paused', 'Inactive'], ['draft', 'Draft']].map(function (f) { return '<button type="button" class="tag adx-fl ' + (EXP_FL === f[0] ? 'acc' : '') + '" data-adxfl="' + f[0] + '">' + f[1] + ' · ' + n(f[0]) + '</button>'; }).join('');
+        document.querySelectorAll('tr[data-open]').forEach(function (tr) { var e = EXPERIENCES.find(function (x) { return x.id === tr.dataset.open; }); tr.hidden = !(EXP_FL === 'all' || (e && e.status === EXP_FL)); });
+      };
+      draw(); bar.addEventListener('click', function (ev) { var b = ev.target.closest('[data-adxfl]'); if (b) { EXP_FL = b.dataset.adxfl; draw(); } });
     } catch (e) {}
+  };
+  new MutationObserver(function () { setTimeout(listSync, 0); }).observe(document.body, { childList: true, subtree: true });
+  // Experience page: Draft → Publish; Active → Update + Make inactive; Inactive → Make active (same place, top right)
+  var setStatus = function (e, st, hist, msg) { e.status = st; if (st === 'live') { e.metric = e.metric === 'Draft' ? '—' : e.metric; } e.v3.hist.unshift({ t: hist, s: 'Just now' }); e._adxStAt = st; ADX_MINE[e.id] = 1; adxSave(); v3RenderDetail(); toast(msg); };
+  var envSync = function () {
     try {
       var e = typeof v3Exp === 'function' && V3D && v3Exp(), b = document.getElementById('v3Prep');
-      if (!e || !e.v3 || !b || (e.status && e.status !== 'draft')) return;
-      var env = e.v3.env || 'draft';
+      if (!e || !e.v3 || !b) return;
+      var st = e.status === 'learning' ? 'live' : e.status || 'draft';
       var m = document.querySelector('#v3DetailMain .v3d-meta'), p = m && m.querySelector('.pill');
-      if (env === 'staging' && p && !p.classList.contains('learning')) { p.className = 'pill learning'; p.innerHTML = '<span class="d"></span>Staging'; }
-      if (b.dataset.adxEnv === env) return;
-      var nb = b.cloneNode(false); nb.id = 'v3Prep'; nb.dataset.adxEnv = env;
-      nb.innerHTML = env === 'staging' ? v3i('check', 15) + 'Promote to production' : v3i('<path d="M12 19V5M6 11l6-6 6 6"/>', 15) + 'Publish to staging';
-      nb.addEventListener('click', function () {
-        if (env === 'staging') return v3OpenPrep(e);
-        e.v3.env = 'staging'; e.v3.hist.unshift({ t: 'Published to staging', s: 'Just now' }); ADX_MINE[e.id] = 1; adxSave();
-        v3RenderDetail(); toast('Published to staging');
-      });
-      b.replaceWith(nb);
-    } catch (e) {}
+      if (p && st !== 'draft') {
+        var lbl = st === 'paused' ? 'Inactive' : 'Active';
+        if (p.textContent.trim() !== lbl) { p.className = 'pill ' + st; p.innerHTML = '<span class="d"></span>' + lbl; }
+        var last = m.lastElementChild;
+        if (last && last !== p && /^Live since/.test(last.textContent)) last.innerHTML = last.innerHTML.replace(/^Live since/, 'Active since');
+        if (last && last !== p && e._adxStAt) { var tx = st === 'paused' ? 'Made inactive just now' : 'Published just now'; if (last.textContent !== tx) last.textContent = tx; }
+      }
+      if (b.dataset.adxSt === st) return;
+      var mk = function (cls, html, fn) { var x = document.createElement('button'); x.className = cls; x.innerHTML = html; x.addEventListener('click', fn); return x; };
+      var nb = b.cloneNode(false); nb.id = 'v3Prep'; nb.dataset.adxSt = st;
+      if (st === 'draft') {
+        nb.innerHTML = v3i('<path d="M12 19V5M6 11l6-6 6 6"/>', 15) + 'Publish';
+        nb.addEventListener('click', function () { setStatus(e, 'live', 'Published', 'Published · the experience is active'); });
+        b.replaceWith(nb);
+      } else if (st === 'live') {
+        nb.innerHTML = v3i('<path d="M12 19V5M6 11l6-6 6 6"/>', 15) + 'Update';
+        nb.addEventListener('click', function () { e.v3.hist.unshift({ t: 'Update published', s: 'Just now' }); ADX_MINE[e.id] = 1; adxSave(); toast('Update published'); });
+        var off = mk('btn', v3i('<circle cx="12" cy="12" r="9"/><path d="M9 9v6M15 9v6"/>', 15) + 'Make inactive', function () { setStatus(e, 'paused', 'Made inactive', 'Made inactive · shoppers no longer see it'); });
+        b.replaceWith(nb); nb.before(off);
+      } else {
+        nb.innerHTML = v3i('<path d="m9 7 8 5-8 5z"/>', 15) + 'Make active';
+        nb.addEventListener('click', function () { setStatus(e, 'live', 'Made active', 'Made active · shoppers see it again'); });
+        b.replaceWith(nb);
+      }
+    } catch (err) {}
   };
   new MutationObserver(function () { setTimeout(envSync, 0); }).observe(document.body, { childList: true, subtree: true });
 
