@@ -3550,6 +3550,8 @@ document.documentElement.setAttribute('data-theme', 'light'); try { localStorage
   .v3-row .k{display:block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
   .v3-row .v{display:block;font-size:13px;color:var(--ink);font-weight:500;line-height:1.45;margin-top:1px}
   .v3-row .v.ph{color:var(--faint);font-weight:400}
+  /* once a row has a value (picked or suggested), its label reads in ink too, not grey */
+  .v3-row.ok .k,.v3-row.sug .k{color:var(--ink)}
   .v3-row .v .s{display:block;font-size:11.5px;color:var(--ai-ink);font-weight:500}
   .v3-row .ed{color:var(--faint);padding:4px;border-radius:6px;flex:none}
   .v3-row .ed:hover{background:var(--sink);color:var(--ink)}
@@ -3753,9 +3755,9 @@ document.documentElement.setAttribute('data-theme', 'light'); try { localStorage
   .cvx-top .cvh-tt:focus{background:var(--surface);box-shadow:0 0 0 2px color-mix(in srgb,#3C8C81 35%,transparent);text-overflow:clip}
   .cvx-top .cvh-tt.ph{color:var(--faint);font-weight:500}
   .cvx-top .cvh-st{position:relative;flex:none;cursor:default}
-  .cvx-top .cvh-tip{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:290px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);font-size:12px;font-weight:400;color:var(--muted);line-height:1.45;display:none}
+  .cvx-top .cvh-tip{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:max-content;padding:8px 10px;border-radius:10px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);font-size:12px;font-weight:400;color:var(--muted);line-height:1.45;display:none}
   .cvx-top .cvh-st:hover .cvh-tip{display:block}
-  .cvx-top .cvh-flow{display:flex;align-items:center;gap:6px;margin-top:8px}
+  .cvx-top .cvh-flow{display:flex;align-items:center;gap:6px}
   .cvx-top .cvh-flow .pill{font-size:11px}
   .cvx-top .cvh-flow .ar{color:var(--faint)}
   .cvx-top .pill.active{background:#ecfdf5;color:#047857;border-color:#a7f3d0} .cvx-top .pill.active .d{background:#10b981}
@@ -10645,11 +10647,11 @@ function v3DraftRows(){
   const g=V3.goal, chk=`<span class="st">${v3i("check",10)}</span>`;
   const status=V3.editId?(v3Dirty()?"Unsaved changes":"No changes yet"):V3.reached?"Ready to create":"Collecting details";
   return [
-    {k:"Audience",cls:st(!!V3.aud,!V3.aud&&!!V3.hintAud),v:V3.aud?esc(V3.aud.label):V3.hintAud?`${esc(V3.hintAud.label)}<span class="s">From your description</span>`:"",ph:"Who should see it",ed:"audience",fl:"aud"},
+    {k:"Audience",cls:st(!!V3.aud,!V3.aud&&!!V3.hintAud),v:V3.aud?esc(V3.aud.label):V3.hintAud?esc(V3.hintAud.label):"",ph:"Who should see it",ed:"audience",fl:"aud"},
     {k:"Trigger",cls:st(!!V3.trig),v:V3.trig?esc(V3.trig.short):"",ph:"When it should appear",ed:"trigger",fl:"trig"},
     {k:"Data",cls:st(V3.data!==undefined),v:V3.data!==undefined?esc(v3DataLabel(V3.data)):"",ph:"Mock data or your own",ed:"data",fl:"data"},
     {k:"Suggested action",cls:st(!!V3.sugg),v:V3.sugg?esc(V3.action):"",ph:"After audience and trigger",ed:V3.sugg?"refine":null,fl:"act"},
-    {k:"Goal",cls:st(g!==undefined,g===undefined&&V3.msgs.length>2),v:g===undefined?(V3.msgs.length>2?`${esc(V3.S.goal.name)}<span class="s">Suggested by Cortex</span>`:""):g.name?esc(g.name)+(g.mode==="new"?'<span class="s">New goal</span>':""):"Independent",ph:"Cortex will suggest one",ed:"goal",fl:"goal"},
+    {k:"Goal",cls:st(g!==undefined,g===undefined&&V3.msgs.length>2),v:g===undefined?(V3.msgs.length>2?esc(V3.S.goal.name):""):g.name?esc(g.name)+(g.mode==="new"?'<span class="s">New goal</span>':""):"Independent",ph:"Cortex will suggest one",ed:"goal",fl:"goal"},
     {k:"Additional instructions",cls:st(V3.instr!==undefined),v:V3.instr===undefined?"":V3.instr.length?V3.instr.map(t=>esc(t)).join("<br>"):"None",ph:"Optional · tone, copy rules",ed:"instr",fl:"instr"},
   ].map(r=>`<div class="v3-row ${r.cls} ${V3.flash&&V3.flash===r.fl?"flash":""}"><span class="st">${r.cls==="ok"?v3i("check",10):r.cls==="sug"?v3i("sparkle",10):""}</span><span class="tx"><span class="k">${r.k}</span><span class="v ${r.v?"":"ph"}">${r.v||r.ph}</span></span>${r.ed&&r.cls==="ok"&&!V3.thinking?`<button class="ed" data-v3edit="${r.ed}" title="Change ${r.k.toLowerCase()}" aria-label="Change ${r.k.toLowerCase()}">${v3i("pen",14)}</button>`:""}</div>`).join("");
 }
@@ -11842,10 +11844,10 @@ cvPanelHTML=function(){
   const best=(OB_GOALS.find(g=>g.id===cvBestGoal())||{}).label;
   const audSug=CV.aud&&(CV.aud.mode==="all"||CV.aud.mode==="crm"&&CV.aud.crm||CV.aud.ids&&CV.aud.ids.size);
   const rows=[
-    {k:"Audience",st:rank>0?"ok":audSug?"sug":"",v:rank>0||audSug?esc(cvAudLabel())+(rank>0?"":`<span class="s">${CV.hints&&CV.hints.aud?"From your description":"Selected, not confirmed"}</span>`):"",ph:"Who should see it",ed:rank>0?"audience":null},
-    {k:"Trigger",st:rank>1&&CV.trig?"ok":CV.trig?"sug":"",v:CV.trig?esc(cvTrigLabel())+(rank>1?"":`<span class="s">Suggested by Cortex</span>`):"",ph:"When it should appear",ed:rank>1&&CV.trig?"trigger":null},
-    {k:"Suggested action",st:rank>=3&&names.length?"ok":CV.step==="suggest"&&names.length?"sug":"",v:names.length&&rank>=2?esc(names.join(", "))+(rank>=3?"":`<span class="s">${names.length} switched on</span>`):"",ph:"After audience and trigger",ed:rank>=3?"suggest":null},
-    {k:"Goal",st:rank>=4&&CV.goal?"ok":rank>=2&&best?"sug":"",v:rank>=4&&CV.goal?esc(cvGoalLabel()):rank>=2&&best?`${esc(best)}<span class="s">Suggested by Cortex</span>`:"",ph:"Cortex will suggest one",ed:rank>=4?"goal":null},
+    {k:"Audience",st:rank>0?"ok":audSug?"sug":"",v:rank>0||audSug?esc(cvAudLabel()):"",ph:"Who should see it",ed:rank>0?"audience":null},
+    {k:"Trigger",st:rank>1&&CV.trig?"ok":CV.trig?"sug":"",v:CV.trig?esc(cvTrigLabel()):"",ph:"When it should appear",ed:rank>1&&CV.trig?"trigger":null},
+    {k:"Suggested action",st:rank>=3&&names.length?"ok":CV.step==="suggest"&&names.length?"sug":"",v:names.length&&rank>=2?esc(names.join(", ")):"",ph:"After audience and trigger",ed:rank>=3?"suggest":null},
+    {k:"Goal",st:rank>=4&&CV.goal?"ok":rank>=2&&best?"sug":"",v:rank>=4&&CV.goal?esc(cvGoalLabel()):rank>=2&&best?esc(best):"",ph:"Cortex will suggest one",ed:rank>=4?"goal":null},
     {k:"Data",st:"ok",v:esc(v3uc(GX&&GX.data?gxDataName():"mock data pack")),ph:"",ed:null},
   ];
   const ready=rank>=4, name=CV.title||(rank>=3&&names.length?names[0]+(names.length>1?" + "+(names.length-1)+" more":""):"");
@@ -12197,7 +12199,7 @@ function cvHeadHTML(){
     <span class="cvh-mk" aria-hidden="true">${CXMARK}</span>
     <div class="cvh-tx">
       <div class="cvh-l1"><span class="cvh-tt ${t?"":"ph"}" id="cvTitle" contenteditable="plaintext-only" spellcheck="false" role="textbox" aria-label="Experience name" data-ph="Untitled Experience">${esc(t||"Untitled Experience")}</span>
-        <span class="cvh-st" tabindex="0">${pill("Draft")}<span class="cvh-tip" role="tooltip"><b style="color:var(--ink);font-weight:600">Draft</b>. Not live yet. Create it and it joins your Experiences, where you can switch it on or off.<span class="cvh-flow">${pill("Draft")}<span class="ar">→</span>${pill("Active")}<span class="ar">⇄</span>${pill("Inactive")}</span></span></span></div>
+        <span class="cvh-st" tabindex="0">${pill("Draft")}<span class="cvh-tip" role="tooltip"><span class="cvh-flow">${pill("Draft")}<span class="ar">→</span>${pill("Active")}<span class="ar">⇄</span>${pill("Inactive")}</span></span></span></div>
       <div class="cvh-l2">Building with Cortex<span class="cvx-info" title="Cortex builds experiences with you from your goals, data and context">${OB_INFO}</span>${step?`<span class="dot stp"></span><span class="stp">${step}</span>`:""}</div>
     </div></div>`;
 }
@@ -12216,6 +12218,8 @@ cvRender=(function(orig){ return function(){ const r=orig.apply(this,arguments);
     if(CV_TT_EDIT!==null){ tt.textContent=CV_TT_EDIT; tt.classList.remove("ph"); tt.focus(); const s=getSelection(); s.selectAllChildren(tt); s.collapseToEnd(); } }
 } catch(e){} return r; }; })(cvRender);
 cvClose=(function(orig){ return function(){ cvCrumb(null); return orig.apply(this,arguments); }; })(cvClose);
+// cvOpen renders before its wrapper sets CV.title; show the title in the header and panel straight away
+cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments); if(opt&&opt.title&&CV){ CV.title=opt.title; const tt=$("#cvTitle"); if(tt){ tt.textContent=opt.title; tt.classList.remove("ph"); } cvCrumb(opt.title); const side=$("#cvSide"); if(side) side.innerHTML=cvPanelHTML(); } return r; }; })(cvOpen);
 </script>
 <!-- Same as the studio server (:8800): "Preview · 3 generated options" under Cortex's suggestions (prototype copy, uses /genui) -->
 <script src="studio-genui.js"></script>
@@ -12240,11 +12244,11 @@ cvClose=(function(orig){ return function(){ cvCrumb(null); return orig.apply(thi
     + 'html body .sp-img{background:#fff ' + phUrl(PH[0], 500) + ' center/contain no-repeat}html body .sp-img .sp-bottle{visibility:hidden}';
   try { V3_SEPH_PRODUCTS[5][1] = 'Micellar Cleansing Water'; } catch (e) {} // the photo's real name; prices stay (the basket subtotal adds them up)
   // Experience draft (right of Cortex): the row Cortex is asking about now shimmers;
-  // its dashed circle turns Cortex teal with a glow (no rotation); when it's answered the tick pops in. Same rows in both builders (cvPanelHTML and v3DraftHTML).
+  // its dashed circle turns Cortex teal with a soft pulsing glow (no rotation); when it's answered the tick pops in. Same rows in both builders (cvPanelHTML and v3DraftHTML).
   css.textContent += '@keyframes adxShim{0%{background-position:100% 0}100%{background-position:-100% 0}}'
-    + '@keyframes adxRing{0%,100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}50%{box-shadow:0 0 0 4px rgba(60,140,129,.14)}}@keyframes adxPop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}'
-    + '.v3-row.wait .k,.v3-row.wait .v.ph{background:linear-gradient(90deg,#18181b 0%,#18181b 38%,#a1a1aa 50%,#18181b 62%,#18181b 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:adxShim 2.2s linear infinite}'
-    + '.v3-row.wait:not(.sug) .st{border:1.5px dashed #3c8c81;background:#eef6f4;box-shadow:0 0 0 3px rgba(60,140,129,.14),0 1px 4px rgba(60,140,129,.25)}'
+    + '@keyframes adxRing{0%,100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}50%{box-shadow:0 0 0 4px rgba(60,140,129,.14)}}@keyframes adxGlow{0%,100%{box-shadow:0 0 0 2px rgba(60,140,129,.08),0 1px 3px rgba(60,140,129,.15)}50%{box-shadow:0 0 0 5px rgba(60,140,129,.16),0 1px 6px rgba(60,140,129,.3)}}@keyframes adxPop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}'
+    + '.v3-row.wait:not(.sug) .k,.v3-row.wait .v.ph{background:linear-gradient(90deg,#18181b 0%,#18181b 38%,#a1a1aa 50%,#18181b 62%,#18181b 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:adxShim 2.2s linear infinite}'
+    + '.v3-row.wait:not(.sug) .st{border:1.5px dashed #3c8c81;background:#eef6f4;animation:adxGlow 2.4s ease-in-out infinite}'
     + '.v3-row.wait.sug .st{animation:adxRing 2.2s ease-in-out infinite}'
     + '.v3-row.done .st{animation:adxPop .38s ease-out}'
     + '@media (prefers-reduced-motion:reduce){.v3-row.wait .k,.v3-row.wait .v.ph,.v3-row.wait .st,.v3-row.done .st{animation:none}}';
@@ -12259,10 +12263,55 @@ cvClose=(function(orig){ return function(){ cvCrumb(null); return orig.apply(thi
       return '<div class="v3-row ' + cls + add + '"><span class="st">' + st + '</span><span class="tx"><span class="k">' + k + '</span>';
     });
     draftOk = okNow;
+    // One header instead of "Experience draft · In progress" + the name (the Cortex header already names it and shows Draft).
+    // While editing a live experience the Saved / Unsaved pill stays, since that's news.
+    var total = (html.match(/<div class="v3-row /g) || []).length, done = Object.keys(okNow).length;
+    html = html.replace(/<div class="v3-dh">([\s\S]*?)<\/div>\s*<div class="v3-dname[^"]*">[\s\S]*?<\/div>/, function (m, inner) {
+      var pill = /^Editing draft/.test(inner) ? (inner.match(/<span class="pill[\s\S]*$/) || [''])[0] : '<span class="adx-cnt">' + done + ' of ' + total + ' done</span>';
+      return '<div class="adx-ckh"><b>Setup checklist</b>' + pill + '</div>';
+    });
     return html;
   };
+  css.textContent += '.adx-ckh{display:flex;align-items:center;gap:8px}.adx-ckh b{font-size:14px;font-weight:600;color:var(--ink)}.adx-ckh .pill,.adx-ckh .adx-cnt{margin-left:auto}'
+    + '.adx-cnt{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}'
+    // built experience: the same five steps lead Details, each ticked
+    + '.v3-kv .adx-step dt{display:flex;align-items:center;gap:8px}.adx-tick{width:16px;height:16px;border-radius:50%;background:var(--good);color:#fff;display:inline-grid;place-items:center;flex:none}.adx-tick svg{width:9px;height:9px}';
+  // Built experience (Details on its page): Audience, Trigger, Suggested action, Goal, Data first, in the checklist's order and
+  // names, each with the same green tick; the micro-elicit settings (conversation goal, question type …) follow.
+  var adxSteps = function () {
+    try {
+      var dl = document.querySelector('#v3DetailMain dl.v3-kv'); if (!dl || dl.dataset.adxSteps) return;
+      dl.dataset.adxSteps = '1';
+      var tick = '<span class="adx-tick">' + v3i('check', 9) + '</span>';
+      var steps = [['audience', 'Audience'], ['trigger', 'Trigger'], ['refine', 'Suggested action'], ['goal', 'Goal'], ['data', 'Data']].map(function (x) {
+        var el = dl.querySelector('[data-v3row="' + x[0] + '"]'); if (!el) return null;
+        var dt = el.querySelector('dt'); if (dt) dt.innerHTML = tick + '<span>' + x[1] + '</span>';
+        el.classList.add('adx-step'); return el;
+      }).filter(Boolean);
+      steps.slice().reverse().forEach(function (el) { dl.insertBefore(el, dl.firstChild); });
+    } catch (e) {}
+  };
+  // the page is redrawn from several places (opening it, saving, Cortex edits), so follow the DOM rather than one renderer
+  var adxStepsQ = false;
+  new MutationObserver(function () { if (adxStepsQ) return; adxStepsQ = true; setTimeout(function () { adxStepsQ = false; adxSteps(); }, 0); }).observe(document.body, { childList: true, subtree: true });
   if (typeof cvPanelHTML === 'function') { var cvP = cvPanelHTML; cvPanelHTML = function () { return markDraft(cvP.apply(this, arguments)); }; }
   if (typeof v3DraftHTML === 'function') { var v3P = v3DraftHTML; v3DraftHTML = function () { return markDraft(v3P.apply(this, arguments)); }; }
+  // Required: a red asterisk after the question / field name instead of the word (the text stays for screen readers)
+  css.textContent += 'html body .cv-req,html body .dl-req{font-size:0!important;background:none!important;border:0!important;padding:0!important;margin-left:2px;color:#dc2626!important;letter-spacing:0!important}html body .cv-ch .cv-req{margin-left:-6px}'
+    + 'html body .cv-req::before,html body .dl-req::before{content:"*"!important;font-size:15px;font-weight:600;color:#dc2626;line-height:1}';
+  // Cortex header: no "New conversation" pencil (it read as Edit while you're already building one), and no divider before Close
+  css.textContent += '#cvNew,#cvNew+.cvx-div{display:none!important}';
+  // ...and no "Building with Cortex · <step>" line under the title: the Experience draft panel on the right already shows the step
+  css.textContent += '.cvx-top .cvh-l2{display:none!important}';
+  // "Who is this experience for?": All shoppers and From your CRM get the same checkbox as the segment tiles
+  // (still either/or with the segments; the studio's click handlers decide what's on)
+  if (typeof cvActiveHTML === 'function' && typeof cvTick === 'function') {
+    var cvA = cvActiveHTML;
+    cvActiveHTML = function () {
+      var h = cvA.apply(this, arguments);
+      return typeof h === 'string' ? h.replace(/(<button class="gx-opt [^"]*" data-audmode="[^"]*">[\s\S]*?)(<\/button>)/g, function (m, a, b) { return a.indexOf('class="ck') >= 0 ? m : a + cvTick() + b; }) : h;
+    };
+  }
   document.head.appendChild(css);
   document.documentElement.setAttribute('data-theme', 'light'); // the prototype shell is light
   var ob = document.getElementById('ob'); if (ob) ob.hidden = true;
