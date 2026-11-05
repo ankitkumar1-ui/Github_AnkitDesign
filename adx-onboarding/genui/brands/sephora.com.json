@@ -1,0 +1,547 @@
+{
+  "profile": {
+    "name": "Sephora",
+    "vertical": "Beauty retail: makeup, skincare, haircare, fragrance, tools, and bath & body",
+    "voice": "Confident, welcoming, and beauty-focused, with an energetic mix of expert discovery and playful, personal copy. The experience spotlights newness, exclusive picks, and an extensive range of brands.",
+    "logo": {
+      "imageUrl": "https://www.sephora.com/img/ufe/logo.svg",
+      "text": "SEPHORA",
+      "letterSpacing": "normal",
+      "weight": "900",
+      "uppercase": true
+    },
+    "colors": {
+      "background": "#fff",
+      "surface": "#f6f6f8",
+      "text": "#000",
+      "mutedText": "#666",
+      "border": "#eee",
+      "primary": "#000",
+      "primaryText": "#fff",
+      "secondary": "#000",
+      "accent": "#136BEA",
+      "sale": "#cf112c",
+      "promoBarBackground": "#000",
+      "promoBarText": "#fff",
+      "footerBackground": "#000",
+      "footerText": "#fff",
+      "rating": "#000"
+    },
+    "typography": {
+      "fontFamily": "\"helvetica neue\", helvetica, arial, sans-serif",
+      "headingFontFamily": "\"helvetica neue\", helvetica, arial, sans-serif",
+      "fallbackFont": "Inter",
+      "headingFallbackFont": "Inter",
+      "headingWeight": "700",
+      "headingUppercase": false,
+      "baseFontSize": 14
+    },
+    "shape": {
+      "buttonShape": "rounded",
+      "buttonUppercase": false,
+      "cardRadius": 4,
+      "imageBackground": "#f6f6f8",
+      "imageAspect": "square",
+      "cardTextAlign": "left"
+    },
+    "header": {
+      "layout": "logo-left",
+      "promoBarText": "",
+      "searchPlaceholder": "Search",
+      "navItems": [
+        "Makeup",
+        "Skincare",
+        "Hair",
+        "Fragrance",
+        "Tools & Brushes",
+        "Bath & Body",
+        "Sale"
+      ],
+      "highlightNavItem": "Sale",
+      "utilityItems": [
+        "Shop Store & Delivery",
+        "Services & Events",
+        "Sign In"
+      ]
+    },
+    "commerce": {
+      "currencySymbol": "$",
+      "addToCartLabel": "Add to Basket",
+      "loyaltyProgram": "Beauty Insider",
+      "badgeLabels": [
+        "Clean at Sephora",
+        "Clean plus Planet Aware",
+        "New",
+        "Limited Edition",
+        "Allure Best of Beauty Award Winner",
+        "Best of Beauty"
+      ],
+      "fulfilmentOptions": [
+        {
+          "title": "Ship to you",
+          "detail": "Choose delivery at checkout."
+        },
+        {
+          "title": "Buy Online & Pick Up",
+          "detail": "Check availability at your store."
+        }
+      ],
+      "filterGroups": [
+        {
+          "title": "Category",
+          "options": [
+            "Makeup",
+            "Skincare",
+            "Hair",
+            "Fragrance",
+            "Bath & Body"
+          ]
+        },
+        {
+          "title": "Brand",
+          "options": [
+            "Sephora Collection",
+            "Rare Beauty",
+            "Dior",
+            "Fenty Beauty"
+          ]
+        },
+        {
+          "title": "Price",
+          "options": [
+            "Under $25",
+            "$25–$50",
+            "$50–$100",
+            "$100 and over"
+          ]
+        },
+        {
+          "title": "Reviews",
+          "options": [
+            "4 stars & up",
+            "3 stars & up"
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "columns": [
+        {
+          "title": "About Sephora",
+          "links": [
+            "About Sephora",
+            "Careers",
+            "Sephora Accelerate"
+          ]
+        },
+        {
+          "title": "My Sephora",
+          "links": [
+            "Beauty Insider",
+            "Sign In",
+            "Order Status"
+          ]
+        },
+        {
+          "title": "Help",
+          "links": [
+            "Contact Us",
+            "Shipping & Returns",
+            "Frequently Asked Questions"
+          ]
+        }
+      ],
+      "legal": "© Sephora USA, Inc. All rights reserved."
+    },
+    "products": [
+      {
+        "id": "3006244",
+        "brand": "Tower 28 Beauty",
+        "name": "Swipe Serum Non-Acnegenic Foundation with Medium Buildable Coverage",
+        "category": "Makeup",
+        "price": 36,
+        "salePrice": null,
+        "rating": 3.9,
+        "reviewCount": 474,
+        "badges": [
+          "Clean at Sephora",
+          "New"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3006244-main-zoom.jpg?pb=clean-at-sephora",
+        "productTint": "Light cool",
+        "packaging": "bottle"
+      },
+      {
+        "id": "3025293",
+        "brand": "Sephora Favorites",
+        "name": "Holiday Perfume Sampler Vault Set w/ Redeemable Voucher",
+        "category": "Fragrance",
+        "price": 98,
+        "salePrice": null,
+        "rating": 3.6,
+        "reviewCount": 10,
+        "badges": [
+          "Sephora Favorites",
+          "Limited Edition",
+          "Online Only"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3025293-main-zoom.jpg?pb=sephora-favorites-full-size",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "3009883",
+        "brand": "Jo Malone London",
+        "name": "Ginger Biscuit Cologne with Tonka Bean",
+        "category": "Fragrance",
+        "price": 175,
+        "salePrice": null,
+        "rating": 4,
+        "reviewCount": 414,
+        "badges": [
+          "New",
+          "Limited Edition"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3009883-main-zoom-1.jpg",
+        "productTint": "Neutral",
+        "packaging": "perfume"
+      },
+      {
+        "id": "2333607",
+        "brand": "ILIA",
+        "name": "Super Serum Skin Tint SPF 40 - Hydrating Foundation",
+        "category": "Makeup",
+        "price": 48,
+        "salePrice": null,
+        "rating": 3.9,
+        "reviewCount": 9511,
+        "badges": [
+          "Clean at Sephora"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2333607-main-zoom.jpg?pb=clean-at-sephora",
+        "productTint": "Medium with cool undertones",
+        "packaging": "dropper"
+      },
+      {
+        "id": "3041472",
+        "brand": "Kérastase",
+        "name": "Premiere Conditioner-30ml",
+        "category": "Hair",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3041472-main-zoom.jpg",
+        "productTint": "White",
+        "packaging": "bottle"
+      },
+      {
+        "id": "2889780",
+        "brand": "Caudalie",
+        "name": "Vinoperfect Instant Brightening Moisturizer-15ml",
+        "category": "Skincare",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2889780-main-zoom.jpg",
+        "productTint": "White",
+        "packaging": "tube"
+      },
+      {
+        "id": "3035102",
+        "brand": "Tatcha",
+        "name": "Dewy Milk Moisturizer- Routine Set",
+        "category": "Skincare",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3035102-main-zoom.jpg",
+        "productTint": "White",
+        "packaging": "bottle"
+      },
+      {
+        "id": "3040543",
+        "brand": "Charlotte Tilbury",
+        "name": "Charlotte Tilbury 3-Piece Set",
+        "category": "Makeup",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3040543-main-zoom.jpg",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "3033776",
+        "brand": "OLIVE YOUNG",
+        "name": "GWP OLIVE YOUNG Tote",
+        "category": "Beauty accessories",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3033776-main-zoom.jpg",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "3038155",
+        "brand": "Marc Jacobs Beauty",
+        "name": "Marc Jacobs Beauty Puffy Bag",
+        "category": "Beauty accessories",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3038155-main-zoom.jpg",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "2597342",
+        "brand": "Haus Labs",
+        "name": "Triclone Skin Tech Medium Coverage Foundation with Fermented Arnica",
+        "category": "Makeup",
+        "price": 52,
+        "salePrice": null,
+        "rating": 4,
+        "reviewCount": 5686,
+        "badges": [
+          "Clean at Sephora"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2597342-main-zoom-1.jpg?pb=clean-at-sephora",
+        "productTint": "Light medium with rosy undertones",
+        "packaging": "bottle"
+      },
+      {
+        "id": "1966258",
+        "brand": "LANEIGE",
+        "name": "Lip Sleeping Mask – Intense Hydration Lip Treatment with Vitamin C",
+        "category": "Skincare",
+        "price": 24,
+        "salePrice": null,
+        "rating": 4.3,
+        "reviewCount": 22446,
+        "badges": [
+          "Allure 2023 Best of Beauty Award Winner"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s1966258-main-zoom-1.jpg?pb=allure-2023-bestofbeauty-badge",
+        "productTint": "Berry",
+        "packaging": "jar"
+      },
+      {
+        "id": "3024643",
+        "brand": "Mane",
+        "name": "Mane x Cinnabon Lip Gloss and Hair Brush Set",
+        "category": "Hair",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.7,
+        "reviewCount": 32,
+        "badges": [
+          "New",
+          "Limited Edition"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3024643-main-zoom-2.jpg",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "3023678",
+        "brand": "Summer Fridays",
+        "name": "Lip Butter Balm Minis - Pink Set",
+        "category": "Skincare",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.4,
+        "reviewCount": 36,
+        "badges": [
+          "Clean at Sephora",
+          "Limited Edition"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3023678-main-zoom-1.jpg?pb=clean-at-sephora",
+        "productTint": "Pink",
+        "packaging": "tube"
+      },
+      {
+        "id": "3004272",
+        "brand": "Rare Beauty by Selena Gomez",
+        "name": "Rare Beginnings Eau de Parfum with Pear and Gardenia",
+        "category": "Fragrance",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.5,
+        "reviewCount": 295,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3004272-main-zoom-us.jpg",
+        "productTint": "Neutral",
+        "packaging": "perfume"
+      },
+      {
+        "id": "3022787",
+        "brand": "Vegamour",
+        "name": "GRO+ Advanced Hair Serum Home and Away Gift Set",
+        "category": "Hair",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [
+          "Clean at Sephora",
+          "New",
+          "Limited Edition"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3022787-main-zoom.jpg?pb=clean-at-sephora",
+        "productTint": "Green",
+        "packaging": "dropper"
+      },
+      {
+        "id": "3030368",
+        "brand": "point of view.",
+        "name": "contour it long-lasting lip liner trio makeup gift set",
+        "category": "Makeup",
+        "price": 0,
+        "salePrice": null,
+        "rating": 3.6,
+        "reviewCount": 5,
+        "badges": [
+          "New",
+          "Limited Edition",
+          "Online Only"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3030368-main-zoom.jpg",
+        "productTint": "Dark",
+        "packaging": "box"
+      },
+      {
+        "id": "2990018",
+        "brand": "Clarins",
+        "name": "Firm & Smooth Icons Gift Set",
+        "category": "Skincare",
+        "price": 0,
+        "salePrice": null,
+        "rating": 0,
+        "reviewCount": 0,
+        "badges": [
+          "New",
+          "Limited Edition"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2990018-main-zoom.jpg",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "3000023",
+        "brand": "Dyson",
+        "name": "Co-anda2x™ Multi-Styler and Dryer for Straight to Wavy Hair (2026 Model)",
+        "category": "Hair",
+        "price": 0,
+        "salePrice": null,
+        "rating": 3.9,
+        "reviewCount": 237,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3000023-main-zoom.jpg",
+        "productTint": "Multicolor",
+        "packaging": "box"
+      },
+      {
+        "id": "3017803",
+        "brand": "DIOR",
+        "name": "Backstage Glow Maximizer Face Palette",
+        "category": "Makeup",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.5,
+        "reviewCount": 822,
+        "badges": [
+          "Limited Edition"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s3017803-main-zoom.jpg",
+        "productTint": "Icy rosy",
+        "packaging": "compact"
+      },
+      {
+        "id": "2998110",
+        "brand": "rhode",
+        "name": "Pocket Blush Buildable Hydrating Cream Blush",
+        "category": "Makeup",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.2,
+        "reviewCount": 2149,
+        "badges": [
+          "Clean at Sephora"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2998110-main-zoom.jpg?pb=clean-at-sephora",
+        "productTint": "Apple",
+        "packaging": "compact"
+      },
+      {
+        "id": "2169423",
+        "brand": "MILK MAKEUP",
+        "name": "Hydro Grip Hydrating Makeup Primer with Hyaluronic Acid + Niacinamide",
+        "category": "Makeup",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4,
+        "reviewCount": 9925,
+        "badges": [
+          "Clean at Sephora"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2169423-main-zoom.jpg?pb=clean-at-sephora",
+        "productTint": "Clear",
+        "packaging": "tube"
+      },
+      {
+        "id": "2362085",
+        "brand": "Rare Beauty by Selena Gomez",
+        "name": "Soft Pinch Liquid Blush",
+        "category": "Makeup",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.5,
+        "reviewCount": 12607,
+        "badges": [],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2362085-main-zoom.jpg",
+        "productTint": "Cool pink",
+        "packaging": "bottle"
+      },
+      {
+        "id": "2319820",
+        "brand": "OUAI",
+        "name": "Detox Clarifying Shampoo with Apple Cider Vinegar",
+        "category": "Hair",
+        "price": 0,
+        "salePrice": null,
+        "rating": 4.6,
+        "reviewCount": 5483,
+        "badges": [
+          "Best of Beauty"
+        ],
+        "imageUrl": "https://www.sephora.com/productimages/sku/s2319820-main-zoom.jpg?pb=best-of-beauty-2026",
+        "productTint": "White",
+        "packaging": "bottle"
+      }
+    ],
+    "domain": "sephora.com"
+  },
+  "stats": {
+    "htmlBytes": 900171,
+    "cssBytes": 65299,
+    "cssFiles": 0,
+    "productCandidates": 40,
+    "products": 24
+  },
+  "model": "gpt-6-luna",
+  "ms": 44461,
+  "analyzedAt": "2026-10-15T07:38:37.155Z"
+}

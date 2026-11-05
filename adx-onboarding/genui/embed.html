@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Experience preview</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="embed.css" />
+  <!-- prototype copy: demo options only, so no OpenAI settings -->
+  <style>#settings-btn{display:none}</style>
+</head>
+<!-- Compact preview for ADX Studio's experience page: 3 generated options for one experience. -->
+<body class="embed">
+  <div class="ep-top">
+    <span class="ep-title">Preview · 3 generated options</span>
+    <div class="ep-tools">
+      <div class="seg" id="device"><button type="button" data-device="mobile" class="on">Mobile</button><button type="button" data-device="desktop">Desktop</button></div>
+      <button type="button" class="ep-icon" id="regen" title="Generate new options" aria-label="Generate new options"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+      <button type="button" class="ep-icon" id="settings-btn" title="OpenAI settings" aria-label="OpenAI settings"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+    </div>
+  </div>
+  <div id="tabs" class="ep-tabs" role="tablist" aria-label="Options"></div>
+  <p id="rationale" class="rationale"></p>
+  <div id="note" class="ep-note" hidden></div>
+  <div id="error" class="error" hidden></div>
+
+  <div id="frame" class="frame show-slots mobile">
+    <div class="frame-bar">
+      <i></i><i></i><i></i>
+      <div class="url" id="url">sephora.com</div>
+      <span id="meta" class="meta"></span>
+    </div>
+    <div id="site-scroll" class="site-scroll"><div id="site" class="site"></div></div>
+    <div id="floating" class="floating"></div>
+    <div id="loading" class="loading" hidden>
+      <div class="spinner"></div>
+      <p id="loading-text">Generating…</p>
+    </div>
+  </div>
+
+  <div id="settings" class="ep-modal" hidden role="dialog" aria-modal="true" aria-labelledby="settings-h">
+    <form class="ep-card" id="settings-form">
+      <h3 id="settings-h">OpenAI settings</h3>
+      <p>Used to generate the preview options. Your key is saved in this browser only and sent only to this server.</p>
+      <label>API key<input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="sk-…" /></label>
+      <label>Model<select id="model"></select></label>
+      <div class="ep-acts"><button type="button" id="settings-cancel">Cancel</button><button type="submit" class="primary">Save &amp; generate</button></div>
+    </form>
+  </div>
+
+  <script type="module" src="embed.js"></script>
+</body>
+</html>
