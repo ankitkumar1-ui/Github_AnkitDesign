@@ -16,6 +16,7 @@
     { path: 'home',        file: 'screens/home.html',        label: 'Home',                             nav: 'Home' },
     { path: 'exp-goals',       file: 'screens/studio.html',      label: 'Goals' },
     { path: 'experiences',     file: 'screens/studio.html',      label: 'Experiences' },
+    { path: 'events',          file: 'screens/derived.html',     label: 'Events' },
     { path: 'simulate',        file: 'screens/studio.html',      label: 'Simulate' },
     { path: 'release',         file: 'screens/studio.html',      label: 'Release' },
     { path: 'analytics',       file: 'screens/studio.html',      label: 'Analytics' },

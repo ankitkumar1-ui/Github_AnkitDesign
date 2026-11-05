@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>ADX Setup — Derived signals</title>
+<title>ADX · Events</title>
 <!-- Styles for this screen only (added while the screen is shown). Fonts are loaded once in index.html. -->
 <style>
+.dv-new{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;background:#eef6f4;color:#2f6f66;font-size:11px;font-weight:500;line-height:1}
+.dv-by{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:11px;font-weight:500;line-height:1}
+
 
 :root{--bg:#FAFAFA;--surface:#FFFFFF;--surface-2:#FAFAFA;--sink:#F4F4F5;--ink:#09090B;--ink-soft:#3F3F46;--muted:#71717A;--faint:#A1A1AA;--line:#E4E4E7;--line-strong:#D4D4D8;--accent:#18181B;--accent-soft:#F4F4F5;--accent-ink:#18181B;--ai:#3C8C81;--ai-soft:#EDF6F4;--ai-ink:#2F7A70;--good:#16A34A;--good-soft:#F0FDF4;--warn:#D97706;--warn-soft:#FFFBEB;--crit:#DC2626;--crit-soft:#FEF2F2;--ring:#18181B;--shadow:0 1px 2px 0 rgba(0,0,0,.05);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);--radius:10px;--radius-sm:8px;--rail:224px;--f-display:'Inter',system-ui,sans-serif;--f-body:'Inter',system-ui,sans-serif;--f-mono:'JetBrains Mono',ui-monospace,monospace;--an-c1:#2a78d6;--an-c2:#eb6834;--an-c3:#1baf7a;--an-c4:#eda100;--an-c5:#e87ba4;--an-c6:#008300;--ln-signal:#2a78d6;--ln-model:#1baf7a;--ln-trigger:#eb6834;--av-indigo-bg:#F0F1FF;--av-indigo-fg:#4C487C;--av-coral-bg:#FCEFEA;--av-coral-fg:#8F2B05;--av-teal-bg:#E3F6F0;--av-teal-fg:#005848;--av-sky-bg:#E6F5FF;--av-sky-fg:#105376;--v3cw:clamp(440px,32vw,640px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -364,7 +367,7 @@ body{margin:0}
 .dv-tpl .pg{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
 .dv-tpl .r{font-size:12px;line-height:1.45;color:var(--ink-soft)}
 .dv-tpl .u{font-size:12px;color:#2f7a70;font-weight:600}
-.dv-row{display:grid;grid-template-columns:minmax(180px,1.4fr) minmax(220px,2fr) minmax(150px,1.2fr) 150px 130px;align-items:center;gap:14px;padding:12px 18px;border:0;border-top:1px solid var(--line);background:transparent;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.dv-row{display:grid;grid-template-columns:minmax(220px,2fr) minmax(130px,1fr) minmax(150px,1fr) minmax(170px,1.3fr) 110px;align-items:center;gap:14px;padding:12px 18px;border:0;border-top:1px solid var(--line);background:transparent;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .dv-row:hover{background:var(--surface-2)}
 .dv-row.hd{border-top:0;background:var(--sink);font-size:12px;font-weight:600;color:var(--ink-soft);cursor:default}
 .dv-chips{display:flex;flex-wrap:wrap;gap:5px}
@@ -396,6 +399,36 @@ body{margin:0}
 .dv-est{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:2px}
 .dv-est b{font-size:15px;font-weight:600}
 .dv-est span{font-size:12px;color:var(--muted)}
+/* Events: who made it, who uses it, and the detail page */
+.ev-by{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);min-width:0}
+.ev-avs{display:inline-flex;flex:none}
+.ev-av{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:600;color:#fff;background:#27272a;border:2px solid var(--surface);box-sizing:content-box}
+.ev-av+.ev-av{margin-left:-7px}
+.ev-av.cx{background:#3c8c81}
+.ev-used{font-size:13px;color:var(--ink-soft);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev-used em{font-style:normal;color:var(--muted)}
+.ev-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:14px;cursor:pointer;background:none;border:0;padding:0;font:inherit}
+.ev-back:hover{color:var(--ink)}
+.ev-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.ev-head h2{margin:0;font-size:20px;font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ev-head p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.ev-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:16px;align-items:start}
+@media(max-width:900px){.ev-grid{grid-template-columns:1fr}}
+.ev-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.ev-sent{margin:0;font-size:14px;line-height:1.55;color:var(--ink-soft)}
+.ev-conds{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ev-cond{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:center;padding:9px 12px;font-size:13px;border-top:1px solid var(--line)}
+.ev-cond:first-child{border-top:0}
+.ev-cond>span{font-size:12px;font-weight:600;color:var(--muted)}
+.ev-cond code{font-family:'Geist Mono',ui-monospace,monospace;font-size:12.5px;color:var(--ink)}
+.ev-kv{display:grid;grid-template-columns:100px minmax(0,1fr);gap:10px 12px;font-size:13px}
+.ev-kv dt{color:var(--muted)}
+.ev-kv dd{margin:0;color:var(--ink);min-width:0}
+.ev-exp{display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink);text-decoration:none}
+.ev-exp:first-child{border-top:0}
+.ev-exp:hover{background:var(--surface-2)}
+.ev-exp b{font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-none{padding:14px 18px;font-size:13px;color:var(--muted)}
 .dv-note{font-size:12px;line-height:1.5;color:var(--muted);background:rgba(60,140,129,.07);border-radius:8px;padding:8px 10px}
 </style>
 </head>
@@ -414,14 +447,14 @@ body{margin:0}
       <div class="nav-cat-group" data-catgroup="start"><div class="flyout-title">Start</div><a class="subnav-item" href="#/home" style="text-decoration:none" title="Home"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg></span><span class="sn-label">Home</span></a></div>
     </div><div class="nav-cat-wrap" data-catwrap="exp">
       <button class="nav-cat" data-cat="exp"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></span><span class="nc-label">Experiences</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
-      <div class="nav-cat-group" data-catgroup="exp"><div class="flyout-title">Experiences</div><a class="subnav-item" href="#/exp-goals" style="text-decoration:none" title="Goals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"></circle></svg></span><span class="sn-label">Goals</span></a><a class="subnav-item" href="#/experiences" style="text-decoration:none" title="Experiences"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"></path></svg></span><span class="sn-label">Experiences</span></a><a class="subnav-item" href="#/simulate" style="text-decoration:none" title="Simulate"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span><span class="sn-label">Simulate</span></a><a class="subnav-item" href="#/release" style="text-decoration:none" title="Release"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span><span class="sn-label">Release</span></a></div>
+      <div class="nav-cat-group" data-catgroup="exp"><div class="flyout-title">Experiences</div><a class="subnav-item" href="#/exp-goals" style="text-decoration:none" title="Goals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"></circle></svg></span><span class="sn-label">Goals</span></a><a class="subnav-item" href="#/experiences" style="text-decoration:none" title="Experiences"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"></path></svg></span><span class="sn-label">Experiences</span></a><a class="subnav-item {{evOn}}" href="#/events" style="text-decoration:none" title="Events"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7z"></path></svg></span><span class="sn-label">Events</span></a><a class="subnav-item" href="#/simulate" style="text-decoration:none" title="Simulate"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></span><span class="sn-label">Simulate</span></a><a class="subnav-item" href="#/release" style="text-decoration:none" title="Release"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span><span class="sn-label">Release</span></a></div>
     </div><div class="nav-cat-wrap" data-catwrap="measure">
       <button class="nav-cat" data-cat="measure"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="11" width="3" height="6"></rect><rect x="12" y="7" width="3" height="10"></rect><rect x="17" y="13" width="3" height="4"></rect></svg></span><span class="nc-label">Measure</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
       <div class="nav-cat-group" data-catgroup="measure"><div class="flyout-title">Measure</div><a class="subnav-item" href="#/analytics" style="text-decoration:none" title="Analytics"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9M13 17V5M8 17v-3"></path></svg></span><span class="sn-label">Analytics</span></a><a class="subnav-item" href="#/test-management" style="text-decoration:none" title="Test Management"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></path><path d="M6.453 15h11.094M8.5 2h7"></path></svg></span><span class="sn-label">Test Management</span></a></div>
     </div></nav>
     <div class="rail-setup" id="railSetup"><div class="nav-cat-wrap setup-wrap" data-catwrap="adx">
       <button class="nav-cat hascurrent" data-cat="adx"><span class="nc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg></span><span class="nc-label">ADX Setup</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"></path></svg></button>
-      <div class="nav-cat-group" data-catgroup="adx"><div class="flyout-title">ADX Setup</div><a class="subnav-item" href="#/setup" style="text-decoration:none" title="Overview"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span><span class="sn-label">Overview</span></a><a class="subnav-item" href="#/connections" style="text-decoration:none" title="Connections"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg></span><span class="sn-label">Connections</span></a><a class="subnav-item" href="#/profiles" style="text-decoration:none" title="Customer Profiles"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="sn-label">Customer Profiles</span></a><a class="subnav-item" href="#/catalog" style="text-decoration:none" title="Product Catalog"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="M3.3 7 12 12l8.7-5"></path><path d="M12 22V12"></path></svg></span><span class="sn-label">Product Catalog</span></a><a class="subnav-item on" href="#/web-signals" style="text-decoration:none" title="Web Signals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></span><span class="sn-label">Web Signals</span></a><button class="subnav-item" title="Content"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v5h5"></path><path d="M8 13h8M8 17h8M8 9h2"></path></svg></span><span class="sn-label">Content</span></button><button class="subnav-item" title="Customer Service Integration"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"></path><path d="M21 16a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h3z"></path><path d="M3 16a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H3z"></path></svg></span><span class="sn-label">Customer Service Integration</span></button><button class="subnav-item" title="Agents"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2M20 14h2M15 13v2M9 13v2"></path></svg></span><span class="sn-label">Agents</span></button></div>
+      <div class="nav-cat-group" data-catgroup="adx"><div class="flyout-title">ADX Setup</div><a class="subnav-item" href="#/setup" style="text-decoration:none" title="Overview"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span><span class="sn-label">Overview</span></a><a class="subnav-item" href="#/connections" style="text-decoration:none" title="Connections"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg></span><span class="sn-label">Connections</span></a><a class="subnav-item" href="#/profiles" style="text-decoration:none" title="Customer Profiles"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="sn-label">Customer Profiles</span></a><a class="subnav-item" href="#/catalog" style="text-decoration:none" title="Product Catalog"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="M3.3 7 12 12l8.7-5"></path><path d="M12 22V12"></path></svg></span><span class="sn-label">Product Catalog</span></a><a class="subnav-item {{wsOn}}" href="#/web-signals" style="text-decoration:none" title="Web Signals"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></span><span class="sn-label">Web Signals</span></a><button class="subnav-item" title="Content"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v5h5"></path><path d="M8 13h8M8 17h8M8 9h2"></path></svg></span><span class="sn-label">Content</span></button><button class="subnav-item" title="Customer Service Integration"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"></path><path d="M21 16a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h3z"></path><path d="M3 16a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H3z"></path></svg></span><span class="sn-label">Customer Service Integration</span></button><button class="subnav-item" title="Agents"><span class="sub-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2M20 14h2M15 13v2M9 13v2"></path></svg></span><span class="sn-label">Agents</span></button></div>
     </div></div>
 
     <div class="rail-foot">
@@ -433,7 +466,7 @@ body{margin:0}
 <header class="topbar">
       <button class="menu-btn" id="menuBtn" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg></button>
       <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar" title="Collapse sidebar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18"></path></svg></button>
-      <div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">ADX Setup</span> <span style="color:var(--faint)">›</span> Web Signals <span style="color:var(--faint)">›</span> sephora.com</b></div>
+      <sc-if value="{{ev}}"><div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">Experiences</span> <span style="color:var(--faint)">›</span> Events</b></div></sc-if><sc-if value="{{notEv}}"><div class="crumb"><span class="root">Storefront</span><span class="sep">›</span><b><span style="color:var(--muted);font-weight:400">ADX Setup</span> <span style="color:var(--faint)">›</span> Web Signals <span style="color:var(--faint)">›</span> sephora.com</b></div></sc-if>
       <div class="top-actions">
         <div class="env mock"><span class="dot"></span>Sandbox · Mock data</div>
         <button class="btn sm tb-cx" id="cxTop" title="Cortex" aria-label="Open Cortex" aria-pressed="false"><svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true"><rect x="0" y="0" width="48" height="48" rx="13" fill="#43918A"></rect><path d="M24 11C25 19 29 23 37 24C29 25 25 29 24 37C23 29 19 25 11 24C19 23 23 19 24 11Z" fill="#fff"></path></svg></button>
@@ -442,16 +475,15 @@ body{margin:0}
       </div>
     </header>
 <div class="wrap">
-  <div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
-  <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">{{sigN}}</span></a><button class="dtab on">Derived signals<span class="tcount">{{n}}</span></button></div>
+  <sc-if value="{{ev}}"><div class="pagehead"><div><div class="eyebrow">Experiences</div><h1>Events</h1></div></div></sc-if><sc-if value="{{notEv}}"><div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
+  <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">{{sigN}}</span></a><button class="dtab on">Events<span class="tcount">{{n}}</span></button></div></sc-if>
 
   <!-- zero state -->
   <sc-if value="{{isEmpty}}">
     <section class="dv-empty">
       <span class="dv-glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"></circle><circle cx="6" cy="18" r="2.5"></circle><path d="M8.5 6H12a3 3 0 0 1 3 3v1.5M8.5 18H12a3 3 0 0 0 3-3v-1.5M15 12h6.5"></path></svg></span>
-      <b>You haven't created a derived signal yet</b>
-      <p>A derived signal combines signals you already capture into one trigger of your own, like <em>scrolled past 4,000 px and stayed 8 seconds</em>. Scans and connectors never create these. You decide what the moment is.</p>
-      <button class="btn primary" onClick="{{create}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Create derived signal</button>
+      <b>No events yet</b>
+      <button class="btn primary" onClick="{{create}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>New event</button>
       <div class="dv-or">Or start from an example</div>
       <div class="dv-tpls">
         <sc-for list="{{tpls}}" as="t">
@@ -469,19 +501,18 @@ body{margin:0}
   <!-- saved derived signals -->
   <sc-if value="{{hasList}}">
     <div class="sg-tools">
-      <span style="font-size:14px;color:var(--muted)">Your own triggers, built from captured signals. Use them in Experiences like any other signal.</span>
       <span class="sg-sp"></span>
-      <button class="btn primary" onClick="{{create}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Create derived signal</button>
+      <button class="btn primary" onClick="{{create}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>New event</button>
     </div>
     <section class="sg-tbl">
-      <div class="dv-row hd"><span>Derived signal</span><span>Fires when</span><span>Built from</span><span>Status</span><span>Used in</span></div>
+      <div class="dv-row hd"><span>Event</span><span>Page</span><span>Created by</span><span>Used by</span><span>Updated</span></div>
       <sc-for list="{{list}}" as="s">
-        <button type="button" class="dv-row" onClick="{{s.edit}}">
-          <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><code class="sg-code">{{s.id}}</code><span class="sg-mut" style="font-size:12px">{{s.desc}}</span></span>
-          <span class="sg-mut" style="font-size:12px;line-height:1.45">{{s.rule}}</span>
-          <span class="dv-chips"><sc-for list="{{s.uses}}" as="u"><i>{{u.t}}</i></sc-for></span>
-          <span><span class="sg-pill exc"><i></i>Draft · Development</span></span>
-          <span class="sg-mut" style="font-size:12px">No experiences yet</span>
+        <button type="button" class="dv-row" onClick="{{s.open}}">
+          <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><code class="sg-code">{{s.id}}</code><sc-if value="{{s.isNew}}"><span class="dv-new">New</span></sc-if></span><span class="sg-mut" style="font-size:12px">{{s.desc}}</span></span>
+          <span class="sg-mut" style="font-size:13px">{{s.page}}</span>
+          <span class="ev-by"><span class="ev-avs"><sc-if value="{{s.emma}}"><i class="ev-av">EC</i></sc-if><sc-if value="{{s.cx}}"><i class="ev-av cx"><svg width="11" height="11" viewBox="0 0 48 48"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#fff"/></svg></i></sc-if></span>{{s.byTx}}</span>
+          <span class="ev-used">{{s.usedTx}}<sc-if value="{{s.more}}"><em> +{{s.more}}</em></sc-if></span>
+          <span class="sg-mut" style="font-size:13px">{{s.updated}}</span>
         </button>
       </sc-for>
     </section>
@@ -500,16 +531,55 @@ body{margin:0}
     </sc-if>
   </sc-if>
 
+  <!-- one event -->
+  <sc-if value="{{viewing}}">
+    <button type="button" class="ev-back" onClick="{{v.back}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Events</button>
+    <div class="ev-head">
+      <div style="flex:1;min-width:0"><h2><code class="sg-code" style="font-size:18px">{{v.id}}</code><sc-if value="{{v.isNew}}"><span class="dv-new">New</span></sc-if></h2><p>{{v.desc}}</p></div>
+      <button class="btn" onClick="{{v.edit}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit</button>
+    </div>
+    <div class="ev-grid">
+      <div>
+        <section class="sg-card">
+          <div class="sg-ch"><b>Fires when</b></div>
+          <div class="ev-body">
+            <p class="ev-sent">{{v.sentence}}</p>
+            <div class="ev-conds"><sc-for list="{{v.conds}}" as="c"><div class="ev-cond"><span>{{c.join}}</span><code>{{c.tx}}</code></div></sc-for></div>
+            <div class="dv-chips"><sc-for list="{{v.uses}}" as="u"><i>{{u.t}}</i></sc-for></div>
+          </div>
+        </section>
+        <section class="sg-card">
+          <div class="sg-ch"><b>Used by</b><span>{{v.usedN}}</span></div>
+          <sc-for list="{{v.used}}" as="u"><a class="ev-exp" href="#/experiences"><b>{{u.name}}</b><span class="sg-pill {{u.cls}}"><i></i>{{u.status}}</span></a></sc-for>
+          <sc-if value="{{v.noUse}}"><div class="ev-none">Not used yet</div></sc-if>
+        </section>
+      </div>
+      <section class="sg-card">
+        <div class="sg-ch"><b>Details</b></div>
+        <div class="ev-body">
+          <dl class="ev-kv" style="margin:0">
+            <dt>Page</dt><dd>{{v.page}}</dd>
+            <dt>Window</dt><dd>{{v.win}}</dd>
+            <dt>Fires</dt><dd>{{v.freq}}</dd>
+            <dt>Created by</dt><dd><span class="ev-by"><span class="ev-avs"><sc-if value="{{v.emma}}"><i class="ev-av">EC</i></sc-if><sc-if value="{{v.cx}}"><i class="ev-av cx"><svg width="11" height="11" viewBox="0 0 48 48"><path d="M24 7C25 16 32 23 41 24C32 25 25 32 24 41C23 32 16 25 7 24C16 23 23 16 24 7Z" fill="#fff"/></svg></i></sc-if></span>{{v.byTx}}</span></dd>
+            <dt>Created</dt><dd>{{v.created}}</dd>
+            <dt>Updated</dt><dd>{{v.updated}}</dd>
+          </dl>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
   <!-- builder -->
   <sc-if value="{{building}}">
     <div class="dv-build">
       <section class="sg-card" style="margin:0">
-        <div class="sg-ch"><b>{{b.title}}</b><span>Combine signals into one trigger</span></div>
+        <div class="sg-ch"><b>{{b.title}}</b></div>
 
         <div class="dv-sec">
           <div class="dv-lbl">Name</div>
           <div class="dv-two">
-            <label class="dv-f"><span>Signal name</span><input class="dv-in mono" value="{{b.name}}" onInput="{{b.onName}}" placeholder="engaged_reader"></label>
+            <label class="dv-f"><span>Event name</span><input class="dv-in mono" value="{{b.name}}" onInput="{{b.onName}}" placeholder="engaged_reader"></label>
             <label class="dv-f"><span>What it means <em>(optional)</em></span><input class="dv-in" value="{{b.desc}}" onInput="{{b.onDesc}}" placeholder="Shopper is clearly reading the page"></label>
           </div>
         </div>
@@ -545,7 +615,7 @@ body{margin:0}
           <sc-if value="{{b.canDelete}}"><button class="btn ghost" onClick="{{b.del}}" style="color:#b91c1c">Delete</button></sc-if>
           <span class="sg-sp"></span>
           <button class="btn" onClick="{{b.cancel}}">Cancel</button>
-          <button class="btn primary" onClick="{{b.save}}" disabled="{{b.cantSave}}">Save derived signal</button>
+          <button class="btn primary" onClick="{{b.save}}" disabled="{{b.cantSave}}">Save event</button>
         </div>
       </section>
 
@@ -556,7 +626,6 @@ body{margin:0}
         <div class="dv-lbl" style="padding:0">Built from</div>
         <div class="dv-chips"><sc-for list="{{b.uses}}" as="u"><i>{{u.t}}</i></sc-for><sc-if value="{{b.noUses}}"><span class="sg-mut" style="font-size:12px">Add a condition</span></sc-if></div>
         <div class="dv-est"><b>{{b.est}}</b><span>{{b.estNote}}</span></div>
-        <div class="dv-note">Saved to Development. It shows up as a trigger in Experiences next to your captured signals.</div>
       </aside>
     </div>
   </sc-if>
@@ -567,13 +636,14 @@ body{margin:0}
 </div>
 </template>
 <script type="text/x-dc">
-/* Derived signals: triggers people build by combining captured signals (never auto-detected, so the list starts empty).
-   Saved ones live in window.ADX_DERIVED so the tab counts on Web Signals and Signals stay in sync. */
+/* Events: triggers built by combining captured signals. One store for the prototype (events.js, window.adxEvents()):
+   it holds the events the experiences run on, including the ones Cortex creates, so tab counts stay in sync. */
 // what a condition can check: behaviour measures, captured signals (events) and their variables
 var DV_WHAT = [
   ['Behavior', [
     ['scroll_depth', 'Scroll depth', 'num', 'px'], ['dwell_time', 'Time on page', 'num', 's'], ['pages_viewed', 'Pages viewed in session', 'num', 'pages'],
-    ['session_length', 'Session length', 'num', 'min'], ['visit_number', 'Visit number', 'num', ''], ['page_type', 'Page type', 'str', '']]],
+    ['session_length', 'Session length', 'num', 'min'], ['visit_number', 'Visit number', 'num', ''], ['page_type', 'Page type', 'str', ''],
+    ['basket_hover', 'Add to Basket hover', 'num', 's'], ['swatches_hovered', 'Shade swatches hovered', 'num', '']]],
   ['Signals', [
     ['product_viewed', 'product_viewed', 'event', ''], ['category_viewed', 'category_viewed', 'event', ''], ['search_performed', 'search_performed', 'event', ''],
     ['review_read', 'review_read', 'event', ''], ['size_guide_scrolled', 'size_guide_scrolled', 'event', ''], ['add_to_cart', 'add_to_cart', 'event', ''],
@@ -583,7 +653,10 @@ var DV_WHAT = [
     ['cart_viewed.cart_value', 'cart_viewed · cart_value', 'num', '$'], ['cart_viewed.item_count', 'cart_viewed · item_count', 'num', 'items'],
     ['product_viewed.category', 'product_viewed · category', 'str', ''], ['product_viewed.brand', 'product_viewed · brand', 'str', ''],
     ['product_viewed.price', 'product_viewed · price', 'num', '$'], ['search_performed.query', 'search_performed · query', 'str', ''],
-    ['filters_applied.results_count', 'filters_applied · results_count', 'num', 'results']]]
+    ['filters_applied.results_count', 'filters_applied · results_count', 'num', 'results'], ['cart_viewed.gap_to_offer', 'cart_viewed · gap_to_offer', 'num', '$']]],
+  ['Profile', [
+    ['profile.shade_vs_coloriq', 'Last shade vs Color IQ', 'str', ''], ['profile.past_categories', 'Past order categories', 'str', ''],
+    ['profile.skin_tone', 'Skin tone', 'str', ''], ['profile.days_since_order', 'Days since last order', 'num', 'days']]]
 ];
 var DV_OPS = {
   num: [['gt', 'is more than'], ['gte', 'is at least'], ['lt', 'is less than'], ['eq', 'equals']],
@@ -607,12 +680,16 @@ var DV_TPL = [
     conds: [{ what: 'add_to_cart', op: 'did', val: '' }, { what: 'checkout_started', op: 'not', val: '' }] }
 ];
 function dvFind(k) { for (var i = 0; i < DV_WHAT.length; i++) for (var j = 0; j < DV_WHAT[i][1].length; j++) if (DV_WHAT[i][1][j][0] === k) return DV_WHAT[i][1][j]; return DV_WHAT[0][1][0]; }
-function dvStore() { if (!window.ADX_DERIVED) window.ADX_DERIVED = []; return window.ADX_DERIVED; }
+function dvStore() { return window.adxEvents(); }
+function dvDate(d) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || ''); return m ? +m[3] + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2] - 1] + ' ' + m[1] : (d || '—'); }
+function dvBy(s) { var cx = s.by === 'cortex' || s.by === 'both', emma = s.by !== 'cortex'; return { emma: emma, cx: cx, byTx: emma && cx ? (s.author || 'Emma C.') + ' + Cortex' : cx ? 'Cortex' : (s.author || 'Emma C.') }; }
+function dvStatusCls(st) { return st === 'Active' ? 'ready' : st === 'Inactive' ? 'exc' : 'exc'; }
 function dvOpLabel(kind, op) { return (DV_OPS[kind].filter(function (o) { return o[0] === op; })[0] || DV_OPS[kind][0])[1]; }
 function dvNeedsVal(kind, op) { return kind !== 'event' || op === 'atleast'; }
 function dvFmt(v) { return /^\d{4,}$/.test(v) ? Number(v).toLocaleString('en-US') : v; }
 // "scroll depth is more than 4,000 px"
 function dvPhrase(c) {
+  if (c.s) return c.s + ' ' + c.op + ' ' + c.v; // a condition written in the studio
   var w = dvFind(c.what), kind = w[2], v = (c.val || '').trim();
   if (kind === 'event') return w[1] + ' ' + (c.op === 'atleast' ? 'happened at least ' + (v || '…') + ' times' : dvOpLabel(kind, c.op));
   var val = v ? (w[3] === '$' ? '$' + dvFmt(v) : kind === 'str' ? '“' + v + '”' : dvFmt(v) + (w[3] ? ' ' + w[3] : '')) : '…';
@@ -622,38 +699,63 @@ function dvRule(b) {
   var j = b.mode === 'all' ? ' and ' : ' or ';
   return b.conds.map(dvPhrase).join(j) + (b.win === 'page' ? ', on the same page' : b.win === 'session' ? ', in one session' : ', within ' + b.win.replace('m', ' minutes'));
 }
-function dvUses(b) { var seen = {}; return b.conds.map(function (c) { var k = c.what.split('.')[0]; return dvFind(k)[2] === 'event' || c.what.indexOf('.') > 0 ? k : dvFind(c.what)[1]; }).filter(function (k) { if (seen[k]) return false; seen[k] = 1; return true; }).map(function (t) { return { t: t }; }); }
+function dvUses(b) { var seen = {}; return b.conds.map(function (c) { if (c.s) return c.s; var k = c.what.split('.')[0]; return dvFind(k)[2] === 'event' || c.what.indexOf('.') > 0 ? k : dvFind(c.what)[1]; }).filter(function (k) { if (seen[k]) return false; seen[k] = 1; return true; }).map(function (t) { return { t: t }; }); }
 
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { b: null, editing: null, tick: 0, toast: '' };
+    this.state = { b: null, editing: null, view: null, tick: 0, toast: '' };
   }
-  componentWillUnmount() { clearTimeout(this.tt); }
+  // an event Cortex just created is New until you've seen it here once
+  componentWillUnmount() { clearTimeout(this.tt); dvStore().forEach(function (s) { s.fresh = false; }); }
   say(t) { var self = this; clearTimeout(this.tt); this.setState({ toast: t }); this.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2800); }
-  open(b, editing) { this.setState({ b: JSON.parse(JSON.stringify(b)), editing: editing || null }); window.scrollTo(0, 0); }
+  open(b, editing) {
+    var nb = JSON.parse(JSON.stringify(b));
+    nb.conds = (nb.conds || []).map(function (c) { return c.s ? { what: 'page_type', op: 'contains', val: c.s + ' ' + c.op + ' ' + c.v } : c; });
+    if (!nb.conds.length) nb.conds = [{ what: 'scroll_depth', op: 'gt', val: '' }];
+    this.setState({ b: nb, editing: editing || null, view: null }); window.scrollTo(0, 0);
+  }
+  show(id) { var e = window.adxEventFind(id); if (e) e.fresh = false; this.setState({ view: id, b: null, editing: null }); window.scrollTo(0, 0); }
   renderVals() {
     var self = this, st = this.state, D = dvStore(), b = st.b;
+    var ev = /^#\/events/.test(location.hash); // opened as Events (Experiences nav): same list, Experiences heading
     var sigN = window.ADX_SIGNALS ? window.ADX_SIGNALS.list.filter(function (s) { return !s.excluded; }).length : 23;
     function upd(fn) { var nb = JSON.parse(JSON.stringify(self.state.b)); fn(nb); self.setState({ b: nb }); }
     var blank = { id: '', desc: '', mode: 'all', win: 'session', freq: 'once', conds: [{ what: 'scroll_depth', op: 'gt', val: '' }] };
     var out = {
       sigN: sigN, n: D.length, toast: st.toast,
-      isEmpty: !b && D.length === 0, hasList: !b && D.length > 0, building: !!b,
+      isEmpty: !b && !st.view && D.length === 0, hasList: !b && !st.view && D.length > 0, building: !!b, viewing: !b && !!st.view, v: {},
       create: function () { self.open(blank); },
       tpls: DV_TPL.map(function (t) { return { id: t.id, page: t.page, rule: dvRule(t), use_for: t.use_for, use: function () { self.open(t); } }; }),
       moreTpls: DV_TPL.filter(function (t) { return !D.some(function (s) { return s.id === t.id; }); }).map(function (t) { return { id: t.id, page: t.page, rule: dvRule(t), use_for: t.use_for, use: function () { self.open(t); } }; }),
-      list: D.map(function (s, i) { return { id: s.id, desc: s.desc || '—', rule: dvRule(s), uses: dvUses(s), edit: function () { self.open(s, i + 1); } }; }),
+      list: D.map(function (s) { var u = s.usedBy || [], by = dvBy(s);
+        return Object.assign({ id: s.id, desc: s.desc || '—', page: s.page || 'Any page', isNew: !!s.fresh, usedTx: u.length ? u[0].name : '—', more: u.length > 1 ? u.length - 1 : 0,
+          updated: dvDate(s.updated), open: function () { self.show(s.id); } }, by); }),
+      ev: ev, notEv: !ev, evOn: ev ? 'on' : '', wsOn: ev ? '' : 'on',
       b: {}
     };
     out.hasMore = out.moreTpls.length > 0;
+    var vs = st.view && !b ? window.adxEventFind(st.view) : null;
+    if (vs) {
+      var vi = D.indexOf(vs), used = vs.usedBy || [];
+      out.v = Object.assign({ id: vs.id, desc: vs.desc, isNew: false, page: vs.page || 'Any page',
+        win: (DV_WIN.filter(function (o) { return o[0] === vs.win; })[0] || DV_WIN[1])[1].replace(/^the s/, 'S'),
+        freq: (DV_FREQ.filter(function (o) { return o[0] === vs.freq; })[0] || DV_FREQ[0])[1],
+        sentence: vs.rule ? vs.rule : (vs.freq === 'each' ? 'Every time ' : 'Once per session, when ') + dvRule(vs) + '.',
+        conds: (vs.conds || []).map(function (c, i) { return { join: i === 0 ? 'If' : vs.mode === 'any' ? 'or' : 'and', tx: dvPhrase(c) }; }),
+        uses: dvUses(vs), used: used.map(function (u) { return { name: u.name, status: u.status || 'Draft', cls: dvStatusCls(u.status) }; }),
+        usedN: used.length ? String(used.length) : '', noUse: !used.length,
+        created: dvDate(vs.created), updated: dvDate(vs.updated),
+        back: function () { self.setState({ view: null }); },
+        edit: function () { self.open(vs, vi + 1); } }, dvBy(vs));
+    } else if (st.view) out.viewing = false, out.hasList = !b && D.length > 0;
     if (!b) return out;
 
     var valid = b.conds.filter(function (c) { var k = dvFind(c.what)[2]; return !dvNeedsVal(k, c.op) || (c.val || '').trim(); });
     var name = (b.id || '').trim();
     var n = valid.length, pct = b.mode === 'all' ? [0, 22, 6, 2.4, 1.1, 0.6][Math.min(n, 5)] : [0, 22, 34, 43, 50, 55][Math.min(n, 5)];
     out.b = {
-      title: st.editing ? 'Edit ' + name : 'New derived signal',
+      title: st.editing ? 'Edit ' + name : 'New event',
       name: b.id, desc: b.desc, idShown: name || 'unnamed_signal',
       onName: function (e) { var v = e.target.value.toLowerCase().replace(/[^a-z0-9_]+/g, '_'); upd(function (x) { x.id = v; }); },
       onDesc: function (e) { var v = e.target.value; upd(function (x) { x.desc = v; }); },
@@ -681,12 +783,15 @@ class Component extends DCLogic {
       uses: dvUses({ conds: valid }), noUses: !n,
       est: n ? '~' + pct + '% of sessions' : '—', estNote: n ? '≈ ' + Math.round(pct * 960).toLocaleString('en-US') + ' sessions a day, based on the last 7 days' : 'Estimate appears once a condition is set',
       cantSave: !name || !n, canDelete: !!st.editing,
-      cancel: function () { self.setState({ b: null, editing: null }); },
-      del: function () { D.splice(st.editing - 1, 1); self.setState({ b: null, editing: null }); self.say(name + ' deleted'); },
+      cancel: function () { var back = st.editing ? D[st.editing - 1].id : null; self.setState({ b: null, editing: null, view: back }); },
+      del: function () { D.splice(st.editing - 1, 1); self.setState({ b: null, editing: null, view: null }); self.say(name + ' deleted'); },
       save: function () {
-        var rec = { id: name, desc: (b.desc || '').trim(), mode: b.mode, win: b.win, freq: b.freq, conds: valid };
-        if (st.editing) D[st.editing - 1] = rec; else D.push(rec);
-        self.setState({ b: null, editing: null }); self.say(name + ' saved to Development · available as a trigger in Experiences');
+        var today = '2026-11-05', prev = st.editing ? D[st.editing - 1] : null;
+        // editing keeps who made it and where it's used; the written rule is replaced by the conditions
+        var rec = Object.assign({}, prev || { by: 'emma', author: 'Emma C.', created: today, usedBy: [] },
+          { id: name, desc: (b.desc || '').trim(), mode: b.mode, win: b.win, freq: b.freq, conds: valid, updated: today, rule: null });
+        if (prev) D[st.editing - 1] = rec; else D.unshift(rec);
+        self.setState({ b: null, editing: null, view: name }); self.say(name + ' saved');
       }
     };
     return out;

@@ -3542,7 +3542,12 @@ document.documentElement.setAttribute('data-theme', 'light'); try { localStorage
   .v3-rows{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
   .v3-row{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-bottom:1px solid var(--line)}
   .v3-row:last-child{border-bottom:none}
-  .v3-row .st{width:18px;height:18px;border-radius:50%;border:1.5px dashed var(--line-strong);flex:none;margin-top:1px;display:grid;place-items:center}
+  .v3-row .st{display:none}
+  .v3-row.req .k::after{content:"*";color:#dc2626;font-weight:600;margin-left:3px}
+  .adx-add{display:inline-flex;align-items:center;gap:5px;margin-top:5px;height:28px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font:500 12.5px/1 inherit;letter-spacing:0;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .adx-add:hover:not([disabled]){background:var(--sink)}
+  .adx-add[disabled]{color:var(--faint);cursor:default;box-shadow:none;background:transparent;border-style:dashed}
+  .adx-add svg{width:12px;height:12px}
   .v3-row.sug .st{border:1.5px solid var(--ai);background:var(--ai-soft);color:var(--ai)}
   .v3-row.ok .st{border:none;background:var(--good);color:#fff}
   .v3-row .st svg{width:10px;height:10px}
@@ -8519,11 +8524,10 @@ function cvActiveHTML(){
     const a=CV.aud;
     return `<div class="cv-cardwrap"><div class="cv-card" id="cvAudCard">
       <div class="cv-ch"><span class="cv-req">Required</span>Who is this experience for?</div>
-      <div class="gx-opt-grid">${GX_AUDS.map(x=>`<button class="gx-opt ${a.mode==="type"&&a.ids.has(x.id)?"on":""}" data-aud="${x.id}"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 5.5a3 3 0 0 1 0 5"/></svg></span><span style="min-width:0;flex:1"><b>${x.label}</b><span>${x.desc}</span>${CV.hints.aud===x.id?'<span class="cv-from">From your description</span>':""}</span>${cvTick()}</button>`).join("")}</div>
-      <div class="gx-grp" style="margin-top:12px">Or</div>
-      <div class="gx-opt-grid">
+      <div class="gx-opt-grid">${GX_AUDS.filter(x=>!x.cx).map(x=>`<button class="gx-opt ${a.mode==="type"&&a.ids.has(x.id)?"on":""}" data-aud="${x.id}"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 5.5a3 3 0 0 1 0 5"/></svg></span><span style="min-width:0;flex:1"><b>${x.label}</b><span>${x.desc}</span>${CV.hints.aud===x.id?'<span class="cv-from">From your description</span>':""}</span>${cvTick()}</button>`).join("")}
         <button class="gx-opt ${a.mode==="all"?"on":""}" data-audmode="all"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span><span style="min-width:0;flex:1"><b>All shoppers</b><span>Everyone who triggers it</span></span></button>
         <button class="gx-opt ${a.mode==="crm"?"on":""}" data-audmode="crm"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span style="min-width:0;flex:1"><b>From your CRM</b><span>Describe a segment from CRM attributes</span></span></button>
+      ${GX_AUDS.filter(x=>x.cx).map(x=>`<button class="gx-opt ${a.mode==="type"&&a.ids.has(x.id)?"on":""}" data-aud="${x.id}"><span class="oi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 5.5a3 3 0 0 1 0 5"/></svg></span><span style="min-width:0;flex:1"><b>${x.label}</b><span>${x.desc}</span>${CV.hints.aud===x.id?'<span class="cv-from">From your description</span>':""}</span>${cvTick()}</button>`).join("")}
       </div>
       <div id="cvCrmWrap" style="${a.mode==="crm"?"":"display:none;"}margin-top:10px"><textarea class="cx-ta" id="cvCrm" rows="2" placeholder="e.g. Bought complexion products in the last 12 months, 2+ orders, Poland or Czechia">${esc(a.crm)}</textarea></div>
       <div class="cv-actions"><button class="btn primary" id="cvAudGo" ${cvAudOk()?"":"disabled"}>Use this audience${gxArrow()}</button><span class="cx-hint">Pick one or more.</span></div>
@@ -8534,7 +8538,7 @@ function cvActiveHTML(){
     const items=(CV.custom?[CV.custom]:[]).concat(top);
     const isOn=x=>t&&(x.custom?t.kind==="custom":(t.kind==="lib"&&t.id===x.id));
     return `<div class="cv-cardwrap"><div class="cv-card">
-      <div class="cv-ch"><span class="cv-req">Required</span>What should trigger it?</div>
+      <div class="cv-ch"><span class="cv-req">Required</span>What event should trigger it?</div>
       <div class="tg-libh"><span>${CV.custom?"Your rule + top matches":"Top matches from your events library"}</span><span class="tg-sync"><i></i>Synced · ADX events + <img class="adobe-ic" src="data:image/png;base64,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" alt="">Adobe Journey Optimizer</span></div>
       <div class="tg-list" role="radiogroup">${items.map((x,i)=>`<div class="tg-item ${isOn(x)?"on":""}" data-tg="${x.custom?"custom":x.id}" role="radio" aria-checked="${isOn(x)}" tabindex="0">
         <span class="rd"></span>
@@ -8622,7 +8626,7 @@ function cvConfirmAudience(){
   if(CV.trig){ cvSay("Updated the audience. Re-checking the suggestion with your trigger."); cvAssemble(); return; }
   cvThink(["Noting "+cvAudLabel(),"Finding the moments that matter for them"],1700,()=>{
   CV.step="trigger";
-  cvSay(`Got it, <b>${esc(cvAudLabel())}</b>. Now, what should trigger it? Here are the 3 best matches from your events library. Each is a page plus shopper behaviour; open one to see its rule.`);
+  cvSay(`Got it, <b>${esc(cvAudLabel())}</b>. Now, what event should trigger it? Here are the 3 best matches from your events library. Each is a page plus shopper behaviour; open one to see its rule.`);
   { const tp=cvTopTriggers(); if(!CV.trig&&tp[0]&&tp[0].score>0) CV.trig={kind:"lib",id:tp[0].id}; }
   cvRender();
   });
@@ -8711,7 +8715,7 @@ function cvConfirmAudienceSilent(){
   if(CV.trig){ cvAssemble(); return; }
   cvThink(["Finding the moments that matter for them"],1200,()=>{
   CV.step="trigger";
-  cvSay(`Now, what should trigger it? Here are the 3 best matches from your events library.`);
+  cvSay(`Now, what event should trigger it? Here are the 3 best matches from your events library.`);
   { const tp=cvTopTriggers(); if(tp[0]&&tp[0].score>0) CV.trig={kind:"lib",id:tp[0].id}; }
   cvRender();
   });
@@ -10248,7 +10252,7 @@ function v3Close(to){ clearTimeout(V3_T); const r=$("#cv"); r.hidden=true; r.inn
 function v3Next(){
   if(V3.returnTo==="reco"&&V3.aud&&V3.trig&&V3.goal!==undefined&&V3.instr!==undefined){ V3.returnTo=null; return v3Reco(true); }
   if(!V3.aud){ V3.step="audience"; v3Say("Who should see it?"); return; }
-  if(!V3.trig){ V3.step="trigger"; v3Say(`Got it, <b>${esc(V3.aud.label)}</b>. Now, what should trigger it? Here are the 3 best matches from your events library. Each is a page plus shopper behaviour; open one to see its rule.`); return; }
+  if(!V3.trig){ V3.step="trigger"; v3Say(`Got it, <b>${esc(V3.aud.label)}</b>. Now, what event should trigger it? Here are the 3 best matches from your events library. Each is a page plus shopper behaviour; open one to see its rule.`); return; }
   if(V3.data===undefined){ V3.step="data"; v3Say(`Which data should I use to size and run this? You can start on mock data and switch to your own later.`); return; }
   if(!V3.sugg) return v3Suggest();
   if(V3.goal===undefined){ V3.step="goal"; v3Say(`Every Experience ladders up to a goal so we can measure it. This one fits <b>“${esc(V3.S.goal.name)}”</b> best. ${esc(V3.S.goal.why)}`); return; }
@@ -10548,9 +10552,7 @@ function v3ActiveHTML(){
     const mode=(m,label,desc,other)=>{ const on=A.mode===m; return `<div class="gx-opt v3-o ${other?"other":""} ${on?"on":""}" role="radio" aria-checked="${on}" tabindex="0" data-v3audmode="${m}"><span class="v3-rd" aria-hidden="true"></span><span style="min-width:0;flex:1"><b>${label}</b><span>${desc}</span></span></div>`; };
     const ok=A.mode==="all"||A.mode==="crm"||A.ids.size>0;
     return `<div class="cv-cardwrap"><div class="cv-ch">Who is this Experience for?<span class="cv-req">Required</span></div>
-      <div class="v3-ans" role="group" aria-label="Audience segments">${S.auds.map(seg).join("")}</div>
-      <div class="gx-grp" style="margin:14px 0 8px">Or</div>
-      <div class="v3-ans" role="radiogroup" aria-label="Other audiences">${mode("all","All shoppers","Everyone who triggers it")}${mode("crm","From your CRM","Describe a segment from CRM attributes in the message box below",true)}</div>
+      <div class="v3-ans" role="group" aria-label="Audience segments">${S.auds.filter(x=>!x.cx).map(seg).join("")}${mode("all","All shoppers","Everyone who triggers it")}${mode("crm","From your CRM","Describe a segment from CRM attributes in the message box below",true)}${S.auds.filter(x=>x.cx).map(seg).join("")}</div>
       <div class="cv-actions"><button class="btn primary" id="v3AudGo" ${ok?"":"disabled"}>Use this audience${gxArrow()}</button><span class="cx-hint" id="v3AudHint">${A.mode==="crm"?"Describe the segment below, then continue":"Pick one or more."}</span></div></div>`;
   }
   if(s==="trigger"){
@@ -10559,7 +10561,7 @@ function v3ActiveHTML(){
       <span style="min-width:0;flex:1"><b>${esc(x.name)}${x.custom?'<span class="tg-badge c">Created by Cortex</span>':""}</b>
         <span class="tg-meta"><span class="tg-pg">${v3i('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',12)}${esc(x.page)}</span>${v3CondChips(x.conds,2)}</span></span>
       <button class="btn sm" data-v3tgview="${x.id}">View</button></div>`; };
-    return `<div class="cv-cardwrap"><div class="cv-ch">What should trigger it?<span class="cv-req">Required</span></div>
+    return `<div class="cv-cardwrap"><div class="cv-ch">What event should trigger it?<span class="cv-req">Required</span></div>
       <div class="tg-libh"><span>${V3.customTrig?"Your rule + top matches":"Top matches from your events library"}</span><span class="tg-sync"><i></i>Synced · ADX events + Adobe Journey Optimizer</span></div>
       <div class="v3-ans" role="radiogroup" aria-label="Trigger">${items.map(row).join("")}</div>
       <div class="cv-actions"><button class="btn primary" id="v3Submit" ${V3.sel?"":"disabled"}>Use this trigger${gxArrow()}</button><span class="cx-hint" id="v3SubHint">${V3.sel?"":"Pick one."}</span></div></div>`;
@@ -10642,18 +10644,24 @@ function v3ActiveHTML(){
   }
   return "";
 }
+/* draft rows: no ticks. A required row's label gets a red asterisk; a missing value shows an "Add …" button instead
+   of a placeholder. It's live for the step Cortex is asking about now (it takes you to that question); later steps wait. */
+function adxAddBtn(label,now,why){ return `<button type="button" class="adx-add" data-adxadd ${now?"":`disabled title="${esc(why||"")}"`}>${v3i('<path d="M12 5v14M5 12h14"/>',12)}${esc(label)}</button>`; }
+document.addEventListener("click",ev=>{ const b=ev.target.closest("[data-adxadd]"); if(!b||b.disabled) return;
+  const cards=[...document.querySelectorAll("#cv .cv-cardwrap, .v3-chatcol .cv-cardwrap, .cv-cardwrap")].filter(c=>c.offsetParent); const c=cards[cards.length-1]; if(!c) return;
+  c.scrollIntoView({behavior:"smooth",block:"center"}); const f=c.querySelector("button:not([disabled]),input,textarea,[tabindex]"); if(f) setTimeout(()=>f.focus({preventScroll:true}),250); },true);
 function v3DraftRows(){
   const st=(ok,sug)=>ok?"ok":sug?"sug":"";
   const g=V3.goal, chk=`<span class="st">${v3i("check",10)}</span>`;
   const status=V3.editId?(v3Dirty()?"Unsaved changes":"No changes yet"):V3.reached?"Ready to create":"Collecting details";
   return [
-    {k:"Audience",cls:st(!!V3.aud,!V3.aud&&!!V3.hintAud),v:V3.aud?esc(V3.aud.label):V3.hintAud?esc(V3.hintAud.label):"",ph:"Who should see it",ed:"audience",fl:"aud"},
-    {k:"Trigger",cls:st(!!V3.trig),v:V3.trig?esc(V3.trig.short):"",ph:"When it should appear",ed:"trigger",fl:"trig"},
-    {k:"Data",cls:st(V3.data!==undefined),v:V3.data!==undefined?esc(v3DataLabel(V3.data)):"",ph:"Mock data or your own",ed:"data",fl:"data"},
-    {k:"Suggested action",cls:st(!!V3.sugg),v:V3.sugg?esc(V3.action):"",ph:"After audience and trigger",ed:V3.sugg?"refine":null,fl:"act"},
-    {k:"Goal",cls:st(g!==undefined,g===undefined&&V3.msgs.length>2),v:g===undefined?(V3.msgs.length>2?esc(V3.S.goal.name):""):g.name?esc(g.name)+(g.mode==="new"?'<span class="s">New goal</span>':""):"Independent",ph:"Cortex will suggest one",ed:"goal",fl:"goal"},
-    {k:"Additional instructions",cls:st(V3.instr!==undefined),v:V3.instr===undefined?"":V3.instr.length?V3.instr.map(t=>esc(t)).join("<br>"):"None",ph:"Optional · tone, copy rules",ed:"instr",fl:"instr"},
-  ].map(r=>`<div class="v3-row ${r.cls} ${V3.flash&&V3.flash===r.fl?"flash":""}"><span class="st">${r.cls==="ok"?v3i("check",10):r.cls==="sug"?v3i("sparkle",10):""}</span><span class="tx"><span class="k">${r.k}</span><span class="v ${r.v?"":"ph"}">${r.v||r.ph}</span></span>${r.ed&&r.cls==="ok"&&!V3.thinking?`<button class="ed" data-v3edit="${r.ed}" title="Change ${r.k.toLowerCase()}" aria-label="Change ${r.k.toLowerCase()}">${v3i("pen",14)}</button>`:""}</div>`).join("");
+    {k:"Audience",cls:st(!!V3.aud,!V3.aud&&!!V3.hintAud),v:V3.aud?esc(V3.aud.label):V3.hintAud?esc(V3.hintAud.label):"",ph:"Who should see it",ed:"audience",fl:"aud",req:1,add:"Add audience",at:"audience"},
+    {k:"Trigger",cls:st(!!V3.trig),v:V3.trig?esc(V3.trig.short):"",ph:"When it should appear",ed:"trigger",fl:"trig",req:1,add:"Add trigger",at:"trigger"},
+    {k:"Data",cls:st(V3.data!==undefined),v:V3.data!==undefined?esc(v3DataLabel(V3.data)):"",ph:"Mock data or your own",ed:"data",fl:"data",req:1,add:"Add data",at:"data"},
+    {k:"Suggested action",cls:st(!!V3.sugg),v:V3.sugg?esc(V3.action):"",ph:"After audience and trigger",ed:V3.sugg?"refine":null,fl:"act",req:1,add:"Add action",at:"suggest"},
+    {k:"Goal",cls:st(g!==undefined,g===undefined&&V3.msgs.length>2),v:g===undefined?(V3.msgs.length>2?esc(V3.S.goal.name):""):g.name?esc(g.name)+(g.mode==="new"?'<span class="s">New goal</span>':""):"Independent",ph:"Cortex will suggest one",ed:"goal",fl:"goal",req:1,add:"Add goal",at:"goal"},
+    {k:"Additional instructions",cls:st(V3.instr!==undefined),v:V3.instr===undefined?"":V3.instr.length?V3.instr.map(t=>esc(t)).join("<br>"):"None",ph:"Optional · tone, copy rules",ed:"instr",fl:"instr",add:"Add instructions",at:"instr"},
+  ].map(r=>`<div class="v3-row ${r.cls}${r.req?" req":""} ${V3.flash&&V3.flash===r.fl?"flash":""}"><span class="st"></span><span class="tx"><span class="k">${r.k}</span><span class="v">${r.v||adxAddBtn(r.add,!V3.thinking&&(V3.step===r.at||r.at==="goal"&&V3.step==="goalConfirm"),r.ph)}</span></span>${r.ed&&r.cls==="ok"&&!V3.thinking?`<button class="ed" data-v3edit="${r.ed}" title="Change ${r.k.toLowerCase()}" aria-label="Change ${r.k.toLowerCase()}">${v3i("pen",14)}</button>`:""}</div>`).join("");
 }
 function v3DraftHTML(){
   return `<div class="v3-draft">
@@ -10878,7 +10886,7 @@ function v3DevSkip(){
   V3.aud=v3AudObj("type",["first"]); V3.trig=v3TrigObj(S.tlib.find(t=>t.id==="size_hes"));
   const sg=S.sugg[0]; V3.sugg=[sg.id]; V3.name=sg.exp; V3.acts=sg.acts; V3.action=sg.action; V3.does=sg.does;
   V3.goal={name:S.goal.name,metric:S.goal.metric,mode:"attached"}; V3.instr=[]; V3.data={mode:"mock"};
-  V3.msgs=[{role:"user",text:prompt},{role:"cortex",html:esc(S.intro)+" Who should see this?"},{role:"pick",label:V3.aud.label,ic:"user"},{role:"cortex",html:"Got it. Now, what should trigger it?"},{role:"pick",label:V3.trig.name,ic:"swap"},
+  V3.msgs=[{role:"user",text:prompt},{role:"cortex",html:esc(S.intro)+" Who should see this?"},{role:"pick",label:V3.aud.label,ic:"user"},{role:"cortex",html:"Got it. Now, what event should trigger it?"},{role:"pick",label:V3.trig.name,ic:"swap"},
     {role:"cortex",html:"I found <b>3 ways</b> to do this. I'd start with the first."},{role:"pick",label:"Enable "+sg.name,ic:"check"},{role:"cortex",html:"This one fits <b>“"+esc(S.goal.name)+"”</b> best."},{role:"pick",label:"Attach to “"+S.goal.name+"”",ic:"target"},
     {role:"cortex",html:"Last step: any additional instructions?"},{role:"pick",label:"No additional instructions",ic:"pen"},{role:"user",text:"Create draft Experience"}];
   const e=v3MakeExp(); V3=null; v3OpenDetail(e.id,true);
@@ -11844,17 +11852,17 @@ cvPanelHTML=function(){
   const best=(OB_GOALS.find(g=>g.id===cvBestGoal())||{}).label;
   const audSug=CV.aud&&(CV.aud.mode==="all"||CV.aud.mode==="crm"&&CV.aud.crm||CV.aud.ids&&CV.aud.ids.size);
   const rows=[
-    {k:"Audience",st:rank>0?"ok":audSug?"sug":"",v:rank>0||audSug?esc(cvAudLabel()):"",ph:"Who should see it",ed:rank>0?"audience":null},
-    {k:"Trigger",st:rank>1&&CV.trig?"ok":CV.trig?"sug":"",v:CV.trig?esc(cvTrigLabel()):"",ph:"When it should appear",ed:rank>1&&CV.trig?"trigger":null},
-    {k:"Suggested action",st:rank>=3&&names.length?"ok":CV.step==="suggest"&&names.length?"sug":"",v:names.length&&rank>=2?esc(names.join(", ")):"",ph:"After audience and trigger",ed:rank>=3?"suggest":null},
-    {k:"Goal",st:rank>=4&&CV.goal?"ok":rank>=2&&best?"sug":"",v:rank>=4&&CV.goal?esc(cvGoalLabel()):rank>=2&&best?esc(best):"",ph:"Cortex will suggest one",ed:rank>=4?"goal":null},
-    {k:"Data",st:"ok",v:esc(v3uc(GX&&GX.data?gxDataName():"mock data pack")),ph:"",ed:null},
+    {k:"Audience",st:rank>0?"ok":audSug?"sug":"",v:rank>0||audSug?esc(cvAudLabel()):"",ph:"Who should see it",ed:rank>0?"audience":null,add:"Add audience",at:["audience"]},
+    {k:"Trigger",st:rank>1&&CV.trig?"ok":CV.trig?"sug":"",v:CV.trig?esc(cvTrigLabel()):"",ph:"When it should appear",ed:rank>1&&CV.trig?"trigger":null,add:"Add trigger",at:["trigger"]},
+    {k:"Suggested action",st:rank>=3&&names.length?"ok":CV.step==="suggest"&&names.length?"sug":"",v:names.length&&rank>=2?esc(names.join(", ")):"",ph:"After audience and trigger",ed:rank>=3?"suggest":null,add:"Add action",at:["assemble","suggest"]},
+    {k:"Goal",st:rank>=4&&CV.goal?"ok":rank>=2&&best?"sug":"",v:rank>=4&&CV.goal?esc(cvGoalLabel()):rank>=2&&best?esc(best):"",ph:"Cortex will suggest one",ed:rank>=4?"goal":null,add:"Add goal",at:["goal"]},
+    {k:"Data",st:"ok",v:esc(v3uc(GX&&GX.data?gxDataName():"mock data pack")),ph:"",ed:null,add:"Add data",at:[]},
   ];
   const ready=rank>=4, name=CV.title||(rank>=3&&names.length?names[0]+(names.length>1?" + "+(names.length-1)+" more":""):"");
   return `<div class="v3-draft">
     <div class="v3-dh">Experience draft<span class="pill ${ready?"learning":"draft"}"><span class="d"></span>${ready?"Ready to create":"In progress"}</span></div>
     <div class="v3-dname ${name?"":"ph"}">${name?esc(name):"Untitled Experience"}</div>
-    <div class="v3-rows">${rows.map(r=>`<div class="v3-row ${r.st}"><span class="st">${r.st==="ok"?v3i("check",10):r.st==="sug"?v3i("sparkle",10):""}</span><span class="tx"><span class="k">${r.k}</span><span class="v ${r.v?"":"ph"}">${r.v||r.ph}</span></span>${r.ed&&!CV.thinking?pen(r.ed):""}</div>`).join("")}</div>
+    <div class="v3-rows">${rows.map(r=>`<div class="v3-row ${r.st} req"><span class="st"></span><span class="tx"><span class="k">${r.k}</span><span class="v">${r.v||adxAddBtn(r.add,!CV.thinking&&r.at.includes(CV.step),r.ph)}</span></span>${r.ed&&!CV.thinking?pen(r.ed):""}</div>`).join("")}</div>
     <details class="v3-aware" id="cvAware" ${V3_CV_AWARE?"open":""}><summary>${CXMARKteal()}<span class="t">Context Cortex already knows</span><span class="badge teal">Auto</span>${v3i("chev",14).replace("<svg",'<svg class="chev"')}</summary>
       <div class="gx-aware-sub">Cortex flexes this on every decision. You don't configure it.</div>
       <div class="gx-aware-list">${GX_AWARE.map(a=>`<div class="gx-arow"><span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${a.icon}</svg></span><span style="min-width:0"><b>${esc(a.title)}</b><span>${esc(a.detail)}</span></span></div>`).join("")}</div></details>
@@ -12244,7 +12252,7 @@ cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments)
     + 'html body .sp-img{background:#fff ' + phUrl(PH[0], 500) + ' center/contain no-repeat}html body .sp-img .sp-bottle{visibility:hidden}';
   try { V3_SEPH_PRODUCTS[5][1] = 'Micellar Cleansing Water'; } catch (e) {} // the photo's real name; prices stay (the basket subtotal adds them up)
   // Experience draft (right of Cortex): the row Cortex is asking about now shimmers;
-  // its dashed circle turns Cortex teal with a soft pulsing glow (no rotation); when it's answered the tick pops in. Same rows in both builders (cvPanelHTML and v3DraftHTML).
+  // (no status circles or ticks). Same rows in both builders (cvPanelHTML and v3DraftHTML).
   css.textContent += '@keyframes adxShim{0%{background-position:100% 0}100%{background-position:-100% 0}}'
     + '@keyframes adxRing{0%,100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}50%{box-shadow:0 0 0 4px rgba(60,140,129,.14)}}@keyframes adxGlow{0%,100%{box-shadow:0 0 0 2px rgba(60,140,129,.08),0 1px 3px rgba(60,140,129,.15)}50%{box-shadow:0 0 0 5px rgba(60,140,129,.16),0 1px 6px rgba(60,140,129,.3)}}@keyframes adxPop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}'
     + '.v3-row.wait:not(.sug) .k,.v3-row.wait .v.ph{background:linear-gradient(90deg,#18181b 0%,#18181b 38%,#a1a1aa 50%,#18181b 62%,#18181b 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:adxShim 2.2s linear infinite}'
@@ -12258,7 +12266,7 @@ cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments)
     var waiting = false, okNow = {};
     html = html.replace(/<div class="v3-row ([^"]*)"><span class="st">([\s\S]*?)<\/span><span class="tx"><span class="k">([^<]*)<\/span>/g, function (m, cls, st, k) {
       var ok = /(^|\s)ok(\s|$)/.test(cls), add = '';
-      if (ok) { okNow[k] = 1; if (!draftOk[k] && k !== 'Data') add = ' done'; } // Data is ticked from the start
+      if (ok) { okNow[k] = 1; if (!draftOk[k] && k !== 'Data') add = ' done'; if (!/<svg/.test(st)) st = v3i('check', 10); } // Data is ticked from the start
       else if (!waiting) { waiting = true; add = ' wait'; }
       return '<div class="v3-row ' + cls + add + '"><span class="st">' + st + '</span><span class="tx"><span class="k">' + k + '</span>';
     });
@@ -12267,35 +12275,580 @@ cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments)
     // While editing a live experience the Saved / Unsaved pill stays, since that's news.
     var total = (html.match(/<div class="v3-row /g) || []).length, done = Object.keys(okNow).length;
     html = html.replace(/<div class="v3-dh">([\s\S]*?)<\/div>\s*<div class="v3-dname[^"]*">[\s\S]*?<\/div>/, function (m, inner) {
-      var pill = /^Editing draft/.test(inner) ? (inner.match(/<span class="pill[\s\S]*$/) || [''])[0] : '<span class="adx-cnt">' + done + ' of ' + total + ' done</span>';
-      return '<div class="adx-ckh"><b>Setup checklist</b>' + pill + '</div>';
+      // no done count: the panel lists what the experience has, it isn't a checklist
+      var pill = /^Editing draft/.test(inner) ? (inner.match(/<span class="pill[\s\S]*$/) || [''])[0] : '';
+      return '<div class="adx-ckh"><b>Details</b>' + pill + '</div>';
     });
     return html;
   };
+  // Status circles: dotted until done, a green tick when done, the pulsing one is what Cortex is asking about now.
+  // Rows without a value show a quiet placeholder instead of an Add button (the chat on the left is where you add it).
+  css.textContent += 'html body .v3-row .st{width:18px;height:18px;border-radius:50%;border:1.5px dashed var(--line-strong);flex:none;margin-top:1px;display:grid;place-items:center}'
+    + 'html body .v3-row.ok .st{border:none;background:var(--good);color:#fff}'
+    + '.adx-ph{display:block;font-size:13px;color:var(--faint);font-weight:400;line-height:1.45;margin-top:1px}'
+    + '.v3-row.wait .adx-ph{background:linear-gradient(90deg,#18181b 0%,#18181b 38%,#a1a1aa 50%,#18181b 62%,#18181b 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:adxShim 2.2s linear infinite}'
+    + '@media (prefers-reduced-motion:reduce){.v3-row.wait .adx-ph{animation:none}}';
+  if (typeof adxAddBtn === 'function') adxAddBtn = function (label, now, why) { return '<span class="adx-ph">' + esc(why || label) + '</span>'; };
   css.textContent += '.adx-ckh{display:flex;align-items:center;gap:8px}.adx-ckh b{font-size:14px;font-weight:600;color:var(--ink)}.adx-ckh .pill,.adx-ckh .adx-cnt{margin-left:auto}'
     + '.adx-cnt{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}'
-    // built experience: the same five steps lead Details, each ticked
-    + '.v3-kv .adx-step dt{display:flex;align-items:center;gap:8px}.adx-tick{width:16px;height:16px;border-radius:50%;background:var(--good);color:#fff;display:inline-grid;place-items:center;flex:none}.adx-tick svg{width:9px;height:9px}';
-  // Built experience (Details on its page): Audience, Trigger, Suggested action, Goal, Data first, in the checklist's order and
-  // names, each with the same green tick; the micro-elicit settings (conversation goal, question type …) follow.
+    // built experience Details: the required steps get the red asterisk
+    + '.v3-kv .adx-step dt::after{content:"*";color:#dc2626;font-weight:600;margin-left:3px}';
+  // Built experience (its page): Details lead with Audience, Trigger, Suggested action, Goal (the checklist's names; no ticks:
+  // it is a finished experience, not a checklist), then the micro-elicit settings; then Preview, then Additional instructions
+  // and Data, then Advanced last.
   var adxSteps = function () {
     try {
-      var dl = document.querySelector('#v3DetailMain dl.v3-kv'); if (!dl || dl.dataset.adxSteps) return;
+      var det = document.querySelector('section.v3-sec[data-sec="details"]'), dl = det && det.querySelector('dl.v3-kv');
+      if (!dl || dl.dataset.adxSteps) return;
       dl.dataset.adxSteps = '1';
-      var tick = '<span class="adx-tick">' + v3i('check', 9) + '</span>';
-      var steps = [['audience', 'Audience'], ['trigger', 'Trigger'], ['refine', 'Suggested action'], ['goal', 'Goal'], ['data', 'Data']].map(function (x) {
-        var el = dl.querySelector('[data-v3row="' + x[0] + '"]'); if (!el) return null;
-        var dt = el.querySelector('dt'); if (dt) dt.innerHTML = tick + '<span>' + x[1] + '</span>';
-        el.classList.add('adx-step'); return el;
-      }).filter(Boolean);
-      steps.slice().reverse().forEach(function (el) { dl.insertBefore(el, dl.firstChild); });
+      var row = function (k) { return dl.querySelector('[data-v3row="' + k + '"]'); };
+      [['goal', 'Goal'], ['audience', 'Audience'], ['trigger', 'Trigger'], ['refine', 'Suggested action'], ['data', 'Data']].forEach(function (x) {
+        var el = row(x[0]); if (!el) return;
+        var dt = el.querySelector('dt'); if (dt) dt.textContent = x[1];
+        el.classList.add('adx-step');
+      });
+      // Details: the steps, then how the micro-elicit talks. Then the Preview, then the rest, then Advanced last.
+      var top = ['goal', 'audience', 'trigger', 'refine', 'megoal', 'metype', 'mefollow', 'meq', 'meopts', 'mecta'].map(row).filter(Boolean);
+      top.slice().reverse().forEach(function (el) { dl.insertBefore(el, dl.firstChild); });
+      var pv = document.querySelector('section.v3-sec[data-sec="preview"]'), adv = document.querySelector('section.v3-sec[data-sec="adv"]');
+      if (pv) det.after(pv);
+      var rest = [].filter.call(dl.children, function (el) { return top.indexOf(el) < 0; });
+      if (rest.length) {
+        var more = document.createElement('section'); more.className = 'card v3-sec adx-more';
+        more.innerHTML = '<div class="v3-secb"><dl class="v3-kv"></dl></div>';
+        var dl2 = more.querySelector('dl'); rest.forEach(function (el) { dl2.appendChild(el); });
+        (pv || det).after(more);
+        if (adv) more.after(adv);
+      } else if (adv && pv) pv.after(adv);
     } catch (e) {}
   };
   // the page is redrawn from several places (opening it, saving, Cortex edits), so follow the DOM rather than one renderer
   var adxStepsQ = false;
   new MutationObserver(function () { if (adxStepsQ) return; adxStepsQ = true; setTimeout(function () { adxStepsQ = false; adxSteps(); }, 0); }).observe(document.body, { childList: true, subtree: true });
-  if (typeof cvPanelHTML === 'function') { var cvP = cvPanelHTML; cvPanelHTML = function () { return markDraft(cvP.apply(this, arguments)); }; }
-  if (typeof v3DraftHTML === 'function') { var v3P = v3DraftHTML; v3DraftHTML = function () { return markDraft(v3P.apply(this, arguments)); }; }
+  // Trigger cards ("What should trigger it?"): an up/down chevron instead of View. Picking a card opens it in place
+  // (one open at a time) with its rule editable: page, then WHEN / AND conditions (signal, operator, value), add or remove.
+  // Clicking a condition chip opens the card on that condition. Edits change the trigger's own conditions, so the chips,
+  // "Use this trigger" and the created experience all read the edited rule. Same for the guided builder's cards (.v3-tg).
+  var TG_OPS = ['=', '≠', '≥', '≤', '>', '<'], tgOrig = new WeakMap();
+  var tgEsc = function (t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var tgFind = function (item) {
+    try {
+      if (item.dataset.tg != null) { var k = item.dataset.tg; return k === 'custom' ? CV.custom : CV_TLIB.find(function (x) { return x.id === k; }); }
+      var id = item.dataset.v3sel, pool = [].concat(V3.customTrig ? [V3.customTrig] : [], V3.trigTop || [], (V3.S && V3.S.tlib) || []);
+      return pool.find(function (x) { return x && x.id === id; }) || null;
+    } catch (e) { return null; }
+  };
+  var tgChips = function (c) { return (typeof cvCondChips === 'function' ? cvCondChips : v3CondChips)(c, 2); };
+  var tgRow = function (c, i) {
+    return '<div class="adx-tgr" data-i="' + i + '"><span class="and">' + (i ? 'AND' : 'WHEN') + '</span>'
+      + '<input class="sig" value="' + tgEsc(c.s) + '" placeholder="Signal" aria-label="Signal">'
+      + '<select class="op" aria-label="Operator">' + TG_OPS.concat(TG_OPS.indexOf(c.op) < 0 && c.op ? [c.op] : []).map(function (o) { return '<option' + (o === c.op ? ' selected' : '') + '>' + tgEsc(o) + '</option>'; }).join('') + '</select>'
+      + '<input class="val" value="' + tgEsc(c.v) + '" placeholder="Value" aria-label="Value">'
+      + '<button type="button" class="rm" aria-label="Remove condition">' + v3i('<path d="M6 6l12 12M18 6L6 18"/>', 13) + '</button></div>';
+  };
+  var tgBody = function (tr) {
+    var site = (typeof OB_PROFILE !== 'undefined' && OB_PROFILE && OB_PROFILE.website) || 'sephora.com';
+    var meta = [tr.window, tr.freq, tr.vol].filter(Boolean).join(' · ');
+    return (tr.cx ? '<label class="adx-tgnm"><span>Event name</span><input class="evn mono" value="' + tgEsc(tr.key) + '" spellcheck="false" aria-label="Event name"></label>' : '')
+      + '<div class="adx-tgpg">' + v3i('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>', 13) + '<b>' + tgEsc(tr.page) + '</b>' + (tr.path ? '<span class="mono">' + tgEsc(site.replace(/^https?:\/\//, '') + tr.path) + '</span>' : '') + '</div>'
+      + '<div class="adx-tgrs">' + tr.conds.map(tgRow).join('') + '</div>'
+      + '<button type="button" class="adx-tgadd">+ Add condition</button>'
+      + (meta ? '<div class="adx-tgm">' + tgEsc(meta) + '</div>' : '');
+  };
+  var tgSet = function (item, open) {
+    var b = item.querySelector('.adx-tgb'), x = item.querySelector('.adx-tgx'); if (!b) return;
+    b.hidden = !open; item.classList.toggle('adx-open', open); if (x) x.setAttribute('aria-expanded', String(open));
+  };
+  var tgOpen = function (item) { item.parentElement.querySelectorAll('.adx-x').forEach(function (o) { tgSet(o, o === item); }); };
+  var tgSync = function (item, tr) {
+    var meta = item.querySelector('.tg-meta');
+    if (meta) { meta.querySelectorAll('.tg-cond,.tg-more').forEach(function (n) { n.remove(); }); meta.insertAdjacentHTML('beforeend', tgChips(tr.conds)); }
+    var nm = item.querySelector('.tg-nm') || item.querySelector('b'), edited = JSON.stringify(tr.conds) !== tgOrig.get(tr), tag = nm && nm.querySelector('.adx-edited');
+    if (edited && nm && !tag) nm.insertAdjacentHTML('beforeend', '<span class="adx-edited">Edited</span>');
+    if (!edited && tag) tag.remove();
+  };
+  var tgRead = function (item, tr) {
+    tr.conds = [].map.call(item.querySelectorAll('.adx-tgr'), function (r) { return { s: r.querySelector('.sig').value.trim(), op: r.querySelector('.op').value, v: r.querySelector('.val').value.trim() }; }).filter(function (c) { return c.s || c.v; });
+    var evn = item.querySelector('.evn'); if (evn) tr.key = evn.value.trim().replace(/\s+/g, '_');
+    tgSync(item, tr);
+  };
+  var tgEnhance = function () {
+    document.querySelectorAll('.tg-item:not(.adx-x),.v3-tg:not(.adx-x)').forEach(function (item) {
+      var tr = tgFind(item); if (!tr || !tr.conds) return;
+      if (!tgOrig.has(tr)) tgOrig.set(tr, JSON.stringify(tr.conds));
+      item.classList.add('adx-x');
+      var view = item.querySelector('[data-tgview],[data-v3tgview]');
+      var chev = document.createElement('button');
+      chev.type = 'button'; chev.className = 'adx-tgx'; chev.setAttribute('aria-label', 'Show rule'); chev.setAttribute('aria-expanded', 'false');
+      chev.innerHTML = v3i('<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>', 16);
+      if (view) view.replaceWith(chev); else item.appendChild(chev);
+      var body = document.createElement('div'); body.className = 'adx-tgb'; body.hidden = true; body.innerHTML = tgBody(tr); item.appendChild(body);
+      tgSync(item, tr);
+      chev.addEventListener('click', function (e) { e.stopPropagation(); if (body.hidden) tgOpen(item); else tgSet(item, false); });
+      item.addEventListener('click', function (e) {
+        if (e.target.closest('.adx-tgx') || e.target.closest('.adx-tgb')) return;
+        tgOpen(item);
+        var chip = e.target.closest('.tg-cond');
+        if (chip) { var i = [].indexOf.call(item.querySelectorAll('.tg-meta .tg-cond'), chip), r = body.querySelectorAll('.adx-tgr .val')[i]; if (r) setTimeout(function () { r.focus(); r.select(); }, 0); }
+      });
+      // typing in the rule must not reach the card's Space / Enter "pick" handler
+      body.addEventListener('keydown', function (e) { e.stopPropagation(); });
+      body.addEventListener('input', function () { tgRead(item, tr); });
+      body.addEventListener('change', function () { tgRead(item, tr); });
+      body.addEventListener('click', function (e) {
+        var rm = e.target.closest('.rm'), add = e.target.closest('.adx-tgadd');
+        if (rm) { rm.closest('.adx-tgr').remove(); body.querySelectorAll('.adx-tgr').forEach(function (r, i) { r.querySelector('.and').textContent = i ? 'AND' : 'WHEN'; }); tgRead(item, tr); }
+        if (add) { var rs = body.querySelector('.adx-tgrs'); rs.insertAdjacentHTML('beforeend', tgRow({ s: '', op: '=', v: '' }, rs.children.length)); rs.lastElementChild.querySelector('.sig').focus(); }
+      });
+      if (item.classList.contains('on')) tgOpen(item);
+    });
+  };
+  css.textContent += '.tg-item.adx-x,.v3-tg.adx-x{flex-wrap:wrap}'
+    + '.adx-tgx{margin-left:auto;flex:none;width:30px;height:30px;border:0;background:none;border-radius:7px;display:grid;place-items:center;color:var(--muted);cursor:pointer}.adx-tgx:hover{background:var(--sink);color:var(--ink)}'
+    + '.adx-open .adx-tgx{background:var(--sink);color:var(--ink)}'
+    + '.adx-tgb{flex-basis:100%;margin:12px 0 2px 30px;padding-top:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px;cursor:default;text-align:left}.adx-tgb[hidden]{display:none}'
+    + '.adx-tgpg{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}.adx-tgpg b{color:var(--ink);font-weight:500}.adx-tgpg .mono{font-family:"Geist Mono",ui-monospace,monospace;font-size:12px}'
+    + '.adx-tgrs{display:flex;flex-direction:column;gap:6px}'
+    + '.adx-tgr{display:grid;grid-template-columns:44px minmax(0,1fr) 64px minmax(0,130px) 26px;gap:6px;align-items:center}'
+    + '.adx-tgr .and{font-size:10.5px;font-weight:600;letter-spacing:.05em;color:var(--muted)}'
+    + '.adx-tgb input,.adx-tgb select{height:32px;min-width:0;border:1px solid var(--line);border-radius:7px;padding:0 9px;font:inherit;font-size:13px;color:var(--ink);background:#fff}'
+    + '.adx-tgb input:focus,.adx-tgb select:focus{outline:none;border-color:#3c8c81;box-shadow:0 0 0 3px rgba(60,140,129,.15)}'
+    + '.adx-tgr .rm{width:26px;height:26px;border:0;background:none;border-radius:6px;color:var(--faint);display:grid;place-items:center;cursor:pointer}.adx-tgr .rm:hover{background:var(--sink);color:var(--ink)}'
+    + '.adx-tgadd{align-self:flex-start;border:0;background:none;padding:2px 0;font:inherit;font-size:12.5px;font-weight:500;color:#2f6f66;cursor:pointer}'
+    + '.adx-tgm{font-size:12px;color:var(--muted)}'
+    + '.adx-x .tg-cond{cursor:pointer}.adx-x .tg-cond:hover{border-color:var(--ink)}'
+    + '.adx-edited{margin-left:8px;font-size:11px;font-weight:500;color:#2f6f66;background:#eef6f4;border-radius:999px;padding:1px 7px;vertical-align:1px}';
+  var tgQ = false;
+  new MutationObserver(function () { if (tgQ) return; tgQ = true; setTimeout(function () { tgQ = false; tgEnhance(); }, 0); }).observe(document.body, { childList: true, subtree: true });
+  // "New" lozenge: something made on the fly in this Cortex session. The experience being built; an audience or an event
+  // Cortex suggested once you pick it (until then it says Suggested). Editing something that already exists never shows New.
+  var NEW = '<span class="adx-new">New</span>', SUG = '<span class="adx-sug">Suggested</span>';
+  css.textContent += '.adx-new{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;background:#eef6f4;color:#2f6f66;font-size:11px;font-weight:500;letter-spacing:0;text-transform:none;line-height:1;vertical-align:1px;margin-left:6px;white-space:nowrap}'
+    + '.adx-sug{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;background:#eef6f4;color:#2f6f66;font-size:11px;font-weight:500;letter-spacing:0;text-transform:none;line-height:1;vertical-align:1px;margin-left:6px;white-space:nowrap}'
+    // a card Cortex suggested: green inner stroke (until it's picked, then the normal selected look)
+    + '.gx-opt b .adx-sug,.gx-opt b .adx-new{display:inline-flex;width:auto;margin-top:0;font-size:11px;color:#2f6f66}'
+    + '.gx-opt.adx-cx:not(.on){border-color:#9fcbc3;box-shadow:inset 0 0 0 1px #9fcbc3,inset 0 0 14px rgba(60,140,129,.09)}'
+    + 'h1 .adx-new{vertical-align:middle;margin-left:10px;height:22px;padding:0 9px;font-size:12px;letter-spacing:0}.adx-cx:not(.on) .adx-new{display:none}.adx-cx.on .adx-sug{display:none}'
+    + '.adx-tgnm{display:grid;grid-template-columns:90px minmax(0,1fr);gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}.adx-tgnm .mono{font-family:"Geist Mono",ui-monospace,monospace;font-size:12.5px}';
+  // What Cortex suggests for the request: a new audience (from Customer Profiles data) and a new event (a derived signal
+  // that combines several signals). Picked by the request's words, like the studio's own trigger matches.
+  var CX = [
+    { kw: /search|find/i, aud: ['Searched 2+ times, no purchase in 30 days', '~18.4K shoppers · from Customer Profiles'],
+      evt: { name: 'Searched twice, opened nothing', key: 'searched_twice_no_open', page: 'Search results page', path: '/search', window: 'Within one session', freq: 'Once per session', vol: '~7.8K / week',
+        conds: [{ s: 'search_performed', op: '≥', v: '2' }, { s: 'product_viewed', op: '=', v: 'false' }, { s: 'Time on results page', op: '≥', v: '20s' }],
+        dv: [{ what: 'search_performed', op: 'atleast', val: '2' }, { what: 'product_viewed', op: 'not', val: '' }, { what: 'dwell_time', op: 'gt', val: '20' }] } },
+    { kw: /basket|cart|cross|order value/i, aud: ['Added to basket 2+ times, no order in 14 days', '~9.4K shoppers · from Customer Profiles'],
+      evt: { name: 'Basket viewed, checkout not started', key: 'basket_viewed_no_checkout', page: 'Basket', path: '/basket', window: 'Within 10 minutes', freq: 'Once per session', vol: '~5.1K / week',
+        conds: [{ s: 'cart_viewed', op: '≥', v: '1' }, { s: 'checkout_started', op: '=', v: 'false' }, { s: 'Cart value', op: '≥', v: '$35' }],
+        dv: [{ what: 'cart_viewed', op: 'did', val: '' }, { what: 'checkout_started', op: 'not', val: '' }, { what: 'cart_viewed.cart_value', op: 'gt', val: '35' }] } },
+    { kw: /category|browse|listing/i, aud: ['Browsed 5+ category pages, opened no product', '~22K shoppers · from Customer Profiles'],
+      evt: { name: 'Scrolled the category, opened nothing', key: 'category_scroll_no_open', page: 'Category page', path: '/shop/*', window: 'Same page view', freq: 'Once per session', vol: '~12K / week',
+        conds: [{ s: 'category_viewed', op: '≥', v: '1' }, { s: 'Scroll depth', op: '≥', v: '3000px' }, { s: 'product_viewed', op: '=', v: 'false' }],
+        dv: [{ what: 'category_viewed', op: 'did', val: '' }, { what: 'scroll_depth', op: 'gt', val: '3000' }, { what: 'product_viewed', op: 'not', val: '' }] } },
+    { kw: /./, aud: ['Engaged this month, no purchase yet', '~31K shoppers · from Customer Profiles'],
+      evt: { name: 'Long visit, nothing added', key: 'long_visit_no_add', page: 'Any page', path: '/*', window: 'Within one session', freq: 'Once per session', vol: '~9K / week',
+        conds: [{ s: 'Pages viewed', op: '≥', v: '4' }, { s: 'add_to_cart', op: '=', v: 'false' }],
+        dv: [{ what: 'pages_viewed', op: 'gt', val: '4' }, { what: 'add_to_cart', op: 'not', val: '' }] } }
+  ];
+  // ---------- Events store (parent window, events.js) ----------
+  var adxEvStore = function () { try { return window.parent !== window && window.parent.adxEvents ? window.parent.adxEvents() : []; } catch (e) { return []; } };
+  var adxEvKey = function (page) { return /search/i.test(page || '') ? 'search' : /basket|cart|checkout/i.test(page || '') ? 'abandon' : /category|list/i.test(page || '') ? 'compare' : 'viewed'; };
+  var EV_OP = { gt: '>', gte: '≥', lt: '<', eq: '=', is: '=', isnot: '≠', contains: 'contains', did: '=', not: '=', atleast: '≥' };
+  var adxEvConds = function (x) {
+    return (x.conds || []).map(function (c) {
+      if (c.s) return { s: c.s, op: c.op, v: c.v };
+      var nm = String(c.what || '').replace(/^profile\./, '').replace(/[._]/g, ' ');
+      return { s: nm.charAt(0).toUpperCase() + nm.slice(1), op: EV_OP[c.op] || '=', v: c.op === 'did' ? 'true' : c.op === 'not' ? 'false' : c.val };
+    });
+  };
+  var adxSlug = function (t) { return String(t || 'event').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''); };
+  var cxSet = function (prompt) {
+    try {
+      var c = CX.filter(function (x) { return x.kw.test(prompt || ''); })[0];
+      for (var i = GX_AUDS.length - 1; i >= 0; i--) if (GX_AUDS[i].cx) GX_AUDS.splice(i, 1);
+      for (var j = CV_TLIB.length - 1; j >= 0; j--) if (CV_TLIB[j].cx) CV_TLIB.splice(j, 1);
+      // already saved to Customer Profiles in an earlier session: it is one of the profile audiences now, not a new suggestion
+      if (!GX_AUDS.some(function (a) { return a.label === c.aud[0]; })) GX_AUDS.push({ id: 'cx_aud', cx: true, label: c.aud[0], desc: c.aud[1] });
+      for (var k = CV_TLIB.length - 1; k >= 0; k--) if (CV_TLIB[k].evId) CV_TLIB.splice(k, 1);
+      // Events already made (the prototype's Events page) join the library, so Cortex can pick one instead of making a copy
+      var EV = adxEvStore(), reuse = EV.filter(function (x) { return x.id === c.evt.key; })[0];
+      EV.forEach(function (x) {
+        var words = String(x.desc || '').toLowerCase().split(/[^a-z]+/).filter(function (w) { return w.length > 4; });
+        CV_TLIB.push({ id: 'ev_' + x.id, evId: x.id, reuse: x === reuse, name: x.desc || x.id, key: x === reuse ? c.evt.key : adxEvKey(x.page), page: x.page || 'Any page', path: '/*',
+          src: 'Events', vol: '', window: x.win === 'page' ? 'Same page view' : x.win === '10m' ? 'Within 10 minutes' : 'Within one session', freq: 'Once per session',
+          conds: adxEvConds(x), kw: x === reuse ? /$^/ : words.length ? new RegExp(words.join('|')) : /$^/ });
+      });
+      // the event Cortex would suggest already exists: use it, don't suggest a new one
+      if (!reuse) { var e = JSON.parse(JSON.stringify(c.evt)); e.id = 'cx_evt'; e.cx = true; e.src = 'Suggested by Cortex'; e.kw = /$^/; e.key0 = e.key; CV_TLIB.push(e); }
+    } catch (err) {}
+  };
+  if (typeof cvOpen === 'function') { var cvO = cvOpen; cvOpen = function (opt) { cxSet(opt && opt.text); return cvO.apply(this, arguments); }; }
+  // the library's top matches stay three; Cortex's new event comes after them
+  if (typeof cvTopTriggers === 'function') {
+    var cvTT = cvTopTriggers;
+    cvTopTriggers = function () {
+      var i = CV_TLIB.findIndex(function (x) { return x.cx || x.reuse; }), cx = i >= 0 ? CV_TLIB.splice(i, 1)[0] : null, top;
+      try { top = cvTT.apply(this, arguments); } finally { if (cx) CV_TLIB.push(cx); }
+      top = top.filter(function (x) { return x !== cx; });
+      return cx ? top.concat([cx]) : top;
+    };
+  }
+  // the experience being built is New (in Cortex's header)
+  if (typeof cvHeadHTML === 'function') { var cvH = cvHeadHTML; cvHeadHTML = function () { return cvH.apply(this, arguments).replace(/(<span class="cvh-tt[^>]*>[^<]*<\/span>)/, '$1' + NEW); }; } // New right after the name
+  // tags on the suggested audience tile and event card (DOM, after render): Suggested until picked, then New
+  var cxTag = function () {
+    document.querySelectorAll('.gx-opt[data-aud="cx_aud"]:not(.adx-cx),.gx-opt[data-v3aud="cx_aud"]:not(.adx-cx),.tg-item[data-tg="cx_evt"]:not(.adx-cx)').forEach(function (el) {
+      el.classList.add('adx-cx'); var nm = el.querySelector('.tg-nm') || el.querySelector('b'); if (nm) nm.insertAdjacentHTML('beforeend', SUG + NEW);
+    });
+  };
+  var IN_EV = '<span class="adx-inev">In Events</span>';
+  css.textContent += '.adx-inev{display:inline-flex;align-items:center;height:18px;padding:0 7px;margin-left:6px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:11px;font-weight:500;vertical-align:1px}';
+  var evTag = function () {
+    CV_TLIB.filter(function (x) { return x.reuse; }).forEach(function (x) {
+      document.querySelectorAll('.tg-item[data-tg="' + x.id + '"]:not(.adx-ev)').forEach(function (el) { el.classList.add('adx-ev'); var nm = el.querySelector('.tg-nm'); if (nm) nm.insertAdjacentHTML('beforeend', IN_EV); });
+    });
+  };
+  var cxTag0 = cxTag; cxTag = function () { cxTag0(); try { evTag(); } catch (e) {} };
+  var cxQ = false;
+  new MutationObserver(function () { if (cxQ) return; cxQ = true; setTimeout(function () { cxQ = false; cxTag(); }, 0); }).observe(document.body, { childList: true, subtree: true });
+  // checklist: the chosen new audience / event shows New after its name
+  var cxRows = function (html) {
+    try {
+      if (!CV) return html;
+      var audNew = CV.aud && CV.aud.ids && CV.aud.ids.has && CV.aud.ids.has('cx_aud') && CV.aud.mode === 'type', trNew = CV.trig && CV.trig.id === 'cx_evt';
+      [['Audience', audNew], ['Trigger', trNew]].forEach(function (x) {
+        if (!x[1]) return;
+        html = html.replace(new RegExp('(<span class="k">' + x[0] + '</span><span class="v ">)([^<]*)'), '$1$2' + NEW);
+      });
+    } catch (e) {}
+    return html;
+  };
+  // creating it: a chosen new event is saved to Events (the prototype's Derived signals, parent ADX_DERIVED), and the
+  // experience itself is New on its page until you open something else
+  window.ADX_FRESH_EXP = null;
+  if (typeof v3MakeExp === 'function') {
+    var v3M = v3MakeExp;
+    v3MakeExp = function () {
+      var t = null, lib = null, title = null, audNew = null, P = window.parent !== window ? window.parent : null, pick = null, v3t = null;
+      try {
+        title = CV && CV.title;
+        pick = CV && CV.trig && CV.trig.kind === 'lib' ? CV_TLIB.find(function (x) { return x.id === CV.trig.id; }) : null;
+        if (!CV && V3 && V3.trig) v3t = V3.trig;
+        t = CV && CV.trig && CV.trig.id === 'cx_evt' ? CV_TLIB.find(function (x) { return x.cx; }) : null;
+        // a library event whose rule was edited in the card: it becomes a new event, the library one stays as it was
+        lib = CV && CV.trig && CV.trig.kind === 'lib' && !t ? CV_TLIB.find(function (x) { return x.id === CV.trig.id; }) : null;
+        if (lib && (!tgOrig.has(lib) || JSON.stringify(lib.conds) === tgOrig.get(lib))) lib = null;
+        var ids = CV && CV.aud && CV.aud.mode === 'type' ? [].concat(Array.from(CV.aud.ids || [])) : V3 && V3.aud && V3.aud.ids ? V3.aud.ids : [];
+        if (ids.indexOf('cx_aud') >= 0) audNew = GX_AUDS.find(function (a) { return a.id === 'cx_aud'; }) || ((V3 && V3.S && V3.S.auds) || []).find(function (a) { return a.id === 'cx_aud'; });
+      } catch (e) {}
+      var e = v3M.apply(this, arguments);
+      try {
+        window.ADX_FRESH_EXP = e && e.id;
+        var used = title || (e && e.name) || '';
+        var win = function (w) { return /10 minutes/.test(w || '') ? '10m' : /page/.test(w || '') ? 'page' : 'session'; };
+        var ruleTx = function (cs) { return cs.map(function (c) { return c.s + ' ' + c.op + ' ' + c.v; }).join(' and '); };
+        var useX = { id: e && e.id, name: used, status: 'Draft' }, useEv = function (ev) { if (P && P.adxEventUse) P.adxEventUse(ev, useX); };
+        if (t) {
+          var edited = JSON.stringify(t.conds) !== tgOrig.get(t);
+          useEv({ id: t.key || t.key0, desc: t.name, mode: 'all', win: win(t.window), freq: 'once', conds: edited ? t.conds : t.dv,
+            by: 'both', fresh: true, page: t.page });
+        }
+        if (lib) {
+          var conds = JSON.parse(JSON.stringify(lib.conds)), slug = lib.name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') + '_edited';
+          if (e && e.v3 && e.v3.trig) { e.v3.trig = Object.assign({}, e.v3.trig, { conds: conds, name: lib.name + ' (edited)', short: lib.name + ' (edited)', label: lib.name + ' (edited)' }); }
+          useEv({ id: slug, desc: lib.name + ' (edited)', mode: 'all', win: win(lib.window), freq: 'once', conds: conds, by: 'both', fresh: true, page: lib.page });
+          lib.conds = JSON.parse(tgOrig.get(lib)); // the library event is unchanged
+        } else if (pick && !pick.cx) {
+          // an existing event (from Events) or a library trigger: reuse the event, or add it once
+          useEv(pick.evId ? { id: pick.evId } : { id: adxSlug(pick.name), desc: pick.name, mode: 'all', win: win(pick.window), freq: 'once', conds: pick.conds, by: 'both', page: pick.page });
+        } else if (v3t) {
+          useEv({ id: adxSlug(v3t.name || v3t.label), desc: v3t.name || v3t.label, mode: 'all', win: 'session', freq: 'once', conds: v3t.conds || [], by: 'both', page: v3t.page });
+        }
+        // a new audience Cortex suggested and you picked is saved to Customer Profiles
+        if (audNew) {
+          var A = P ? (P.ADX_AUDIENCES || (P.ADX_AUDIENCES = [])) : [];
+          if (!A.some(function (a) { return a.name === audNew.label; })) A.unshift({ id: 'aud_' + Date.now().toString(36), name: audNew.label, n: (audNew.desc.match(/~?[\d.]+K/) || [''])[0].replace('~', ''), by: 'cortex', fresh: true, usedIn: used });
+          adxAudSync();
+        }
+        if (e) { ADX_MINE[e.id] = 1; setTimeout(adxSave, 3200); }
+      } catch (err) {}
+      return e;
+    };
+  }
+  var freshTag = function () {
+    try {
+      // no version tag (v1, v2…) next to the status
+      document.querySelectorAll('#v3DetailMain .v3d-meta .tag').forEach(function (t) { if (/^v\d+$/.test(t.textContent.trim())) t.remove(); });
+      // New sits right after the experience's name
+      var h = document.querySelector('#v3DetailMain .v3d-head h1'); if (!h || h.querySelector('.adx-new')) return;
+      var cur = typeof v3Exp === 'function' && v3Exp(); if (!cur || cur.id !== window.ADX_FRESH_EXP) return;
+      h.insertAdjacentHTML('beforeend', NEW);
+    } catch (e) {}
+  };
+  new MutationObserver(function () { setTimeout(freshTag, 0); }).observe(document.body, { childList: true, subtree: true });
+  // leaving the new experience's page ends "New" for it
+  var goN = go; go = function () { window.ADX_FRESH_EXP = null; return goN.apply(this, arguments); };
+  // ---------- Experiences made here survive the studio frame reloading (kept on the prototype, parent window) ----------
+  var PW = window.parent !== window ? window.parent : null, ADX_MINE = {};
+  var adxSave = function () {
+    try { if (!PW) return; var S = PW.ADX_EXPS || (PW.ADX_EXPS = {});
+      EXPERIENCES.forEach(function (e) { if (ADX_MINE[e.id]) S[e.id] = JSON.stringify(e, function (k, v) { return v instanceof Set ? Array.from(v) : v instanceof RegExp ? undefined : v; }); }); } catch (e) {}
+  };
+  try {
+    if (PW && PW.ADX_EXPS) Object.keys(PW.ADX_EXPS).reverse().forEach(function (id) {
+      if (EXPERIENCES.some(function (e) { return e.id === id; })) return;
+      var e = JSON.parse(PW.ADX_EXPS[id]); ADX_MINE[id] = 1; EXPERIENCES.unshift(e);
+    });
+  } catch (e) {}
+  window.addEventListener('pagehide', adxSave);
+
+  // ---------- Audiences come from Customer Profiles (same names and sizes as that page), plus the ones Cortex saved there ----------
+  var PROF_AUDS = [['new', 'New visitors', '24.8K'], ['loyal', 'Beauty Insider members', '69.8K'], ['intent', 'High-intent browsers', '12.1K']];
+  var adxAudSync = function () {
+    try {
+      PROF_AUDS.forEach(function (p) {
+        var a = GX_AUDS.find(function (x) { return x.id === p[0]; });
+        if (!a) { a = { id: p[0] }; GX_AUDS.splice(GX_AUDS.findIndex(function (x) { return x.cx; }) < 0 ? GX_AUDS.length : GX_AUDS.findIndex(function (x) { return x.cx; }), 0, a); }
+        a.label = p[1]; a.desc = p[2] + ' shoppers · Customer Profiles';
+      });
+      ((PW && PW.ADX_AUDIENCES) || []).forEach(function (s) {
+        if (GX_AUDS.some(function (x) { return !x.cx && x.label === s.name; })) return;
+        var at = GX_AUDS.findIndex(function (x) { return x.cx; });
+        GX_AUDS.splice(at < 0 ? GX_AUDS.length : at, 0, { id: s.id, label: s.name, desc: (s.n ? s.n + ' shoppers · ' : '') + 'Customer Profiles' });
+      });
+    } catch (e) {}
+  };
+  adxAudSync();
+
+  // ---------- Goal first: every experience needs one, and it shapes the audience, trigger and actions Cortex suggests ----------
+  var gLabel = function (id) { try { return (OB_GOALS.find(function (g) { return g.id === id; }) || {}).label || ''; } catch (e) { return ''; } };
+  if (typeof cvOpen === 'function' && typeof cvThink === 'function') {
+    var cvO2 = cvOpen;
+    cvOpen = function (opt) {
+      var think = cvThink, audIntro = null;
+      cvThink = function (lines, dur, fn, label) { audIntro = fn; return think.call(this, lines.concat(['Matching it to your goals']), dur, function () {
+        CV.step = 'goal';
+        var pre = CV.goalPre && gLabel(CV.goalPre);
+        cvSay('Every experience ladders up to a goal so we can measure it.' + (pre ? ' This one is for <b>' + esc(pre) + '</b>, so I\'ve picked it. Confirm it, or pick another.' : ' Which goal is this for?'));
+        cvRender();
+      }, label); };
+      try { return cvO2.apply(this, arguments); }
+      finally { cvThink = think; if (CV) { CV.goalFirst = true; CV.goalSet = false; CV.done = {}; CV.audIntro = audIntro; } }
+    };
+  }
+  if (typeof cvStepRank === 'function') { var cvSR = cvStepRank; cvStepRank = function (id) { return id === 'goal' && CV && CV.goalFirst && !CV.goalSet ? -1 : cvSR.apply(this, arguments); }; }
+  if (typeof cvBestGoal === 'function') { var cvBG = cvBestGoal; cvBestGoal = function () { try { return cvBG.apply(this, arguments); } catch (e) { return (CV && CV.goalPre) || 'convert'; } }; }
+  if (typeof cvJump === 'function') { var cvJ = cvJump; cvJump = function (step) { if (step === 'goal' && CV) CV.goalBack = CV.step; return cvJ.apply(this, arguments); }; }
+  // the suggestion step no longer resets the goal
+  if (typeof cvAssemble === 'function') { var cvAs = cvAssemble; cvAssemble = function () { var g = CV && CV.goal; var r = cvAs.apply(this, arguments); if (CV && CV.goalSet) CV.goal = g; return r; }; }
+  var cvReady = function () {
+    cvThink(['Checking guardrails & brand limits', 'Preparing your draft'], 1700, function () {
+      CV.step = 'ready';
+      cvSay('Done. It\'s set up and attached to <b>' + esc(cvGoalLabel()) + '</b>. Review it below and on the right, then create it as a draft. Nothing goes live until you publish.');
+      CV.msgs.push({ role: 'arts', items: cvPicked().map(function (r) { return { kind: 'Action', name: r.name }; }).concat([{ kind: 'Goal link', name: cvGoalLabel() }]) });
+      cvRender();
+    });
+  };
+  if (typeof cvAttach === 'function') {
+    var cvAt = cvAttach;
+    cvAttach = function () {
+      if (!CV || !CV.goalFirst || !CV.goal) return cvAt.apply(this, arguments);
+      if (CV.done && CV.done.act) { CV.goalSet = true; return cvAt.apply(this, arguments); } // changed at the end: straight back to Ready
+      var first = !CV.goalSet; CV.goalSet = true;
+      cvUser('Goal: ' + cvGoalLabel());
+      if (first) return cvThink(['Noting the goal', 'Finding shoppers it matters for'], 1500, function () { CV.step = 'audience'; if (CV.audIntro) CV.audIntro(); else { cvSay('Who should see this?'); cvRender(); } });
+      var back = CV.goalBack && CV.goalBack !== 'goal' ? CV.goalBack : 'audience';
+      cvThink(['Updating the goal'], 700, function () { CV.step = back; cvSay('Updated the goal.'); cvRender(); });
+    };
+  }
+  if (typeof cvAccept === 'function') {
+    var cvAc = cvAccept;
+    cvAccept = function () {
+      if (!CV || !CV.goalFirst || !CV.goalSet) return cvAc.apply(this, arguments);
+      var picked = cvPicked(); if (!picked.length) return;
+      CV.done.act = true; CV.reco = picked[0];
+      CV.msgs.push({ role: 'card', html: cvSuggestHTML(false) });
+      cvUser(picked.length > 1 ? 'Enable ' + picked.length + ': ' + picked.map(function (r) { return r.name; }).join(', ') + '.' : 'Enable ' + picked[0].name + '.');
+      cvReady();
+    };
+  }
+  ['cvConfirmAudience', 'cvConfirmAudienceSilent'].forEach(function (n) {
+    if (typeof window[n] !== 'function') return; var f = window[n];
+    window[n] = function () { if (CV && cvAudOk()) CV.done && (CV.done.aud = true); return f.apply(this, arguments); };
+  });
+  if (typeof cvConfirmTrigger === 'function') { var cvCT = cvConfirmTrigger; cvConfirmTrigger = function () { if (CV && CV.trig && CV.done) CV.done.trig = true; return cvCT.apply(this, arguments); }; }
+  // "Enable n and attach to a goal" → the goal is already attached
+  var noGoalTx = function (h) { return CV && CV.goalSet && typeof h === 'string' ? h.replace(/ and attach to a goal/g, ' and continue') : h; };
+  if (typeof cvSuggestHTML === 'function') { var cvSg = cvSuggestHTML; cvSuggestHTML = function () { return noGoalTx(cvSg.apply(this, arguments)); }; }
+  document.addEventListener('click', function (ev) { if (ev.target.closest && ev.target.closest('#cv [data-pick]')) setTimeout(function () { var b = document.getElementById('cvAccept'); if (b) b.innerHTML = noGoalTx(b.innerHTML); }, 0); });
+  // Ready to create: Goal comes first in the summary too
+  if (typeof cvSummaryRows === 'function') { var cvSu = cvSummaryRows; cvSummaryRows = function () { var h = cvSu.apply(this, arguments); var g = h.match(/<div><span>Goal<\/span>[\s\S]*?<\/div>/); return g ? h.replace(g[0], '').replace('<div class="cv-sum">', '<div class="cv-sum">' + g[0]) : h; }; }
+  // Cortex now shows three library matches and one new event
+  if (typeof cvSay === 'function') { var cvS = cvSay; cvSay = function (html) { if (typeof html === 'string' && CV && CV.goalSet) html = html.replace(/^Nice\. /, ''); return cvS.call(this, typeof html === 'string' ? html.replace(/Here are the 3 best matches from your events library\.( Each is a page plus shopper behaviour; open one to see its rule\.)?/, 'Here are the 3 best matches from your events library, and a new event I\'d create for this.') : html); }; }
+
+  // Details panel in Cortex: Goal, Audience, Trigger, Suggested action, Data, in the order Cortex asks
+  if (typeof cvPanelHTML === 'function') {
+    cvPanelHTML = function () {
+      if (!CV) return '';
+      var s = CV.step, d = CV.done || {}, th = !!CV.thinking;
+      var pen = function (k) { return '<button class="ed" data-cvjump="' + k + '" title="Change" aria-label="Change">' + v3i('pen', 14) + '</button>'; };
+      var names = (CV.recos ? cvPicked() : []).map(function (r) { return r.name; });
+      var audNew = CV.aud && CV.aud.mode === 'type' && CV.aud.ids && CV.aud.ids.has('cx_aud'), trNew = CV.trig && CV.trig.id === 'cx_evt';
+      var st = function (ok, here, has) { return ok ? 'ok' : here && has ? 'sug' : ''; };
+      var rows = [
+        { k: 'Goal', on: 'goal', st: st(CV.goalSet && s !== 'goal', s === 'goal', !!CV.goal), v: CV.goal ? esc(cvGoalLabel()) : '', ph: 'What it should move', add: 'Add goal', at: ['goal'] },
+        { k: 'Audience', on: 'audience', st: st(d.aud && s !== 'audience', s === 'audience', cvAudOk()), v: (d.aud || s === 'audience') && cvAudOk() ? esc(cvAudLabel()) + (audNew ? NEW : '') : '', ph: 'Who should see it', add: 'Add audience', at: ['audience'] },
+        { k: 'Trigger', on: 'trigger', st: st(d.trig && s !== 'trigger', s === 'trigger', !!CV.trig), v: CV.trig ? esc(cvTrigLabel()) + (trNew ? NEW : '') : '', ph: 'When it should appear', add: 'Add trigger', at: ['trigger'] },
+        { k: 'Suggested action', on: 'suggest', st: st(d.act && s !== 'suggest', s === 'suggest', names.length > 0), v: names.length && (d.act || s === 'suggest') ? esc(names.join(', ')) : '', ph: 'What it should do', add: 'Add action', at: ['assemble', 'suggest'] },
+        { k: 'Data', st: 'ok', v: esc(v3uc(GX && GX.data ? gxDataName() : 'mock data pack')), ph: '', at: [] }
+      ];
+      return '<div class="v3-draft"><div class="v3-dh">Experience draft</div><div class="v3-dname"></div>'
+        + '<div class="v3-rows">' + rows.map(function (r) { return '<div class="v3-row ' + r.st + ' req"><span class="st"></span><span class="tx"><span class="k">' + r.k + '</span><span class="v">' + (r.v || adxAddBtn(r.add, !th && r.at.indexOf(s) >= 0, r.ph)) + '</span></span>' + (r.on && r.st === 'ok' && !th ? pen(r.on) : '') + '</div>'; }).join('') + '</div>'
+        + '<details class="v3-aware" id="cvAware" ' + (V3_CV_AWARE ? 'open' : '') + '><summary>' + CXMARKteal() + '<span class="t">Context Cortex already knows</span><span class="badge teal">Auto</span>' + v3i('chev', 14).replace('<svg', '<svg class="chev"') + '</summary>'
+        + '<div class="gx-aware-sub">Cortex flexes this on every decision. You don\'t configure it.</div><div class="gx-aware-list">' + GX_AWARE.map(function (a) { return '<div class="gx-arow"><span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + a.icon + '</svg></span><span style="min-width:0"><b>' + esc(a.title) + '</b><span>' + esc(a.detail) + '</span></span></div>'; }).join('') + '</div></details>'
+        + (!GX || !GX.data || GX.data === 'synthetic' ? '<div class="v3-mock"><b>Mock data</b>Suggestions are sized on your mock data pack. Nothing goes live from here.</div>' : '')
+        + '</div>';
+    };
+  }
+  // the guided builder asks for the goal first as well
+  if (typeof v3Open === 'function' && typeof v3Think === 'function') {
+    var v3O = v3Open;
+    v3Open = function (opt) {
+      var think = v3Think;
+      v3Think = function (lines, dur, fn, label) { return think.call(this, lines.concat(['Matching it to your goals']), dur, function () {
+        V3.goalFirst = true;
+        v3Say('Every Experience ladders up to a goal so we can measure it. I\'d attach this one to <b>“' + esc(V3.S.goal.name) + '”</b>. ' + esc(V3.S.goal.why || ''));
+        V3.step = 'goal';
+      }, label); };
+      try { return v3O.apply(this, arguments); }
+      finally {
+        v3Think = think;
+        try { // Cortex's audience suggestion, as in the chat builder
+          var c = CX.filter(function (x) { return x.kw.test(V3.prompt || ''); })[0];
+          if (V3 && V3.S && V3.S.auds) {
+            adxAudSync();
+            var prof = GX_AUDS.filter(function (a) { return !a.cx; }).map(function (a) { return { id: a.id, label: a.label, reco: a.label, desc: a.desc, ic: 'user' }; });
+            V3.S.auds = prof.concat(c && !prof.some(function (a) { return a.label === c.aud[0]; }) ? [{ id: 'cx_aud', cx: true, label: c.aud[0], reco: c.aud[0], desc: c.aud[1], ic: 'user' }] : []);
+            if (V3.hintAud) { var hid = V3.hintAud.id === 'first' ? 'new' : V3.hintAud.id; V3.hintAud = V3.S.auds.find(function (a) { return a.id === hid; }) || null; }
+          }
+        } catch (e) {}
+      }
+    };
+  }
+  // guided builder Details: the Goal row first
+  var goalFirstRows = function (html) {
+    if (typeof html !== 'string' || html.indexOf('v3-rows') < 0) return html;
+    try {
+      var box = document.createElement('div'); box.innerHTML = html;
+      var rows = box.querySelector('.v3-rows'), g = rows && [].filter.call(rows.children, function (r) { var k = r.querySelector('.k'); return k && k.textContent.trim() === 'Goal'; })[0];
+      if (g && rows.firstElementChild !== g) { rows.insertBefore(g, rows.firstElementChild); return box.innerHTML; }
+    } catch (e) {}
+    return html;
+  };
+
+  // ---------- Micro-elicit: more follow-up types, and the shopper-facing copy is editable ----------
+  try {
+    if (typeof ME_FOLLOW !== 'undefined' && !ME_FOLLOW.some(function (f) { return f.id === 'refine'; }))
+      ME_FOLLOW.push({ id: 'refine', name: 'Refined search results', d: 'Reruns the search with the attribute the shopper gave.' }, { id: 'shade', name: 'Shade match', d: 'Matches the shopper to a shade from their answer.' });
+  } catch (e) {}
+  // Each question type asks a different kind of question, so it comes with its own question, answers, follow-up and button.
+  // Picking a type loads its preset; your edits are kept per type (m.copy[type]). The follow-up follows the type until you pick one.
+  var ME_PRE = {
+    intent: { q: 'Quick question so I search the right place: is this a shade you already wear, or a new one you want to find?', opts: ['One I already wear', 'Something new', 'Not sure yet'], follow: 'refine' },
+    constraint: { q: 'Does it have to be fragrance-free, or is a light scent okay?', opts: ['Must be fragrance-free', 'A light scent is fine', 'No preference'], follow: 'reco' },
+    preference: { q: 'Only 3 matte options for oily skin. Would a natural finish work too?', opts: ['Natural is fine', 'Matte only', 'Show me both'], follow: 'refine' },
+    decision: { q: 'Two close matches left. Which matters more to you?', opts: ['Longer wear', 'A lighter feel'], follow: 'reco' },
+    verify: { q: 'Your last order was 330 Medium. Is that still your shade?', opts: ['Still 330 Medium', 'A different shade'], follow: 'shade' }
+  };
+  var ME_CTA = { reco: 'Add to basket', refine: 'Show results', shade: 'Use this shade' };
+  var meType = function (m) { return (m && m.qtype) || 'intent'; };
+  var meCopy = function (m) {
+    var t = meType(m), p = ME_PRE[t] || ME_PRE.intent, u = (m && m.copy && m.copy[t]) || {};
+    return { q: u.q != null ? u.q : p.q, opts: u.opts || p.opts, cta: u.cta != null ? u.cta : ME_CTA[(m && m.follow) || p.follow] || ME_CTA.reco };
+  };
+  // the widget's own built-in copy, replaced in the preview by the type's copy
+  var meOrig = function (trigId) {
+    return { q: trigId === 'search_noclick' ? 'Lots of options for that. Quick question so I can narrow it down: which matters most to you?' : 'Only 3 results for that. Quick question so I can find the right one: which matters more to you?' };
+  };
+  if (typeof meSettingsHTML === 'function') {
+    var meS = meSettingsHTML;
+    meSettingsHTML = function (active) {
+      var m = meState(); if (m && !m.followSet) m.follow = (ME_PRE[meType(m)] || ME_PRE.intent).follow;
+      var h = meS.apply(this, arguments); if (!active || typeof h !== 'string') return h;
+      var c = meCopy(m);
+      var f = '<div class="adx-mecopy"><div><div class="me-h"><b>Question</b></div><textarea class="me-goal" data-mecopy="q" rows="2" aria-label="Question">' + esc(c.q) + '</textarea></div>'
+        + '<div><div class="me-h"><b>Answer chips</b></div><input class="me-in" data-mecopy="opts" value="' + esc(c.opts.join(', ')) + '" aria-label="Answer chips, separated by commas"></div>'
+        + '<div><div class="me-h"><b>Button text</b></div><input class="me-in" data-mecopy="cta" value="' + esc(c.cta) + '" aria-label="Button text"></div></div>';
+      var at = h.lastIndexOf('</div>'); return at > 0 ? h.slice(0, at) + f + h.slice(at) : h;
+    };
+  }
+  var meRedraw = function () { var set = document.querySelector('[data-meset]'); if (!set) return; var w = document.createElement('div'); w.innerHTML = meSettingsHTML(true); set.replaceWith(w.firstElementChild); };
+  document.addEventListener('input', function (ev) {
+    var t = ev.target.closest && ev.target.closest('[data-mecopy]'); if (!t) return; var m = meState(); if (!m) return;
+    var k = t.dataset.mecopy, ty = meType(m); m.copy = m.copy || {}; m.copy[ty] = m.copy[ty] || {};
+    m.copy[ty][k] = k === 'opts' ? t.value.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : t.value;
+  });
+  // after the studio's own handler sets the type, redraw so the type's question, answers, follow-up and button show
+  document.addEventListener('click', function (ev) { if (ev.target.closest && ev.target.closest('[data-meset] [data-meq]')) setTimeout(meRedraw, 0); }, true);
+  document.addEventListener('change', function (ev) { if (ev.target.closest && ev.target.closest('[data-mesel]')) { var m = meState(); if (m) m.followSet = true; setTimeout(meRedraw, 0); } });
+  css.textContent += '.me-in{width:100%;height:34px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;font-size:13px;color:var(--ink);background:#fff;box-sizing:border-box}.me-in:focus{outline:none;border-color:#3c8c81;box-shadow:0 0 0 3px rgba(60,140,129,.15)}'
+    + '.adx-mecopy{display:flex;flex-direction:column;gap:16px;margin-top:16px}';
+  if (typeof meRowsHTML === 'function') {
+    var meR = meRowsHTML;
+    meRowsHTML = function (x) {
+      var h = meR.apply(this, arguments); if (!x || !x.me) return h;
+      var c = meCopy(x.me);
+      return h + '<div data-v3row="meq"><dt>Question</dt><dd>' + esc(c.q) + '</dd><span></span></div>'
+        + '<div data-v3row="meopts"><dt>Answer chips</dt><dd>' + esc(c.opts.join(' · ')) + '</dd><span></span></div>'
+        + '<div data-v3row="mecta"><dt>Button text</dt><dd>' + esc(c.cta) + '</dd><span></span></div>';
+    };
+  }
+  if (typeof v3SephWidget === 'function') {
+    var meW = v3SephWidget;
+    v3SephWidget = function (r) {
+      var h = meW.apply(this, arguments);
+      try {
+        if (!r || r.kind !== 'elicit' || typeof h !== 'string') return h;
+        var x = (V3D && v3Exp() && v3Exp().v3) || {}, m = x.me; if (!m) return h;
+        var c = meCopy(m), chips = c.opts.map(function (o) { return '<button data-simnext>' + esc(o) + '</button>'; }).join('');
+        h = h.split(esc(meOrig(x.trig && x.trig.id).q)).join(esc(c.q));
+        h = h.replace(/(<div class="sp-chips">)[\s\S]*?(<\/div>)/, '$1' + chips + '$2');
+        if (c.opts[0]) h = h.split('<div class="sp-bub me">All-day wear</div>').join('<div class="sp-bub me">' + esc(c.opts[0]) + '</div>');
+        h = h.replace(/(<button class="sp-btn" data-simnext>)[^<]*(<\/button>)/, '$1' + esc(c.cta) + '$2');
+      } catch (e) {}
+      return h;
+    };
+  }
+
+  // ---------- Draft → Staging → Production ----------
+  var envSync = function () {
+    try { // Experiences list
+      document.querySelectorAll('tr[data-open] .pill.draft').forEach(function (p) {
+        var x = EXPERIENCES.find(function (e) { return e.id === p.closest('tr').dataset.open; });
+        if (x && x.v3 && x.v3.env === 'staging') { p.className = 'pill learning'; p.innerHTML = '<span class="d"></span>Staging'; }
+      });
+    } catch (e) {}
+    try {
+      var e = typeof v3Exp === 'function' && V3D && v3Exp(), b = document.getElementById('v3Prep');
+      if (!e || !e.v3 || !b || (e.status && e.status !== 'draft')) return;
+      var env = e.v3.env || 'draft';
+      var m = document.querySelector('#v3DetailMain .v3d-meta'), p = m && m.querySelector('.pill');
+      if (env === 'staging' && p && !p.classList.contains('learning')) { p.className = 'pill learning'; p.innerHTML = '<span class="d"></span>Staging'; }
+      if (b.dataset.adxEnv === env) return;
+      var nb = b.cloneNode(false); nb.id = 'v3Prep'; nb.dataset.adxEnv = env;
+      nb.innerHTML = env === 'staging' ? v3i('check', 15) + 'Promote to production' : v3i('<path d="M12 19V5M6 11l6-6 6 6"/>', 15) + 'Publish to staging';
+      nb.addEventListener('click', function () {
+        if (env === 'staging') return v3OpenPrep(e);
+        e.v3.env = 'staging'; e.v3.hist.unshift({ t: 'Published to staging', s: 'Just now' }); ADX_MINE[e.id] = 1; adxSave();
+        v3RenderDetail(); toast('Published to staging');
+      });
+      b.replaceWith(nb);
+    } catch (e) {}
+  };
+  new MutationObserver(function () { setTimeout(envSync, 0); }).observe(document.body, { childList: true, subtree: true });
+
+  if (typeof cvPanelHTML === 'function') { var cvP = cvPanelHTML; cvPanelHTML = function () { return cxRows(markDraft(cvP.apply(this, arguments))); }; }
+  if (typeof v3DraftHTML === 'function') { var v3P = v3DraftHTML; v3DraftHTML = function () { return markDraft(goalFirstRows(v3P.apply(this, arguments))); }; }
   // Required: a red asterisk after the question / field name instead of the word (the text stays for screen readers)
   css.textContent += 'html body .cv-req,html body .dl-req{font-size:0!important;background:none!important;border:0!important;padding:0!important;margin-left:2px;color:#dc2626!important;letter-spacing:0!important}html body .cv-ch .cv-req{margin-left:-6px}'
     + 'html body .cv-req::before,html body .dl-req::before{content:"*"!important;font-size:15px;font-weight:600;color:#dc2626;line-height:1}';
@@ -12309,6 +12862,7 @@ cvOpen=(function(orig){ return function(opt){ const r=orig.apply(this,arguments)
     var cvA = cvActiveHTML;
     cvActiveHTML = function () {
       var h = cvA.apply(this, arguments);
+      if (typeof h === 'string') h = h.replace('<div class="cv-ch">Attach to a goal</div>', '<div class="cv-ch">Attach to a goal<span class="cv-req">Required</span></div>'); // a goal is required
       return typeof h === 'string' ? h.replace(/(<button class="gx-opt [^"]*" data-audmode="[^"]*">[\s\S]*?)(<\/button>)/g, function (m, a, b) { return a.indexOf('class="ck') >= 0 ? m : a + cvTick() + b; }) : h;
     };
   }

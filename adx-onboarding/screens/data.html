@@ -5,6 +5,9 @@
 <title>Onboarding — Connect your data</title>
 <!-- Styles for this screen only (added while the screen is shown). Fonts are loaded once in index.html. -->
 <style>
+/* required: a red asterisk after the title (same as Add signal), not a "Required" badge */
+.req-star{color:#dc2626;font-weight:600;margin-left:-5px}
+
 
 body{margin:0}
 /* ---- Auto-scan: the first choice in each Connect tab ---- */
@@ -61,7 +64,7 @@ body{margin:0}
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg><sc-if value="{{evt.secDone}}" hint-placeholder-val="{{false}}"><span title="{{evt.tickTitle}}" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Web signals
-            <span class="shbadge sec">Required</span></div>
+            <span class="req-star" title="Required" aria-label="Required">*</span></div>
           <div style="font-size: 14px; color: {{evt.subFg}}; margin-top: 2px">{{evt.sub}}</div>
         </div>
         <sc-if value="{{evt.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{evt.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{evt.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{evt.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 12px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{evt.more}}</span></sc-if></span></sc-if>
@@ -341,7 +344,7 @@ body{margin:0}
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><path d="M7.5 7.5h.01"></path></svg><sc-if value="{{cat.tick}}" hint-placeholder-val="{{false}}"><span title="{{cat.tickTitle}}" style="position: absolute; bottom: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #16a34a; color: #fff; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if></span>
         <div style="flex: 1; min-width: 0">
           <div style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em">Product catalog
-            <span class="shbadge sec">Required</span></div>
+            <span class="req-star" title="Required" aria-label="Required">*</span></div>
           <div style="font-size: 14px; color: #71717a; margin-top: 2px">Products, prices, stock and categories.</div>
         </div>
         <sc-if value="{{cat.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{cat.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{cat.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{cat.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 12px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{cat.more}}</span></sc-if></span></sc-if>
@@ -555,7 +558,7 @@ body{margin:0}
             </span>
             <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
               <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><b style="font-size: 14px; font-weight: 600">{{g.name}}</b>
-                <span class="shbadge sec">Required</span></span>
+                <span class="req-star" title="Required" aria-label="Required">*</span></span>
               <span style="font-size: 14px; color: #71717a">{{g.blurb}}</span>
             </span>
             <sc-if value="{{g.hasFaces}}" hint-placeholder-val="{{false}}"><span title="{{g.facesTitle}}" style="display: inline-flex; align-items: center; flex: 0 0 auto"><sc-for list="{{g.faces}}" as="f" hint-placeholder-count="3"><span style="position: relative; z-index: {{f.z}}; margin-left: {{f.ml}}; width: 26px; height: 26px; box-sizing: border-box; border-radius: 8px; background: #fff; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; display: flex; align-items: center; justify-content: center"><img src="{{f.logo}}" alt="" width="15" height="15" style="display: block; border-radius: 3px"></span></sc-for><sc-if value="{{g.more}}" hint-placeholder-val="{{false}}"><span style="position: relative; margin-left: -8px; height: 26px; min-width: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 8px; background: #f4f4f5; border: 1px solid #e4e4e7; box-shadow: 0 0 0 2px #fff; font-size: 12px; font-weight: 600; color: #3f3f46; display: flex; align-items: center; justify-content: center">{{g.more}}</span></sc-if></span></sc-if>
