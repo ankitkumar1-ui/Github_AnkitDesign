@@ -3743,6 +3743,27 @@ document.documentElement.setAttribute('data-theme', 'light'); try { localStorage
   .cv.v3 .cvx-title .cxm{flex:none}
   .cv.v3 .cvx-tr{flex:none}
   @media(max-width:760px){.cv.v3 .v3-sub,.cv.v3 .cvx-tr .tag{display:none}.cv.v3 .v3-bl{display:none}}
+  /* Cortex header: the Experience being built, its status, and Cortex as the builder */
+  .cvx-top .cvh{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
+  .cvx-top .cvh-mk{width:30px;height:30px;border-radius:9px;background:#3C8C81;display:grid;place-items:center;flex:none}
+  .cvx-top .cvh-tx{min-width:0;display:flex;flex-direction:column;gap:1px}
+  .cvx-top .cvh-l1{display:flex;align-items:center;gap:8px;min-width:0}
+  .cvx-top .cvh-tt{font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;border-radius:6px;padding:1px 4px;margin:-1px -4px;outline:none;cursor:text}
+  .cvx-top .cvh-tt:hover{background:var(--sink)}
+  .cvx-top .cvh-tt:focus{background:var(--surface);box-shadow:0 0 0 2px color-mix(in srgb,#3C8C81 35%,transparent);text-overflow:clip}
+  .cvx-top .cvh-tt.ph{color:var(--faint);font-weight:500}
+  .cvx-top .cvh-st{position:relative;flex:none;cursor:default}
+  .cvx-top .cvh-tip{position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:290px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);font-size:12px;font-weight:400;color:var(--muted);line-height:1.45;display:none}
+  .cvx-top .cvh-st:hover .cvh-tip{display:block}
+  .cvx-top .cvh-flow{display:flex;align-items:center;gap:6px;margin-top:8px}
+  .cvx-top .cvh-flow .pill{font-size:11px}
+  .cvx-top .cvh-flow .ar{color:var(--faint)}
+  .cvx-top .pill.active{background:#ecfdf5;color:#047857;border-color:#a7f3d0} .cvx-top .pill.active .d{background:#10b981}
+  .cvx-top .pill.inactive{background:var(--surface);color:var(--muted);border-color:var(--line)} .cvx-top .pill.inactive .d{background:transparent;border:1.5px solid var(--faint);box-sizing:border-box}
+  .cvx-top .cvh-l2{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);white-space:nowrap}
+  .cvx-top .cvh-l2 .cvx-info{display:inline-grid}
+  .cvx-top .cvh-l2 .dot{width:3px;height:3px;border-radius:50%;background:var(--faint)}
+  @media(max-width:620px){.cvx-top .cvh-l2 .stp{display:none}}
 
   .v3-pen{width:28px;height:28px;margin:-5px -6px -5px 0;border-radius:7px;display:grid;place-items:center;color:var(--faint);align-self:center}
   .v3-pen:hover{background:var(--sink);color:var(--ink)}
@@ -11645,7 +11666,7 @@ cvCreate=function(){
   const goal=CV.goal?{name:cvGoalLabel().replace(/ \(new\)$/,""),metric:og?og.kpi:"",mode:String(CV.goal).startsWith("new:")?"new":"attached"}:null;
   const S=v3SephS(recos,goal), aud=CV.aud||{mode:"all",ids:new Set()};
   const msgs=v3FromCvMsgs(CV.msgs).concat([{role:"user",text:"Create experience"}]);
-  const title=picked[0].name+(picked.length>1?" + "+(picked.length-1)+" more":"")+" · "+cvAudLabel();
+  const title=CV.title||(picked[0].name+(picked.length>1?" + "+(picked.length-1)+" more":"")+" · "+cvAudLabel());
   V3={prompt:CV.prompt||"New Experience",S,step:null,msgs,thinking:null,goal:undefined,hintAud:null,copy:S.copy,name:title,alt:false,returnTo:null,reached:true,freq:"Once per session",notes:[],seen:0,panel:false,flash:null,pendingGoal:null,customTrig:null};
   const ids=[...(aud.ids||[])];
   V3.aud={mode:aud.mode||"all",ids,id:ids.length===1?ids[0]:aud.mode||"all",label:cvAudLabel(),reco:cvAudLabel(),crm:aud.crm,ic:"user"};
@@ -11827,7 +11848,7 @@ cvPanelHTML=function(){
     {k:"Goal",st:rank>=4&&CV.goal?"ok":rank>=2&&best?"sug":"",v:rank>=4&&CV.goal?esc(cvGoalLabel()):rank>=2&&best?`${esc(best)}<span class="s">Suggested by Cortex</span>`:"",ph:"Cortex will suggest one",ed:rank>=4?"goal":null},
     {k:"Data",st:"ok",v:esc(v3uc(GX&&GX.data?gxDataName():"mock data pack")),ph:"",ed:null},
   ];
-  const ready=rank>=4, name=rank>=3&&names.length?names[0]+(names.length>1?" + "+(names.length-1)+" more":""):"";
+  const ready=rank>=4, name=CV.title||(rank>=3&&names.length?names[0]+(names.length>1?" + "+(names.length-1)+" more":""):"");
   return `<div class="v3-draft">
     <div class="v3-dh">Experience draft<span class="pill ${ready?"learning":"draft"}"><span class="d"></span>${ready?"Ready to create":"In progress"}</span></div>
     <div class="v3-dname ${name?"":"ph"}">${name?esc(name):"Untitled Experience"}</div>
@@ -12164,6 +12185,37 @@ v3Dock=(function(orig){ return function(e,fresh,note){ if(!fresh&&!note&&e&&e.v3
 /* ============ integration logos ============ */
 const DS_LOGO={ajo:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAALOUlEQVR42u2c6Y8UxxnGn3p7zp6LS04kW2ADNnZw4iO2sWNix2Bs1l6wuZQ/IJ+jREo+RIoiWfkv8iXfzGIM7C5gloXFLJeBBezdmMMYc59eMDtXz/TMdFflQ1c3u8vMMtM1gxdpW2ohIW1191NVv/d9n6oaJoTA1FX7oikJpgSaEqiVVwBASyEkbBtM05Dd04Nbn/wdWiwOwbnP7iSIkonQk/Mw+z8dYKGwfH3WUoFaejFyXj6zeT2sH29CJJIQ3PbbGhhjKBw5COPIQcTfWgphczBNe0SnGOcAI5hnTsI4sh9aahpABBYI+rwDYMEQAIH05k8dyRh7dBnkzt10Zwe4kQcjAoRQuoVtgfQYjK/2oXT+HEDkdMQjJ5AQYESw7t5Brm8HSNf9s2f8RAsEYGdHkOneKB8lHj2BXDGyO7eicv0KKBR2RkGT2qaojmxvN+xsxmFQi0RqmUCMCKJSQaZ7IygYam4vCwEKR1C5fAG5PT1jOuSREEjYNsAYjKMHYZ4aBNP1pnNCCAFoGjJdnwGcO3x7VARyI0t6y3rAsloTaTgH6TEUBwdQGDwOMAb4Th8epkCcA0QoXTwP49BeUCwOYfPWTeOSiXRnh5cnTXqBXNZkuj+DPXIXLNC6ZF1wDtLjyO/tReXWDSfkCz6JBRICTNNg57LI7uwGRfWWwdN7XjAIa/gWMl9skaKJySuQK0ZuTw/Kl86DIpGWhd/RI5YiEWS3bwYvmU0P+dR0JnCOdOcGME3DQzHjOAdFoiidPYX8wb1ND/nNE4g7ob04eAzm4ABIj7W0BBhb0jBACGS2dHgdNQlHkAztmzsgSqWW5SW1OodicRhHD8D8/owM+XwSCSRDe+XGNeT7e0F6rLVwrtY9mgaeyziJIwDRpMjZFIG80L59M6zbP4IFgy2Hc/X6LIbc7m2w0yNg1BxYUxPUAdMIvFhE5ostoEi06aG2/vosjPKVS8ju3t40WFMzeg5gyO/vQ/n706BI1H+ypliSCJkXZbo3OlZvEzio3IL7EunODoAxtZlvK9ZS0gYpDp1A4cRRR3DFNkn1hcAYzNPfojBwSIZ22/8USaSakouhUr5XnymOSiWB7rNU/ZrnQgCBIB77x7+hTZsBYVm+P0xwDorFYOzbjcr1q8qWLClMeMdS/ek2cn1fQPMb2onAzSIizz2PVNvHiL78GoRZ9M8PIcACQVh3hpHetmlMlH2oAnmWak83KjeugYVCvsIqYwzCtpFsXwMASH64GggElD5KyPIju6MTvFgA08h3yCeVuS4qFWS2fg4K+bRUGQMvlRB6Yg6S734ACIHY628hvGAhRLHoTA+/PItEUT73HfL79wBgvkO+rzfwLNUjB2CeGgJF/VmqjAi8WEB8yXKPPRQOI9n2sVOZKwBWyOrHhbXfKevrr8ZYqtyC8A1UG6THkFq5bkzESS7/CIFZj0FYFf9RSLZdGDiE4plvfddnjQvkWqoXzjmWqh73l2sQgRcKiL74KqILfyPhGgA4R+iJ2Yj97m3wgqGU7DFNAzdyyHRu8F2fUePT27VUN8LOjEhL1d8oFLaN1Io1ACOPEW77yZXrAMV6SkhjP9e3A9bdO77qM2oUfkzTYGczapaqhHPwiTlILFk+hhHuv7FFixF+ZiG4qQjrUBiV61eQ7d3mqz6jRnsEAHJ9O1C+fAEU9mepunBOvPO+A2eZkbviCdsGhSNILF8JbirCWghQMOTUZ1al4SlLjX6Y4DbSXRvANP+5irt07MKZ1QgCqbaPoc2YpZRZg3MwXYd5chDGwFdeBzRfINdS/eYYzMHjIL+rpUTgBUPC+QVnBI7vVVkehGY/6cEaKrBmDLAqyLghvwGxG3iqa6muhyibvqOLA2cLyRVrnB1jNUR2R2dqxVqAEZgqrGNx5A98ifKViw3VZ1TvMAURKtevIt+/C6TH1eD8+Bwkl7RNmMB5sH7jLYSfflYZ1iwQgH33DjJbP2+oPqN6QedYqptg3Rn2bal6cF6yHNr0cXCuIqawbVAk2hxYcwGKRpHt6brnPNTxDVSX+poGXiyMslS5GpxXrK0KZ9SE9Spo02c6sPa7/i7k+tn5c8j176o75FM9HwUAuX19KJ/7DhSN+kveRsP5+Rerw7nK34BzhJ6ci9jrv3cya03FoXEsmnTnBs+uURbIbSSzRVqqPlnpwbl99YRwrg3rdc50VFmpcLfMHD+C4snBuuozqsdSLZ4aQuGYgqXKGHi5hODjs5FY2tZQde3B+s23EZq/ANw0AaZSnxFE0XBGUbMgne7sgCgYvi1VJgvT+DvLEZg+c2I414J1VEfyvZXgZtHbe61Sn+X39MC6PSy3zAgfAklGWHeGke/bobRa2iica8E6+cEqaNOmK8JagIVCqNy6hkxP1wNhTQ+2VLtQuenfUvXg/MIr0H/9Un1wrgZrwRGeOx/6osVOZq0IawqFkd22CaJSltNYNCKQkJZqGZmtm0ChsO+6izEGYVmO59wAnKvlMR6swcBUFuDkiDZP/w/G4QNyGvP6BRK2wwjj8H6Yp/1bqipwrgXr+OJ3EJr3DHipqLTmJeSmz/QD6jOa2FLtADj3baneg/P7CMyY6RW8PoeiA2s9hsSydglrhWU924G1cagfpYs/1KzPqKalev57GIf6QbG47+VbwTkoHEGqfbUjNBdO+2KCm/Oao9XLrNtXQUtOa8i2qIqRQAB2+u6ERxqoVmKW7voMdnbE/2qpC+dFi6G/9Jo85RNweopNcBPVhrgMyeF5C6C/+ia4YTi2rErIj+rI7uyGnctWrc8CtSzVXO9WtV2q3g7Um7j61z8BliUTPDGhqMIsIvzMr/CLv/2r5kcxTUNq5Vrk9+4Eg8ImY7kBtHzpPHJf9mDaR3/02vdGrRg1rtzTgSObP8Wtf/4FWkpxGDMGUS5BlEr1sUfuxmCRKJ7q6kf4qfnelB+TnzEGbuRxcd17qFy/7Jw89FuCEIEbeeivvok5/93kvMOod6X7LFXbdraxaQH1XapCgIXCoNQ0UCL14DuehDZzFkTJvHdIZfw7uLCOxZFY9qE6rN367JsBFIZO3Hek4V7LcrW08PVRFIcULNVqGbltOw+t4xaWBRYIIL+nB8K2qn68l1m3r4aWSCnC2j3SUKx6pIHGDG83tJfLD3eX6niTParDPPMtiieHqlfcEtaRp59D9JU3pGetCGv3SMOPN8ccaaDRob187QqMfbt/ll2q9zuPBnLuXsMqU919v9SKtYDgavukRgWU7LgjDTTGUt2mZqk263K3r+T39cntK/eHXy+zfnsZgnPmSxtEcf0sHEHGPdIgRyl5lmrBQHbHFlA0+rOOHi/8hiMoXzgH49jh6hW3hLUWTyDx7geOkKqwjkRR+u4UjEP9TvucgzxLtX83yj+clbtUJ8EPnsi1rFzv1pq1kpdZr1gDSiSVYS0YAwR3OCzbJ89S7VyvZKm2YpoxXYdxeD+suz9VN7ZcWC9YCP23rysvMEKmD4XD+1H64SxABHItVePYYbVdqq2YZqEwrBtXkT/4ZU1jy/2/ZPtaJwIq7mp1zrulvfUzckbPBiVLtWUaAQAx5HZtk2BmNW2QxB+WIThnLnhJEdZufbZrO+z0CMi6PYz83l7nR0dkGj9pbi6cLPfrAZSvX3VquVqwTqYQX9J2L+r5fSYAFomicu0yMj1d0P48+7FPcru3g4XDgFWpO+N9WDdjBOunYQR/+Tj0lxc5bBrHGSaF0mbOQrb7c4hKRdomfp/LAdtC5doVBAonjiA09+mfPfeZqJik6TNgnj1Ve7FPesrRZ59HfGkbzKETTTir79RkbOo3zB7QP1MSTAk0JVArr/8Dg4/joy7sAMQAAAAASUVORK5CYII=",ga:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAFOUlEQVR42u2cS2/cVBTHf+faySSp0rRQKkHpBgkq2COWFPgCSN0hIbEs34CvgAQrNpQlqgRCIKEuoIAEElIlWCEBO7oAmhS1TZs0IZmX7zksZiaZh+15xJ5ix1dKxok9d3J/8z+ve8YRMzMKPQwQGjd/YP+Xz4nu3sSiJiBDl2nis7tTEKyeZenCRU68+CaudhJMkeICMjADEXa+f4+9n65iXhG30Dk3zEPil2nGwbVmCtpi8ennOX3pfcLHnykwIFMQx+6ND9m5/i5u5YmOaEw7q7ZYrcQD6p0SAQnQvQcsnn+BM299XFBAXTh++xZ3r1wCr+Cku1pmB9QbLsT2t1h99TKumOrprKjxx4/o3jYE4SGcLIZ6ZHGF+u/fFBRQd0QP/ur6Ysvev7kAv3u/2IDwmrtSiw1oDqMCVAGqAFWAKkAVoApQBagCVI0KUAWoAjT/Ec735TSbnQlTutuHJQHU3QEEN7KXPtMIusKXMHdIcwBkHTjmseYG5veIp2Sxh7HXmEIQoK37uUMKc4eD4De/JbpzDa2vg7b6ei3jANngcd+hqzn2b28T+WVqWG6IwrzhtP++QrTxKcgCuLCjHrMYHyLxU1jC1CZoBPW9iHDZEbhst6XzjWJdJ+o3v6O98QmEqxAskY0DGmXarHu8N0SKAkgcWET7ny8QqfVBy+GlRDCgWddcIOUAqAPCGutYfR3cYm5whhfRg0SGbtvl4noAi3ZB29mbVbrXotVQ1JOZkvLLpC3L9zHRvmJ/bLU86i2T96bwpYZ0vw2wMmg1NRNIxa/FJJlBu2Wo50g+qZzFqnSiWweSomozC8mVhkifHxIG7a3dNtSOsYkNOukhZyQdXFFLZ4JUXEAW56Tj4fRG1NapyxFXHgNLh9Mr/dptmwqSK4t59cORODh9idI0kFzh+cgonHiIg448iuxwU+F4hPk0OPHJdxTFfBq2lJk0jMIZX5kggPfp5lYOJy1MpZzhS7xPjm7ly6QlKT9K9+1JkEqVKE6rnOHrVEchuVJIRg5XLjPC6Y1hSOFIenrQlJs1mOjg4yMQkMTQkLQnD6lGVXFOEJF+QN2kQIIj/sVdUQYr863DUmhIXBdW0nuzahDIgIIEa6zjd3+F1iaDO7v9PSkjdYfFFESw5uZcOp/ERTAbhhNvlePCoqoR9swqun2VaPM6RLugOgih744PG2nk2SC43qM4cEvMo39+wCRWObPBkUMfJLRvfUR050skPAnBCXCWCEgSANkwIIOxaWpOKpLEkDYdHIDQb93A3/saCU93FtS73yoBEJMqaK5cDu1Kegu1SQrbdDgAzt/7CgjS/UqhildJPCdTwkHAaX0d3ML8zCHPxFkSzErShJMMp5MoWrv4eaKkK4cZlFOOTFqmLGInOSllL1YngTeBckoNSKaCY6RkBeUDlCWcwitIMoAjY+YNS6GYsRkyCcqRkeRWyuODLK3imgJOul935TGwuKx6DJwJZit9mD8KnBKYmEwIJ8WLH5/G4QxwJhjlKjUS4cw+f1jwHY6DMJ/IQo4G31lwCvDk+XHdRxbX5AjU1SNLp3Cy+hLmm0fvZpQGDuACtLVP7blXcItPvY7KOfA7SO9mk8LBkczsVYIQazxETp5n7eJlnKutUXv2HSJ9Et98CESdD0L+379cX5kx/Hs325xoRPTvFrZyjjNvfEC4dhYx9YY4fGObxp+fods/g98aqlFstGsx7N3TztuYDkhiqpN8v5gsCNu/7dLaaLCw7Porj6n+h9lADrnyGMsXXubUa2+zsHYWTPkPwiU1KJ5MunwAAAAASUVORK5CYII="};
 function dsLogo(s){ return DS_LOGO[s.id]?`<span class="lg lg-img"><img src="${DS_LOGO[s.id]}" alt=""></span>`:`<span class="lg" style="background:${s.c}">${s.mono}</span>`; }
+
+/* ============ Cortex header: name the Experience being built ============ */
+/* The header leads with what is being made (its title, editable) and its status. While Cortex builds it, it is a Draft;
+   once created it becomes an Experience that can be Active or Inactive. Cortex sits underneath as the builder. */
+function cvCrumb(label){ try{ if(window.parent!==window) window.parent.postMessage({adx:"crumb",label:label||null},"*"); }catch(e){} }
+function cvHeadHTML(){
+  const t=CV.title||"", step={audience:"Choosing the audience",trigger:"Choosing the trigger",assemble:"Putting it together",suggest:"Picking what it does",goal:"Setting the goal",ready:"Ready to create"}[CV.step]||"";
+  const pill=s=>`<span class="pill ${s==="Active"?"active":s==="Inactive"?"inactive":"draft"}"><span class="d"></span>${s}</span>`;
+  return `<div class="cvh">
+    <span class="cvh-mk" aria-hidden="true">${CXMARK}</span>
+    <div class="cvh-tx">
+      <div class="cvh-l1"><span class="cvh-tt ${t?"":"ph"}" id="cvTitle" contenteditable="plaintext-only" spellcheck="false" role="textbox" aria-label="Experience name" data-ph="Untitled Experience">${esc(t||"Untitled Experience")}</span>
+        <span class="cvh-st" tabindex="0">${pill("Draft")}<span class="cvh-tip" role="tooltip"><b style="color:var(--ink);font-weight:600">Draft</b>. Not live yet. Create it and it joins your Experiences, where you can switch it on or off.<span class="cvh-flow">${pill("Draft")}<span class="ar">→</span>${pill("Active")}<span class="ar">⇄</span>${pill("Inactive")}</span></span></span></div>
+      <div class="cvh-l2">Building with Cortex<span class="cvx-info" title="Cortex builds experiences with you from your goals, data and context">${OB_INFO}</span>${step?`<span class="dot stp"></span><span class="stp">${step}</span>`:""}</div>
+    </div></div>`;
+}
+let CV_TT_EDIT=null; // text being typed into the title, kept across Cortex re-renders
+cvRender=(function(orig){ return function(){ const r=orig.apply(this,arguments); try{
+  const h=document.querySelector("#cv .cvx-top .cvx-title"); if(h&&CV){ h.outerHTML=cvHeadHTML(); cvCrumb(CV.title||"New Experience");
+    const tt=$("#cvTitle"), sel=()=>{ const s=getSelection(), rg=document.createRange(); rg.selectNodeContents(tt); s.removeAllRanges(); s.addRange(rg); };
+    const commit=()=>{ if(CV_TT_EDIT===null) return; const v=tt.textContent.trim(); CV_TT_EDIT=null; CV.title=v||CV.title||""; tt.textContent=CV.title||tt.dataset.ph; tt.classList.toggle("ph",!CV.title); cvCrumb(CV.title||"New Experience"); const side=$("#cvSide"); if(side) side.innerHTML=cvPanelHTML(); };
+    tt.addEventListener("mousedown",e=>{ if(document.activeElement!==tt){ e.preventDefault(); tt.focus(); } });
+    tt.addEventListener("focus",()=>{ if(CV_TT_EDIT===null){ CV_TT_EDIT=CV.title||""; if(tt.classList.contains("ph")){ tt.textContent=""; tt.classList.remove("ph"); } sel(); } });
+    tt.addEventListener("input",()=>{ CV_TT_EDIT=tt.textContent; const v=CV_TT_EDIT.trim(); if(v){ CV.title=v; cvCrumb(v); const n=document.querySelector("#cvSide .v3-dname"); if(n){ n.textContent=v; n.classList.remove("ph"); } } });
+    tt.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); tt.blur(); } if(e.key==="Escape"){ tt.textContent=CV.title||""; tt.blur(); } });
+    // a Cortex re-render swaps the header and puts focus back on the new title, so only a real blur commits
+    tt.addEventListener("blur",()=>{ setTimeout(()=>{ const f=document.getElementById("cvTitle"); if(f&&document.activeElement===f) return; if(f) f.dispatchEvent(new Event("cvcommit")); },0); });
+    tt.addEventListener("cvcommit",commit);
+    if(CV_TT_EDIT!==null){ tt.textContent=CV_TT_EDIT; tt.classList.remove("ph"); tt.focus(); const s=getSelection(); s.selectAllChildren(tt); s.collapseToEnd(); } }
+} catch(e){} return r; }; })(cvRender);
+cvClose=(function(orig){ return function(){ cvCrumb(null); return orig.apply(this,arguments); }; })(cvClose);
 </script>
 <!-- Same as the studio server (:8800): "Preview · 3 generated options" under Cortex's suggestions (prototype copy, uses /genui) -->
 <script src="studio-genui.js"></script>
@@ -12187,6 +12239,30 @@ function dsLogo(s){ return DS_LOGO[s.id]?`<span class="lg lg-img"><img src="${DS
   css.textContent += PH.map(function (f, i) { return 'html body .sp-thumb.t' + i + '{background:#fff ' + phUrl(f, 200) + ' center/contain no-repeat}html body .sp-thumb.t' + i + '::after{display:none}'; }).join('')
     + 'html body .sp-img{background:#fff ' + phUrl(PH[0], 500) + ' center/contain no-repeat}html body .sp-img .sp-bottle{visibility:hidden}';
   try { V3_SEPH_PRODUCTS[5][1] = 'Micellar Cleansing Water'; } catch (e) {} // the photo's real name; prices stay (the basket subtotal adds them up)
+  // Experience draft (right of Cortex): the row Cortex is asking about now shimmers;
+  // its dashed circle turns Cortex teal with a glow (no rotation); when it's answered the tick pops in. Same rows in both builders (cvPanelHTML and v3DraftHTML).
+  css.textContent += '@keyframes adxShim{0%{background-position:100% 0}100%{background-position:-100% 0}}'
+    + '@keyframes adxRing{0%,100%{box-shadow:0 0 0 0 rgba(60,140,129,0)}50%{box-shadow:0 0 0 4px rgba(60,140,129,.14)}}@keyframes adxPop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}'
+    + '.v3-row.wait .k,.v3-row.wait .v.ph{background:linear-gradient(90deg,#18181b 0%,#18181b 38%,#a1a1aa 50%,#18181b 62%,#18181b 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:adxShim 2.2s linear infinite}'
+    + '.v3-row.wait:not(.sug) .st{border:1.5px dashed #3c8c81;background:#eef6f4;box-shadow:0 0 0 3px rgba(60,140,129,.14),0 1px 4px rgba(60,140,129,.25)}'
+    + '.v3-row.wait.sug .st{animation:adxRing 2.2s ease-in-out infinite}'
+    + '.v3-row.done .st{animation:adxPop .38s ease-out}'
+    + '@media (prefers-reduced-motion:reduce){.v3-row.wait .k,.v3-row.wait .v.ph,.v3-row.wait .st,.v3-row.done .st{animation:none}}';
+  var draftOk = {}; // rows already ticked, so only a new tick pops
+  var markDraft = function (html) {
+    if (typeof html !== 'string' || html.indexOf('v3-row') < 0) return html;
+    var waiting = false, okNow = {};
+    html = html.replace(/<div class="v3-row ([^"]*)"><span class="st">([\s\S]*?)<\/span><span class="tx"><span class="k">([^<]*)<\/span>/g, function (m, cls, st, k) {
+      var ok = /(^|\s)ok(\s|$)/.test(cls), add = '';
+      if (ok) { okNow[k] = 1; if (!draftOk[k] && k !== 'Data') add = ' done'; } // Data is ticked from the start
+      else if (!waiting) { waiting = true; add = ' wait'; }
+      return '<div class="v3-row ' + cls + add + '"><span class="st">' + st + '</span><span class="tx"><span class="k">' + k + '</span>';
+    });
+    draftOk = okNow;
+    return html;
+  };
+  if (typeof cvPanelHTML === 'function') { var cvP = cvPanelHTML; cvPanelHTML = function () { return markDraft(cvP.apply(this, arguments)); }; }
+  if (typeof v3DraftHTML === 'function') { var v3P = v3DraftHTML; v3DraftHTML = function () { return markDraft(v3P.apply(this, arguments)); }; }
   document.head.appendChild(css);
   document.documentElement.setAttribute('data-theme', 'light'); // the prototype shell is light
   var ob = document.getElementById('ob'); if (ob) ob.hidden = true;
