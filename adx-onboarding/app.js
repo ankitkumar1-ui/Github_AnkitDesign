@@ -75,6 +75,14 @@
     }
   }
 
+  // Sidebar groups (Start, Experiences, Measure, ADX Setup): clicking a group's header collapses or opens it, like the studio.
+  // The state sits on #app (it survives screens re-rendering and moving between screens); CSS in shadcn-app.css hides the group.
+  root.addEventListener('click', function (e) {
+    var c = e.target.closest('.nav-cat[data-cat]');
+    if (!c || !root.contains(c)) return;
+    root.classList.toggle('nav-shut-' + c.dataset.cat);
+  });
+
   // Small floating quick nav (bottom-left). It can be minimised to a pill; press "\\" to hide/show it.
   var jump = document.getElementById('jump');
   var MIN_KEY = 'adx-proto-nav-min', lastActive = null;

@@ -24,6 +24,11 @@
 #app .setup-wrap .subnav-item.on{background:#fafafa;color:#09090b;font-weight:500}
 #app .setup-wrap .subnav-item.on .sub-ico{color:#09090b}
 
+/* collapsed groups (app.js toggles nav-shut-<group> on #app) */
+#app .nav-cat .chev{transition:transform .18s}
+#app.nav-shut-start [data-catgroup="start"],#app.nav-shut-exp [data-catgroup="exp"],#app.nav-shut-measure [data-catgroup="measure"],#app.nav-shut-adx [data-catgroup="adx"]{display:none}
+#app.nav-shut-start .nav-cat[data-cat="start"] .chev,#app.nav-shut-exp .nav-cat[data-cat="exp"] .chev,#app.nav-shut-measure .nav-cat[data-cat="measure"] .chev,#app.nav-shut-adx .nav-cat[data-cat="adx"] .chev{transform:rotate(180deg)}
+
 /* ---- Top bar ---- */
 #app .crumb{font-size:14px}
 #app .crumb b{font-weight:400}
