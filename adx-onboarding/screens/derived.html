@@ -409,6 +409,7 @@ body{margin:0}
 .ev-used em{font-style:normal;color:var(--muted)}
 .ev-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:14px;cursor:pointer;background:none;border:0;padding:0;font:inherit}
 .ev-back:hover{color:var(--ink)}
+.ev-name{display:flex;align-items:center;gap:8px;flex-wrap:wrap;overflow-wrap:anywhere}
 .ev-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
 .ev-head h2{margin:0;font-size:20px;font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .ev-head p{margin:4px 0 0;font-size:14px;color:var(--muted)}
@@ -475,7 +476,7 @@ body{margin:0}
       </div>
     </header>
 <div class="wrap">
-  <sc-if value="{{ev}}"><div class="pagehead"><div><div class="eyebrow">Experiences</div><h1>Events</h1></div></div></sc-if><sc-if value="{{notEv}}"><div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
+  <sc-if value="{{evHead}}"><div class="pagehead"><div><h1>Events</h1></div></div></sc-if><sc-if value="{{wsHead}}"><div class="pagehead"><div><div class="eyebrow">ADX Setup</div><h1>Website Signals &amp; Behavior</h1><p>Website behavior captured as signals your experiences can use.</p></div></div>
   <div class="dtabs"><a class="dtab" href="#/web-signals" style="text-decoration:none">Source &amp; mapping</a><a class="dtab" href="#/signals" style="text-decoration:none">Signals<span class="tcount">{{sigN}}</span></a><button class="dtab on">Events<span class="tcount">{{n}}</span></button></div></sc-if>
 
   <!-- zero state -->
@@ -533,11 +534,13 @@ body{margin:0}
 
   <!-- one event -->
   <sc-if value="{{viewing}}">
-    <button type="button" class="ev-back" onClick="{{v.back}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Events</button>
-    <div class="ev-head">
-      <div style="flex:1;min-width:0"><h2><code class="sg-code" style="font-size:18px">{{v.id}}</code><sc-if value="{{v.isNew}}"><span class="dv-new">New</span></sc-if></h2><p>{{v.desc}}</p></div>
-      <button class="btn" onClick="{{v.edit}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit</button>
-    </div>
+    <button type="button" class="ev-back" onClick="{{v.back}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>All events</button>
+    <div class="pagehead"><div style="min-width:0">
+      <div class="eyebrow">Event</div>
+      <h1 class="ev-name">{{v.id}}<sc-if value="{{v.isNew}}"><span class="dv-new">New</span></sc-if></h1><p>{{v.desc}}</p>
+    </div><div class="side">
+      <button class="btn" onClick="{{v.edit}}"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit event</button>
+    </div></div>
     <div class="ev-grid">
       <div>
         <section class="sg-card">
@@ -749,6 +752,7 @@ class Component extends DCLogic {
         back: function () { self.setState({ view: null }); },
         edit: function () { self.open(vs, vi + 1); } }, dvBy(vs));
     } else if (st.view) out.viewing = false, out.hasList = !b && D.length > 0;
+    out.evHead = ev && !out.viewing; out.wsHead = !ev && !out.viewing;
     if (!b) return out;
 
     var valid = b.conds.filter(function (c) { var k = dvFind(c.what)[2]; return !dvNeedsVal(k, c.op) || (c.val || '').trim(); });

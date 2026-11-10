@@ -24,6 +24,17 @@
 #app .setup-wrap .subnav-item.on{background:#fafafa;color:#09090b;font-weight:500}
 #app .setup-wrap .subnav-item.on .sub-ico{color:#09090b}
 
+/* main nav (built in app.js): sections split by dividers, counts on the right */
+#app .rail-nav .nav-sec{display:flex;flex-direction:column;gap:1px}
+#app .rail-nav .nav-div{height:1px;background:#e4e4e7;margin:10px 8px}
+#app .rail-nav{padding-top:6px}
+#app .subnav-item .nav-n{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#71717a;font-variant-numeric:tabular-nums}
+#app .nav-n[data-n="exp"]::after{content:var(--n-exp)}
+#app .nav-n[data-n="goals"]::after{content:var(--n-goals)}
+#app .nav-n[data-n="events"]::after{content:var(--n-events)}
+#app .nav-n[data-n="aud"]::after{content:var(--n-aud)}
+#app .nav-live{display:var(--n-live,none);width:6px;height:6px;border-radius:50%;background:#16a34a}
+
 /* collapsed groups (app.js toggles nav-shut-<group> on #app) */
 #app .nav-cat .chev{transition:transform .18s}
 #app.nav-shut-start [data-catgroup="start"],#app.nav-shut-exp [data-catgroup="exp"],#app.nav-shut-measure [data-catgroup="measure"],#app.nav-shut-adx [data-catgroup="adx"]{display:none}
