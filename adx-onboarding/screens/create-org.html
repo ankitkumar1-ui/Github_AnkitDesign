@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Create your organization</title>
+<!-- Step one of the prototype: the first person from a company creates the organization (account, code, org,
+     Sandbox environment, invite team), then signs in. Org details are kept in window.ADX_ORG. -->
+<style>
+body{margin:0}
+.co-req{color:#dc2626;font-weight:600;margin-left:-5px}
+.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:520px){.co-grid{grid-template-columns:1fr}}
+.co-field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.co-ro{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e4e4e7;border-radius:8px;background:#fafafa;font-size:14px}
+.co-ro .ic{width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid #e4e4e7;display:grid;place-items:center;color:#3c8c81;flex:0 0 auto}
+.co-ro .ic svg{width:16px;height:16px}
+.co-ro .k{font-size:12px;color:#71717a}
+.co-ro .shbadge{margin-left:auto}
+.co-otp{display:flex;align-items:center;justify-content:center;gap:8px}
+.co-otp-g{display:flex}
+.co-otp-g input{width:48px;height:52px;padding:0;border:1px solid #e4e4e7;border-left-width:0;border-radius:0;background:#fff;color:#09090b;font:500 20px/1 'Geist Mono',ui-monospace,monospace;text-align:center;caret-color:transparent;outline:none;box-shadow:0 1px 2px rgba(0,0,0,.05);position:relative;transition:box-shadow .15s,border-color .15s}
+.co-otp-g input:first-child{border-left-width:1px;border-radius:6px 0 0 6px}
+.co-otp-g input:last-child{border-radius:0 6px 6px 0}
+.co-otp-g input:focus{z-index:1;border-color:#09090b;box-shadow:0 0 0 3px rgba(9,9,11,.12)}
+.co-otp-sep{width:10px;height:2px;border-radius:1px;background:#d4d4d8}
+.co-link{background:none;border:0;padding:0;font:inherit;font-size:14px;color:#09090b;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.co-muted{font-size:14px;color:#71717a}
+
+/* illustration */
+
+/* setup progress */
+.co-steps{display:flex;flex-direction:column;border:1px solid #e4e4e7;border-radius:12px;overflow:hidden}
+.co-step{display:flex;align-items:center;gap:12px;padding:12px 14px;font-size:14px;color:#a1a1aa}
+.co-step + .co-step{border-top:1px solid #e4e4e7}
+.co-step.go,.co-step.ok{color:#09090b}
+.co-step .st{width:18px;height:18px;flex:0 0 auto;display:grid;place-items:center}
+.co-step .st i{width:14px;height:14px;border-radius:50%;border:1.5px solid #d4d4d8;box-sizing:border-box}
+.co-step.go .st i{border-color:#3c8c81;border-right-color:transparent;animation:coSpin .8s linear infinite}
+.co-step.ok .st i{display:none}
+.co-step .st svg{display:none;color:#3c8c81}
+.co-step.ok .st svg{display:block}
+.co-step .v{margin-left:auto;font-size:12px;color:#71717a}
+@keyframes coSpin{to{transform:rotate(360deg)}}
+
+/* invite rows */
+.co-inv{display:grid;grid-template-columns:1fr 132px 36px;gap:8px;align-items:center}
+.co-x{width:36px;height:36px;border:0;background:none;border-radius:6px;color:#71717a;cursor:pointer;display:grid;place-items:center}
+.co-x:hover{background:#f4f4f5;color:#09090b}
+</style>
+</head>
+<body>
+<template data-view>
+<div style="display: flex; flex-wrap: wrap; min-height: 1040px; background: #fff; font-family: Geist, ui-sans-serif, system-ui, -apple-system, sans-serif; color: #09090b; -webkit-font-smoothing: antialiased">
+
+  <section style="flex: 5 1 420px; min-width: 0; position: relative; overflow: hidden; background: #0b0b0f; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 56px 40px 88px; box-sizing: border-box">
+    <div aria-hidden="true" style="position: absolute; width: 520px; height: 520px; border-radius: 50%; left: -180px; top: -200px; background: radial-gradient(circle, rgba(60,140,129,0.22), transparent 65%)"></div>
+    <div aria-hidden="true" style="position: absolute; width: 460px; height: 460px; border-radius: 50%; right: -200px; bottom: -160px; background: radial-gradient(circle, rgba(60,140,129,0.30), transparent 65%)"></div>
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center">
+      <img src="assets/adx-logo.png" alt="ADX" width="76" height="76" style="width: 76px; height: 76px; border-radius: 20px; display: block; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 12px 44px rgba(0,0,0,0.35)">
+      <div style="font-family: 'Instrument Sans', Geist, sans-serif; font-size: 54px; font-weight: 600; letter-spacing: -0.03em; line-height: 1">ADX</div>
+      <div style="font-size: 14px; color: rgba(255,255,255,0.72); margin-top: 10px; letter-spacing: 0.01em">Agentic Digital Experience</div>
+      <p style="font-size: 16px; line-height: 1.45; color: #fff; margin: 30px 0 0; max-width: 30ch">Storefronts that adapt to every shopper, run by AI agents you can see and steer.</p>
+    </div>
+    <div style="position: absolute; bottom: 24px; left: 0; right: 0; font-size: 12px; color: rgba(255,255,255,0.55)">by netomi · ©2026 Netomi, Inc. All rights reserved.</div>
+  </section>
+
+  <section style="flex: 7 1 520px; min-width: 0; position: relative; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px 96px; box-sizing: border-box">
+    <div style="width: 100%; max-width: 440px; display: flex; flex-direction: column">
+
+      <!-- 1 · account -->
+      <sc-if value="{{isEmail}}">
+        <h1 style="margin: 0 0 28px; font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; text-align: center">Create your organization</h1>
+        <button type="button" class="shb out lg full" style="gap: 8px" onClick="{{google}}">
+          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+          Continue with Google</button>
+        <div style="display: flex; align-items: center; gap: 12px; margin: 20px 0; color: #71717a; font-size: 12px"><div class="shsep" style="flex: 1"></div>Or<div class="shsep" style="flex: 1"></div></div>
+        <form onSubmit="{{toCode}}" style="margin: 0; display: flex; flex-direction: column">
+          <label for="coEmail" class="shl" style="margin-bottom: 8px">Work email<span class="co-req" aria-label="Required">*</span></label>
+          <input id="coEmail" class="shi" type="email" autocomplete="email" value="{{f.email}}" onChange="{{set.email}}">
+          <button type="submit" class="shb pri lg full" style="margin-top: 16px">Continue</button>
+        </form>
+        <p style="margin: 20px 0 0; text-align: center" class="co-muted">Already have an account? <a href="#/signin" style="color: #09090b; text-underline-offset: 4px">Log in</a></p>
+      </sc-if>
+
+      <!-- 2 · code -->
+      <sc-if value="{{isCode}}">
+        <h1 style="margin: 0; font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; text-align: center">Check your email</h1>
+        <p style="margin: 8px 0 28px; text-align: center" class="co-muted">Code sent to <b style="color: #09090b; font-weight: 500">{{f.email}}</b></p>
+        <form onSubmit="{{toOrg}}" style="margin: 0; display: flex; flex-direction: column">
+          <label for="coCode0" class="shl" style="margin-bottom: 8px">Verification code</label>
+          <div class="co-otp" role="group" aria-label="Verification code">
+            <div class="co-otp-g"><input id="coCode0" inputmode="numeric" autocomplete="one-time-code" aria-label="Digit 1" value="{{otp.0.v}}" onFocus="{{otp.0.focus}}" onInput="{{otp.0.input}}" onKeyDown="{{otp.0.key}}" onPaste="{{otp.0.paste}}"><input id="coCode1" inputmode="numeric" autocomplete="off" aria-label="Digit 2" value="{{otp.1.v}}" onFocus="{{otp.1.focus}}" onInput="{{otp.1.input}}" onKeyDown="{{otp.1.key}}" onPaste="{{otp.1.paste}}"><input id="coCode2" inputmode="numeric" autocomplete="off" aria-label="Digit 3" value="{{otp.2.v}}" onFocus="{{otp.2.focus}}" onInput="{{otp.2.input}}" onKeyDown="{{otp.2.key}}" onPaste="{{otp.2.paste}}"></div>
+            <div class="co-otp-sep" aria-hidden="true"></div>
+            <div class="co-otp-g"><input id="coCode3" inputmode="numeric" autocomplete="off" aria-label="Digit 4" value="{{otp.3.v}}" onFocus="{{otp.3.focus}}" onInput="{{otp.3.input}}" onKeyDown="{{otp.3.key}}" onPaste="{{otp.3.paste}}"><input id="coCode4" inputmode="numeric" autocomplete="off" aria-label="Digit 5" value="{{otp.4.v}}" onFocus="{{otp.4.focus}}" onInput="{{otp.4.input}}" onKeyDown="{{otp.4.key}}" onPaste="{{otp.4.paste}}"><input id="coCode5" inputmode="numeric" autocomplete="off" aria-label="Digit 6" value="{{otp.5.v}}" onFocus="{{otp.5.focus}}" onInput="{{otp.5.input}}" onKeyDown="{{otp.5.key}}" onPaste="{{otp.5.paste}}"></div>
+          </div>
+          <button type="submit" class="shb pri lg full" style="margin-top: 16px">Verify</button>
+        </form>
+        <p style="margin: 20px 0 0; text-align: center"><button type="button" class="co-link" onClick="{{toEmail}}">Change email</button></p>
+      </sc-if>
+
+      <!-- illustration: the org and what gets created with it -->
+
+      <!-- 3 · organization -->
+      <sc-if value="{{isOrg}}">
+        <h1 style="margin: 0; font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; text-align: center">Welcome, Emma</h1>
+        <p style="margin: 8px 0 28px; text-align: center" class="co-muted">{{domain}} is new to ADX</p>
+        <form onSubmit="{{create}}" style="margin: 0; display: flex; flex-direction: column; gap: 16px">
+          <div class="co-grid">
+            <div class="co-field"><label for="coName" class="shl">Organization name<span class="co-req" aria-label="Required">*</span></label>
+              <input id="coName" class="shi" value="{{f.name}}" onChange="{{set.name}}"></div>
+            <div class="co-field"><label for="coSite" class="shl">Website<span class="co-req" aria-label="Required">*</span></label>
+              <input id="coSite" class="shi" value="{{f.site}}" onChange="{{set.site}}"></div>
+            <div class="co-field"><label for="coInd" class="shl">Industry<span class="co-req" aria-label="Required">*</span></label>
+              <select id="coInd" class="shi" value="{{f.industry}}" onChange="{{set.industry}}">
+                <sc-for list="{{industries}}" as="o"><option value="{{o}}">{{o}}</option></sc-for>
+              </select></div>
+            <div class="co-field"><label for="coReg" class="shl">Region<span class="co-req" aria-label="Required">*</span></label>
+              <select id="coReg" class="shi" value="{{f.region}}" onChange="{{set.region}}">
+                <sc-for list="{{regions}}" as="o"><option value="{{o}}">{{o}}</option></sc-for>
+              </select></div>
+          </div>
+          <div class="co-field"><span class="shl">Environment</span>
+            <div class="co-ro"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></span>Sandbox<span class="shbadge sec">Mock data</span></div></div>
+          <div class="co-field"><span class="shl">Owner</span>
+            <div class="co-ro"><span class="shav" style="background: #fff; border: 1px solid #e4e4e7; font-size: 12px">EC</span><div style="min-width: 0"><div>Emma C.</div><div class="k">{{f.email}}</div></div><span class="shbadge pri">Admin</span></div></div>
+          <button type="submit" class="shb pri lg full" style="margin-top: 8px" disabled="{{cantCreate}}">Create organization</button>
+        </form>
+      </sc-if>
+
+      <!-- 4 · setting up -->
+      <sc-if value="{{isMaking}}">
+        <h1 style="margin: 0 0 24px; font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; text-align: center">{{makeTitle}}</h1>
+        <div class="co-steps">
+          <sc-for list="{{steps}}" as="s">
+            <div class="co-step {{s.cls}}"><span class="st"><i></i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>{{s.t}}<span class="v">{{s.v}}</span></div>
+          </sc-for>
+        </div>
+        <sc-if value="{{made}}"><button type="button" class="shb pri lg full" style="margin-top: 24px" onClick="{{toInvite}}">Continue</button></sc-if>
+      </sc-if>
+
+      <!-- 5 · invite team -->
+      <sc-if value="{{isInvite}}">
+        <h1 style="margin: 0 0 24px; font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; text-align: center">Invite your team</h1>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div class="co-inv"><span class="shl">Email</span><span class="shl">Role</span><span></span></div>
+          <sc-for list="{{invites}}" as="r">
+            <div class="co-inv">
+              <input class="shi" type="email" placeholder="name@{{domain}}" value="{{r.email}}" onChange="{{r.setEmail}}" aria-label="Email">
+              <select class="shi" value="{{r.role}}" onChange="{{r.setRole}}" aria-label="Role">
+                <sc-for list="{{roles}}" as="o"><option value="{{o}}">{{o}}</option></sc-for>
+              </select>
+              <button type="button" class="co-x" onClick="{{r.remove}}" aria-label="Remove"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+            </div>
+          </sc-for>
+          <button type="button" class="shb ghost sm" style="align-self: flex-start; gap: 6px; margin-top: 4px" onClick="{{addRow}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>Add another</button>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 28px">
+          <button type="button" class="shb out lg" style="flex: 1" onClick="{{skip}}">Skip for now</button>
+          <button type="button" class="shb pri lg" style="flex: 1" onClick="{{send}}" disabled="{{cantSend}}">{{sendLabel}}</button>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div style="position: absolute; bottom: 22px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 12px; color: #71717a">
+      <div style="width: 120px; height: 1px; background: #e4e4e7"></div>
+      <a href="#support" style="color: #52525b; text-decoration: none">Contact support</a>
+      <div style="width: 120px; height: 1px; background: #e4e4e7"></div>
+    </div>
+  </section>
+</div>
+</template>
+<script type="text/x-dc">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 'email', made: 0,
+      f: { email: '', code: '', name: 'Sephora', site: 'sephora.com', industry: 'Beauty & cosmetics', region: 'Europe · East' },
+      invites: [{ email: 'liam.r@sephora.com', role: 'Editor' }, { email: '', role: 'Viewer' }]
+    };
+  }
+  componentWillUnmount() { clearTimeout(this.timer); clearTimeout(this.otpT); }
+  // verification code: six boxes; focusing one types the demo code in, a digit at a time
+  otpBox(i) { return document.getElementById('coCode' + i); }
+  otpSet(code, focusAt) { var n = Object.assign({}, this.state.f, { code: code }); this.setState({ f: n }); var self = this;
+    for (var k = 0; k < 6; k++) { var bx = this.otpBox(k); if (bx) bx.value = code.charAt(k); } // keep the boxes current before the next key lands
+    if (focusAt != null) { var b = self.otpBox(Math.min(focusAt, 5)); if (b) { self.otpMoving = true; b.focus(); self.otpMoving = false; } } }
+  otpAuto() {
+    var self = this, DEMO = '482913';
+    if (this.otpT || this.state.f.code.length >= 6) return;
+    (function next() {
+      var c = self.state.f.code;
+      if (self.state.step !== 'code' || c.length >= 6) { self.otpT = 0; return; }
+      var b = self.otpBox(c.length); if (b) { self.otpMoving = true; b.focus(); self.otpMoving = false; }
+      self.otpT = setTimeout(function () { self.otpSet(c + DEMO.charAt(c.length)); self.otpT = setTimeout(next, 0); }, c.length ? 170 : 260);
+    })();
+  }
+  otpStop() { clearTimeout(this.otpT); this.otpT = 0; }
+  go(step) { this.setState({ step: step }); }
+  // setting up: organization, then the Sandbox environment, then Emma as admin
+  run() {
+    var self = this;
+    this.setState({ step: 'making', made: 0 });
+    (function tick(n) { self.timer = setTimeout(function () { self.setState({ made: n }); if (n < 3) tick(n + 1); }, n ? 900 : 700); })(1);
+  }
+  finish(sent) {
+    var s = this.state, f = s.f;
+    window.ADX_ORG = { name: f.name, site: f.site, industry: f.industry, region: f.region, env: 'Sandbox', owner: { name: 'Emma C.', email: f.email, role: 'Admin' },
+      members: sent ? s.invites.filter(function (r) { return r.email.trim(); }).map(function (r) { return { email: r.email.trim(), role: r.role, status: 'Invited' }; }) : [] };
+    location.hash = '#/signin';
+  }
+  renderVals() {
+    var self = this, s = this.state, f = s.f, st = s.step;
+    function setter(k) { return function (e) { var n = Object.assign({}, self.state.f); n[k] = e.target.value; self.setState({ f: n }); }; }
+    function sub(fn) { return function (e) { if (e && e.preventDefault) e.preventDefault(); fn(); }; }
+    var domain = (f.email.split('@')[1] || f.site || '').toLowerCase();
+    var making = st === 'making', made = s.made;
+    var done = making && made >= 3, after = st === 'invite';
+    var sentN = s.invites.filter(function (r) { return /\S+@\S+/.test(r.email); }).length;
+    var STEPS = [['Organization', f.name], ['Sandbox environment', 'Mock data'], ['Admin access', 'Emma C.']];
+    return {
+      f: f, domain: domain, initial: (f.name || '?').charAt(0).toUpperCase(),
+      isEmail: st === 'email', isCode: st === 'code', isOrg: st === 'org', isMaking: making, isInvite: after,
+      set: { email: setter('email'), code: setter('code'), name: setter('name'), site: setter('site'), industry: setter('industry'), region: setter('region') },
+      industries: ['Beauty & cosmetics', 'Fashion & apparel', 'Electronics', 'Home & living', 'Grocery'],
+      regions: ['Europe · East', 'Europe · West', 'North America', 'Asia Pacific'],
+      roles: ['Admin', 'Editor', 'Viewer'],
+      toCode: sub(function () { if (/\S+@\S+\.\S+/.test(self.state.f.email)) self.go('code'); }),
+      // Google returns Emma's verified account, so no email code
+      google: function () { self.setState({ f: Object.assign({}, self.state.f, { email: 'emma@sephora.com' }), step: 'org' }); },
+      toEmail: function () { self.go('email'); },
+      toOrg: sub(function () { if (/^\d{6}$/.test(self.state.f.code)) { self.otpStop(); self.go('org'); } }),
+      otp: [0, 1, 2, 3, 4, 5].map(function (i) { return {
+        v: f.code.charAt(i),
+        focus: function () { if (!self.otpMoving) self.otpAuto(); },
+        // one key, or several digits at once (autofill, fast typing): fill from this box on
+        input: function (e) { self.otpStop(); var c = self.state.f.code, old = c.charAt(i), v = e.target.value;
+          if (old && v.length > 1) v = v.indexOf(old) === 0 ? v.slice(1) : v.lastIndexOf(old) === v.length - 1 ? v.slice(0, -1) : v;
+          var d = (v.match(/\d/g) || []).join('');
+          if (!d) { e.target.value = old; return; }
+          var at = Math.min(i, c.length), nc = (c.slice(0, at) + d + c.slice(at + d.length)).slice(0, 6);
+          self.otpSet(nc, at + d.length); },
+        key: function (e) { var c = self.state.f.code;
+          if (e.key === 'Backspace') { e.preventDefault(); self.otpStop(); var at = c.charAt(i) ? i : Math.max(0, Math.min(i, c.length) - 1); self.otpSet(c.slice(0, at), at); }
+          else if (e.key === 'ArrowLeft' && i > 0) { e.preventDefault(); self.otpSet(c, i - 1); }
+          else if (e.key === 'ArrowRight' && i < 5) { e.preventDefault(); self.otpSet(c, i + 1); } },
+        paste: function (e) { e.preventDefault(); self.otpStop(); var d = ((e.clipboardData || window.clipboardData).getData('text').match(/\d/g) || []).join('').slice(0, 6); if (d) self.otpSet(d, d.length); }
+      }; }),
+      cantCreate: !(f.name.trim() && f.site.trim()),
+      create: sub(function () { if (f.name.trim() && f.site.trim()) self.run(); }),
+      makeTitle: done ? f.name + ' is ready' : 'Setting up ' + f.name,
+      made: done,
+      steps: STEPS.map(function (x, i) { return { t: x[0], v: made > i ? x[1] : '', cls: made > i ? 'ok' : made === i ? 'go' : '' }; }),
+      toInvite: function () { self.go('invite'); },
+      invites: s.invites.map(function (r, i) {
+        function upd(k) { return function (e) { var l = self.state.invites.slice(); l[i] = Object.assign({}, l[i]); l[i][k] = e.target.value; self.setState({ invites: l }); }; }
+        return { email: r.email, role: r.role, setEmail: upd('email'), setRole: upd('role'),
+          remove: function () { var l = self.state.invites.slice(); l.splice(i, 1); self.setState({ invites: l.length ? l : [{ email: '', role: 'Editor' }] }); } };
+      }),
+      addRow: function () { self.setState({ invites: self.state.invites.concat([{ email: '', role: 'Editor' }]) }); },
+      cantSend: !sentN, sendLabel: sentN > 1 ? 'Send ' + sentN + ' invites' : 'Send invite',
+      skip: function () { self.finish(false); }, send: function () { if (sentN) self.finish(true); }
+    };
+  }
+}
+</script>
+</body>
+</html>

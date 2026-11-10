@@ -9,6 +9,7 @@
   // `nav` = label in the quick-nav switcher (routes without it are reached through the app);
   // `under` = which quick-nav item to highlight for a sub-screen.
   var ROUTES = [
+    { path: 'create-org',  file: 'screens/create-org.html',  label: 'Create your organization',         nav: 'Create org account' },
     { path: 'signin',      file: 'screens/signin.html',      label: 'Sign in',                          nav: 'Sign in' },
     { path: 'about',       file: 'screens/about.html',       label: '1 · About you',                    nav: 'About you' },
     { path: 'data',        file: 'screens/data.html',        label: '2 · Connect your data',            nav: 'Connect your data' },
@@ -225,6 +226,6 @@
   });
 
   window.addEventListener('hashchange', show);
-  if (!location.hash) location.replace('#/signin');
+  if (!location.hash) location.replace('#/create-org');
   show();
 })();

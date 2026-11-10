@@ -15,11 +15,12 @@ Press `\` to hide/show the screen switcher in the bottom-left corner.
 
 ## Flow
 
-`#/signin` → `#/about` → `#/data` → `#/goals` (opens with Cortex setting up, then the goal list) → `#/home` → `#/setup` (from the side menu or Home's Workspace panel) → `#/connections` → `#/web-signals`
+`#/create-org` → `#/signin` → `#/about` → `#/data` → `#/goals` (opens with Cortex setting up, then the goal list) → `#/home` → `#/setup` (from the side menu or Home's Workspace panel) → `#/connections` → `#/web-signals`
 
 | Route | File | Canvas board |
 |---|---|---|
-| signin | screens/signin.html | Onboarding v2 · Sign in |
+| create-org | screens/create-org.html | Step one: the first person from a company creates the organization. Work email (`emma@sephora.com`) → code → Welcome, Emma: org name, website, industry, region, Sandbox environment (mock data), owner as Admin, with an SVG of the org and what it creates (admin, Sandbox, team) that lights up while Setting up runs → Invite your team (email + Admin / Editor / Viewer, skippable) → Sign in. Saved as `window.ADX_ORG` (members = invites) |
+| signin | screens/signin.html | Onboarding v2 · Sign in, now "Log in to ADX" with the owner's email filled in (V2 keeps the old "Log in or sign up") |
 | about | screens/about.html | Onboarding v2 · 1 About you |
 | data | screens/data.html | Onboarding v2 · 2 Connect your data (V1). Web signals, Product catalog and Content each open on a compact "Auto-scan" card (Allow scan, then progress, then result), then "Or connect manually" tools. One scan fills all three; state lives in `window.ADX_SCAN`, progress shows in each card, toast when done. The earlier scan-hero version is frozen as V2 (`screens/v2/data.html`) |
 | goals | screens/goals.html | Onboarding v2 · Cortex setting up + 3 Your goals |
